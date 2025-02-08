@@ -3145,3 +3145,15 @@ div#graph1, div#graph4, div#graph5, div#graph6, div#graph7, div#graph8, div#grap
 }
 
 }
+
+span.fa-thumbs-style.fa.fa-thumbs-up {
+    font-size:20px;
+    color:red;
+}
+span.fa-thumbs-style.fa.fa-thumbs-down {
+    font-size:15px;
+    color:gray;
+}
+a.active.font-icon{
+    font-size:20px;
+}

@@ -39,7 +39,7 @@ Route::get('/active-category-product/{category_id}', [CategoryProduct::class, 'a
 Route::get('/add-brand-product', [BrandProduct::class, 'add_brand_product'])->name('add-brand');
 Route::get('/all-brand-product', [BrandProduct::class, 'all_brand_product'])->name('all-brand');
 
-Route::post('/save-brand-product', [BrandProduct::class, 'save_brand_product'])->name('save-brand');
+Route::post('/save-brand', [BrandProduct::class, 'save_brand_product'])->name('save-brand');
 Route::get('/edit-brand-product/{brand_id}', [BrandProduct::class, 'edit_brand_product'])->name('edit-brand');
 Route::post('/update-brand-product/{brand_id}', [BrandProduct::class, 'update_brand_product'])->name('update-brand');
 Route::get('/delete-brand-product/{brand_id}', [BrandProduct::class, 'delete_brand_product'])->name('delete-brand');

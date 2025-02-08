@@ -45,31 +45,29 @@
             <?php 
             $message = Session::get('message'); ## lấy tin nhắn có tên là message
             if($message){
-            echo "<span id='messageStyle'> $message </span>" ;
+            echo "<p id='messageStyle'> $message </p>" ;
                 Session::put('message',null); ## in ra xong set lại null
             }
         ?>
-            @foreach($all_category as $key => $cate_pro)
+            @foreach($all_category as $key => $cate)
           <tr>
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
-            <td>{{$cate_pro->category_name}}</td>
+            <td>{{$cate->danhmuc_ten}}</td>
             <td><span class="text-ellipsis">
             <?php 
-            if ($cate_pro->category_status == 0) {
+            if ($cate->danhmuc_trangthai == 0) {
                 echo "Đang ẩn  ";
-                echo "<a href=\"" . route('active-category', ['category_id' => $cate_pro->category_id]) . "\"><span class=\"fa-thumbs-style fa fa-thumbs-up\"></span></a>";
+                echo "<a href=\"" . route('active-category', ['category_id' => $cate->danhmuc_id]) . "\"><span class=\"fa-thumbs-style fa fa-thumbs-down\"></span></a>";
             } else {
                 echo "Đang hiển thị   ";
-                echo "<a href=\"" . route('unactive-category', ['category_id' => $cate_pro->category_id]) . "\"><span class=\"fa-thumbs-style fa fa-thumbs-down\"></span></a>";
+                echo "<a href=\"" . route('unactive-category', ['category_id' => $cate->danhmuc_id]) . "\"><span class=\"fa-thumbs-style fa fa-thumbs-up\"></span></a>";
             }
             ?>
-
-
             </span></td>
 
             <td>
-              <a href="{{route('edit-category', ['category_id' => $cate_pro->category_id])}}" class="active" ui-toggle-class=""><i class="fa fa-pencil-square-o text-success text-active"></i>  </a>
-              <a onclick="return confirm('Bạn có chắc muốn xóa ?')" href="{{route('delete-category', ['category_id' => $cate_pro->category_id])}}"> <i class="fa fa-times text-danger text"></i></a>
+              <a href="{{route('edit-category', ['category_id' => $cate->danhmuc_id])}}" class="active" ui-toggle-class=""><i class="fa fa-pencil-square-o text-success text-active"></i>  </a>
+              <a onclick="return confirm('Bạn có chắc muốn xóa ?')" href="{{route('delete-category', ['category_id' => $cate->danhmuc_id])}}"> <i class="fa fa-times text-danger text"></i></a>
             </td>
           </tr>
         @endforeach
