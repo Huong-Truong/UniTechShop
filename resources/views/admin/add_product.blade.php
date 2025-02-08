@@ -9,7 +9,7 @@
                         <?php 
                         $message = Session::get('message'); ## lấy tin nhắn có tên là message
                         if($message){
-                        echo "<span id='messageStyle'> $message </span>" ;
+                        echo "<p id='messageStyle'> $message </p>" ;
                             Session::put('message',null); ## in ra xong set lại null
                         }
                         ?>
@@ -32,27 +32,24 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Mô tả Sản phẩm</label>
-                                        <textarea  name="product_desc" style="resize: none" rows = "8"  placeholder="Mô tả sản phẩm" class="form-control" name="" id="exampleInputPassword1"></textarea>
+                                        <textarea  name="product_content" style="resize: none" rows = "8"  placeholder="Mô tả sản phẩm" class="form-control" name="" id="exampleInputPassword1"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1">Nội dung Sản phẩm</label>
-                                        <textarea  name="product_content" style="resize: none" rows = "8"  placeholder="Nội dung Sản phẩm" class="form-control" name="" id="exampleInputPassword1"></textarea>
-                                </div>
-                                <div class="form-group">
-                                <label for="exampleInputPassword1">Danh mục sản phẩm</label>
+                                <label for="exampleInputPassword1">Danh mục</label>
                                 <select name="category" class="form-control input-sm m-bot15">
-                                    @foreach ($cate_product as $key=>$value)
-                                        <option value = "{{$value->category_id}}">{{$value->category_name}}</option>
-                                    @endforeach
+                                     @foreach ($cate_product as $key=>$value)
+                                        <option value = "{{$value->danhmuc_id}}">{{$value->danhmuc_ten}}</option>
+                                    @endforeach 
                                 </select>
                                 </div>
+                              
                                 <div class="form-group">
-                                <label for="exampleInputPassword1">Thương hiệu sản phẩm</label>
+                                <label for="exampleInputPassword1">Thương hiệu</label>
                                 <select name="brand" class="form-control input-sm m-bot15">
-                                @foreach ($brand_product as $key=>$value)
-                                        <option value = "{{$value->brand_id}}">{{$value->brand_name}}</option>
+                                 @foreach ($brand_product as $key=>$value)
+                                        <option value = "{{$value->hang_id}}">{{$value->hang_ten}}</option>
                                 @endforeach
-                                
+                                 
                              
                                 </select>
                                 </div>

@@ -25,9 +25,9 @@ class ProductController extends Controller
     public function add_product ()
     {
         $this->AuthenLogin();
-        $cate_product = DB::table('category')->orderby('category_id', 'desc')->get(); ## lấy id category
-        $brd_product = DB::table('brand')->orderby('brand_id', 'desc')->get(); ## lấy id category
-       return view ('admin.add_product')->with('cate_product', $cate_product)->with('brand_product', $brd_product);
+        $cate_product = DB::table('danhmuc')->orderby('danhmuc_id', 'desc')->get(); ## lấy id 
+        $brand_product = DB::table('hangsanpham')->orderby('hang_id', 'desc')->get(); ## lấy id 
+       return view ('admin.add_product')->with('cate_product', $cate_product)->with('brand_product', $brand_product);
  
     }
 
@@ -48,14 +48,13 @@ class ProductController extends Controller
     {
         $this->AuthenLogin();
         $data = array();
-        $data['product_name'] = $request->product_name;
-        $data['category_id'] = $request->category;
-        $data['brand_id'] = $request->brand;
-        $data['product_desc'] = $request->product_desc;
-        $data['product_content'] = $request->product_content;
-        $data['product_price'] = $request->product_price;
+        $data['sanpham_ten'] = $request->product_name;
+        $data['danhmuc_id'] = $request->category;
+        $data['hang_id'] = $request->brand;
+        $data['sanpham_mota'] = $request->product_content;
+        $data['sanpham_gia'] = $request->product_price;
         // $data['product_imgage'] = $request->product_image;
-        $data['product_status'] = $request->product_status;
+        $data['sanpham_trangthai'] = $request->product_status;
         $get_image_file = $request->file('product_image');
 
 
@@ -70,15 +69,15 @@ class ProductController extends Controller
             $get_image_file->move('upload/product', $new_image);
             
             // Lưu thông tin ảnh vào cơ sở dữ liệu
-            $data['product_image'] = $new_image;
-            DB::table('product')->insert($data);
+            $data['sanpham_hinhanh'] = $new_image;
+            DB::table('sanpham')->insert($data);
             
             // Hiển thị thông báo thành công và chuyển hướng
             Session::put('message', 'Thêm sản phẩm mới thành công!');
             return Redirect::to('add-product');
         }else{
                         
-            DB::table('product')->insert($data);
+            DB::table('sanpham')->insert($data);
             
             // Hiển thị thông báo thành công và chuyển hướng
             Session::put('message', 'Thêm sản phẩm mới thành công!');
