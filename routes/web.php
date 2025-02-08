@@ -64,3 +64,5 @@ Route::get('/active-product/{product_id}', [ProductController::class, 'active_pr
 Route::get('/manage-orders', [CheckOutController::class, 'manage_orders'])->name('manage-orders');
 Route::get('/view-order/{order_id}', [CheckOutController::class, 'view_order'])->name('view-order');
 Route::get('/delete-order/{order_id}', [CheckOutController::class, 'manage_orders'])->name('delete-order');
+
+# chien
