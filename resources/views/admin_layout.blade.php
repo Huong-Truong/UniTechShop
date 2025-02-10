@@ -35,10 +35,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="{{asset('admin_js/raphael-min.js')}}"></script>
 <script src="{{asset('admin_js/morris.js')}}"></script>
 <style>
-    #messageStyle{
-    color: red;
-    width: 100%;
+    p#messageStyle{
+    color:red;
+    font-size: 15px;
+    width:100%;
     text-align: center;
+    padding: 15px;
     }
     .fa-thumb-style {
     font-size: 20px;
@@ -253,7 +255,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <?php 
                         $name = Session::get('admin_name');
                         if($name){
-                            echo $name;
+                            echo Str::upper($name);
                         }
                     ?>
                 </span>
@@ -302,8 +304,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <span>Thương hiệu sản phẩm</span>
                     </a>
                     <ul class="sub">
-						<li><a href="{{ route('add-brand') }}">Thêm thương hiệu sản phẩm</a></li>
-						<li><a href="{{route('all-brand') }}">Liệt kê thương hiệu sản phẩm</a></li>
+						<li><a href="{{ route('add-brand') }}">Thêm thương hiệu </a></li>
+						<li><a href="{{route('all-brand') }}">Liệt kê thương hiệu</a></li>
                        
                     </ul>
                 </li>
@@ -326,6 +328,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <ul class="sub">
 						<li><a href="{{ route('manage-orders') }}">Quản lý đơn hàng</a></li>
 						<!-- <li><a href="{{route('all-product') }}"></a></li> -->
+                       
+                    </ul>
+                </li>
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-book"></i>
+                        <span> Khuyến mãi</span>
+                    </a>
+                    <ul class="sub">
+						<li><a href="{{ route('add-product') }}">Thêm khuyến mãi</a></li>
+						<li><a href="{{route('all-product') }}">Liệt kê khuyến mãi</a></li>
                        
                     </ul>
                 </li>

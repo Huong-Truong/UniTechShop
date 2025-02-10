@@ -54,7 +54,7 @@ Route::get('/active-category-product/{category_id}', [CategoryProduct::class, 'a
 Route::get('/add-brand-product', [BrandProduct::class, 'add_brand_product'])->name('add-brand');
 Route::get('/all-brand-product', [BrandProduct::class, 'all_brand_product'])->name('all-brand');
 
-Route::post('/save-brand-product', [BrandProduct::class, 'save_brand_product'])->name('save-brand');
+Route::post('/save-brand', [BrandProduct::class, 'save_brand_product'])->name('save-brand');
 Route::get('/edit-brand-product/{brand_id}', [BrandProduct::class, 'edit_brand_product'])->name('edit-brand');
 Route::post('/update-brand-product/{brand_id}', [BrandProduct::class, 'update_brand_product'])->name('update-brand');
 Route::get('/delete-brand-product/{brand_id}', [BrandProduct::class, 'delete_brand_product'])->name('delete-brand');
@@ -74,6 +74,9 @@ Route::get('/delete-product/{product_id}', [ProductController::class, 'delete_pr
 
 Route::get('/unactive-product/{product_id}', [ProductController::class, 'unactive_product'])->name('unactive-product');
 Route::get('/active-product/{product_id}', [ProductController::class, 'active_product'])->name('active-product');
+
+Route::get('/edit-hdsd-product/{product_id}', [ProductController::class, 'edit_hdsd_product'])->name('edit-hdsd-product');
+Route::post('/update-hdsd-product/{product_id}', [ProductController::class, 'update_hdsd_product'])->name('update-hdsd-product');
 
 ## orders
 Route::get('/manage-orders', [CheckOutController::class, 'manage_orders'])->name('manage-orders');

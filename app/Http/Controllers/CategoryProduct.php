@@ -30,7 +30,7 @@ class CategoryProduct extends Controller
     public function all_category_product ()
     {
         $this->AuthenLogin();
-       $all_category = DB::table('category')->get(); ## lấy tấy cả dữ liêu
+       $all_category = DB::table('danhmuc')->get(); ## lấy tấy cả dữ liêu
         $manger_category = view ('admin.all_category_product')->with('all_category', $all_category);
         return view('admin_layout')->with('admin.all_category_product',$manger_category); ## gom lại hiện chung
 
@@ -40,15 +40,14 @@ class CategoryProduct extends Controller
     {
         $this->AuthenLogin();
         $data = array();
-        $data['category_name'] = $request->category_product_name;
-        $data['category_desc'] = $request->category_product_desc;
-        $data['category_status'] = $request->category_product_status;
+        $data['danhmuc_ten'] = $request->danhmuc_ten;
+        $data['danhmuc_trangthai'] = $request->danhmuc_trangthai;
         /*
             $data['category_name'] : tên của cột trong database
             $request->category_product_name: tên của name lấy bên save_category
         */
         /*insert vào bảng*/
-        DB::table('category')->insert($data);
+        DB::table('danhmuc')->insert($data);
         Session::put('message','Thêm danh mục sản phẩm mới thành công!');
         return Redirect::to('add-category-product'); ## Khi thêm thành công rồi thì trả lại về thêm danh mục sản phẩm
     }
@@ -56,29 +55,29 @@ class CategoryProduct extends Controller
 
     public function unactive_category_product($category_id){
         $this->AuthenLogin();
-        DB::table('category')->where('category_id', $category_id)->update(['category_status' => 0]);
-        Session::put('message','Cập nhật hiển thị thành công');
+        DB::table('danhmuc')->where('danhmuc_id', $category_id)->update(['danhmuc_trangthai' => 0]);
+        // Session::put('message','Cập nhật hiển thị thành công');
         return Redirect::to('all-category-product'); 
     }
 
     public function active_category_product($category_id){
         $this->AuthenLogin();
-        DB::table('category')->where('category_id', $category_id)->update(['category_status' => 1]);
-        Session::put('message','Cập nhật hiển thị thành công');
+        DB::table('danhmuc')->where('danhmuc_id', $category_id)->update(['danhmuc_trangthai' => 1]);
+        // Session::put('message','Cập nhật hiển thị thành công');
         return Redirect::to('all-category-product'); 
     }
 
     public function edit_category_product($category_id){
         $this->AuthenLogin();
-        $category = DB::table('category')->where('category_id', $category_id)->get();
+        $category = DB::table('danhmuc')->where('danhmuc_id', $category_id)->get();
         $manger_category = view ('admin.edit_category_product')->with('edit_category', $category);
-        return view('admin-layout')->with('admin.edit_category_product',$manger_category); ## gom lại hiện chung
+        return view('admin_layout')->with('admin.edit_category_product',$manger_category); ## gom lại hiện chung
     }
 
 
     public function delete_category_product($category_id){
         $this->AuthenLogin();
-        DB::table('category')->where('category_id', $category_id)->delete();
+        DB::table('danhmuc')->where('danhmuc_id', $category_id)->delete();
         Session::put('message','Xóa danh mục thành công');
         return Redirect::to('all-category-product'); 
     }
@@ -86,10 +85,9 @@ class CategoryProduct extends Controller
     public function update_category_product(Request $request,$category_id){
         $this->AuthenLogin();
         $data = array();
-        $data['category_name'] = $request->category_product_name;
-        $data['category_desc'] = $request->category_product_desc;
-        DB::table('category')->where('category_id', $category_id)->update($data);
-        Session::put('message','update danh mục thành công');
+        $data['danhmuc_ten'] = $request->danhmuc_ten;
+        DB::table('danhmuc')->where('danhmuc_id', $category_id)->update($data);
+        Session::put('message','Cập nhật danh mục thành công');
         return Redirect::to('all-category-product'); 
     }
     //  End function của admin

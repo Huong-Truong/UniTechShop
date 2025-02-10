@@ -3,7 +3,7 @@
 <div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">
-        Liệt kê danh mục sản phẩm
+        Liệt kê sản phẩm
     </div>
     <div class="row w3-res-tb">
       <div class="col-sm-5 m-b-xs">
@@ -38,10 +38,11 @@
             <th>Tên sản phẩm</th>
             <th>Giá</th>
             <th>Hình ảnh</th>
-            <th>danh mục</th>
+            <th>Danh mục</th>
             <th>Thương hiệu</th>
-    
             <th>Hiển thị</th>
+            <th>Thêm ảnh </th>
+            <th>Thao tác</th>
             <th style="width:30px;"></th>
           </tr>
         </thead>
@@ -49,36 +50,46 @@
             <?php 
             $message = Session::get('message'); ## lấy tin nhắn có tên là message
             if($message){
-            echo "<span id='messageStyle'> $message </span>" ;
+            echo "<p id='messageStyle'> $message </p>" ;
                 Session::put('message',null); ## in ra xong set lại null
             }
         ?>
         @foreach($all as $key => $pro)
           <tr>
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
-            <td>{{$pro->product_name}}</td>
-            <td>{{$pro->product_price}}</td>
-            <td><img src="upload/product/{{$pro->product_image}}" height="100" width="100" alt=""></td>
-            <td>{{$pro->category_name}}</td>
-            <td>{{$pro->brand_name}}</td>
+            <td>{{$pro->sanpham_ten}}</td>
+           
+            <td>
+              <?php
+          echo  $formattedVND = number_format(preg_replace('/\D/', '',$pro->sanpham_gia), 0, ',', '.') . ' VND';
+            ?>
+            </td>
+            <td><img src="{{asset('img/sp'.$pro->sanpham_id.'/'.$pro->sanpham_hinhanh)}}" height="100" width="100" alt="Lỗi ảnh"></td>
+            <td>{{$pro->danhmuc_ten}}</td>
+            <td>{{$pro->hang_ten}}</td>
             <td><span class="text-ellipsis">
             <?php 
-            if ($pro->product_status == 0) {
-                echo "Đang ẩn  ";
-                echo "<a href=\"" . route('active-product', ['product_id' => $pro->product_id]) . "\"><span class=\"fa-thumbs-style fa fa-thumbs-up\"></span></a>";
+            if ($pro->sanpham_trangthai == 0) {
+                echo "<a href=\"" . route('active-product', ['product_id' => $pro->sanpham_id]) . "\"><span class=\"fa-thumbs-style fa fa-thumbs-down\"></span></a>";
             } else {
-                echo "Đang hiển thị   ";
-                echo "<a href=\"" . route('unactive-product', ['product_id' => $pro->product_id]) . "\"><span class=\"fa-thumbs-style fa fa-thumbs-down\"></span></a>";
+                echo "<a href=\"" . route('unactive-product', ['product_id' => $pro->sanpham_id]) . "\"><span class=\"fa-thumbs-style fa fa-thumbs-up\"></span></a>";
             }
             ?>
 
 
             </span></td>
-
-            <td>
-              <a href="{{route('edit-product', ['product_id' => $pro->product_id])}}" class="active" ui-toggle-class=""><i class="fa fa-pencil-square-o text-success text-active"></i>  </a>
-              <a onclick="return confirm('Bạn có chắc muốn xóa ?')" href="{{route('delete-product', ['product_id' => $pro->product_id])}}"> <i class="fa fa-times text-danger text"></i></a>
+            <td> 
+               <label class="custom-file-upload">
+                <input type="file" id="exampleInputAddImg" name="product_image"/>
+                Thêm ảnh
+              </label>
             </td>
+            <td>
+              <a href="{{route('edit-product', ['product_id' => $pro->sanpham_id])}}" class="active" ui-toggle-class=""><i class="fa fa-pencil-square-o text-success text-active"></i>  </a>
+              <a onclick="return confirm('Bạn có chắc muốn xóa ?')" href="{{route('delete-product', ['product_id' => $pro->sanpham_id])}}"> <i class="fa fa-times text-danger text"></i></a>
+              <a href="{{route('edit-hdsd-product', ['product_id' => $pro->sanpham_id])}}" class="active" ui-toggle-class=""><i class="fa text-success text-active">...</i>  </a>
+
+            
           </tr>
         @endforeach
         </tbody>

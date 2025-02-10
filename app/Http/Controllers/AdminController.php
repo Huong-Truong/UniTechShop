@@ -48,7 +48,7 @@ class AdminController extends Controller
 
     $result = DB::table('admin')->where('admin_email', $admin_email)->where('admin_password', $admin_password)->first();
     if($result){
-        Session::put('admin_name', $result->admin_name);
+        Session::put('admin_name', $result->admin_ten);
         Session::put('admin_id', $result->admin_id);
         return Redirect::to('/dashboard');
     }else{
@@ -60,9 +60,10 @@ class AdminController extends Controller
     public function logout(Request $request)
 {
         $this->AuthenLogin();
-        Session::put('admin_name', null);
+        Session::put('admin_ten', null);
         Session::put('admin_id', null);
         return view('admin_login');
 }
+
 
 }

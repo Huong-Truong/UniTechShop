@@ -13,7 +13,7 @@
 							<input type="password"class="form-control border-0 py-4" name="password_account" placeholder="Mật khẩu" />
 							<span>
 								<input type="checkbox" class="checkbox"> 
-								Ghi nhớ đăng nhập
+								Ghi nhớ
 							</span>
 							<button type="submit" class="btn btn-primary btn-block border-0 py-3">Đăng nhập</button>
 						</form>

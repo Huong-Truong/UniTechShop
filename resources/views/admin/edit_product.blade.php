@@ -9,43 +9,43 @@
                         <?php 
                         $message = Session::get('message'); ## lấy tin nhắn có tên là message
                         if($message){
-                        echo "<span id='messageStyle'> $message </span>" ;
+                        echo "<p id='messageStyle'> $message </p>" ;
                             Session::put('message',null); ## in ra xong set lại null
                         }
                         ?>
                         <div class="panel-body">
                            
                             <div class="position-center">
-                                <form role="form" action="{{route('update-product', ['product_id' => $edit_product->product_id])}}" method="post" enctype="multipart/form-data">
+                                <form role="form" action="{{route('update-product', ['product_id' => $edit_product->sanpham_id])}}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Tên Sản phẩm</label>
-                                    <input value="{{ $edit_product->product_name}}"name="product_name" class="form-control" id="exampleInputEmail1" placeholder="Tên danh mục">
+                                    <input value="{{ $edit_product->sanpham_ten}}"name="product_name" class="form-control" id="exampleInputEmail1">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Giá</label>
-                                    <input value="{{ $edit_product->product_price}}"name="product_price" class="form-control" id="exampleInputEmail1" placeholder="Tên danh mục">
+                                    <input value="{{ $edit_product->sanpham_gia}}"name="product_price" class="form-control" id="exampleInputEmail1">
                                 </div>
                                 <div class="form-group">
 
                                     <label for="exampleInputEmail1">Hình ảnh</label>
 
-                                  <img src="{{ asset('upload/product/' . $edit_product->product_image) }}" height="100" width="100" alt="">
+                                  <img src="{{asset('img/sp'.$edit_product->sanpham_id.'/'.$edit_product->sanpham_hinhanh)}}" height="100" width="100" alt="">
                                     <input type="file" name="product_image" class="form-control" id="exampleInputEmail1" >
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1">Mô tả sản phẩm</label>
-                                        <textarea  name="product_desc" style="resize: none" rows = "8"  placeholder="Mô tả danh mục" class="form-control" name="" id="exampleInputPassword1">{{ $edit_product->product_desc}}</textarea>
-                                </div>
-                                <div class="form-group">
                                     <label for="exampleInputPassword1">Nội dung sản phẩm</label>
-                                        <textarea  name="product_content" style="resize: none" rows = "8"  placeholder="Mô tả danh mục" class="form-control" name="" id="exampleInputPassword1">{{ $edit_product->product_desc}}</textarea>
+                                        <textarea  name="product_content" style="resize: none" rows = "8"  placeholder="Mô tả danh mục" class="form-control" name="" id="exampleInputPassword1">
+                                            {{ $edit_product->sanpham_mota}}
+                                        </textarea>
                                 </div>
                                 <div class="form-group">
                                 <label for="exampleInputPassword1">Danh mục sản phẩm</label>
                                 <select name="category" class="form-control input-sm m-bot15">
                                     @foreach ($cate_product as $key=>$value)
-                                        <option value = "{{$value->category_id}}" {{ $value->category_id == $edit_product->category_id ? 'selected' : '' }}>{{$value->category_name}}</option>
+                                        <option value = "{{$value->danhmuc_id}}" {{ $value->danhmuc_id == $edit_product->danhmuc_id ? 'selected' : '' }}>
+                                            {{$value->danhmuc_ten}}
+                                        </option>
                                     @endforeach
                                 </select>
                                 </div>
@@ -53,10 +53,10 @@
                                 <label for="exampleInputPassword1">Thương hiệu sản phẩm</label>
                                 <select  name="brand" class="form-control input-sm m-bot15">
                                 @foreach ($brand_product as $key=>$value)
-                                        <option value = "{{$value->brand_id}}" {{ $value->brand_id == $edit_product->brand_id ? 'selected' : '' }}>{{$value->brand_name}}</option>
+                                        <option value = "{{$value->hang_id}}" {{ $value->hang_id == $edit_product->hang_id ? 'selected' : '' }}>
+                                            {{$value->hang_ten}}
+                                        </option>
                                 @endforeach
-                                
-                             
                                 </select>
                                 </div>
                                 <button type="submit" name="update_product" class="btn btn-info">Cập nhật sản phẩm</button>
