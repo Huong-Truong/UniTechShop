@@ -96,13 +96,31 @@ class CategoryProduct extends Controller
 
 
     public function show_category_home($category_id){
-        $cate_product = DB::table('category')->where('category_status', 1)->orderby('category_id', 'desc')->get(); ## lấy id category
+        $cate_product = DB::table('danhmuc')->where('danhmuc_trangthai', 1)->orderby('danhmuc_id', 'desc')->get(); ## lấy id category
         $brd_product = DB::table('brand')->where('brand_status', 1)->orderby('brand_id', 'desc')->get(); ## lấy id category
         $all = DB::table('product')
         ->join('category', 'category_product.category_id', '=', 'product.category_id')
         ->where('product.category_id', $category_id)
         ->get(); // Thêm phương thức get() để lấy tất cả dữ liệu
-        $category_name = DB::table('category')->where('category_id', $category_id)->pluck('category_name')->first();
-        return view('pages.category.show_category')->with('category_name',$category_name)->with('category', $cate_product)->with('brand', $brd_product)->with('category_id', $all);
+        $category_name = DB::table('danhmuc')->where('danhmuc_id', $category_id)->pluck('danhmuc_ten')->first();
+        return view('pages.category.show_category')->with('category_name',$category_name)->with('danhmuc', $cate_product)->with('brand', $brd_product)->with('category_id', $all);
     }
+
+
+    public function show_danhmuc_home($danhmuc_id){
+     
+        $cate_product = DB::table('danhmuc')->where('danhmuc_trangthai', 1)->orderby('danhmuc_id', 'desc')->get(); // lấy id category
+        $product = DB::table('sanpham')->where('sanpham_trangthai', 1)->where('danhmuc_id', $danhmuc_id)->orderby('sanpham_id', 'desc')->paginate(12);
+        $brand = DB::table('hangsanpham')->where('hang_trangthai', 1)->orderby('hang_id', 'desc')->get();
+        $phanloai = DB::table('phanloaisp')->orderby('phanloai_id', 'asc')->get();
+        $ten_danhmuc = DB::table('danhmuc')->where('danhmuc_id', $danhmuc_id)->first();
+        return view('pages.category.show_category')->with('ten_danhmuc', $ten_danhmuc)->with('danhmuc', $cate_product)->with('sanpham', $product)->with('hang', $brand)->with('phanloai', $phanloai);
+   
+    }
+
+
+    // public function hienthi_danhmuc(){
+    //     $cate_product = DB::table('danhmuc')->orderby('danhmuc_id', 'desc')->get();
+    //     return view('layout')->with('danhmuc', $cate_product);
+    // }
 }

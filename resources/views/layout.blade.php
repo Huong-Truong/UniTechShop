@@ -71,7 +71,7 @@
             <div class="col-lg-6 col-6 text-left">
                 <form action="">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for products">
+                        <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm">
                         <div class="input-group-append">
                             <span class="input-group-text bg-transparent text-primary">
                                 <i class="fa fa-search"></i>
@@ -104,26 +104,26 @@
                     <i class="fa fa-angle-down text-dark"></i>
                 </a>
                 <nav class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0" id="navbar-vertical">
-                    <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
+                <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
+                    @foreach($phanloai as $pl)
                         <div class="nav-item dropdown">
-                            <a href="#" class="nav-link" data-toggle="dropdown">Robots<i class="fa fa-angle-down float-right mt-1"></i></a>
-                            <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
-                                <a href="" class="dropdown-item">Men's Dresses</a>
-                                <a href="" class="dropdown-item">Women's Dresses</a>
-                                <a href="" class="dropdown-item">Baby's Dresses</a>
-                            </div>
+                            <a href="#" class="nav-link" data-toggle="dropdown">
+                                {{$pl->phanloai_ten}}<i class="fa fa-angle-down float-right mt-1"></i>
+                            </a>
+                          
+                                    <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
+                                    @foreach($danhmuc as $value)
+                                        @if($value->phanloai_id == $pl->phanloai_id) 
+                                        <a href="{{route('danh-muc',['danhmuc_id' => $value->danhmuc_id])}}" class="dropdown-item">{{$value->danhmuc_ten}}</a>
+                                        @endif
+                                        @endforeach
+                                    </div>
+                                    <!-- <a href="" class="nav-item nav-link">{{$pl->phanloai_ten}}</a> -->
+                              
                         </div>
-                        <a href="" class="nav-item nav-link">VR</a>
-                        <a href="" class="nav-item nav-link">AR</a>
-                        <a href="" class="nav-item nav-link">Flycams</a>
-                        <a href="" class="nav-item nav-link">Drones</a>
-                        <a href="" class="nav-item nav-link">Máy in 3D</a>
-                        <a href="" class="nav-item nav-link">Máy khắc laser</a>
-                        <a href="" class="nav-item nav-link">GPS</a>
-                        <a href="" class="nav-item nav-link">High-tech Cameras</a>
-                        <a href="" class="nav-item nav-link">Smart Home Devices
-                        </a>
-                    </div>
+                    @endforeach
+                </div>
+
                 </nav>
             </div>
             <div class="col-lg-9">
@@ -137,15 +137,17 @@
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
                             <a href="{{route('trangchu')}}" class="nav-item nav-link active">Trang Chủ</a>
-                            <a href="shop.html" class="nav-item nav-link">Sản Phẩm</a>
+                            <a href="{{route('san-pham')}}" class="nav-item nav-link">Sản Phẩm</a>
                             <a href="detail.html" class="nav-item nav-link">Giỏ Hàng</a>
-                            <div class="nav-item dropdown">
+                            <a href="detail.html" class="nav-item nav-link">Thanh Toán</a>
+                            <a href="detail.html" class="nav-item nav-link">Tài Khoản</a>
+                            <!-- <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
                                 <div class="dropdown-menu rounded-0 m-0">
                                     <a href="cart.html" class="dropdown-item">Tài Khoản</a>
                                     <a href="checkout.html" class="dropdown-item">Thanh Toán</a>
                                 </div>
-                            </div>
+                            </div> -->
                             <a href="contact.html" class="nav-item nav-link">Liên Hệ</a>
                         </div>
                         <div class="navbar-nav ml-auto py-0">
@@ -154,40 +156,7 @@
                         </div>
                     </div>
                 </nav>
-                <div id="header-carousel" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active" style="height: 410px;">
-                            <img class="img-fluid" src="{{asset('img/carousel-1.jpg')}}" alt="Image">
-                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                                <div class="p-3" style="max-width: 700px;">
-                                    <h5 class="text-light text-uppercase font-weight-medium mb-3">Sản phẩm mới</h5>
-                                    <h4 class="display-4 text-white font-weight-semi-bold mb-4">Kies Drone V2 </h4>
-                                    <a href="" class="btn btn-light py-2 px-3">Đặt hàng ngay</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item" style="height: 410px;">
-                            <img class="img-fluid" src="img/carousel-2.jpg" alt="Image">
-                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                                <div class="p-3" style="max-width: 700px;">
-                                    <h5 class="text-light text-uppercase font-weight-medium mb-3">Đột phá công nghệ</h5>
-                                    <h4 class="display-4 text-white font-weight-semi-bold mb-4">Meta Quest Pro VR</h4>
-                                    <a href="" class="btn btn-light py-2 px-3">Đặt hàng ngay</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <a class="carousel-control-prev" href="#header-carousel" data-slide="prev">
-                        <div class="btn btn-dark" style="width: 45px; height: 45px;">
-                            <span class="carousel-control-prev-icon mb-n2"></span>
-                        </div>
-                    </a>
-                    <a class="carousel-control-next" href="#header-carousel" data-slide="next">
-                        <div class="btn btn-dark" style="width: 45px; height: 45px;">
-                            <span class="carousel-control-next-icon mb-n2"></span>
-                        </div>
-                    </a>
-                </div>
+            @yield('slide')
             </div>
         </div>
     </div>

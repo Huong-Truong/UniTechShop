@@ -1,6 +1,7 @@
  @extends('layout')
  @section('content')
  <!-- Featured Start -->
+ 
  <div class="container-fluid pt-5">
         <div class="row px-xl-5 pb-3">
             <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
@@ -29,23 +30,29 @@
             </div>
         </div>
     </div>
+    
     <!-- Featured End -->
 
 
     <!-- Categories Start -->
     <div class="container-fluid pt-5">
+    <div class="text-center mb-4">
+            <h2 class="section-title px-5"><span class="px-2">Một số thương hiệu</span></h2>
+        </div>
+      
         <div class="row px-xl-5 pb-3">
+        @foreach($hang as $key =>$value)
             <div class="col-lg-4 col-md-6 pb-1">
                 <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
                     <p class="text-right">15 Products</p>
                     <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                        <img class="img-fluid" src="img/cat-1.jpg" alt="">
+                        <img class="img-fluid" src="{{ asset('img/sp1/P304KDrone.png') }}" alt="">
                     </a>
-                    <h5 class="font-weight-semi-bold m-0">Men's dresses</h5>
+                    <h5 class="font-weight-semi-bold m-0">{{$value->hang_ten}}</h5>
                 </div>
             </div>
-    
-        </div>
+            @endforeach
+        </div> 
     </div>
     <!-- Categories End -->
 
@@ -83,6 +90,7 @@
         <div class="text-center mb-4">
             <h2 class="section-title px-5"><span class="px-2">Trandy Products</span></h2>
         </div>
+       
         <div class="row px-xl-5 pb-3">
             <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
                 <div class="card product-item border-0 mb-4">
@@ -250,34 +258,37 @@
     <!-- Products Start -->
     <div class="container-fluid pt-5">
         <div class="text-center mb-4">
-            <h2 class="section-title px-5"><span class="px-2">Just Arrived</span></h2>
+            <h2 class="section-title px-5"><span class="px-2">Sản phẩm mới</span></h2>
         </div>
+    
         <div class="row px-xl-5 pb-3">
+        @foreach($sanpham as $key => $value)
             <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+           
                 <div class="card product-item border-0 mb-4">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="img/product-1.jpg" alt="">
+                   <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                    <img class="img-fluid w-100" src="{{ asset('img/sp' . $value->sanpham_id . '/' . $value->sanpham_hinhanh) }}" alt="">
                     </div>
                     <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
+                        <h6 class="text-truncate mb-3">{{$value->sanpham_ten}}</h6>
                         <div class="d-flex justify-content-center">
-                            <h6>$123.00</h6><h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                        <h6> {{number_format($value->sanpham_gia) . ' VNĐ'}}</h6>
+                            <!-- <h6>$123.00</h6><h6 class="text-muted ml-2"><del>$123.00</del></h6> -->
                         </div>
                     </div>
                     <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+
+                        <a href="{{route('xem-san-pham', ['sanpham_id' => $value->sanpham_id])}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết</a>
+                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ hàng</a>
                     </div>
+                 
                 </div>
+         
+            
             </div>
-            
-           
-            
-            
-            
-            
-            
+            @endforeach
         </div>
+    
     </div>
     <!-- Products End -->
 
@@ -316,4 +327,43 @@
         </div>
     </div> -->
     <!-- Vendor End -->
+@endsection
+
+
+
+@section('slide')
+<div id="header-carousel" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active" style="height: 410px;">
+                            <img class="img-fluid" src="{{asset('img/carousel-1.jpg')}}" alt="Image">
+                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                                <div class="p-3" style="max-width: 700px;">
+                                    <h5 class="text-light text-uppercase font-weight-medium mb-3">Sản phẩm mới</h5>
+                                    <h4 class="display-4 text-white font-weight-semi-bold mb-4">Kies Drone V2 </h4>
+                                    <a href="" class="btn btn-light py-2 px-3">Đặt hàng ngay</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item" style="height: 410px;">
+                            <img class="img-fluid" src="img/carousel-2.jpg" alt="Image">
+                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                                <div class="p-3" style="max-width: 700px;">
+                                    <h5 class="text-light text-uppercase font-weight-medium mb-3">Đột phá công nghệ</h5>
+                                    <h4 class="display-4 text-white font-weight-semi-bold mb-4">Meta Quest Pro VR</h4>
+                                    <a href="" class="btn btn-light py-2 px-3">Đặt hàng ngay</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#header-carousel" data-slide="prev">
+                        <div class="btn btn-dark" style="width: 45px; height: 45px;">
+                            <span class="carousel-control-prev-icon mb-n2"></span>
+                        </div>
+                    </a>
+                    <a class="carousel-control-next" href="#header-carousel" data-slide="next">
+                        <div class="btn btn-dark" style="width: 45px; height: 45px;">
+                            <span class="carousel-control-next-icon mb-n2"></span>
+                        </div>
+                    </a>
+                </div>
 @endsection

@@ -8,8 +8,23 @@ use App\Http\Controllers\BrandProduct;
 use App\Http\Controllers\ProductController;
 // use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckOutController;
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/trang-chu', [HomeController::class, 'index'])->name('trangchu');
+
+
+## trang sản phẩm
+
+Route::get('/san-pham', [ProductController::class, 'show_product'])->name('san-pham');
+
+
+## hiển thị sản phẩm theo danh mục home
+Route::get('/danh-muc/{danhmuc_id}', [CategoryProduct::class, 'show_danhmuc_home'])->name('danh-muc');
+Route::get('/xem-san-pham/{sanpham_id}', [ProductController::class, 'show_chitiet_sanpham'])->name('xem-san-pham');
+
+
+
+
 ## admin
 Route::get('/admin', [AdminController::class, 'index'])->name('admin'); ## đăng nhập admin
 Route::get('/dashboard', [AdminController::class, 'showDashboard'])->name('dashboard');

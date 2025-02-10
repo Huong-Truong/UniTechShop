@@ -96,7 +96,7 @@ class BrandProduct extends Controller
 
 
     public function show_brand_home($brand_id){
-        $cate_product = DB::table('category')->where('category_status', 1)->orderby('category_id', 'desc')->get(); ## lấy id category
+        $cate_product = DB::table('danhmuc')->where('danhmuc_trangthai', 1)->orderby('danhmuc_id', 'desc')->get(); ## lấy id category
         $brd_product = DB::table('brand')->where('brand_status', 1)->orderby('brand_id', 'desc')->get(); ## lấy id category
         $all = DB::table('product')
         ->join('brand', 'brand.brand_id', '=', 'product.brand_id')
@@ -104,6 +104,6 @@ class BrandProduct extends Controller
         ->get(); // Thêm phương thức get() để lấy tất cả dữ liệu
         $brand_name = DB::table('brand')->where('brand_status', 1)->where('brand_id', $brand_id)
         ->pluck('brand_name')->first(); ## thêm first để bỏ dấu [""] khi in
-        return view('pages.brand.show_brand')->with('brand_name', $brand_name)->with('category', $cate_product)->with('brand', $brd_product)->with('brand_id', $all);
+        return view('pages.brand.show_brand')->with('brand_name', $brand_name)->with('danhmuc', $cate_product)->with('brand', $brd_product)->with('brand_id', $all);
     }
 }

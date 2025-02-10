@@ -162,9 +162,19 @@ class ProductController extends Controller
     
     // end admin
 
+    ## hiện sản phẩm trên trang "SẢN PHẨM"
+
+    public function show_product(){
+
+        $cate_product = DB::table('danhmuc')->where('danhmuc_trangthai', 1)->orderby('danhmuc_id', 'desc')->get();
+        $product = DB::table('sanpham')->where('sanpham_trangthai', 1)->orderby('sanpham_id', 'desc')->paginate(9);
+        $phanloai = DB::table('phanloaisp')->orderby('phanloai_id', 'asc')->get();
+        $brand = DB::table('hangsanpham')->where('hang_trangthai', 1)->orderby('hang_id', 'desc')->get();
+        return view('pages.product.shop')->with('danhmuc', $cate_product)->with('sanpham', $product)->with('phanloai', $phanloai)->with('hang', $brand);
+    }
 
     public function show_details_product($product_id){
-        $cate_product = DB::table('category')->where('category_status', 1)->orderby('category_id', 'desc')->get(); ## lấy id category
+        $cate_product = DB::table('danhmuc')->where('danhmuc_trangthai', 1)->orderby('danhmuc_id', 'desc')->get(); ## lấy id category
         $brd_product = DB::table('brand')->where('brand_status', 1)->orderby('brand_id', 'desc')->get(); ## lấy id category
       
         $details_product = DB::table('product')
@@ -181,6 +191,30 @@ class ProductController extends Controller
         ->where('product.category_id', $category_id)->whereNotIn('product.product_id', [$product_id] )->get();
                                                                                                 ## phải có mảng
 
-        return view('pages.product.show_details')->with('relate', $relate_product)->with('product', $details_product)->with('category', $cate_product)->with('brand', $brd_product);
+        return view('pages.product.show_details')->with('relate', $relate_product)->with('product', $details_product)->with('danhmuc', $cate_product)->with('brand', $brd_product);
+    }
+
+
+    public function show_chitiet_sanpham($sanpham_id){
+    
+ 
+        $cate_product = DB::table('danhmuc')->where('danhmuc_trangthai', 1)->orderby('danhmuc_id', 'desc')->get(); // lấy id category
+        $product = DB::table('sanpham')->where('sanpham_id', $sanpham_id)->
+        join('danhmuc','danhmuc.danhmuc_id', '=', 'sanpham.danhmuc_id')->
+        join('hangsanpham', 'hangsanpham.hang_id', '=', 'sanpham.hangsanpham_id')->
+        first();
+
+        $phanloai = DB::table('phanloaisp')->orderby('phanloai_id', 'asc')->get();
+        ## sản phẩm tương tự
+        ## lấy danh mục 
+     
+        $product_rela = DB::table('sanpham')
+        ->where('danhmuc_id', $product->danhmuc_id)
+        ->whereNotIn('sanpham_id', [$product->sanpham_id])
+        ->limit(4)
+        ->get();
+    
+        return view('pages.product.product_details')->with('phanloai', $phanloai) ->with('danhmuc', $cate_product)->with('sanpham', $product)->with('sanpham_tuongtu', $product_rela);
+
     }
 }
