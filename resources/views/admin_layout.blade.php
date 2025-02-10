@@ -40,7 +40,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     font-size: 15px;
     width:100%;
     text-align: center;
-    padding-top: 15px;
+    padding: 15px;
     }
     .fa-thumb-style {
     font-size: 20px;

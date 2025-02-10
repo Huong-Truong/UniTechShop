@@ -60,6 +60,9 @@ Route::get('/delete-product/{product_id}', [ProductController::class, 'delete_pr
 Route::get('/unactive-product/{product_id}', [ProductController::class, 'unactive_product'])->name('unactive-product');
 Route::get('/active-product/{product_id}', [ProductController::class, 'active_product'])->name('active-product');
 
+Route::get('/edit-hdsd-product/{product_id}', [ProductController::class, 'edit_hdsd_product'])->name('edit-hdsd-product');
+Route::post('/update-hdsd-product/{product_id}', [ProductController::class, 'update_hdsd_product'])->name('update-hdsd-product');
+
 ## orders
 Route::get('/manage-orders', [CheckOutController::class, 'manage_orders'])->name('manage-orders');
 Route::get('/view-order/{order_id}', [CheckOutController::class, 'view_order'])->name('view-order');
