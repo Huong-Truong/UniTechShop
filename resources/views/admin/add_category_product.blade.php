@@ -26,7 +26,6 @@
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Thương hiệu</label>
                                     <select name="classify" class="form-control input-sm m-bot15">
-                                        <option value = " ">Chọn phân loại </option>
                                      @foreach ($classify_product as $key=> $value)
                                             <option value = "{{$value->phanloai_id}}">{{$value->phanloai_ten}}</option>
                                     @endforeach

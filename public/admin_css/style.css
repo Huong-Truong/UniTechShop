@@ -13,7 +13,7 @@ html, body{
 	font-family: 'Roboto', sans-serif;
     font-size: 100%;
     overflow-x: hidden;
-    background: url(../images/bg.jpg) no-repeat 0px 0px;
+    background: url(../images/bg8.jpg) no-repeat 0px 0px;
 	background-size:cover;
 }
 body a{
@@ -202,15 +202,15 @@ ul.sidebar-menu li a.active i {
     transition:all .3s ease-in-out;
 }
 .footer {
-    background: #d19a98;
+    background: #d1dce6;
     padding: 20px;
 }
 .footer p {
-    color: #fff;
+    color: #312e2e;
     letter-spacing: 1px;
 }
 .footer p a {
-    color: #744e7d;
+    color: #85628e;
 }
 .footer p a:hover {
     color: #fff;
@@ -219,7 +219,7 @@ ul.sidebar-menu li a.active i {
     left:0;
     right:0;
     z-index:1002;
-    background:rgb(240, 188, 180);
+    background:rgba(58, 176, 195, 0.5);
     -webkit-transition:all .3s ease-in-out;
     -moz-transition:all .3s ease-in-out;
     -o-transition:all .3s ease-in-out;
@@ -239,7 +239,7 @@ ul.sidebar-menu li a.active i {
     width:100%;
 }
 .brand {
-    background:#8b5c7e;
+    background: rgba(70, 71, 71, 0.5);
     float:left;
     width:240px;
     height:80px;
@@ -2355,8 +2355,8 @@ ul.inbox-pagination li {
 }
 /*-- gallery --*/
 .w3layouts-main h2 {
-	color: #8b5c7e;
-    font-size: 29px;
+	color: #fffbff;
+    font-size: 40px;
     letter-spacing: 2px;
     text-transform: uppercase;
     padding-bottom: 15px;
@@ -2365,8 +2365,9 @@ ul.inbox-pagination li {
 .w3layouts-main {
     width: 30%;
     margin:5em auto;
+    
     background:rgba(171, 119, 157, 0.27);
-    padding: 42px 35px;
+    padding: 42px 40px;
 }
 /*--//header--*/
 /*--login--*/
@@ -2417,7 +2418,7 @@ input.ggg{
     font-size: 18px;
     text-transform: uppercase;
     letter-spacing: 2px;
-    background: #f0bcb4;
+    background: #727683;
     color: white;
     border: none;
     outline: none;
@@ -2431,7 +2432,7 @@ input.ggg{
     -ms-transition: 0.5s all;
 }
 .w3layouts-main input[type="submit"]:hover {
-	background:#8b5c7e;
+	background:#5f3853;
 	transition:0.5s all;
 	-webkit-transition:0.5s all;
 	-o-transition:0.5s all;
