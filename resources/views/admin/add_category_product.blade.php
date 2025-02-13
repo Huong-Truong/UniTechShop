@@ -22,6 +22,18 @@
                                     <label for="exampleInputEmail1">Tên danh mục</label>
                                     <input name="danhmuc_ten" class="form-control" id="exampleInputEmail1" placeholder="Tên danh mục">
                                 </div>
+                                {{-- Phân loại --}}
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Thương hiệu</label>
+                                    <select name="classify" class="form-control input-sm m-bot15">
+                                        <option value = " ">Chọn phân loại </option>
+                                     @foreach ($classify_product as $key=> $value)
+                                            <option value = "{{$value->phanloai_id}}">{{$value->phanloai_ten}}</option>
+                                    @endforeach
+                                     
+                                 
+                                    </select>
+                                    </div>
                                 {{-- Trạng thái --}}
                                 <div class="form-group">
                                 <label for="exampleInputPassword1">Hiển thị</label>
