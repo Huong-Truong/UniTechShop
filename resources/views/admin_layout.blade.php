@@ -56,14 +56,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!--logo start-->
 <div class="brand">
     <a href="index.html" class="logo">
-        VISITORS
+        UniTech
     </a>
     <div class="sidebar-toggle-box">
         <div class="fa fa-bars"></div>
     </div>
 </div>
 <!--logo end-->
-<div class="nav notify-row" id="top_menu">
+{{-- <div class="nav notify-row" id="top_menu">
     <!--  notification start -->
     <ul class="nav top-menu">
         <!-- settings start -->
@@ -133,9 +133,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <a href="#">See All Tasks</a>
                 </li>
             </ul>
-        </li>
+        </li> --}}
         <!-- settings end -->
-        <!-- inbox dropdown start-->
+        {{-- <!-- inbox dropdown start-->
         <li id="header_inbox_bar" class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                 <i class="fa fa-envelope-o"></i>
@@ -198,9 +198,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 </li>
             </ul>
         </li>
-        <!-- inbox dropdown end -->
+        <!-- inbox dropdown end --> --}}
         <!-- notification dropdown start-->
-        <li id="header_notification_bar" class="dropdown">
+        {{-- <li id="header_notification_bar" class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
 
                 <i class="fa fa-bell-o"></i>
@@ -238,7 +238,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             </ul>
         </li>
         <!-- notification dropdown end -->
-    </ul>
+    </ul> --}}
     <!--  notification end -->
 </div>
 <div class="top-nav clearfix">
@@ -250,12 +250,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <!-- user login dropdown start-->
         <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                <img alt="" src="images/2.png">
+                <img alt="Lỗi" src="images/<?php echo rand(1, 3)?>.png">
                 <span class="username">
                     <?php 
                         $name = Session::get('admin_name');
                         if($name){
-                            echo Str::upper($name);
+                            echo $name;
                         }
                     ?>
                 </span>
