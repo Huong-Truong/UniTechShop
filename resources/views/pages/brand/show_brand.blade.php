@@ -111,12 +111,18 @@
     <!-- Page Header Start -->
     <div class="container-fluid bg-secondary mb-5 ">
         <div class="d-flex flex-column align-items-center justify-content-center"  style="height: 410px;">
-            <h1 class="font-weight-semi-bold text-uppercase mb-3">{{$ten_danhmuc->danhmuc_ten}}</h1>
+            <h1 class="font-weight-semi-bold text-uppercase mb-3">{{$ten_hang->hang_ten}}</h1>
             <div class="d-inline-flex">
                 <p class="m-0"><a href="">Home</a></p>
                 <p class="m-0 px-2">-</p>
                 <p class="m-0">Shop</p>
+               
             </div>
+            <div class="d-inline-flex">
+            <p style="text-align:center; padding-top: 30px; color:dark-grey !important;">{{$ten_hang->hang_mota}}</p>
+
+        </div>
+
         </div>
     </div>
     <!-- Page Header End -->

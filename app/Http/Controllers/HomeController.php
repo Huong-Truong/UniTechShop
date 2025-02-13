@@ -41,7 +41,10 @@ class HomeController extends Controller
 
     public function login(){
         $cate_product = DB::table('danhmuc')->where('danhmuc_trangthai', 1)->orderby('danhmuc_id', 'desc')->get(); ## lấy id category
-        return view('login')->with('danhmuc', $cate_product);
+        $brand = DB::table('hangsanpham')->where('hang_trangthai', 1)->orderby('hang_id', 'desc')->get();
+        $phanloai = DB::table('phanloaisp')->orderby('phanloai_id', 'asc')->get();
+        return view('login')->with('danhmuc', $cate_product)->with('hang', $brand)->with('phanloai', $phanloai);
+        // return view('login')->with('danhmuc', $cate_product);
     }
 
 }

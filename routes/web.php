@@ -22,8 +22,8 @@ Route::get('/san-pham', [ProductController::class, 'show_product'])->name('san-p
 Route::get('/danh-muc/{danhmuc_id}', [CategoryProduct::class, 'show_danhmuc_home'])->name('danh-muc');
 Route::get('/xem-san-pham/{sanpham_id}', [ProductController::class, 'show_chitiet_sanpham'])->name('xem-san-pham');
 
-
-
+## hiển thị sản phẩm theo thuong hieu home
+Route::get('/thuong-hieu/{hang_id}', [BrandProduct::class, 'show_thuonghieu_home'])->name('thuong-hieu');
 
 ## admin
 Route::get('/admin', [AdminController::class, 'index'])->name('admin'); ## đăng nhập admin

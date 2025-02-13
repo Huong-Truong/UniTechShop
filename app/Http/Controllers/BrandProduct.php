@@ -104,4 +104,18 @@ class BrandProduct extends Controller
         ->pluck('brand_name')->first(); ## thêm first để bỏ dấu [""] khi in
         return view('pages.brand.show_brand')->with('brand_name', $brand_name)->with('danhmuc', $cate_product)->with('brand', $brd_product)->with('brand_id', $all);
     }
+
+
+    
+    public function show_thuonghieu_home($hang_id){
+     
+        $cate_product = DB::table('danhmuc')->where('danhmuc_trangthai', 1)->orderby('danhmuc_id', 'desc')->get(); // lấy id category
+        $product = DB::table('sanpham')->where('sanpham_trangthai', 1)->where('hangsanpham_id', $hang_id)->orderby('sanpham_id', 'desc')->paginate(12);
+        $brand = DB::table('hangsanpham')->where('hang_trangthai', 1)->orderby('hang_id', 'desc')->get();
+        $phanloai = DB::table('phanloaisp')->orderby('phanloai_id', 'asc')->get();
+        $ten_hang = DB::table('hangsanpham')->where('hang_id', $hang_id)->first();
+        return view('pages.brand.show_brand')->with('ten_hang', $ten_hang)->with('danhmuc', $cate_product)->with('sanpham', $product)->with('hang', $brand)->with('phanloai', $phanloai);
+   
+   
+    }
 }
