@@ -24,13 +24,16 @@ class CategoryProduct extends Controller
     public function add_category_product ()
     {
         $this->AuthenLogin();
-        return view('admin.add_category_product');
+        $classify_product = DB::table('phanloaisp')->orderby('phanloai_id', 'desc')->get(); ## lấy id 
+        return view('admin.add_category_product')->with('classify_product', $classify_product);
     }
 
     public function all_category_product ()
     {
         $this->AuthenLogin();
-       $all_category = DB::table('danhmuc')->get(); ## lấy tấy cả dữ liêu
+        $all_category = DB::table('danhmuc')
+        ->join('phanloaisp', 'phanloaisp.phanloai_id', '=', 'danhmuc.phanloai_id')->get(); ## lấy tấy cả dữ liêu
+        
         $manger_category = view ('admin.all_category_product')->with('all_category', $all_category);
         return view('admin_layout')->with('admin.all_category_product',$manger_category); ## gom lại hiện chung
 
@@ -42,6 +45,7 @@ class CategoryProduct extends Controller
         $data = array();
         $data['danhmuc_ten'] = $request->danhmuc_ten;
         $data['danhmuc_trangthai'] = $request->danhmuc_trangthai;
+        $data['phanloai_id'] = $request->classify;
         /*
             $data['category_name'] : tên của cột trong database
             $request->category_product_name: tên của name lấy bên save_category

@@ -3,11 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ClassifyController;
 use App\Http\Controllers\CategoryProduct;
 use App\Http\Controllers\BrandProduct;
 use App\Http\Controllers\ProductController;
 // use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckOutController;
+
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/trang-chu', [HomeController::class, 'index'])->name('trangchu');
@@ -36,6 +38,15 @@ Route::get('/logout', [AdminController::class, 'logout'])->name('logout');
 
 // ADMIN:
 Route::get('/login', [HomeController::class, 'login'])->name('login');
+##ClassifyProduct
+Route::get('/add-classify-product', [ClassifyController::class, 'add_classify_product'])->name('add-classify');
+Route::get('/all-classify-product', [ClassifyController::class, 'all_classify_product'])->name('all-classify');
+
+Route::post('/save-classify-product', [ClassifyController::class, 'save_classify_product'])->name('save-classify');
+Route::get('/edit-classify-product/{classify_id}', [ClassifyController::class, 'edit_classify_product'])->name('edit-classify');
+Route::post('/update-classify-product/{classify_id}', [ClassifyController::class, 'update_classify_product'])->name('update-classify');
+Route::get('/delete-classify-product/{classify_id}', [ClassifyController::class, 'delete_classify_product'])->name('delete-classify');
+
 ## CategoryProduct
 
 Route::get('/add-category-product', [CategoryProduct::class, 'add_category_product'])->name('add-category');

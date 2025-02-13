@@ -36,6 +36,7 @@
               </label>
             </th>
             <th>Tên danh mục</th>
+            <th>Phân loại</th>
             <th>Hiển thị</th>
             <th>Thao tác</th>
             <th style="width:30px;"></th>
@@ -53,6 +54,7 @@
           <tr>
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
             <td>{{$cate->danhmuc_ten}}</td>
+            <td>{{$cate->phanloai_ten}}</td>
             <td><span class="text-ellipsis">
             <?php 
             if ($cate->danhmuc_trangthai == 0) {

@@ -31,12 +31,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     width: 100%;
     text-align: center;
     }
+    
+  
 </style>
 </head>
 <body>
-<div class="log-w3">
+<div class="log-w3"><br><br>
 <div class="w3layouts-main">
     <h2>Đăng Nhập</h2>
+    
     <?php 
         $message = Session::get('message'); ## lấy tin nhắn có tên là message
         if($message){

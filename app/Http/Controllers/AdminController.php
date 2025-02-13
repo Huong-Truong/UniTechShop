@@ -24,6 +24,7 @@ class AdminController extends Controller
     public function index()
     {
         $admin_id = Session::get('admin_id');
+        
         if($admin_id){
            return Redirect::to('dashboard');
         }else{
