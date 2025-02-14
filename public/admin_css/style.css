@@ -786,7 +786,7 @@ ul.top-menu>li>a:hover,ul.top-menu>li>a:focus {
     font-size: 18px;
     font-weight: 400;
     padding: 0 16px;
-    background:#ddede0;
+    background:rgba(213, 189, 189, 0.5);
    border-top-right-radius: 2px;
    border-top-left-radius: 2px; 
     text-transform: uppercase;
@@ -1635,7 +1635,7 @@ ul.bs-glyphicons-list {
     box-shadow: 0 1px 1px rgba(0,0,0,.05);
 }
 .table-agile-info{
-	background: #eef9f0;
+    background-color:rgba(130, 157, 185, 0.5); 
     padding: 2em;
     border-radius: 4px;
     -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
@@ -1647,6 +1647,10 @@ ul.bs-glyphicons-list {
     border-radius: 4px;
     -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
     box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+.panel-default{
+    background-color:rgba(130, 157, 185, 0.5);
+    color:#0d0f10;
 }
 .panel-default>.panel-heading {
     color: #000000 ! important;

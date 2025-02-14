@@ -1,7 +1,7 @@
 @extends('admin_layout')
 @section('admin-content')
 <div class="table-agile-info">
-  <div class="panel panel-default">
+  <div class="panel panel-default" style="background-color:rgba(130, 157, 185, 0.5)">
     <div class="panel-heading">
         Liệt kê thương hiệu
     </div>
