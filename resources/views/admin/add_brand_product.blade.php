@@ -23,6 +23,10 @@
                                     <input name="brand_name" class="form-control" id="exampleInputEmail1" placeholder="Tên danh mục">
                                 </div>
                             {{--Trạng thái hãng--}}
+                            <div class="form-group">
+                                    <label for="exampleInputPassword1">Mô tả Hãng</label>
+                                        <textarea  name="brand_content" style="resize: none" rows = "8"  placeholder="Mô tả sản phẩm" class="form-control" name="" id="exampleInputPassword1"></textarea>
+                            </div>
                                 <div class="form-group">
                                 <label for="exampleInputPassword1">Hiển thị</label>
                                 <select name="brand_status" class="form-control input-sm m-bot15">

@@ -21,7 +21,11 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Tên hãng</label>
                                     <input value="{{ $edit_value->hang_ten}}"name="brand_name" class="form-control" id="exampleInputEmail1" placeholder="Tên danh mục">
-                                </div>               
+                                </div> 
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Mô tả Hãng</label>
+                                        <textarea  name="brand_content" style="resize: none" rows = "8"  placeholder="Mô tả sản phẩm" class="form-control" name="" id="exampleInputPassword1"></textarea>
+                                </div>              
                                 <button type="submit" name="update_brand_product" class="btn btn-info">Cập nhật hãng</button>
                             </form>
                             </div>

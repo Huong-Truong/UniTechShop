@@ -29,12 +29,19 @@ class HomeController extends Controller
 
 
     public function Search(Request $request){
+        // $keywords = $request->keywords_submit;
+        // $cate_product = DB::table('tbl_category_product')->where('category_status', 1)->orderby('category_id', 'desc')->get(); ## lấy id category
+        // $brd_product = DB::table('tbl_brand_product')->where('brand_status', 1)->orderby('brand_id', 'desc')->get(); ## lấy id category
+        // // $all_product = DB::table('tbl_product')->where('product_status', 1)->orderby('brand_id', 'desc')->limit(4)->get();
+        // $search_product_by = DB::table('tbl_product')->where('product_status', 1)->where('product_name', 'like', '%'.$keywords.'%')->get();
+        // return view('pages.product.search')->with('category', $cate_product)->with('brand', $brd_product)->with('all_product', $search_product_by); ## trả về góc nhìn
+        $cate_product = DB::table('danhmuc')->where('danhmuc_trangthai', 1)->orderby('danhmuc_id', 'desc')->get(); ## lấy id category
+        $brand = DB::table('hangsanpham')->where('hang_trangthai', 1)->orderby('hang_id', 'desc')->get();
+        $phanloai = DB::table('phanloaisp')->orderby('phanloai_id', 'asc')->get();
         $keywords = $request->keywords_submit;
-        $cate_product = DB::table('tbl_category_product')->where('category_status', 1)->orderby('category_id', 'desc')->get(); ## lấy id category
-        $brd_product = DB::table('tbl_brand_product')->where('brand_status', 1)->orderby('brand_id', 'desc')->get(); ## lấy id category
-        // $all_product = DB::table('tbl_product')->where('product_status', 1)->orderby('brand_id', 'desc')->limit(4)->get();
-        $search_product_by = DB::table('tbl_product')->where('product_status', 1)->where('product_name', 'like', '%'.$keywords.'%')->get();
-        return view('pages.product.search')->with('category', $cate_product)->with('brand', $brd_product)->with('all_product', $search_product_by); ## trả về góc nhìn
+        $search_product_by = DB::table('sanpham')->where('sanpham_trangthai', 1)->where('product_name','like', '%'.$keywords.'$')->get();
+        return view('pages.product.search')->with('danhmuc', $cate_product)->with('hang', $brand)->with('phanloai', $phanloai)->with('all_product', $search_product_by);
+    
     }
 
 

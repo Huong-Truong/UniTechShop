@@ -41,6 +41,7 @@ class BrandProduct extends Controller
         $data = array();
         $data['hang_ten'] = $request->brand_name;
         $data['hang_trangthai'] = $request->brand_status;
+        $data['hang_mota'] = $request->brand_content;
         /*
             $data['brand_name'] : tên của cột trong database
             $request->brand_product_name: tên của name lấy bên save_brand
@@ -85,6 +86,7 @@ class BrandProduct extends Controller
         $this->AuthenLogin();
         $data = array();
         $data['hang_ten'] = $request->brand_name;
+        $data['hang_mota'] = $request->brand_content;
         DB::table('hangsanpham')->where('hang_id', $brand_id)->update($data);
         Session::put('message','Cập nhật hãng thành công');
         return Redirect::to('all-brand-product'); 
@@ -110,7 +112,7 @@ class BrandProduct extends Controller
     public function show_thuonghieu_home($hang_id){
      
         $cate_product = DB::table('danhmuc')->where('danhmuc_trangthai', 1)->orderby('danhmuc_id', 'desc')->get(); // lấy id category
-        $product = DB::table('sanpham')->where('sanpham_trangthai', 1)->where('hangsanpham_id', $hang_id)->orderby('sanpham_id', 'desc')->paginate(12);
+        $product = DB::table('sanpham')->where('sanpham_trangthai', 1)->where('hang_id', $hang_id)->orderby('sanpham_id', 'desc')->paginate(12);
         $brand = DB::table('hangsanpham')->where('hang_trangthai', 1)->orderby('hang_id', 'desc')->get();
         $phanloai = DB::table('phanloaisp')->orderby('phanloai_id', 'asc')->get();
         $ten_hang = DB::table('hangsanpham')->where('hang_id', $hang_id)->first();

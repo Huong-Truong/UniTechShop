@@ -256,7 +256,7 @@ public function update_hdsd_product(Request $request,$product_id){
         $cate_product = DB::table('danhmuc')->where('danhmuc_trangthai', 1)->orderby('danhmuc_id', 'desc')->get(); // lấy id category
         $product = DB::table('sanpham')->where('sanpham_id', $sanpham_id)->
         join('danhmuc','danhmuc.danhmuc_id', '=', 'sanpham.danhmuc_id')->
-        join('hangsanpham', 'hangsanpham.hang_id', '=', 'sanpham.hangsanpham_id')->
+        join('hangsanpham', 'hangsanpham.hang_id', '=', 'sanpham.hang_id')->
         first();
 
         $phanloai = DB::table('phanloaisp')->orderby('phanloai_id', 'asc')->get();

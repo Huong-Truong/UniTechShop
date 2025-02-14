@@ -110,7 +110,7 @@
 @section('slide')
     <!-- Page Header Start -->
     <div class="container-fluid bg-secondary mb-5 ">
-        <div class="d-flex flex-column align-items-center justify-content-center"  style="height: 410px;">
+        <div class="d-flex flex-column align-items-center justify-content-center"  style="height: 410px; ">
             <h1 class="font-weight-semi-bold text-uppercase mb-3">{{$ten_hang->hang_ten}}</h1>
             <div class="d-inline-flex">
                 <p class="m-0"><a href="">Home</a></p>
@@ -119,7 +119,7 @@
                
             </div>
             <div class="d-inline-flex">
-            <p style="text-align:center; padding-top: 30px; color:dark-grey !important;">{{$ten_hang->hang_mota}}</p>
+            <h6 style="text-align:center; padding-top: 30px; color:dark-grey !important;">{{$ten_hang->hang_mota}}</h6>
 
         </div>
 
