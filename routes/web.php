@@ -12,7 +12,7 @@ use App\Http\Controllers\CheckOutController;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/trang-chu', [HomeController::class, 'index'])->name('trangchu');
+Route::get('/trang-chu', [HomeController::class, 'index'])->name('trang-chu');
 
 
 ## trang sản phẩm
@@ -26,6 +26,9 @@ Route::get('/xem-san-pham/{sanpham_id}', [ProductController::class, 'show_chitie
 
 ## hiển thị sản phẩm theo thuong hieu home
 Route::get('/thuong-hieu/{hang_id}', [BrandProduct::class, 'show_thuonghieu_home'])->name('thuong-hieu');
+
+## tìm kiếm sản phẩm trên home
+Route::post('/Search', [HomeController::class, 'Search'])->name('Search');
 
 ## admin
 Route::get('/admin', [AdminController::class, 'index'])->name('admin'); ## đăng nhập admin

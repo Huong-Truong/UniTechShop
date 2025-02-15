@@ -60,7 +60,7 @@
         </div>
         <div class="row align-items-center py-3 px-xl-5">
             <div class="col-lg-3 d-none d-lg-block">
-                <a href="" class="text-decoration-none">
+                <a href="{{route('trang-chu')}}" class="text-decoration-none">
                     <h2 class="m-0 display-5 font-weight-semi-bold">
                         <span class="text-primary font-weight-bold border px-1 mr-2">UniTech</span>   
                     </h2>
@@ -69,13 +69,33 @@
                 </a>
             </div>
             <div class="col-lg-6 col-6 text-left">
-                <form action="">
+            <!-- <form action="{{route('Search')}}" method="post">
+							@csrf
+						<div class="search_box pull-right">
+							<input type="text" name="keywords_submit" placeholder="Tìm kiếm sản phẩm"/> 
+							<input type="submit" style="margin-top: 0;color:black" name="search-items"class="btn btn-success btn-sm" value="Tìm kiếm" >
+						</div>
+	
+						</form> -->
+                        <!-- <div class="col-sm-5">
+						<form action="{{route('Search')}}" method="post">
+							@csrf
+						<div class="search_box pull-right">
+							<input type="text" name="keywords" placeholder="Tìm kiếm sản phẩm"/> 
+							<input type="submit" style="margin-top: 0;color:black" name="search-items" class="btn btn-success btn-sm" value="Tìm kiếm" >
+						</div>
+	
+						</form>
+					</div> -->
+
+                <form action="{{route('Search')}}" method="post" >
+                    @csrf
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm">
+                        <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm" name="keywords">
                         <div class="input-group-append">
-                            <span type="submit" class="input-group-text bg-transparent text-primary">
-                                <i class="fa fa-search"></i>
-                            </span>
+                            <button type="submit" class="input-group-text bg-transparent text-primary">
+                                <i   class="fa fa-search"></i>
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -136,7 +156,7 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
-                            <a href="{{route('trangchu')}}" class="nav-item nav-link active">Trang Chủ</a>
+                            <a href="{{route('trang-chu')}}" class="nav-item nav-link active">Trang Chủ</a>
                             <a href="{{route('san-pham')}}" class="nav-item nav-link">Sản Phẩm</a>
                             <a href="detail.html" class="nav-item nav-link">Giỏ Hàng</a>
                             <a href="detail.html" class="nav-item nav-link">Thanh Toán</a>
