@@ -5,7 +5,7 @@
     <div class="panel-heading">
         Liệt kê danh mục sản phẩm
     </div>
-    <div class="row w3-res-tb">
+    {{-- <div class="row w3-res-tb">
       <div class="col-sm-5 m-b-xs">
         <select class="input-sm form-control w-sm inline v-middle">
           <option value="0">Bulk action</option>
@@ -25,7 +25,7 @@
           </span>
         </div>
       </div>
-    </div>
+    </div> --}}
     <div class="table-responsive">
       <table class="table table-striped b-t b-light">
         <thead>
@@ -58,10 +58,10 @@
             <td><span class="text-ellipsis">
             <?php 
             if ($cate->danhmuc_trangthai == 0) {
-                echo "Đang ẩn  ";
+              //  echo "Đang ẩn  ";
                 echo "<a href=\"" . route('active-category', ['category_id' => $cate->danhmuc_id]) . "\"><span class=\"fa-thumbs-style fa fa-thumbs-down\"></span></a>";
             } else {
-                echo "Đang hiển thị   ";
+               // echo "Đang hiển thị   ";
                 echo "<a href=\"" . route('unactive-category', ['category_id' => $cate->danhmuc_id]) . "\"><span class=\"fa-thumbs-style fa fa-thumbs-up\"></span></a>";
             }
             ?>

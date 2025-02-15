@@ -24,8 +24,8 @@ Route::get('/san-pham', [ProductController::class, 'show_product'])->name('san-p
 Route::get('/danh-muc/{danhmuc_id}', [CategoryProduct::class, 'show_danhmuc_home'])->name('danh-muc');
 Route::get('/xem-san-pham/{sanpham_id}', [ProductController::class, 'show_chitiet_sanpham'])->name('xem-san-pham');
 
-
-
+## hiển thị sản phẩm theo thuong hieu home
+Route::get('/thuong-hieu/{hang_id}', [BrandProduct::class, 'show_thuonghieu_home'])->name('thuong-hieu');
 
 ## admin
 Route::get('/admin', [AdminController::class, 'index'])->name('admin'); ## đăng nhập admin
@@ -38,15 +38,18 @@ Route::get('/logout', [AdminController::class, 'logout'])->name('logout');
 
 // ADMIN:
 Route::get('/login', [HomeController::class, 'login'])->name('login');
+
 ##ClassifyProduct
 Route::get('/add-classify-product', [ClassifyController::class, 'add_classify_product'])->name('add-classify');
 Route::get('/all-classify-product', [ClassifyController::class, 'all_classify_product'])->name('all-classify');
+
 
 Route::post('/save-classify-product', [ClassifyController::class, 'save_classify_product'])->name('save-classify');
 Route::get('/edit-classify-product/{classify_id}', [ClassifyController::class, 'edit_classify_product'])->name('edit-classify');
 Route::post('/update-classify-product/{classify_id}', [ClassifyController::class, 'update_classify_product'])->name('update-classify');
 Route::get('/delete-classify-product/{classify_id}', [ClassifyController::class, 'delete_classify_product'])->name('delete-classify');
 
+Route::get('/search-classify-product', [ClassifyController::class, 'search_classify_product'])->name('search-classify');
 ## CategoryProduct
 
 Route::get('/add-category-product', [CategoryProduct::class, 'add_category_product'])->name('add-category');

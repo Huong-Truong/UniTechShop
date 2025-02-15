@@ -81,15 +81,15 @@
             <td> 
                <label class="custom-file-upload">
                 <input type="file" id="exampleInputAddImg" name="product_image"/>
-                Thêm ảnh
+                Thêm
               </label>
             </td>
             <td>
               <a href="{{route('edit-product', ['product_id' => $pro->sanpham_id])}}" class="active" ui-toggle-class=""><i class="fa fa-pencil-square-o text-success text-active"></i>  </a>
               <a onclick="return confirm('Bạn có chắc muốn xóa ?')" href="{{route('delete-product', ['product_id' => $pro->sanpham_id])}}"> <i class="fa fa-times text-danger text"></i></a>
-              <a href="{{route('edit-hdsd-product', ['product_id' => $pro->sanpham_id])}}" class="active" ui-toggle-class=""><i class="fa text-success text-active">...</i>  </a>
-
-            
+              <a href="{{route('edit-hdsd-product', ['product_id' => $pro->sanpham_id])}}" class="active" ui-toggle-class="">
+                <i class="fa fa-info-circle text-danger text"></i> 
+              </a>
           </tr>
         @endforeach
         </tbody>

@@ -90,6 +90,7 @@ class CategoryProduct extends Controller
         $this->AuthenLogin();
         $data = array();
         $data['danhmuc_ten'] = $request->danhmuc_ten;
+
         DB::table('danhmuc')->where('danhmuc_id', $category_id)->update($data);
         Session::put('message','Cập nhật danh mục thành công');
         return Redirect::to('all-category-product'); 

@@ -9,7 +9,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 ?> 
 <!DOCTYPE html>
 <head>
-<title>Visitors an Admin Panel Category Bootstrap Responsive Website Template | Home :: w3layouts</title>
+<title>UniTech - Trang quản lý</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Visitors Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
@@ -36,7 +36,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="{{asset('admin_js/morris.js')}}"></script>
 <style>
     p#messageStyle{
-    color:red;
+    color:rgb(109, 109, 111);
     font-size: 15px;
     width:100%;
     text-align: center;
