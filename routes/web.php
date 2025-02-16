@@ -7,8 +7,8 @@ use App\Http\Controllers\ClassifyController;
 use App\Http\Controllers\CategoryProduct;
 use App\Http\Controllers\BrandProduct;
 use App\Http\Controllers\ProductController;
-// use App\Http\Controllers\CartController;
-use App\Http\Controllers\CheckOutController;
+use App\Http\Controllers\CartController;
+// use App\Http\Controllers\CheckOutController;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -19,6 +19,8 @@ Route::get('/trang-chu', [HomeController::class, 'index'])->name('trang-chu');
 
 Route::get('/san-pham', [ProductController::class, 'show_product'])->name('san-pham');
 
+## phân loại lọc 
+Route::get('/phan-loai/{phanloai_id}', [CategoryProduct::class, 'show_phanloai_loc'])->name('phan-loai');
 
 ## hiển thị sản phẩm theo danh mục home
 Route::get('/danh-muc/{danhmuc_id}', [CategoryProduct::class, 'show_danhmuc_home'])->name('danh-muc');
@@ -30,6 +32,11 @@ Route::get('/thuong-hieu/{hang_id}', [BrandProduct::class, 'show_thuonghieu_home
 ## tìm kiếm sản phẩm trên home
 Route::post('/Search', [HomeController::class, 'Search'])->name('Search');
 
+## Giỏ hàng
+Route::post('/save-cart', [CartController::class, 'save_cart'])->name('save-cart');
+Route::get('/show-cart', [CartController::class, 'show_cart'])->name('show-cart');
+Route::get('/delete-to-cart/{rowID}', [CartController::class, 'delete_to_cart'])->name('delete-to-cart');
+Route::post('/update-cart-qty', [CartController::class, 'update_cart_qty'])->name('update-cart-qty');
 ## admin
 Route::get('/admin', [AdminController::class, 'index'])->name('admin'); ## đăng nhập admin
 Route::get('/dashboard', [AdminController::class, 'showDashboard'])->name('dashboard');

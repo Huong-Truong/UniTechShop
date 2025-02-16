@@ -4,7 +4,10 @@
 
 
     <!-- Shop Start -->
-    <div class="container-fluid pt-5">
+  
+
+  <!-- Shop Start -->
+  <div class="container-fluid pt-5">
         <div class="row px-xl-5">
             <!-- Shop Sidebar Start -->
             <div class="col-lg-3 col-md-12">
@@ -12,42 +15,36 @@
                 <div class="border-bottom mb-4 pb-4">
     <h5 class="font-weight-semi-bold mb-4">Lọc theo loại sản phẩm</h5>
     <form>
-        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-            <input type="checkbox" class="custom-control-input" checked id="price-all-phanloai">
-            <label class="custom-control-label" for="price-all-phanloai">Tất cả</label>
-            <!-- <span class="badge border font-weight-normal">1000</span> -->
-        </div>
+      
         @foreach($phanloai as $key => $pl)
+        <form action="{{route('phan-loai',['phanloai_id' => $pl->phanloai_id])}}" method="get" >
         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-            <input type="checkbox" class="custom-control-input" id="price-{{$pl->phanloai_id}}">
+            <input type="checkbox" class="custom-control-input" id="price-{{$pl->phanloai_id}}" name="{{$pl->phanloai_id}} " onchange="this.form.submit()">
             <label class="custom-control-label" for="price-{{$pl->phanloai_id}}">{{$pl->phanloai_ten}}</label>
             <span class="badge border font-weight-normal">150</span>
         </div>
+        </form>
         @endforeach
     </form>
-</div>
+    </div>
 <!-- Price End -->
 
 <!-- Color Start -->
 <div class="border-bottom mb-4 pb-4">
     <h5 class="font-weight-semi-bold mb-4">Lọc theo danh mục</h5>
-    <form>
-        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-            <input type="checkbox" class="custom-control-input" checked id="color-all-danhmuc">
-            <label class="custom-control-label" for="color-all-danhmuc">Tất cả</label>
-            <!-- <span class="badge border font-weight-normal">1000</span> -->
-        </div>
+
+        
         @foreach($danhmuc as $key => $pl)
+        <form action="{{route('danh-muc',['danhmuc_id' => $pl->danhmuc_id])}}" method="get" >
         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-            <input type="checkbox" class="custom-control-input" id="color-{{$pl->danhmuc_id}}">
+        <input type="checkbox" class="custom-control-input" id="color-{{ $pl->danhmuc_id }}" name="danhmuc_id" value="{{ $pl->danhmuc_id }}" onchange="this.form.submit()">
             <label class="custom-control-label" for="color-{{$pl->danhmuc_id}}">{{$pl->danhmuc_ten}}</label>
             <span class="badge border font-weight-normal">150</span>
         </div>
+        </form>
         @endforeach
-    </form>
 </div>
 </div>
-        
                 <!-- Color End -->
 
                 <!-- Size Start -->
@@ -65,7 +62,7 @@
     <div class="row pb-3">
         <div class="col-12 pb-1">
             <div class="d-flex align-items-center justify-content-between mb-4">
-                <form action="">
+                <!-- <form action="">
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Search by name">
                         <div class="input-group-append">
@@ -74,7 +71,7 @@
                             </span>
                         </div>
                     </div>
-                </form>
+                </form> -->
                 <div class="dropdown ml-4">
                     <button class="btn border dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Sort by

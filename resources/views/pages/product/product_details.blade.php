@@ -55,20 +55,43 @@
                    
                 </div>
                 <div class="d-flex align-items-center mb-4 pt-2">
-                    <div class="input-group quantity mr-3" style="width: 130px;">
-                        <div class="input-group-btn">
-                            <button class="btn btn-primary btn-minus" >
-                            <i class="fa fa-minus"></i>
-                            </button>
-                        </div>
-                        <input type="text" class="form-control bg-secondary text-center" value="1">
-                        <div class="input-group-btn">
-                            <button class="btn btn-primary btn-plus">
-                                <i class="fa fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Thêm vào giỏ hàng</button>
+                <form action="{{route('save-cart')}}" method="post">
+    @csrf
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="input-group quantity" style="width: 100px;">
+            <div class="input-group-btn">
+                <button class="btn btn-sm btn-primary btn-minus" type="button">
+                    <i class="fa fa-minus"></i>
+                </button>
+            </div>
+            <input type="text" name="qty" class="form-control form-control-sm bg-secondary text-center" value="1">
+            <input type="hidden" name="sanpham_id_hidden" value="{{$sanpham->sanpham_id}}">
+            <div class="input-group-btn">
+                <button class="btn btn-sm btn-primary btn-plus" type="button">
+                    <i class="fa fa-plus"></i>
+                </button>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary px-3 ml-3"><i class="fa fa-shopping-cart mr-1"></i> Thêm vào giỏ hàng</button>
+    </div>
+</form>
+
+<script>
+    document.querySelector('.btn-minus').addEventListener('click', function() {
+        let qtyInput = document.querySelector('input[name="qty"]');
+        let qty = parseInt(qtyInput.value);
+        if(qty > 1) {
+            qtyInput.value = qty - 1;
+        }
+    });
+
+    document.querySelector('.btn-plus').addEventListener('click', function() {
+        let qtyInput = document.querySelector('input[name="qty"]');
+        let qty = parseInt(qtyInput.value);
+        qtyInput.value = qty + 1;
+    });
+</script>
+
                 </div>
                 <div class="d-flex pt-2">
                     <p class="text-dark font-weight-medium mb-0 mr-2">Chia sẻ tới: </p>

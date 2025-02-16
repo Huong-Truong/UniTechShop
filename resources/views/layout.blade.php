@@ -158,7 +158,7 @@
                         <div class="navbar-nav mr-auto py-0">
                             <a href="{{route('trang-chu')}}" class="nav-item nav-link active">Trang Chủ</a>
                             <a href="{{route('san-pham')}}" class="nav-item nav-link">Sản Phẩm</a>
-                            <a href="detail.html" class="nav-item nav-link">Giỏ Hàng</a>
+                            <a href="{{route('show-cart')}}" class="nav-item nav-link">Giỏ Hàng</a>
                             <a href="detail.html" class="nav-item nav-link">Thanh Toán</a>
                             <a href="detail.html" class="nav-item nav-link">Tài Khoản</a>
                             <!-- <div class="nav-item dropdown">

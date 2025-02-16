@@ -116,12 +116,51 @@ class CategoryProduct extends Controller
         $product = DB::table('sanpham')->where('sanpham_trangthai', 1)->where('danhmuc_id', $danhmuc_id)->orderby('sanpham_id', 'desc')->paginate(12);
         $brand = DB::table('hangsanpham')->where('hang_trangthai', 1)->orderby('hang_id', 'desc')->get();
         $phanloai = DB::table('phanloaisp')->orderby('phanloai_id', 'asc')->get();
-        $ten_danhmuc = DB::table('danhmuc')->where('danhmuc_id', $danhmuc_id)->first();
-        return view('pages.category.show_category')->with('ten_danhmuc', $ten_danhmuc)->with('danhmuc', $cate_product)->with('sanpham', $product)->with('hang', $brand)->with('phanloai', $phanloai);
+        $ten_danhmuc = DB::table('danhmuc')->where('danhmuc_id', $danhmuc_id)->pluck('danhmuc_ten')->first();
+        return view('pages.category.show_category')->with('ten_page', $ten_danhmuc)->with('danhmuc', $cate_product)->with('sanpham', $product)->with('hang', $brand)->with('phanloai', $phanloai);
    
     }
 
+    // public function show_danhmuc_loc(Request $request){
+     
+    //     $cate_product = DB::table('danhmuc')->where('danhmuc_trangthai', 1)->orderby('danhmuc_id', 'desc')->get(); // lấy id category
+    //     $product = DB::table('sanpham')->where('sanpham_trangthai', 1)->where('danhmuc_id', $danhmuc_id)->orderby('sanpham_id', 'desc')->paginate(12);
+    //     $brand = DB::table('hangsanpham')->where('hang_trangthai', 1)->orderby('hang_id', 'desc')->get();
+    //     $phanloai = DB::table('phanloaisp')->orderby('phanloai_id', 'asc')->get();
+    //     $ten_page = DB::table('danhmuc')->where('danhmuc_id', $danhmuc_id)->pluck('danhmuc_ten')->first();
+    //     return view('pages.category.show_category')->with('ten_page', $ten_page)->with('danhmuc', $cate_product)->with('sanpham', $product)->with('hang', $brand)->with('phanloai', $phanloai);
+   
+    // }
 
+    public function show_phanloai_loc($phanloai_id){
+        // Lấy danh mục sản phẩm
+        $cate_product = DB::table('danhmuc')->where('danhmuc_trangthai', 1)->orderby('danhmuc_id', 'desc')->get();
+        
+        // Lấy phân loại sản phẩm theo ID
+        $pl_sp = DB::table('phanloaisp')->where('phanloai_id', $phanloai_id)->first();
+        
+        // Lấy sản phẩm và join với bảng danh mục và phân loại sản phẩm
+        $product = DB::table('sanpham')
+            ->join('danhmuc', 'danhmuc.danhmuc_id', '=', 'sanpham.danhmuc_id')
+            ->join('phanloaisp', 'phanloaisp.phanloai_id', '=', 'danhmuc.phanloai_id')
+            ->where('phanloaisp.phanloai_id', $phanloai_id)
+            ->orderby('sanpham_id', 'desc')
+            ->paginate(12);
+        
+        // Lấy danh sách thương hiệu và phân loại sản phẩm
+        $brand = DB::table('hangsanpham')->where('hang_trangthai', 1)->orderby('hang_id', 'desc')->get();
+        $phanloai = DB::table('phanloaisp')->orderby('phanloai_id', 'asc')->get();
+        $ten_page = DB::table('phanloaisp')->where('phanloai_id', $phanloai_id)->pluck('phanloai_ten')->first();
+
+
+        // Trả về view với dữ liệu đã lấy được
+        return view('pages.category.show_category')
+            ->with('danhmuc', $cate_product)
+            ->with('sanpham', $product)
+            ->with('hang', $brand)
+            ->with('phanloai', $phanloai)->with('ten_page', $ten_page);
+    }
+    
     // public function hienthi_danhmuc(){
     //     $cate_product = DB::table('danhmuc')->orderby('danhmuc_id', 'desc')->get();
     //     return view('layout')->with('danhmuc', $cate_product);
