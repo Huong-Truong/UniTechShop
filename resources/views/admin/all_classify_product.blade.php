@@ -19,10 +19,12 @@
       </div>
       <div class="col-sm-3">
         <div class="input-group">
-          <input type="text" class="input-sm form-control" placeholder="Search">
-          <span class="input-group-btn">
-            <button class="btn btn-sm btn-default" type="button">Go!</button>
-          </span>
+          <form role="form" action="{{route('search-classify')}}" method="get">
+            <input type="text" class="input-sm form-control" name="key_search" placeholder="Search">
+            <span class="input-group-btn">
+              <button class="btn btn-sm btn-default" type="submit">Go!</button>
+            </span>
+          </form>
         </div>
       </div>
     </div>

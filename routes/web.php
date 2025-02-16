@@ -48,15 +48,18 @@ Route::get('/logout', [AdminController::class, 'logout'])->name('logout');
 
 // ADMIN:
 Route::get('/login', [HomeController::class, 'login'])->name('login');
+
 ##ClassifyProduct
 Route::get('/add-classify-product', [ClassifyController::class, 'add_classify_product'])->name('add-classify');
 Route::get('/all-classify-product', [ClassifyController::class, 'all_classify_product'])->name('all-classify');
+
 
 Route::post('/save-classify-product', [ClassifyController::class, 'save_classify_product'])->name('save-classify');
 Route::get('/edit-classify-product/{classify_id}', [ClassifyController::class, 'edit_classify_product'])->name('edit-classify');
 Route::post('/update-classify-product/{classify_id}', [ClassifyController::class, 'update_classify_product'])->name('update-classify');
 Route::get('/delete-classify-product/{classify_id}', [ClassifyController::class, 'delete_classify_product'])->name('delete-classify');
 
+Route::get('/search-classify-product', [ClassifyController::class, 'search_classify_product'])->name('search-classify');
 ## CategoryProduct
 
 Route::get('/add-category-product', [CategoryProduct::class, 'add_category_product'])->name('add-category');

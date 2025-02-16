@@ -16,7 +16,7 @@
                         <div class="panel-body">
                             @foreach ($edit_brand as $key => $edit_value)
                             <div class="position-center">
-                                <form role="form" action="{{route('update-brand', ['brand_id' => $edit_value->hang_id])}}" method="post">
+                                <form role="form" action="{{route('update-brand', ['brand_id' => $edit_value->hang_id])}}" method="get">
                                 @csrf
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Tên hãng</label>

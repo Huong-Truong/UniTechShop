@@ -27,18 +27,13 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Video</label><br>
-
-                                      <video width="640" height="360" controls>
-                                        <source src="{{$hdsd->HDSD_video}}" type="video/mp4">
-                                        <source src="{{ $hdsd->HDSD_video}}" type="video/ogg">
-                                        <source src="{{ $hdsd->HDSD_video}}" type="video/webm">
-                                        Trình duyệt của bạn không hỗ trợ thẻ video.
-                                    </video>
-
-                                    <label class="custom-file-upload">
-                                        <input type="file" id="exampleInputAddVideo" name="hdsd_video" accept="video/*"/>
-                                      </label>
-
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/{{$hdsd->HDSD_video}}" 
+                                      frameborder="0" 
+                                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                      allowfullscreen></iframe>
+                                    <br>
+                                    <label for="exampleInputEmail1">ID video</label>
+                                    <input value="{{$hdsd->HDSD_video}}"name="hdsd_video" class="form-control" id="exampleInputEmail1" >
                                 </div>
                                 <button type="submit" name="update_hdsd_product" class="btn btn-info">Cập nhật</button>
                             </form>

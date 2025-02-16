@@ -2,7 +2,7 @@
 @section('admin-content')
 <div class="row">
             <div class="col-lg-12">
-                    <section class="panel">
+                    <section class="panel ">
                         <header class="panel-heading">
                             Thêm thương hiệu
                         </header>

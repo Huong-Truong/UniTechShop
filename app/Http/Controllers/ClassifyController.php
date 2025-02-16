@@ -70,6 +70,16 @@ class ClassifyController extends Controller
         return Redirect::to('all-classify-product'); 
     }
 
+    public function search_classify_product(Request $request){
+        $this->AuthenLogin();
+        $key_search = $request->key_search;
+        $all_classify = DB::table('phanloaisp')->where('phanloai_ten','like','%'.$key_search.'%')->get(); ## lấy tấy cả dữ liêu
+
+         return view('admin.all_classify_product')->with('all_classify', $all_classify);
+
+    }
+    
+   
     // end function admin
 
 }

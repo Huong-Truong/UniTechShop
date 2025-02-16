@@ -84,7 +84,7 @@ class ProductController extends Controller
            DB::table('hdsd')->insert($hdsd);
             // Hiển thị thông báo thành công và chuyển hướng
             Session::put('message', 'Thêm sản phẩm mới thành công!');
-            return Redirect::to('add-product');
+            return Redirect::to('all-product');
         }else{
             // insert vô sanpham
             DB::table('sanpham')->insert($data);
@@ -92,7 +92,7 @@ class ProductController extends Controller
             DB::table('hdsd')->insert($hdsd);
             // Hiển thị thông báo thành công và chuyển hướng
             Session::put('message', 'Thêm sản phẩm mới thành công!');
-            return Redirect::to('add-product');
+            return Redirect::to('all-product');
         }
 
         
@@ -190,27 +190,13 @@ public function update_hdsd_product(Request $request,$product_id){
     $this->AuthenLogin();
     $data = array();
     $data['HDSD_mota'] = $request->hdsd_mota;
-    $get_video_file = $request->file('hdsd_video');
+    $data['HDSD_video'] = $request->hdsd_video;
     $productName = DB::table('sanpham')
                  ->where('sanpham_id', $product_id)
                  ->pluck('sanpham_ten')
                  ->first();
 
-    
-    if($get_video_file){
-        
-        // Tạo tên mới cho ảnh với phần mở rộng gốc và số ngẫu nhiên
-        $new_video = "hdsd".str_replace(' ', '', $productName).'.'.$get_video_file->getClientOriginalExtension();
-        
-        // Di chuyển tệp tin đến thư mục đích
-        $get_video_file->move('video/sp'.$product_id, $new_video);
-        
-        // Lưu thông tin ảnh vào cơ sở dữ liệu
-        $data['HDSD_video'] = $new_video;
-        
-    }
-
-
+   
     DB::table('hdsd')->where('sanpham_id', $product_id)->update($data);
     Session::put('message','Cập nhật thành công');
     return Redirect::to('all-product'); 
