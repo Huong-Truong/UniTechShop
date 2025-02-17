@@ -1867,7 +1867,7 @@ select.input-sm {
     height: 21px;
     width: 95px;
     position: relative;
-    float: left;
+    /* float: left; */
     margin-top: 11px;
 }
 .badge.bg-important {
@@ -3185,9 +3185,9 @@ a.active.font-icon{
     font-size:20px;
 }
  /* Ẩn giao diện textbox của thẻ input file */
- #exampleInputAddImg {
+ /* #exampleInputAddImg {
     display: none; /* Ẩn input file gốc */
-}
+} */
 
 /* Tạo nút bấm tùy chỉnh */
 .custom-file-upload {
@@ -3213,4 +3213,27 @@ a.active.font-icon{
 
 .img_edit{
     padding-bottom:10px ;
+}
+
+.custom-button {
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    background-color: #857777;
+    color: white;
+    border: 1px solid #a4adb6;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: bold;
+   
+}
+
+.custom-button:hover {
+    background-color: #4f4f4f;
+    border-color: #909090;
+    color: white;
+}
+
+a.active{
+    font-size: 15px;
 }

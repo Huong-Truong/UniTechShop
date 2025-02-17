@@ -8,6 +8,7 @@ use App\Http\Controllers\CategoryProduct;
 use App\Http\Controllers\BrandProduct;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\GalleryController;
 // use App\Http\Controllers\CheckOutController;
 
 
@@ -62,6 +63,7 @@ Route::post('/update-classify-product/{classify_id}', [ClassifyController::class
 Route::get('/delete-classify-product/{classify_id}', [ClassifyController::class, 'delete_classify_product'])->name('delete-classify');
 
 Route::get('/search-classify-product', [ClassifyController::class, 'search_classify_product'])->name('search-classify');
+
 ## CategoryProduct
 
 Route::get('/add-category-product', [CategoryProduct::class, 'add_category_product'])->name('add-category');
@@ -104,6 +106,10 @@ Route::get('/active-product/{product_id}', [ProductController::class, 'active_pr
 Route::get('/edit-hdsd-product/{product_id}', [ProductController::class, 'edit_hdsd_product'])->name('edit-hdsd-product');
 Route::post('/update-hdsd-product/{product_id}', [ProductController::class, 'update_hdsd_product'])->name('update-hdsd-product');
 
+## Gallery 
+Route::get('/add-gallery/{product_id}', [GalleryController::class, 'add_gallery'])->name('add-gallery');
+Route::post('/select-gallery', [GalleryController::class, 'select_gallery'])->name('select-gallery');
+Route::post('/insert-gallery/{product_id}', [GalleryController::class, 'insert_gallery'])->name('insert-gallery');
 ## orders
 Route::get('/manage-orders', [CheckOutController::class, 'manage_orders'])->name('manage-orders');
 Route::get('/view-order/{order_id}', [CheckOutController::class, 'view_order'])->name('view-order');
