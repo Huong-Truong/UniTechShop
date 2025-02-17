@@ -13,7 +13,7 @@ html, body{
 	font-family: 'Roboto', sans-serif;
     font-size: 100%;
     overflow-x: hidden;
-    background: url(../images/bg8.jpg) no-repeat 0px 0px;
+      background: url(../images/bg1.jpg) no-repeat 0px 0px; 
 	background-size:cover;
 }
 body a{
@@ -3209,4 +3209,8 @@ a.active.font-icon{
 }
 .table-striped>thead{
     background-color: rgba(230, 247, 250, 0.978);
+}
+
+.img_edit{
+    padding-bottom:10px ;
 }

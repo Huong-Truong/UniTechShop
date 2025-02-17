@@ -11,6 +11,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Visitors Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+ <!-- Favicon -->
+ <link href="{{asset('img/favicon.ico')}}" rel="icon">
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- bootstrap-css -->
 <link rel="stylesheet" href="{{ asset('admin_css/bootstrap.min.css') }}" >
@@ -36,6 +38,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </style>
 </head>
 <body>
+ 
 <div class="log-w3"><br><br>
 <div class="w3layouts-main">
     <h2>Đăng Nhập</h2>

@@ -25,7 +25,7 @@ class CategoryProduct extends Controller
     {
         $this->AuthenLogin();
         $classify_product = DB::table('phanloaisp')->orderby('phanloai_id', 'desc')->get(); ## lấy id 
-        return view('admin.add_category_product')->with('classify_product', $classify_product);
+        return view('admin.category.add_category_product')->with('classify_product', $classify_product);
     }
 
     public function all_category_product ()
@@ -34,8 +34,8 @@ class CategoryProduct extends Controller
         $all_category = DB::table('danhmuc')
         ->join('phanloaisp', 'phanloaisp.phanloai_id', '=', 'danhmuc.phanloai_id')->get(); ## lấy tấy cả dữ liêu
         
-        $manger_category = view ('admin.all_category_product')->with('all_category', $all_category);
-        return view('admin_layout')->with('admin.all_category_product',$manger_category); ## gom lại hiện chung
+        $manger_category = view ('admin.category.all_category_product')->with('all_category', $all_category);
+        return view('admin_layout')->with('admin.category.all_category_product',$manger_category); ## gom lại hiện chung
 
     }
 
@@ -74,8 +74,8 @@ class CategoryProduct extends Controller
     public function edit_category_product($category_id){
         $this->AuthenLogin();
         $category = DB::table('danhmuc')->where('danhmuc_id', $category_id)->get();
-        $manger_category = view ('admin.edit_category_product')->with('edit_category', $category);
-        return view('admin_layout')->with('admin.edit_category_product',$manger_category); ## gom lại hiện chung
+        $manger_category = view ('admin.category.edit_category_product')->with('edit_category', $category);
+        return view('admin_layout')->with('admin.category.edit_category_product',$manger_category); ## gom lại hiện chung
     }
 
 

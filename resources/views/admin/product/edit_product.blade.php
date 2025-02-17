@@ -29,8 +29,8 @@
                                 <div class="form-group">
 
                                     <label for="exampleInputEmail1">Hình ảnh</label>
-
-                                  <img src="{{asset('img/sp'.$edit_product->sanpham_id.'/'.$edit_product->sanpham_hinhanh)}}" height="100" width="100" alt="">
+                                    <br>
+                                  <img class="img_edit"src="{{asset('img/sp'.$edit_product->sanpham_id.'/'.$edit_product->sanpham_hinhanh)}}" height="100" width="100" alt="">
                                     <input type="file" name="product_image" class="form-control" id="exampleInputEmail1" >
                                 </div>
                                 <div class="form-group">

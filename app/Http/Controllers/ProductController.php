@@ -27,7 +27,7 @@ class ProductController extends Controller
         $this->AuthenLogin();
         $cate_product = DB::table('danhmuc')->orderby('danhmuc_id', 'desc')->get(); ## lấy id 
         $brand_product = DB::table('hangsanpham')->orderby('hang_id', 'desc')->get(); ## lấy id 
-       return view ('admin.add_product')->with('cate_product', $cate_product)->with('brand_product', $brand_product);
+       return view ('admin.product.add_product')->with('cate_product', $cate_product)->with('brand_product', $brand_product);
  
     }
 
@@ -39,8 +39,8 @@ class ProductController extends Controller
         ->join('hangsanpham', 'hangsanpham.hang_id', '=', 'sanpham.hang_id')
         ->get(); // Thêm phương thức get() để lấy tất cả dữ liệu
     
-        $manger = view ('admin.all_product')->with('all', $all);
-        return view('admin_layout')->with('admin.all_product',$manger); ## gom lại hiện chung
+        $manger = view ('admin.product.all_product')->with('all', $all);
+        return view('admin_layout')->with('admin.product.all_product',$manger); ## gom lại hiện chung
 
     }
 
@@ -126,7 +126,7 @@ class ProductController extends Controller
     $cate_product = DB::table('danhmuc')->orderBy('danhmuc_id', 'desc')->get();
     $brd_product = DB::table('hangsanpham')->orderBy('hang_id', 'desc')->get();
     $product = DB::table('sanpham')->where('sanpham_id', $product_id)->first();
-    return view('admin.edit_product')
+    return view('admin.product.edit_product')
         ->with('edit_product', $product)
         ->with('cate_product', $cate_product)
         ->with('brand_product', $brd_product);
@@ -181,7 +181,7 @@ class ProductController extends Controller
     $this->AuthenLogin();
     $product = DB::table('sanpham')->where('sanpham_id',$product_id)->get();
     $hdsd = DB::table('hdsd')->where('sanpham_id', $product_id)->get();
-    return view('admin.edit_hdsd_product')
+    return view('admin.product.edit_hdsd_product')
         ->with('hdsd', $hdsd)
         ->with('product', $product);
 }

@@ -11,8 +11,10 @@ use App\Http\Controllers\CartController;
 // use App\Http\Controllers\CheckOutController;
 
 
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/trang-chu', [HomeController::class, 'index'])->name('trang-chu');
+
 
 
 ## trang sản phẩm

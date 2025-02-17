@@ -22,14 +22,14 @@ class ClassifyController extends Controller
     public function add_classify_product ()
     {
         $this->AuthenLogin();
-        return view('admin.add_classify_product');
+        return view('admin.classify.add_classify_product');
     }
 
     public function all_classify_product ()
     {
         $this->AuthenLogin();
        $all_classify = DB::table('phanloaisp')->get(); ## lấy tấy cả dữ liêu
-        $manger_classify = view ('admin.all_classify_product')->with('all_classify', $all_classify);
+        $manger_classify = view ('admin.classify.all_classify_product')->with('all_classify', $all_classify);
         return view('admin_layout')->with('admin.all_classify_product',$manger_classify); ## gom lại hiện chung
 
     }
@@ -49,8 +49,8 @@ class ClassifyController extends Controller
     public function edit_classify_product($classify_id){
         $this->AuthenLogin();
         $classify = DB::table('phanloaisp')->where('phanloai_id', $classify_id)->get();
-        $manger_classify = view ('admin.edit_classify_product')->with('edit_classify', $classify);
-        return view('admin_layout')->with('admin.edit_classify_product',$manger_classify); ## gom lại hiện chung
+        $manger_classify = view ('admin.classify.edit_classify_product')->with('edit_classify', $classify);
+        return view('admin_layout')->with('admin.classify.edit_classify_product',$manger_classify); ## gom lại hiện chung
     }
 
 
@@ -75,7 +75,7 @@ class ClassifyController extends Controller
         $key_search = $request->key_search;
         $all_classify = DB::table('phanloaisp')->where('phanloai_ten','like','%'.$key_search.'%')->get(); ## lấy tấy cả dữ liêu
 
-         return view('admin.all_classify_product')->with('all_classify', $all_classify);
+         return view('admin.classify.all_classify_product')->with('all_classify', $all_classify);
 
     }
     

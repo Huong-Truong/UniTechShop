@@ -25,7 +25,7 @@ class HomeController extends Controller
         
     }
 
-
+   
 
 
     public function Search(Request $request){
