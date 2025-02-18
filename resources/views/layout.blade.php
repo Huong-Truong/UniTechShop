@@ -159,8 +159,22 @@
                             <a href="{{route('trang-chu')}}" class="nav-item nav-link active">Trang Chủ</a>
                             <a href="{{route('san-pham')}}" class="nav-item nav-link">Sản Phẩm</a>
                             <a href="{{route('show-cart')}}" class="nav-item nav-link">Giỏ Hàng</a>
-                            <a href="detail.html" class="nav-item nav-link">Thanh Toán</a>
-                            <a href="detail.html" class="nav-item nav-link">Tài Khoản</a>
+                            <?php
+                            $khachhang_id = Session::get('khachhang_id');
+                            $donhang_id = Session::get('donhang_id');
+                            if($khachhang_id!= NULL && $donhang_id == NULL ){
+                            ?>
+                          <a href="{{route('checkout')}}" class="nav-item nav-link">Thanh Toán</a>
+                        <?php }elseif($khachhang_id!= NULL && $donhang_id != NULL ){  ?>
+
+                            <a href="{{route('payment')}}" class="nav-item nav-link">Thanh toán</a>
+                    
+                        <?php  }else{?>
+                            <a href="{{route('login-checkout')}}" class="nav-item nav-link">Thanh toán</a>
+                            <?php }?>
+                           
+                          
+                            <!-- <a href="detail.html" class="nav-item nav-link">Tài Khoản</a> -->
                             <!-- <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
                                 <div class="dropdown-menu rounded-0 m-0">
@@ -171,8 +185,16 @@
                             <a href="contact.html" class="nav-item nav-link">Liên Hệ</a>
                         </div>
                         <div class="navbar-nav ml-auto py-0">
-                            <a href="{{route('login')}}" class="nav-item nav-link">Đăng Nhập</a>
+                            <?php
+                            $khachhang_id = Session::get('khachhang_id');
+                            if($khachhang_id!= NULL){
+                            ?>
+                        <a href="{{route('logout-checkout')}}" class="nav-item nav-link">Đăng xuất</a>
+                        <?php }else{  ?>
+                            <a href="{{route('login-checkout')}}" class="nav-item nav-link">Đăng Nhập</a>
                             <a href="" class="nav-item nav-link">Đăng ký</a>
+                        <?php  }?>
+                           
                         </div>
                     </div>
                 </nav>

@@ -83,7 +83,16 @@
                             <h5 class="font-weight-bold">Thành tiền</h5>
                             <h5 class="font-weight-bold">{{Cart::total()}}</h5>
                         </div>
-                        <button class="btn btn-block btn-primary my-3 py-3">Thanh Toán Đơn Hàng</button>
+                        <?php
+                            $khachhang_id = Session::get('khachhang_id');
+                            if($khachhang_id!= NULL){
+                            ?>
+                          <a href="{{route('checkout')}}" class="btn btn-block btn-primary my-3 py-3">Thanh toán đơn hàng</a>
+                        <?php }else{  ?>
+                            <a href="{{route('login-checkout')}}" class="btn btn-block btn-primary my-3 py-3">Thanh toán đơn hàng</a>
+                    
+                        <?php  }?>
+                
                     </div>
                 </div>
             </div>

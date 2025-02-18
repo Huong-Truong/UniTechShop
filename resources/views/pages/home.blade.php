@@ -135,9 +135,20 @@
             <div class="col">
                 <div class="owl-carousel vendor-carousel">
                 @foreach($hang as $key =>$value)
+                    <?php
+                    $total = 0;
+                        foreach($count_prd_brand as $v_count_prd_brand){
+                            if($v_count_prd_brand->hang_id == $value->hang_id){
+                                $total = $v_count_prd_brand->total;
+                                break;
+                            }
+                        }
+                        
+                        ?>
                     <div class="vendor-item border p-4 bg-primary">
                     <div class="cat-item d-flex flex-column border mb-4" style="padding: 10px;">
-                    <p class="text-right">15 Products</p>
+                    
+                    <p class="text-right">{{$total}} Products</p>
                     <a href="{{route('thuong-hieu',['hang_id' => $value->hang_id])}}" class="cat-img position-relative overflow-hidden mb-3">
                     <h4 class="font-weight-semi-bold m-0">{{$value->hang_ten}}</h4>
                     </a>

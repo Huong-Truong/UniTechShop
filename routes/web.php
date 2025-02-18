@@ -8,7 +8,7 @@ use App\Http\Controllers\CategoryProduct;
 use App\Http\Controllers\BrandProduct;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
-// use App\Http\Controllers\CheckOutController;
+use App\Http\Controllers\CheckOutController;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -37,6 +37,19 @@ Route::post('/save-cart', [CartController::class, 'save_cart'])->name('save-cart
 Route::get('/show-cart', [CartController::class, 'show_cart'])->name('show-cart');
 Route::get('/delete-to-cart/{rowID}', [CartController::class, 'delete_to_cart'])->name('delete-to-cart');
 Route::post('/update-cart-qty', [CartController::class, 'update_cart_qty'])->name('update-cart-qty');
+
+
+## login-thanh toán
+Route::get('/login-checkout', [CheckOutController::class, 'login_checkout'])->name('login-checkout');
+Route::get('/logout-checkout', [CheckOutController::class, 'logout_checkout'])->name('logout-checkout');
+
+Route::get('/checkout', [CheckOutController::class, 'checkout'])->name('checkout');
+Route::post('/save-checkout', [CheckOutController::class, 'save_checkout'])->name('save-checkout');
+Route::get('/payment', [CheckOutController::class, 'payment'])->name('payment');
+## user
+Route::post('/login-khachhang', [CheckOutController::class, 'login_khachhang'])->name('login-khachhang');
+Route::post('/dangky-khachhang', [CheckOutController::class, 'dangky_khachhang'])->name('dangky-khachhang');
+
 ## admin
 Route::get('/admin', [AdminController::class, 'index'])->name('admin'); ## đăng nhập admin
 Route::get('/dashboard', [AdminController::class, 'showDashboard'])->name('dashboard');

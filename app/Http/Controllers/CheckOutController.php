@@ -13,7 +13,102 @@ use Cart;
 class CheckOutController extends Controller
 {
 
+    public function dangky_khachhang(Request $request){
+        $data = array();
+        $data['khachhang_ten'] = $request->name;
+        $data['khachhang_matkhau'] = $request->pass;
+        ## chỉnh md5 không? md5( $request->pass)
+        $data['khachhang_email'] = $request->email;
+        $data['khachhang_sdt'] = $request->phone;
+        $insert_khachhang = DB::table('khachhang')->insertGetId($data); // Lấy ID của bản ghi mới chèn
+        
+        Session::put('khachhang_id', $insert_khachhang); // Lưu ID vào session
+        Session::put('khachhang_ten', $request->name); // Lưu tên khách hàng vào session
+        return Redirect::to('/checkout');
+        
+    }
+
+    public function login_khachhang(Request $request){
+        $email = $request->khachhang_email;
+        $password = $request->khachhang_matkhau;
+        $result = DB::table('khachhang')->where('khachhang_email', $email)->where('khachhang_matkhau',$password)->first();
+        if($result){
+            Session::put('khachhang_id', $result); // Lưu ID vào session
+            return Redirect::to('/checkout');
+        }else{
+            return Redirect::to('/login-checkout');
+        }
+       
+       
+
+
+    }
+
+    public function login_checkout(){
+        $cate_product = DB::table('danhmuc')->where('danhmuc_trangthai', 1)->orderby('danhmuc_id', 'desc')->get(); ## lấy id category
+        $brand = DB::table('hangsanpham')->where('hang_trangthai', 1)->orderby('hang_id', 'desc')->get();
+        $phanloai = DB::table('phanloaisp')->orderby('phanloai_id', 'asc')->get();
+        return view('login')->with('danhmuc', $cate_product)->with('hang', $brand)->with('phanloai', $phanloai);
+    }
+
+
+
+    public function logout_checkout(){
+        Session::flush();
+        return Redirect('/login-checkout');
+    }
     
+
+
+    public function checkout(){
+     
+        $khachhang_id = Session::get('khachhang_id');
+        $id = $khachhang_id->khachhang_id;
+        if($khachhang_id != NULL){
+            $cate_product = DB::table('danhmuc')->where('danhmuc_trangthai', 1)->orderby('danhmuc_id', 'desc')->get();
+            $brand = DB::table('hangsanpham')->where('hang_trangthai', 1)->orderby('hang_id', 'desc')->get();
+            $phanloai = DB::table('phanloaisp')->orderby('phanloai_id', 'asc')->get();
+            $khachhang = DB::table('khachhang')->where('khachhang_id', $id)->first();
+            return view('pages.checkout.checkout')->with('danhmuc', $cate_product)->with('hang', $brand)->with('phanloai', $phanloai)->with('khachhang', $khachhang);
+        }
+    
+    }
+    
+    
+
+
+
+    public function save_checkout(Request $request){
+        $data = array();
+        $data['donhang_nguoinhan'] = $request->nguoinhan;
+        $data['donhang_ghichu'] = $request->ghichu;
+        $data['donhang_email'] = $request->email;
+        $data['donhang_sdt'] = $request->sdt;
+        $data['donhang_diachi'] = $request->diachi;
+        $insert_donhang = DB::table('donhang')->insertGetId($data); // Lấy ID của bản ghi mới chèn
+        Session::put('donhang_id', $insert_donhang); // Lưu ID vào session
+        return Redirect::to('/payment');
+    }
+
+    
+    public function payment(){
+        $khachhang_id = Session::get('khachhang_id');
+        $id = $khachhang_id->khachhang_id;
+        if($khachhang_id != NULL){
+            $cate_product = DB::table('danhmuc')->where('danhmuc_trangthai', 1)->orderby('danhmuc_id', 'desc')->get();
+            $brand = DB::table('hangsanpham')->where('hang_trangthai', 1)->orderby('hang_id', 'desc')->get();
+            $phanloai = DB::table('phanloaisp')->orderby('phanloai_id', 'asc')->get();
+            $khachhang = DB::table('khachhang')->where('khachhang_id', $id)->first();
+            return view('pages.checkout.payment')->with('danhmuc', $cate_product)->with('hang', $brand)->with('phanloai', $phanloai)->with('khachhang', $khachhang);
+        }
+           
+    }
+
+   
+
+
+
+### cũ
     public function logout_check_out(){
      Session::flush();
      return Redirect::to('/login-check-out');   
@@ -78,11 +173,7 @@ class CheckOutController extends Controller
         return Redirect::to('/payment');
     }
 
-    public function payment(){
-        $cate_product = DB::table('tbl_category_product')->where('category_status', 1)->orderby('category_id', 'desc')->get(); ## lấy id category
-        $brd_product = DB::table('tbl_brand_product')->where('brand_status', 1)->orderby('brand_id', 'desc')->get(); ## lấy id category
-          return  view('pages.checkout.payment')->with('category', $cate_product)->with('brand', $brd_product);
-    }
+    
 
     public function order_place(Request $request){
         // Lấy payment method và insert
