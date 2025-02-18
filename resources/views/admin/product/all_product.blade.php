@@ -64,6 +64,7 @@
           echo  $formattedVND = number_format(preg_replace('/\D/', '',$pro->sanpham_gia), 0, ',', '.') . ' VND';
             ?>
             </td>
+            {{-- <td><img src="{{asset('img/sp'.$pro->sanpham_id.'/'.$pro->sanpham_hinhanh)}}" height="100" width="100" alt="Lỗi ảnh"></td> --}}
             <td><img src="{{asset('img/sp'.$pro->sanpham_id.'/'.$pro->sanpham_hinhanh)}}" height="100" width="100" alt="Lỗi ảnh"></td>
             <td>{{$pro->danhmuc_ten}}</td>
             <td>{{$pro->hang_ten}}</td>

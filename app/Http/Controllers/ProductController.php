@@ -71,8 +71,8 @@ class ProductController extends Controller
            // $get_name_image = current(explode('.', $get_image_file->getClientOriginalName()));
             
             // Tạo tên mới cho ảnh với phần mở rộng gốc và số ngẫu nhiên
-            $new_image = str_replace(' ', '', $data['sanpham_ten']).'.'.$get_image_file->getClientOriginalExtension();
-            
+            // $new_image = str_replace(' ', '', $data['sanpham_ten']).'.'.$get_image_file->getClientOriginalExtension();
+            $new_image = 'sp'.$maxId.'.'.$get_image_file->getClientOriginalExtension();
             // Di chuyển tệp tin đến thư mục đích
             $get_image_file->move('img/sp'.$maxId , $new_image);
             
@@ -159,7 +159,8 @@ class ProductController extends Controller
            // $get_name_image = current(explode('.', $get_image_file->getClientOriginalName()));
             
             // Tạo tên mới cho ảnh với phần mở rộng gốc và số ngẫu nhiên
-            $new_image = str_replace(' ', '', $data['sanpham_ten']).'.'.$get_image_file->getClientOriginalExtension();
+            // $new_image = str_replace(' ', '', $data['sanpham_ten']).'.'.$get_image_file->getClientOriginalExtension();
+            $new_image = 'sp'.$product_id.'.'.$get_image_file->getClientOriginalExtension();
             
             // Di chuyển tệp tin đến thư mục đích
             $get_image_file->move('img/sp'.$product_id, $new_image);

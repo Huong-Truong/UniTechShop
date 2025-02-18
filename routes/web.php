@@ -110,6 +110,8 @@ Route::post('/update-hdsd-product/{product_id}', [ProductController::class, 'upd
 Route::get('/add-gallery/{product_id}', [GalleryController::class, 'add_gallery'])->name('add-gallery');
 Route::post('/select-gallery', [GalleryController::class, 'select_gallery'])->name('select-gallery');
 Route::post('/insert-gallery/{product_id}', [GalleryController::class, 'insert_gallery'])->name('insert-gallery');
+Route::post('/update-gallery', [GalleryController::class, 'update_gallery'])->name('update-gallery');
+Route::post('/delete-gallery', [GalleryController::class, 'delete_gallery'])->name('delete-gallery');
 ## orders
 Route::get('/manage-orders', [CheckOutController::class, 'manage_orders'])->name('manage-orders');
 Route::get('/view-order/{order_id}', [CheckOutController::class, 'view_order'])->name('view-order');

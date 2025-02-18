@@ -81,6 +81,37 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             }
         });
 
+        $(document).on('blur','.edit_gallery_name',function(){
+            var gal_id = $(this).data('gal_id');
+            var gal_text = $(this).text();
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+              url:" {{ route('update-gallery') }}",
+                method : "POST",
+                data:{gal_id:gal_id,gal_text: gal_text,_token: _token},
+                success: function(data){
+                    load_gallery();
+                }
+            });
+
+        });
+
+        $(document).on('click','.delete-gallery',function(){
+            var gal_id = $(this).data('gal_id');
+            var gal_text = $(this).text();
+            var _token = $('input[name="_token"]').val();
+            if(confirm('Bạn có chắc chắn muốn xóa ảnh này ?')){
+                $.ajax({
+                url:" {{ route('delete-gallery') }}",
+                    method : "POST",
+                    data:{gal_id:gal_id,gal_text: gal_text,_token: _token},
+                    success: function(data){
+                        load_gallery();
+                    }
+                });
+            }
+        });
+
     });
 </script>
 <style>
@@ -299,7 +330,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <!-- user login dropdown start-->
         <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                <img alt="Lỗi" src="images/<?php echo rand(1, 3)?>.png">
+                <img alt=" " src="images/<?php echo rand(1, 3)?>.png">
                 <span class="username">
                     <?php 
                         $name = Session::get('admin_name');

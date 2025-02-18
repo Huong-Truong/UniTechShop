@@ -21,8 +21,9 @@
 
                                 <div class="col-md-3">
                                 </div>
-                                <div class="col-md-6">
-                                    <input type="file" class = "form-control" name = "file[]" accept="image/*" id="file" multiple>
+                                <div class="col-md-6  " >
+                                    <input type="file" class = "form-control custom-file-upload" name = "file[]" accept="image/*" id="file" multiple>
+                        
                                     <span id="error_gallery"></span>
                                 </div>
                                 <div class="col-md-3">

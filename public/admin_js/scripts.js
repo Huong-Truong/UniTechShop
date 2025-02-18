@@ -305,3 +305,10 @@
 
 // // Thay đổi nền ngay khi trang được tải
 // document.addEventListener('DOMContentLoaded', changeBackground);
+
+// document.querySelector('.custom-file-upload').addEventListener('change', function(event) {
+//     var inputFile = event.target;
+//     var fileName = inputFile.files[0] ? inputFile.files[0].name : 'Chọn tệp';
+//     var label = inputFile.nextElementSibling;
+//     label.textContent = fileName;
+// });
