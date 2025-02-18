@@ -145,12 +145,11 @@ class GalleryController extends Controller
 
     public function delete_gallery(Request $request){
         $gal_id = $request->gal_id;
-        $gal_text = $request->gal_text;
-        $pro_id = DB::table('hinhanh')->where('hinhanh_id', $gal_id)->pluck('sanpham_id')->first();
-        if($pro_id){
-            echo '../img/sp/'. $pro_id.'/'. $gal_text;
-        }
-        echo "Ko có";
+        // $gal_text = $request->gal_text;
+        // $pro_id = DB::table('hinhanh')->where('hinhanh_id', $gal_id)->pluck('sanpham_id')->first();
+        // if($pro_id){
+        //     echo '../img/sp/'. $pro_id.'/'. $gal_text;
+        // }
         
       // unlink('img/sp/'. $pro_id.'/'. $gal_text);
     
