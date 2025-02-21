@@ -41,8 +41,18 @@
                     </div>
                     <small class="pt-1">(50 Reviews)</small>
                 </div>
-                <h3 class="font-weight-semi-bold mb-4">{{number_format($sanpham->sanpham_gia) . ' VNĐ'}}</h3>
-                <p class="mb-4"> {{$sanpham->sanpham_mota}}</p>
+         
+                <?php 
+                if(isset($price_update) && $price_update ){
+                    ?>
+                <h3 class="font-weight-semi-bold mb-4">       <s>{{number_format($sanpham->sanpham_gia) . ' VNĐ'}}</s></h3>
+                <h3 class="font-weight-semi-bold mb-4">Giá khuyến mãi: {{number_format($price_update) . ' VNĐ'}}</h3>
+                <?php }else{ ?>
+                    <h3 class="font-weight-semi-bold mb-4">{{number_format($sanpham->sanpham_gia) . ' VNĐ'}}</h3>
+
+                <?php }?>
+                
+                <p class="mb-4">{{$sanpham->sanpham_mota}}</p>
                 <div class="d-flex mb-3">
                     <p class="text-dark font-weight-medium mb-0 mr-3">Thương hiệu: {{$sanpham->hang_ten}}</p>
                    

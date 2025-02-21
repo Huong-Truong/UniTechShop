@@ -44,12 +44,9 @@
             <th>Danh mục</th>
             <th>Thương hiệu</th>
             <th>Hiển thị</th>
-<<<<<<< HEAD
-            <th>Thư viện ảnh </th>
-=======
+          
             <th>Thư viện</th>
          
->>>>>>> 851d8709d3252554158477fadf598e627b92a88f
             <th>Thao tác</th>
             <th style="width:30px;"></th>
           </tr>

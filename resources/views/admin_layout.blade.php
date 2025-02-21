@@ -38,6 +38,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="{{asset('admin_js/morris.js')}}"></script>
 
 
+
+
+
+
 <script type="text/javascript">
     $(document).ready(function(){
         // gọi hàm
@@ -46,6 +50,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         function load_gallery(){
             var pro_id = $('.pro_id').val();
             var _token = $('input[name="_token"]').val();
+
            // alert(pro_id);
             $.ajax({
               url:" {{ route('select-gallery') }}",
@@ -333,11 +338,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <!-- user login dropdown start-->
         <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-<<<<<<< HEAD
-                <img alt=" " src="images/<?php echo rand(1, 3)?>.png">
-=======
+           
                 <img alt=" " src="images/huongtruong.jpg">
->>>>>>> 851d8709d3252554158477fadf598e627b92a88f
                 <span class="username">
                     <?php 
                         $name = Session::get('admin_name');

@@ -256,7 +256,14 @@ public function update_hdsd_product(Request $request,$product_id){
         join('hangsanpham', 'hangsanpham.hang_id', '=', 'sanpham.hang_id')->first();
         $hinhanh = DB::table('hinhanh')->where('sanpham_id', $product->sanpham_id)->get();
         $phanloai = DB::table('phanloaisp')->orderby('phanloai_id', 'asc')->get();
-        ## sản phẩm tương tự
+
+        $today = Date('Y-m-d');
+        $khuyenmai = DB::table('thongtinkhuyenmai')
+        ->join('khuyenmai','thongtinkhuyenmai.km_id', '=', 'khuyenmai.km_id')->where('thongtinkhuyenmai.sanpham_id', $sanpham_id)
+        ->whereDate('thongtinkhuyenmai.ngaybatdau' ,'<=', $today)
+        ->whereDate('thongtinkhuyenmai.ngayketthuc', '>=', $today)->
+        first();
+           ## sản phẩm tương tự
         ## lấy danh mục 
         
         $hdsd = DB::table('hdsd')->where('sanpham_id',$sanpham_id)->get();
@@ -266,10 +273,23 @@ public function update_hdsd_product(Request $request,$product_id){
         ->whereNotIn('sanpham_id', [$product->sanpham_id])
         ->limit(4)
         ->get();
-    
-        return view('pages.product.product_details')->with('hdsd', $hdsd)->with('phanloai', $phanloai)->with('hinhanh', $hinhanh)->with('danhmuc', $cate_product)->with('sanpham', $product)->with('sanpham_tuongtu', $product_rela);
+        if($khuyenmai){
+            if($khuyenmai->km_donvi == '%'){
+                $update_gia = $product->sanpham_gia - ($product->sanpham_gia * $khuyenmai->km_gia)/100;
+               
+            }else if($khuyenmai->km_donvi == 'VND'){
+                $update_gia = $product->sanpham_gia - $khuyenmai->km_gia;
+            }
+            Session::put('gia_update', $update_gia);
+            return view('pages.product.product_details')->with('hdsd', $hdsd)->with('phanloai', $phanloai)->with('price_update', $update_gia)->with('hinhanh', $hinhanh)->with('danhmuc', $cate_product)->with('sanpham', $product)->with('sanpham_tuongtu', $product_rela);
+        }else{
+            return view('pages.product.product_details')->with('hdsd', $hdsd)->with('phanloai', $phanloai)->with('hinhanh', $hinhanh)->with('danhmuc', $cate_product)->with('sanpham', $product)->with('sanpham_tuongtu', $product_rela);
 
-    }
+        }
+      
+        
+
 
    
+}
 }

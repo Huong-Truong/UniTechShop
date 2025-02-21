@@ -55,8 +55,8 @@
             <td>{{$cate_pro->sanpham_ten}}</td>
             <td>{{$cate_pro->sanpham_gia}}</td>
             <td>{{$cate_pro->ctdh_soluong}}</td>
-            <td>{{$cate_pro->sanpham_gia*$cate_pro->ctdh_soluong    }}</td>
-
+            <td>{{$cate_pro->sanpham_gia*$cate_pro->ctdh_soluong}}</td>
+            
           </tr>
         @endforeach
         </tbody>
