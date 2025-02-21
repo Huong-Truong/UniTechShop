@@ -68,6 +68,11 @@ Route::post('/admin-dashboard', [AdminController::class, 'dashboard'])->name('ad
 Route::get('/logout', [AdminController::class, 'logout'])->name('logout');
 
 
+//trang lien he
+Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
+//trang dich vu
+Route::get('/services', [HomeController::class, 'services'])->name('services');
+
 //  Test:
 
 // ADMIN:
