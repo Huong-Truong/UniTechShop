@@ -37,19 +37,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="{{asset('admin_js/raphael-min.js')}}"></script>
 <script src="{{asset('admin_js/morris.js')}}"></script>
 
-<!-- <script src="{{asset('ckeditor/ckeditor.js')}}"></script> -->
-<script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
-<script>
-    console.log("CKEditor script loaded");
-    CKEDITOR.replace("noidung1");
-</script>
 
- 
 
-<!-- <script>
-    CKEDITOR.replace("noidung1");
-</script>
- -->
+
 
 
 <script type="text/javascript">
@@ -60,6 +50,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         function load_gallery(){
             var pro_id = $('.pro_id').val();
             var _token = $('input[name="_token"]').val();
+
            // alert(pro_id);
             $.ajax({
               url:" {{ route('select-gallery') }}",

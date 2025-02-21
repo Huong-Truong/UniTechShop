@@ -144,7 +144,6 @@ class GalleryController extends Controller
     }
 }
 
-<<<<<<< HEAD
     public function delete_gallery(Request $request){
         $gal_id = $request->gal_id;
         // $gal_text = $request->gal_text;
@@ -158,7 +157,6 @@ class GalleryController extends Controller
     
        DB::table('hinhanh')->where('hinhanh_id', $gal_id)->delete();
         }
-=======
     // public function delete_gallery(Request $request){
     //     $gal_id = $request->gal_id;
     //      $gal_text = $request->gal_text;
@@ -174,35 +172,31 @@ class GalleryController extends Controller
     
     //     DB::table('hinhanh')->where('hinhanh_id', $gal_id)->delete();
     //     }
-    public function delete_gallery(Request $request) {
-        $gal_id = $request->gal_id;
-        $gal_text = DB::table('hinhanh')->where('hinhanh_id', $gal_id)->pluck('hinhanh_ten')->first();
-        $pro_id = DB::table('hinhanh')->where('hinhanh_id', $gal_id)->pluck('sanpham_id')->first();
+    // public function delete_gallery(Request $request) {
+    //     $gal_id = $request->gal_id;
+    //     $gal_text = DB::table('hinhanh')->where('hinhanh_id', $gal_id)->pluck('hinhanh_ten')->first();
+    //     $pro_id = DB::table('hinhanh')->where('hinhanh_id', $gal_id)->pluck('sanpham_id')->first();
     
-        if ($pro_id) {
-            $file_path = 'img/sp'.$pro_id.'/'.$gal_text ;
-            if (file_exists($file_path)) {
-                if (unlink($file_path)) {
-                    echo "Thành công";
-                } else {
-                    echo "Thất bại: Không thể xóa file.";
-                }
-            } else {
-                echo "Thất bại: File không tồn tại.";
-            }
-        } else {
-            echo "Thất bại: Không tìm thấy sản phẩm.";
-        }
+    //     if ($pro_id) {
+    //         $file_path = 'img/sp'.$pro_id.'/'.$gal_text ;
+    //         if (file_exists($file_path)) {
+    //             if (unlink($file_path)) {
+    //                 echo "Thành công";
+    //             } else {
+    //                 echo "Thất bại: Không thể xóa file.";
+    //             }
+    //         } else {
+    //             echo "Thất bại: File không tồn tại.";
+    //         }
+    //     } else {
+    //         echo "Thất bại: Không tìm thấy sản phẩm.";
+    //     }
     
-        DB::table('hinhanh')->where('hinhanh_id', $gal_id)->delete();
-    }
->>>>>>> 851d8709d3252554158477fadf598e627b92a88f
+    //     DB::table('hinhanh')->where('hinhanh_id', $gal_id)->delete();
+    // }
 }
 
 
 
-<<<<<<< HEAD
-=======
 
 
->>>>>>> 851d8709d3252554158477fadf598e627b92a88f

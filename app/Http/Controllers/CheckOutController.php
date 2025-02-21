@@ -249,10 +249,15 @@ class CheckOutController extends Controller
         ->join('khachhang', 'khachhang.khachhang_id', '=', 'donhang.khachhang_id')
         ->join('chitiettrangthai', 'donhang.donhang_id', '=', 'chitiettrangthai.donhang_id')
         ->join('trangthai','trangthai.trangthai_id', '=', 'chitiettrangthai.trangthai_id' )
-        ->select('donhang.*', 'khachhang.khachhang_ten', 'trangthai.trangthai_ten')
+        ->select('donhang.*', 'khachhang.khachhang_ten', 'trangthai.trangthai_ten', 'chitiettrangthai.trangthai_id')
         ->orderby('donhang.donhang_id', 'desc')->get(); // Thêm phương thức get() để lấy tất cả dữ liệu
     
-        return view ('admin.order.manage_orders')->with('all', $all_orders);
+        $donhang_id = $all_orders->pluck('donhang.donhang_id')->first();
+        $trangthai = DB::table('trangthai')->get();
+
+        
+        
+        return view ('admin.order.manage_orders')->with('all', $all_orders)->with('trangthai', $trangthai);
         // return view('admin_layout')->with('admin.manage_orders',$manger); ## gom lại hiện chung
 
     }
@@ -271,6 +276,17 @@ class CheckOutController extends Controller
         ->get();
 
         return view ('admin.order.view_order')->with('all_details', $all_orders_details)->with('customer',$all_payment_customer);
+
+    }
+
+    ## cập nhật trạng thái đơn hàng
+    public function update_status(Request $request){
+        $data = array();
+        $data['trangthai_id'] = $request->trangthai_donhang;
+
+        DB::table('chitiettrangthai')->where('donhang_id', $request->donhang_id)->update($data);
+        ## update
+        return Redirect::to('manage-orders');
 
     }
 }

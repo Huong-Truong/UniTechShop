@@ -10,11 +10,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckOutController;
 use App\Http\Controllers\GalleryController;
-
-
-// use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\SalesController;
-// use App\Http\Controllers\CheckOutController;
+
 
 
 
@@ -146,5 +143,7 @@ Route::post('/save-set-sale/{product_id}', [SalesController::class, 'save_set_sa
 Route::get('/manage-orders', [CheckOutController::class, 'manage_orders'])->name('manage-orders');
 Route::get('/view-order/{donhang_id}', [CheckOutController::class, 'view_order'])->name('view-order');
 Route::get('/delete-order/{donhang_id}', [CheckOutController::class, 'manage_orders'])->name('delete-order');
+## cập nhật trang thái đơn hàng
+Route::get('/update-status', [CheckOutController::class, 'update_status'])->name('update-status');
 
 # chien

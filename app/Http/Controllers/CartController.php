@@ -24,7 +24,12 @@ class CartController extends Controller
         $data['id'] = $product_info->sanpham_id;
         $data['qty'] = $quantity;
         $data['name'] = $product_info->sanpham_ten;
-        $data['price'] = $product_info->sanpham_gia;
+        if(Session::get('gia_update')){
+            $data['price'] = Session::get('gia_update');
+        }else{
+            $data['price'] = $product_info->sanpham_gia;
+        }
+      
         $data['weight'] = '1';
         $data['options']['image'] = $product_info->sanpham_hinhanh;
         Cart::add($data);

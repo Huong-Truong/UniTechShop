@@ -36,7 +36,7 @@
               </label>
             </th>
             <th>Người đặt</th>
-            <th>Tổng giá tiền</th>
+            <th>Tổng giá tiền kèm thuế</th>
             <th>Tình trạng</th>
             <th>Hiển thị</th>
             <th style="width:30px;"></th>
@@ -55,7 +55,24 @@
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
             <td>{{$cate_pro->khachhang_ten}}</td>
             <td>{{$cate_pro->donhang_tongtien}}</td>
-            <td>{{$cate_pro->trangthai_ten}}</td>
+
+            <td>
+            <form action="{{route('update-status')}}" method="get">
+            <div class="form-group">
+            <input type="hidden" name="donhang_id" value="{{$cate_pro->donhang_id}}">
+              <select name="trangthai_donhang" class="input-sm m-bot15">
+                     @foreach ($trangthai as $key=>$value)
+                    
+                    <option value = "{{$value->trangthai_id}}" {{ $value->trangthai_id == $cate_pro->trangthai_id? 'selected' : '' }} >
+                        
+                     {{$value->trangthai_ten}}
+                    </option>
+                    @endforeach
+              </select>
+              <input type="submit" class="btn btn-primary" name="submit" value="Sửa">
+            </div>
+            </form>
+            </td>
             <td>
               <a href="{{route('view-order', ['donhang_id' => $cate_pro->donhang_id])}}" class="active" ui-toggle-class=""><i class="fa fa-pencil-square-o text-success text-active"></i>  </a>
               <a onclick="return confirm('Bạn có chắc muốn xóa ?')" href="{{route('delete-order', ['donhang_id' => $cate_pro->donhang_id])}}"> <i class="fa fa-times text-danger text"></i></a>
