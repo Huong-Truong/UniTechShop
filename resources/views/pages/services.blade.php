@@ -9,7 +9,7 @@
         </div>
                 <table class="table table-bordered text-center mb-0">
                     <?php 
-                    $content = Cart::content();
+                
                     ?>
                     <thead class="bg-secondary text-dark">
                         <tr>
