@@ -795,7 +795,6 @@ ul.top-menu>li>a:hover,ul.top-menu>li>a:focus {
 }
 .panel {
     border: none ! important;
- 
      background-color: rgba(255, 255, 255, 0.9); 
 }
 div.panel-default{
@@ -805,8 +804,16 @@ div.panel-default{
 .table-striped{
     background-color:rgba(249, 250, 250, 0.5);
     color:black;
-    font-size: 13px;
+    font-size: 12px;
 }
+<<<<<<< HEAD
+=======
+.table-striped11{
+    background-color:rgba(249, 250, 250, 0.5);
+    color:black;
+    font-size: 11px;
+}
+>>>>>>> 851d8709d3252554158477fadf598e627b92a88f
 
 .agileinfo-grap {
     padding: 2em;
@@ -832,6 +839,7 @@ span.panel-title{
 	color:#000000;
 	 font-size: 18px;
 }
+
 
 .agile-calendar-grid {
     border: 1px solid #c0dbc5;
@@ -3236,4 +3244,14 @@ a.active.font-icon{
 
 a.active{
     font-size: 15px;
+<<<<<<< HEAD
+=======
+}
+
+.panel-heading1{
+    background-color:#FFFF;
+} 
+.panel-title{
+    font-size: 15px;
+>>>>>>> 851d8709d3252554158477fadf598e627b92a88f
 }

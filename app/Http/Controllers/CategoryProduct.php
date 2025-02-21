@@ -25,6 +25,10 @@ class CategoryProduct extends Controller
     {
         $this->AuthenLogin();
         $classify_product = DB::table('phanloaisp')->orderby('phanloai_id', 'desc')->get(); ## lấy id 
+        $classify_product = DB::table('phanloaisp')
+    ->select(DB::raw('MIN(phanloai_id) as phanloai_id'), 'phanloai_ten')
+    ->groupBy('phanloai_ten')
+    ->get();
         return view('admin.category.add_category_product')->with('classify_product', $classify_product);
     }
 

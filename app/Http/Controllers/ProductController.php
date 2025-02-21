@@ -27,6 +27,17 @@ class ProductController extends Controller
         $this->AuthenLogin();
         $cate_product = DB::table('danhmuc')->orderby('danhmuc_id', 'desc')->get(); ## lấy id 
         $brand_product = DB::table('hangsanpham')->orderby('hang_id', 'desc')->get(); ## lấy id 
+        
+        $cate_product = DB::table('danhmuc')
+        ->select(DB::raw('MIN(danhmuc_id) as danhmuc_id'), 'danhmuc_ten')
+        ->groupBy('danhmuc_ten')
+        ->get();
+        $brand_product = DB::table('hangsanpham')
+        ->select(DB::raw('MIN(hang_id) as hang_id'), 'hang_ten')
+        ->groupBy('hang_ten')
+        ->get();
+        // $cate_product = DB::table('danhmuc')->orderby('danhmuc_id', 'desc')->get(); ## lấy id 
+        // $brand_product = DB::table('hangsanpham')->orderby('hang_id', 'desc')->get(); ## lấy id 
        return view ('admin.product.add_product')->with('cate_product', $cate_product)->with('brand_product', $brand_product);
  
     }

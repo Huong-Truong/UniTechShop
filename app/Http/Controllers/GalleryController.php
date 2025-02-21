@@ -139,10 +139,12 @@ class GalleryController extends Controller
         }
         // Hiển thị thông báo thành công và chuyển hướng
         Session::put('message', 'Thêm ảnh mới cho sản phẩm thành công!');
+        //Session::put('message', 'Thêm ảnh mới cho sản phẩm thành công!');
         return Redirect::to('add-gallery/'.$product_id);
     }
 }
 
+<<<<<<< HEAD
     public function delete_gallery(Request $request){
         $gal_id = $request->gal_id;
         // $gal_text = $request->gal_text;
@@ -156,7 +158,51 @@ class GalleryController extends Controller
     
        DB::table('hinhanh')->where('hinhanh_id', $gal_id)->delete();
         }
+=======
+    // public function delete_gallery(Request $request){
+    //     $gal_id = $request->gal_id;
+    //      $gal_text = $request->gal_text;
+    //      $pro_id = DB::table('hinhanh')->where('hinhanh_id', $gal_id)->pluck('sanpham_id')->first();
+    //      echo $pro_id;
+    //      if($pro_id){
+    //          echo '../img/sp/'. $pro_id.'/'. $gal_text;
+    //       }
+    //     if( unlink('../img/sp/'. $pro_id.'/'. $gal_text)){
+    //         echo "Thành công";
+    //     } else echo "Thất bại";
+      
+    
+    //     DB::table('hinhanh')->where('hinhanh_id', $gal_id)->delete();
+    //     }
+    public function delete_gallery(Request $request) {
+        $gal_id = $request->gal_id;
+        $gal_text = DB::table('hinhanh')->where('hinhanh_id', $gal_id)->pluck('hinhanh_ten')->first();
+        $pro_id = DB::table('hinhanh')->where('hinhanh_id', $gal_id)->pluck('sanpham_id')->first();
+    
+        if ($pro_id) {
+            $file_path = 'img/sp'.$pro_id.'/'.$gal_text ;
+            if (file_exists($file_path)) {
+                if (unlink($file_path)) {
+                    echo "Thành công";
+                } else {
+                    echo "Thất bại: Không thể xóa file.";
+                }
+            } else {
+                echo "Thất bại: File không tồn tại.";
+            }
+        } else {
+            echo "Thất bại: Không tìm thấy sản phẩm.";
+        }
+    
+        DB::table('hinhanh')->where('hinhanh_id', $gal_id)->delete();
+    }
+>>>>>>> 851d8709d3252554158477fadf598e627b92a88f
 }
 
 
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 851d8709d3252554158477fadf598e627b92a88f

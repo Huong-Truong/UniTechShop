@@ -29,6 +29,7 @@ class ClassifyController extends Controller
     {
         $this->AuthenLogin();
        $all_classify = DB::table('phanloaisp')->get(); ## lấy tấy cả dữ liêu
+        $all_classify = DB::table('phanloaisp')->get(); ## lấy tấy cả dữ liêu
         $manger_classify = view ('admin.classify.all_classify_product')->with('all_classify', $all_classify);
         return view('admin_layout')->with('admin.all_classify_product',$manger_classify); ## gom lại hiện chung
 

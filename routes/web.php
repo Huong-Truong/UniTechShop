@@ -12,6 +12,10 @@ use App\Http\Controllers\CheckOutController;
 use App\Http\Controllers\GalleryController;
 
 
+use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\SalesController;
+// use App\Http\Controllers\CheckOutController;
+
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -129,6 +133,15 @@ Route::post('/select-gallery', [GalleryController::class, 'select_gallery'])->na
 Route::post('/insert-gallery/{product_id}', [GalleryController::class, 'insert_gallery'])->name('insert-gallery');
 Route::post('/update-gallery', [GalleryController::class, 'update_gallery'])->name('update-gallery');
 Route::post('/delete-gallery', [GalleryController::class, 'delete_gallery'])->name('delete-gallery');
+
+## Sales
+Route::get('/all-sales', [SalesController::class, 'all_sales'])->name('all-sales');
+Route::get('/add-sales', [SalesController::class, 'add_sales'])->name('add-sales');
+Route::get('/delete-sales/{sale_id}', [SalesController::class, 'delete_sales'])->name('delete-sales');
+Route::post('/save-sales', [SalesController::class, 'save_sales'])->name('save-sales');
+Route::get('/set-sale/{product_id}', [SalesController::class, 'set_sale'])->name('set-sale');
+Route::post('/save-set-sale/{product_id}', [SalesController::class, 'save_set_sale'])->name('save-set-sale');
+
 ## orders
 Route::get('/manage-orders', [CheckOutController::class, 'manage_orders'])->name('manage-orders');
 Route::get('/view-order/{donhang_id}', [CheckOutController::class, 'view_order'])->name('view-order');

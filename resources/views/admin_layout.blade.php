@@ -137,6 +137,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     width:100%;
     text-align: center;
     padding: 15px;
+    background-color:#FFFF; 
     }
     .fa-thumb-style {
     font-size: 20px;
@@ -346,7 +347,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <!-- user login dropdown start-->
         <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+<<<<<<< HEAD
                 <img alt=" " src="images/<?php echo rand(1, 3)?>.png">
+=======
+                <img alt=" " src="images/huongtruong.jpg">
+>>>>>>> 851d8709d3252554158477fadf598e627b92a88f
                 <span class="username">
                     <?php 
                         $name = Session::get('admin_name');
@@ -391,7 +396,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <ul class="sub">
 						<li><a href="{{ route('add-classify') }}">Thêm phân loại sản phẩm</a></li>
 						<li><a href="{{route('all-classify') }}">Liệt kê phân loại sản phẩm</a></li>
-                       
                     </ul>
                 </li> 
                 <li class="sub-menu">
@@ -441,12 +445,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-book"></i>
-                        <span> Khuyến mãi</span>
+                        <span> Quản lý khuyến mãi</span>
                     </a>
                     <ul class="sub">
-						<li><a href="{{ route('add-product') }}">Thêm khuyến mãi</a></li>
-						<li><a href="{{route('all-product') }}">Liệt kê khuyến mãi</a></li>
-                       
+						<li><a href="{{ route('all-sales') }}">Khuyến mãi hệ thống</a></li>
+                        {{-- <li><a href="{{ route('set-sales') }}">Thiết lập khuyến mãi </a></li> --}}
                     </ul>
                 </li>
                 
