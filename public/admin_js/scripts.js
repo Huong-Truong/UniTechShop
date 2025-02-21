@@ -288,3 +288,27 @@
 
 
 })(jQuery);
+
+// script.js
+// function getRandomImage() {
+//     const images = ['../images/bg1.jpg', '../images/bg2.jpg']; // Tên file hình ảnh
+//     const randomIndex = Math.floor(Math.random() * images.length);
+//     return images[randomIndex];
+// }
+
+// function changeBackground() {
+//     const randomImage = getRandomImage();
+//     document.body.style.backgroundImage = `url('${randomImage}')`;
+//     document.body.style.backgroundRepeat = 'no-repeat';
+//     document.body.style.backgroundPosition = '0px 0px';
+// }
+
+// // Thay đổi nền ngay khi trang được tải
+// document.addEventListener('DOMContentLoaded', changeBackground);
+
+// document.querySelector('.custom-file-upload').addEventListener('change', function(event) {
+//     var inputFile = event.target;
+//     var fileName = inputFile.files[0] ? inputFile.files[0].name : 'Chọn tệp';
+//     var label = inputFile.nextElementSibling;
+//     label.textContent = fileName;
+// });

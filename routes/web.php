@@ -9,10 +9,14 @@ use App\Http\Controllers\BrandProduct;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckOutController;
+use App\Http\Controllers\GalleryController;
+
+
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/trang-chu', [HomeController::class, 'index'])->name('trang-chu');
+
 
 
 ## trang sản phẩm
@@ -50,6 +54,9 @@ Route::get('/payment', [CheckOutController::class, 'payment'])->name('payment');
 Route::post('/login-khachhang', [CheckOutController::class, 'login_khachhang'])->name('login-khachhang');
 Route::post('/dangky-khachhang', [CheckOutController::class, 'dangky_khachhang'])->name('dangky-khachhang');
 
+
+## đặt hàng
+Route::post('/order-place', [CheckOutController::class, 'order_place'])->name('order-place');
 ## admin
 Route::get('/admin', [AdminController::class, 'index'])->name('admin'); ## đăng nhập admin
 Route::get('/dashboard', [AdminController::class, 'showDashboard'])->name('dashboard');
@@ -73,6 +80,7 @@ Route::post('/update-classify-product/{classify_id}', [ClassifyController::class
 Route::get('/delete-classify-product/{classify_id}', [ClassifyController::class, 'delete_classify_product'])->name('delete-classify');
 
 Route::get('/search-classify-product', [ClassifyController::class, 'search_classify_product'])->name('search-classify');
+
 ## CategoryProduct
 
 Route::get('/add-category-product', [CategoryProduct::class, 'add_category_product'])->name('add-category');
@@ -115,9 +123,15 @@ Route::get('/active-product/{product_id}', [ProductController::class, 'active_pr
 Route::get('/edit-hdsd-product/{product_id}', [ProductController::class, 'edit_hdsd_product'])->name('edit-hdsd-product');
 Route::post('/update-hdsd-product/{product_id}', [ProductController::class, 'update_hdsd_product'])->name('update-hdsd-product');
 
+## Gallery 
+Route::get('/add-gallery/{product_id}', [GalleryController::class, 'add_gallery'])->name('add-gallery');
+Route::post('/select-gallery', [GalleryController::class, 'select_gallery'])->name('select-gallery');
+Route::post('/insert-gallery/{product_id}', [GalleryController::class, 'insert_gallery'])->name('insert-gallery');
+Route::post('/update-gallery', [GalleryController::class, 'update_gallery'])->name('update-gallery');
+Route::post('/delete-gallery', [GalleryController::class, 'delete_gallery'])->name('delete-gallery');
 ## orders
 Route::get('/manage-orders', [CheckOutController::class, 'manage_orders'])->name('manage-orders');
-Route::get('/view-order/{order_id}', [CheckOutController::class, 'view_order'])->name('view-order');
-Route::get('/delete-order/{order_id}', [CheckOutController::class, 'manage_orders'])->name('delete-order');
+Route::get('/view-order/{donhang_id}', [CheckOutController::class, 'view_order'])->name('view-order');
+Route::get('/delete-order/{donhang_id}', [CheckOutController::class, 'manage_orders'])->name('delete-order');
 
 # chien

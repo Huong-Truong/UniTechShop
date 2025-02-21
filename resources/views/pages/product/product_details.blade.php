@@ -13,15 +13,12 @@
                         <div class="carousel-item active">
                             <img class="w-100 h-100" src="{{ asset('img/sp' . $sanpham->sanpham_id . '/' . $sanpham->sanpham_hinhanh) }}" alt="Image">
                         </div>
+                        @foreach ($hinhanh as $v_hinhanh)
                         <div class="carousel-item">
-                            <img class="w-100 h-100" src="img/product-2.jpg" alt="Image">
+                            <img class="w-100 h-100" src="{{ asset('img/sp' . $sanpham->sanpham_id . '/' . $v_hinhanh->hinhanh_ten) }}" alt="Image">
                         </div>
-                        <div class="carousel-item">
-                            <img class="w-100 h-100" src="img/product-3.jpg" alt="Image">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="w-100 h-100" src="img/product-4.jpg" alt="Image">
-                        </div>
+                       
+                        @endforeach
                     </div>
                     <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
                         <i class="fa fa-2x fa-angle-left text-dark"></i>
@@ -73,9 +70,12 @@
             </div>
         </div>
         <button type="submit" class="btn btn-primary px-3 ml-3"><i class="fa fa-shopping-cart mr-1"></i> Thêm vào giỏ hàng</button>
-    </div>
-</form>
 
+        
+    </div>
+  
+</form>
+<a href="#dv" class="btn btn-primary px-3 ml-3"><i class="fa fa-file mr-1"></i> Dịch vụ đính kèm</a>
 <script>
     document.querySelector('.btn-minus').addEventListener('click', function() {
         let qtyInput = document.querySelector('input[name="qty"]');
@@ -115,16 +115,13 @@
         <div class="row px-xl-5">
             <div class="col">
                 <div class="nav nav-tabs justify-content-center border-secondary mb-4">
-                    <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Mô tả & Video</a>
+                    <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-4">Hướng dẫn sử dụng & Video</a>
                     <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-2">Các thông số</a>
                     <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">Đánh giá (10)</a>
+                    <a class="nav-item nav-link  active" data-toggle="tab" href="#tab-pane-1" id="dv" >Dịch vụ</a>
                 </div>
                 <div class="tab-content">
-                    <div class="tab-pane fade show active" id="tab-pane-1">
-                        <h4 class="mb-3">Product Description</h4>
-                        <p>Eos no lorem eirmod diam diam, eos elitr et gubergren diam sea. Consetetur vero aliquyam invidunt duo dolores et duo sit. Vero diam ea vero et dolore rebum, dolor rebum eirmod consetetur invidunt sed sed et, lorem duo et eos elitr, sadipscing kasd ipsum rebum diam. Dolore diam stet rebum sed tempor kasd eirmod. Takimata kasd ipsum accusam sadipscing, eos dolores sit no ut diam consetetur duo justo est, sit sanctus diam tempor aliquyam eirmod nonumy rebum dolor accusam, ipsum kasd eos consetetur at sit rebum, diam kasd invidunt tempor lorem, ipsum lorem elitr sanctus eirmod takimata dolor ea invidunt.</p>
-                        <p>Dolore magna est eirmod sanctus dolor, amet diam et eirmod et ipsum. Amet dolore tempor consetetur sed lorem dolor sit lorem tempor. Gubergren amet amet labore sadipscing clita clita diam clita. Sea amet et sed ipsum lorem elitr et, amet et labore voluptua sit rebum. Ea erat sed et diam takimata sed justo. Magna takimata justo et amet magna et.</p>
-                    </div>
+                   
                     <div class="tab-pane fade" id="tab-pane-2">
                         <h4 class="mb-3">Additional Information</h4>
                         <p>Eos no lorem eirmod diam diam, eos elitr et gubergren diam sea. Consetetur vero aliquyam invidunt duo dolores et duo sit. Vero diam ea vero et dolore rebum, dolor rebum eirmod consetetur invidunt sed sed et, lorem duo et eos elitr, sadipscing kasd ipsum rebum diam. Dolore diam stet rebum sed tempor kasd eirmod. Takimata kasd ipsum accusam sadipscing, eos dolores sit no ut diam consetetur duo justo est, sit sanctus diam tempor aliquyam eirmod nonumy rebum dolor accusam, ipsum kasd eos consetetur at sit rebum, diam kasd invidunt tempor lorem, ipsum lorem elitr sanctus eirmod takimata dolor ea invidunt.</p>
@@ -215,6 +212,77 @@
                             </div>
                         </div>
                     </div>
+                    <div class="tab-pane fade " id="tab-pane-4">
+                  
+                  <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                      @foreach($hdsd as $v_hdsd)
+                  <h4 class="mb-3">Hướng dẫn sử dụng</h4>
+                  <h5>Documents</h5>
+                  <a href="{{$v_hdsd->HDSD_mota}}">Nhấn vào đây </a>
+                  <div class="form-group">
+                              <h5 for="exampleInputEmail1">Video</h5><br>
+                              <iframe width="700" height="400" src="https://www.youtube.com/embed/{{$v_hdsd->HDSD_video}}" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen></iframe>
+                              <br>
+                              
+                          </div>
+                          @endforeach
+                      </div>
+              </div>
+                    <div class="tab-pane fade show active" id="tab-pane-1">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4 class="mb-4">Dịch vụ tập huấn sử dụng sản phẩm</h4>
+                                <div class="media mb-4">
+                                    <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+                                    <div class="media-body">
+                                        <h6>John Doe<small> - <i>01 Jan 2045</i></small></h6>
+                                        <div class="text-primary mb-2">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star-half-alt"></i>
+                                            <i class="far fa-star"></i>
+                                        </div>
+                                        <p>Diam amet duo labore stet elitr ea clita ipsum, tempor labore accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 class="mb-4">Leave a review</h4>
+                                <small>Your email address will not be published. Required fields are marked *</small>
+                                <div class="d-flex my-3">
+                                    <p class="mb-0 mr-2">Your Rating * :</p>
+                                    <div class="text-primary">
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                </div>
+                                <form>
+                                    <div class="form-group">
+                                        <label for="message">Your Review *</label>
+                                        <textarea id="message" cols="30" rows="5" class="form-control"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name">Your Name *</label>
+                                        <input type="text" class="form-control" id="name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Your Email *</label>
+                                        <input type="email" class="form-control" id="email">
+                                    </div>
+                                    <div class="form-group mb-0">
+                                        <input type="submit" value="Leave Your Review" class="btn btn-primary px-3">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -247,6 +315,7 @@
 
                         <a href="{{route('xem-san-pham', ['sanpham_id' => $value->sanpham_id])}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết</a>
                         <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ hàng</a>
+         
                     </div>
                  
                 </div>

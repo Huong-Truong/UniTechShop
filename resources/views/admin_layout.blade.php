@@ -14,6 +14,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Visitors Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+ <!-- Favicon -->
+ <link href="{{asset('img/favicon.ico')}}" rel="icon">
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- bootstrap-css -->
 <link rel="stylesheet" href="{{asset('admin_css/bootstrap.min.css')}}" >
@@ -34,9 +36,103 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="{{asset('admin_js/jquery2.0.3.min.js')}}"></script>
 <script src="{{asset('admin_js/raphael-min.js')}}"></script>
 <script src="{{asset('admin_js/morris.js')}}"></script>
+
+<!-- <script src="{{asset('ckeditor/ckeditor.js')}}"></script> -->
+<script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+<script>
+    console.log("CKEditor script loaded");
+    CKEDITOR.replace("noidung1");
+</script>
+
+ 
+
+<!-- <script>
+    CKEDITOR.replace("noidung1");
+</script>
+ -->
+
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        // gọi hàm
+        load_gallery();
+        // viết hàm
+        function load_gallery(){
+            var pro_id = $('.pro_id').val();
+            var _token = $('input[name="_token"]').val();
+           // alert(pro_id);
+            $.ajax({
+              url:" {{ route('select-gallery') }}",
+                method : "POST",
+                data:{pro_id: pro_id,_token: _token},
+                success: function(data){
+                    $('#gallery_load').html(data);
+                }
+            });
+        }
+
+        $('#file').change(function(){
+            var error = false;
+            var files = $('#file')[0].files;
+           ;
+            if(files.length > 5){
+                alert('Chỉ được chọn tối đa 5 ảnh ');
+                error=true;
+                // error += '<p id="messageStyle">Bạn chỉ được chọn tối đa 10 ảnh</p>';
+            // } else if(files.length == ''){
+            //     alert('Bạn không được bỏ trống ảnh ');
+            //     // error += '<p  id="messageStyle">Bạn không được bỏ trống ảnh</p>';
+            } else if(files.size > 1000){
+                error=true;
+                alert('Kích thước của anh không được lớn hơn 8MB');
+                // error += '<p id="messageStyle">Kích thước của anh không được lớn hơn 8MB</p>';
+            }
+
+            if(error==false){
+
+            } else {
+                $('#file').val('');
+               // $('#error_gallery').html('<span class="text-danger">'+error+'</span>');
+                return false;
+            }
+        });
+
+        $(document).on('blur','.edit_gallery_name',function(){
+            var gal_id = $(this).data('gal_id');
+            var gal_text = $(this).text();
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+              url:" {{ route('update-gallery') }}",
+                method : "POST",
+                data:{gal_id:gal_id,gal_text: gal_text,_token: _token},
+                success: function(data){
+                    load_gallery();
+                }
+            });
+
+        });
+
+        $(document).on('click','.delete-gallery',function(){
+            var gal_id = $(this).data('gal_id');
+            var gal_text = $(this).text();
+            var _token = $('input[name="_token"]').val();
+            if(confirm('Bạn có chắc chắn muốn xóa ảnh này ?')){
+                $.ajax({
+                url:" {{ route('delete-gallery') }}",
+                    method : "POST",
+                    data:{gal_id:gal_id,gal_text: gal_text,_token: _token},
+                    success: function(data){
+                        load_gallery();
+                    }
+                });
+            }
+        });
+
+    });
+</script>
 <style>
     p#messageStyle{
-    color:rgb(109, 109, 111);
+    color:rgb(94, 94, 95);
     font-size: 15px;
     width:100%;
     text-align: center;
@@ -250,7 +346,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <!-- user login dropdown start-->
         <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                <img alt="Lỗi" src="images/<?php echo rand(1, 3)?>.png">
+                <img alt=" " src="images/<?php echo rand(1, 3)?>.png">
                 <span class="username">
                     <?php 
                         $name = Session::get('admin_name');
@@ -290,7 +386,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                  <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-book"></i>
-                        <span>Phân loại sản phẩm</span>
+                        <span>Quản lý phân loại</span>
                     </a>
                     <ul class="sub">
 						<li><a href="{{ route('add-classify') }}">Thêm phân loại sản phẩm</a></li>
@@ -301,7 +397,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-book"></i>
-                        <span>Danh mục sản phẩm</span>
+                        <span>Quản lý danh mục</span>
                     </a>
                     <ul class="sub">
 						<li><a href="{{ route('add-category') }}">Thêm danh mục sản phẩm</a></li>
@@ -312,7 +408,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-book"></i>
-                        <span>Thương hiệu sản phẩm</span>
+                        <span>Quản lý thương hiệu</span>
                     </a>
                     <ul class="sub">
 						<li><a href="{{ route('add-brand') }}">Thêm thương hiệu </a></li>
@@ -323,7 +419,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-book"></i>
-                        <span> Sản phẩm</span>
+                        <span> Quản lý sản phẩm</span>
                     </a>
                     <ul class="sub">
 						<li><a href="{{ route('add-product') }}">Thêm sản phẩm</a></li>

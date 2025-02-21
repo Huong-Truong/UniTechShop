@@ -23,15 +23,15 @@ class BrandProduct extends Controller
     public function add_brand_product ()
     {
         $this->AuthenLogin();
-        return view('admin.add_brand_product');
+        return view('admin.brand.add_brand_product');
     }
 
     public function all_brand_product ()
     {
         $this->AuthenLogin();
        $all_brand = DB::table('hangsanpham')->get(); ## lấy tấy cả dữ liêu
-        $manger_brand = view ('admin.all_brand_product')->with('all_brand', $all_brand);
-        return view('admin_layout')->with('admin.all_brand_product',$manger_brand); ## gom lại hiện chung
+        $manger_brand = view ('admin.brand.all_brand_product')->with('all_brand', $all_brand);
+        return view('admin_layout')->with('admin.brand.all_brand_product',$manger_brand); ## gom lại hiện chung
 
     }
 
@@ -70,8 +70,8 @@ class BrandProduct extends Controller
     public function edit_brand_product($brand_id){
         $this->AuthenLogin();
         $brand = DB::table('hangsanpham')->where('hang_id', $brand_id)->get();
-        $manger_brand = view ('admin.edit_brand_product')->with('edit_brand', $brand);
-        return view('admin_layout')->with('admin.edit_brand_product',$manger_brand); ## gom lại hiện chung
+        $manger_brand = view ('admin.brand.edit_brand_product')->with('edit_brand', $brand);
+        return view('admin_layout')->with('admin.brand.edit_brand_product',$manger_brand); ## gom lại hiện chung
     }
 
 

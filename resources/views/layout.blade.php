@@ -161,11 +161,12 @@
                             <a href="{{route('show-cart')}}" class="nav-item nav-link">Giỏ Hàng</a>
                             <?php
                             $khachhang_id = Session::get('khachhang_id');
-                            $donhang_id = Session::get('donhang_id');
-                            if($khachhang_id!= NULL && $donhang_id == NULL ){
+                            $vanchuyen_id = Session::get('vanchuyen_id');
+                            
+                            if($khachhang_id!= NULL && $vanchuyen_id == NULL  ){
                             ?>
                           <a href="{{route('checkout')}}" class="nav-item nav-link">Thanh Toán</a>
-                        <?php }elseif($khachhang_id!= NULL && $donhang_id != NULL ){  ?>
+                        <?php }elseif($khachhang_id!= NULL && $vanchuyen_id != NULL ){  ?>
 
                             <a href="{{route('payment')}}" class="nav-item nav-link">Thanh toán</a>
                     
@@ -190,6 +191,7 @@
                             if($khachhang_id!= NULL){
                             ?>
                         <a href="{{route('logout-checkout')}}" class="nav-item nav-link">Đăng xuất</a>
+                        <!-- Sẽ làm thêm bấm đăng nhập kh thì nó hiện trang chủ, còn đăng nhập từ nút thanh toán thì sau khi đăng nhập qua thanh toán -->
                         <?php }else{  ?>
                             <a href="{{route('login-checkout')}}" class="nav-item nav-link">Đăng Nhập</a>
                             <a href="" class="nav-item nav-link">Đăng ký</a>

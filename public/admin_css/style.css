@@ -13,7 +13,7 @@ html, body{
 	font-family: 'Roboto', sans-serif;
     font-size: 100%;
     overflow-x: hidden;
-    background: url(../images/bg8.jpg) no-repeat 0px 0px;
+      background: url(../images/bg1.jpg) no-repeat 0px 0px; 
 	background-size:cover;
 }
 body a{
@@ -807,7 +807,7 @@ div.panel-default{
     color:black;
     font-size: 13px;
 }
-}
+
 .agileinfo-grap {
     padding: 2em;
     background:rgb(238, 249, 240);
@@ -1867,7 +1867,7 @@ select.input-sm {
     height: 21px;
     width: 95px;
     position: relative;
-    float: left;
+    /* float: left; */
     margin-top: 11px;
 }
 .badge.bg-important {
@@ -2539,8 +2539,7 @@ div#chartContainer5,div#chartContainer6,div#chartContainer7,div#chartContainer8 
     height:150px;
     margin-top:20px;
 }
-canvas.canvasjs-chart-canvas {
-}
+
 .chart_agile_bottom{
 	padding:20px;
 	background:#fff;
@@ -3186,14 +3185,39 @@ a.active.font-icon{
     font-size:20px;
 }
  /* Ẩn giao diện textbox của thẻ input file */
- #exampleInputAddImg {
-    display: none; /* Ẩn input file gốc */
-}
+    #exampleInputAddImg {
+    display: none; 
+}   
 
 /* Tạo nút bấm tùy chỉnh */
 .custom-file-upload {
     display: inline-block;
     padding: 6px 12px;
+    cursor: pointer;
+    background-color: hsl(0, 0%, 100%);
+    color: rgb(0, 0, 0);
+    border: 1px solid #a4adb6;
+    border-radius: 4px;
+    font-size: 13px;
+    /* font-weight: bold; */
+}
+
+.custom-file-upload:hover {
+    background-color: #dddddd;
+    border-color: #909090;
+
+}
+.table-striped>thead{
+    background-color: rgba(230, 247, 250, 0.978);
+}
+
+.img_edit{
+    padding-bottom:10px ;
+}
+
+.custom-button {
+    display: inline-block;
+    padding: 8px 14px;
     cursor: pointer;
     background-color: #857777;
     color: white;
@@ -3201,13 +3225,15 @@ a.active.font-icon{
     border-radius: 4px;
     font-size: 10px;
     font-weight: bold;
+   
 }
 
-.custom-file-upload:hover {
+.custom-button:hover {
     background-color: #4f4f4f;
     border-color: #909090;
-
+    color: white;
 }
-.table-striped>thead{
-    background-color: rgba(230, 247, 250, 0.978);
+
+a.active{
+    font-size: 15px;
 }

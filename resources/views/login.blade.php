@@ -5,9 +5,10 @@
     padding: 100px;
 }
  .dn, .login-form, .signup-form {
-    border: 1px solid #000000; /* 2px wide black border */
+    border: 1px dashed #000000; /* 2px wide black border */
 	border-radius: 10px;
-	padding: 15px;
+	padding: 20px;
+    border-color: lightgray;
 }
 </style>
 
@@ -30,9 +31,9 @@
                     </form>
                 </div>
             </div>
-            <div class="col-sm-1">
+            <!-- <div class="col-sm-1">
 				<h5>Hoặc</h5>
-			</div>
+			</div> -->
             <div class="col-sm-5">
                 <div class="signup-form dn">
                     <h2>Đăng ký</h2>
@@ -40,6 +41,7 @@
                         @csrf
                         <input name="name" class="form-control border-0 py-4" type="text" placeholder="Tên tài khoản"/>
                         <input name="email" class="form-control border-0 py-4" type="email" placeholder="Địa chỉ email"/>
+                        <input name="address" class="form-control border-0 py-4" type="text" placeholder="Địa chỉ"/>
                         <input name="pass" class="form-control border-0 py-4" type="password" placeholder="Mật khẩu"/>
                         <input name="phone" class="form-control border-0 py-4" type="text" placeholder="Số điện thoại"/>
                         <button name="submit" type="submit" class="btn btn-primary btn-block border-0 py-3">Đăng ký</button>

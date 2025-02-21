@@ -27,7 +27,7 @@ class ProductController extends Controller
         $this->AuthenLogin();
         $cate_product = DB::table('danhmuc')->orderby('danhmuc_id', 'desc')->get(); ## lấy id 
         $brand_product = DB::table('hangsanpham')->orderby('hang_id', 'desc')->get(); ## lấy id 
-       return view ('admin.add_product')->with('cate_product', $cate_product)->with('brand_product', $brand_product);
+       return view ('admin.product.add_product')->with('cate_product', $cate_product)->with('brand_product', $brand_product);
  
     }
 
@@ -39,8 +39,8 @@ class ProductController extends Controller
         ->join('hangsanpham', 'hangsanpham.hang_id', '=', 'sanpham.hang_id')
         ->get(); // Thêm phương thức get() để lấy tất cả dữ liệu
     
-        $manger = view ('admin.all_product')->with('all', $all);
-        return view('admin_layout')->with('admin.all_product',$manger); ## gom lại hiện chung
+        $manger = view ('admin.product.all_product')->with('all', $all);
+        return view('admin_layout')->with('admin.product.all_product',$manger); ## gom lại hiện chung
 
     }
 
@@ -71,8 +71,8 @@ class ProductController extends Controller
            // $get_name_image = current(explode('.', $get_image_file->getClientOriginalName()));
             
             // Tạo tên mới cho ảnh với phần mở rộng gốc và số ngẫu nhiên
-            $new_image = str_replace(' ', '', $data['sanpham_ten']).'.'.$get_image_file->getClientOriginalExtension();
-            
+            // $new_image = str_replace(' ', '', $data['sanpham_ten']).'.'.$get_image_file->getClientOriginalExtension();
+            $new_image = 'sp'.$maxId.'.'.$get_image_file->getClientOriginalExtension();
             // Di chuyển tệp tin đến thư mục đích
             $get_image_file->move('img/sp'.$maxId , $new_image);
             
@@ -126,7 +126,7 @@ class ProductController extends Controller
     $cate_product = DB::table('danhmuc')->orderBy('danhmuc_id', 'desc')->get();
     $brd_product = DB::table('hangsanpham')->orderBy('hang_id', 'desc')->get();
     $product = DB::table('sanpham')->where('sanpham_id', $product_id)->first();
-    return view('admin.edit_product')
+    return view('admin.product.edit_product')
         ->with('edit_product', $product)
         ->with('cate_product', $cate_product)
         ->with('brand_product', $brd_product);
@@ -159,7 +159,8 @@ class ProductController extends Controller
            // $get_name_image = current(explode('.', $get_image_file->getClientOriginalName()));
             
             // Tạo tên mới cho ảnh với phần mở rộng gốc và số ngẫu nhiên
-            $new_image = str_replace(' ', '', $data['sanpham_ten']).'.'.$get_image_file->getClientOriginalExtension();
+            // $new_image = str_replace(' ', '', $data['sanpham_ten']).'.'.$get_image_file->getClientOriginalExtension();
+            $new_image = 'sp'.$product_id.'.'.$get_image_file->getClientOriginalExtension();
             
             // Di chuyển tệp tin đến thư mục đích
             $get_image_file->move('img/sp'.$product_id, $new_image);
@@ -181,7 +182,7 @@ class ProductController extends Controller
     $this->AuthenLogin();
     $product = DB::table('sanpham')->where('sanpham_id',$product_id)->get();
     $hdsd = DB::table('hdsd')->where('sanpham_id', $product_id)->get();
-    return view('admin.edit_hdsd_product')
+    return view('admin.product.edit_hdsd_product')
         ->with('hdsd', $hdsd)
         ->with('product', $product);
 }
@@ -223,7 +224,6 @@ public function update_hdsd_product(Request $request,$product_id){
         ->join('brand', 'brand.brand_id', '=', 'product.brand_id')
         ->where('product.product_id', $product_id)->first();
 
-      
          $category_id = $details_product->category_id;
     
         $relate_product = DB::table('product')
@@ -242,12 +242,13 @@ public function update_hdsd_product(Request $request,$product_id){
         $cate_product = DB::table('danhmuc')->where('danhmuc_trangthai', 1)->orderby('danhmuc_id', 'desc')->get(); // lấy id category
         $product = DB::table('sanpham')->where('sanpham_id', $sanpham_id)->
         join('danhmuc','danhmuc.danhmuc_id', '=', 'sanpham.danhmuc_id')->
-        join('hangsanpham', 'hangsanpham.hang_id', '=', 'sanpham.hang_id')->
-        first();
-
+        join('hangsanpham', 'hangsanpham.hang_id', '=', 'sanpham.hang_id')->first();
+        $hinhanh = DB::table('hinhanh')->where('sanpham_id', $product->sanpham_id)->get();
         $phanloai = DB::table('phanloaisp')->orderby('phanloai_id', 'asc')->get();
         ## sản phẩm tương tự
         ## lấy danh mục 
+        
+        $hdsd = DB::table('hdsd')->where('sanpham_id',$sanpham_id)->get();
      
         $product_rela = DB::table('sanpham')
         ->where('danhmuc_id', $product->danhmuc_id)
@@ -255,7 +256,7 @@ public function update_hdsd_product(Request $request,$product_id){
         ->limit(4)
         ->get();
     
-        return view('pages.product.product_details')->with('phanloai', $phanloai) ->with('danhmuc', $cate_product)->with('sanpham', $product)->with('sanpham_tuongtu', $product_rela);
+        return view('pages.product.product_details')->with('hdsd', $hdsd)->with('phanloai', $phanloai)->with('hinhanh', $hinhanh)->with('danhmuc', $cate_product)->with('sanpham', $product)->with('sanpham_tuongtu', $product_rela);
 
     }
 

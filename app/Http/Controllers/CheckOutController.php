@@ -13,6 +13,7 @@ use Cart;
 class CheckOutController extends Controller
 {
 
+    
     public function dangky_khachhang(Request $request){
         $data = array();
         $data['khachhang_ten'] = $request->name;
@@ -20,6 +21,7 @@ class CheckOutController extends Controller
         ## chỉnh md5 không? md5( $request->pass)
         $data['khachhang_email'] = $request->email;
         $data['khachhang_sdt'] = $request->phone;
+        $data['khachhang_diachi'] = $request->address;
         $insert_khachhang = DB::table('khachhang')->insertGetId($data); // Lấy ID của bản ghi mới chèn
         
         Session::put('khachhang_id', $insert_khachhang); // Lưu ID vào session
@@ -31,7 +33,7 @@ class CheckOutController extends Controller
     public function login_khachhang(Request $request){
         $email = $request->khachhang_email;
         $password = $request->khachhang_matkhau;
-        $result = DB::table('khachhang')->where('khachhang_email', $email)->where('khachhang_matkhau',$password)->first();
+        $result = DB::table('khachhang')->where('khachhang_email', $email)->where('khachhang_matkhau',$password)->pluck('khachhang_id')->first();
         if($result){
             Session::put('khachhang_id', $result); // Lưu ID vào session
             return Redirect::to('/checkout');
@@ -61,17 +63,31 @@ class CheckOutController extends Controller
 
 
     public function checkout(){
-     
         $khachhang_id = Session::get('khachhang_id');
-        $id = $khachhang_id->khachhang_id;
-        if($khachhang_id != NULL){
+        if($khachhang_id){
             $cate_product = DB::table('danhmuc')->where('danhmuc_trangthai', 1)->orderby('danhmuc_id', 'desc')->get();
             $brand = DB::table('hangsanpham')->where('hang_trangthai', 1)->orderby('hang_id', 'desc')->get();
             $phanloai = DB::table('phanloaisp')->orderby('phanloai_id', 'asc')->get();
-            $khachhang = DB::table('khachhang')->where('khachhang_id', $id)->first();
+            $khachhang = DB::table('khachhang')->where('khachhang_id', $khachhang_id)->first(); // Access the session data as an integer
             return view('pages.checkout.checkout')->with('danhmuc', $cate_product)->with('hang', $brand)->with('phanloai', $phanloai)->with('khachhang', $khachhang);
+        } else {
+            return Redirect::to('/login-checkout');
         }
+    }
     
+    public function payment(){
+        $khachhang_id = Session::get('khachhang_id');
+        if($khachhang_id){
+            $cate_product = DB::table('danhmuc')->where('danhmuc_trangthai', 1)->orderby('danhmuc_id', 'desc')->get();
+            $brand = DB::table('hangsanpham')->where('hang_trangthai', 1)->orderby('hang_id', 'desc')->get();
+            $phanloai = DB::table('phanloaisp')->orderby('phanloai_id', 'asc')->get();
+            $khachhang = DB::table('khachhang')->where('khachhang_id', $khachhang_id)->first(); // Access the session data as an integer
+            $vanchuyen_id = Session::get('vanchuyen_id');
+            $vanchuyen = DB::table('vanchuyen')->where('vanchuyen_id', $vanchuyen_id)->get();
+            return view('pages.checkout.payment')->with('danhmuc', $cate_product)->with('hang', $brand)->with('vanchuyen', $vanchuyen)->with('phanloai', $phanloai)->with('khachhang', $khachhang);
+        } else {
+            return Redirect::to('/login-checkout');
+        }
     }
     
     
@@ -80,29 +96,31 @@ class CheckOutController extends Controller
 
     public function save_checkout(Request $request){
         $data = array();
-        $data['donhang_nguoinhan'] = $request->nguoinhan;
-        $data['donhang_ghichu'] = $request->ghichu;
-        $data['donhang_email'] = $request->email;
-        $data['donhang_sdt'] = $request->sdt;
-        $data['donhang_diachi'] = $request->diachi;
-        $insert_donhang = DB::table('donhang')->insertGetId($data); // Lấy ID của bản ghi mới chèn
-        Session::put('donhang_id', $insert_donhang); // Lưu ID vào session
+        $data['vanchuyen_nguoinhan'] = $request->nguoinhan;
+        $data['vanchuyen_ghichu'] = $request->ghichu;
+        $data['vanchuyen_email'] = $request->email;
+        $data['vanchuyen_sdt'] = $request->sdt;
+        $data['vanchuyen_diachi'] = $request->diachi;
+        $insert_vanchuyen = DB::table('vanchuyen')->insertGetId($data); // Lấy ID của bản ghi mới chèn
+        Session::put('vanchuyen_id', $insert_vanchuyen); // Lưu ID vào session
         return Redirect::to('/payment');
     }
 
     
-    public function payment(){
-        $khachhang_id = Session::get('khachhang_id');
-        $id = $khachhang_id->khachhang_id;
-        if($khachhang_id != NULL){
-            $cate_product = DB::table('danhmuc')->where('danhmuc_trangthai', 1)->orderby('danhmuc_id', 'desc')->get();
-            $brand = DB::table('hangsanpham')->where('hang_trangthai', 1)->orderby('hang_id', 'desc')->get();
-            $phanloai = DB::table('phanloaisp')->orderby('phanloai_id', 'asc')->get();
-            $khachhang = DB::table('khachhang')->where('khachhang_id', $id)->first();
-            return view('pages.checkout.payment')->with('danhmuc', $cate_product)->with('hang', $brand)->with('phanloai', $phanloai)->with('khachhang', $khachhang);
-        }
+    // public function payment(){
+    //     $khachhang_id = Session::get('khachhang_id');
+    //     $id = $khachhang_id->khachhang_id;
+    //     if($khachhang_id != NULL){
+    //         $cate_product = DB::table('danhmuc')->where('danhmuc_trangthai', 1)->orderby('danhmuc_id', 'desc')->get();
+    //         $brand = DB::table('hangsanpham')->where('hang_trangthai', 1)->orderby('hang_id', 'desc')->get();
+    //         $phanloai = DB::table('phanloaisp')->orderby('phanloai_id', 'asc')->get();
+    //         $khachhang = DB::table('khachhang')->where('khachhang_id', $id)->first();
+    //         $vanchuyen_id = Session::get('vanchuyen_id');
+    //         $vanchuyen = DB::table('vanchuyen')->where('vanchuyen_id', $vanchuyen_id)->get();
+    //         return view('pages.checkout.payment')->with('danhmuc', $cate_product)->with('hang', $brand)->with('vanchuyen', $vanchuyen)->with('phanloai', $phanloai)->with('khachhang', $khachhang);
+    //     }
            
-    }
+    // }
 
    
 
@@ -166,62 +184,54 @@ class CheckOutController extends Controller
         $data['shipping_phone'] = $request->shipping_phone;
         $data['shipping_notes'] = $request->shipping_notes;
         $insert_data = DB::table('tbl_shipping')->insertGetId($data); ## khi insert vào rồi, LẤY LUÔN DỮ LIỆU ID ĐÃ INSERT
-
         Session::put('shipping_id', $insert_data);
-
-
         return Redirect::to('/payment');
     }
 
     
 
     public function order_place(Request $request){
-        // Lấy payment method và insert
-        $data = array();
-        $data['payment_method'] = $request->options;
-        $data['payment_status'] = 'Đang chờ xử lý';
-        $payment_id = DB::table('tbl_payment')->insertGetId($data); ## khi insert vào rồi, LẤY LUÔN DỮ LIỆU ID ĐÃ INSERT
+            // order 
+            $order_data = array();
+            $order_data['thanhtoan_id'] = $request->payment_option;
+            $order_data['khachhang_id'] = Session::get('khachhang_id');
+            $order_data['vanchuyen_id'] = Session::get('vanchuyen_id');
+            $order_data['donhang_tongtien'] = Cart::total();
+            $result  = DB::table('donhang')->insertGetId($order_data);
 
-        // insert order
-        $order_data  = array();
-        $order_data['customer_id'] = Session::get('customer_id');
-        $order_data['shipping_id'] = Session::get('shipping_id');
-        $order_data['payment_id'] = $payment_id;
-        $order_data['order_total'] = Cart::total();
-        $order_data['order_status'] = 'Đang chờ xử lý';
-
-        $order_id = DB::table('tbl_order')->insertGetId($order_data);
-
-        $content = Cart::content();
-        foreach($content as $v_content){
-            $order_details_data['order_id'] = $order_id;
-            $order_details_data['product_id'] = $v_content->id;
-            $order_details_data['product_name'] = $v_content->name;
-            $order_details_data['product_price'] = $v_content->price;
-            $order_details_data['product_sales_quantity'] = $v_content->qty;
-            $result = DB::table('tbl_order_details')->insert($order_details_data);
-        }
-
-
-
-      
-        if($data['payment_method'] == 1) {
-            
-            echo 'Thanh Toán Thẻ ATM';
-        
-        }
-         else if ($data['payment_method'] == 2) {
-            
-            $cate_product = DB::table('tbl_category_product')->where('category_status', 1)->orderby('category_id', 'desc')->get(); ## lấy id category
-            $brd_product = DB::table('tbl_brand_product')->where('brand_status', 1)->orderby('brand_id', 'desc')->get(); ## lấy id category
-            Cart::destroy(); ## đã đặt hàng xong thì hủy giỏ hàng, kh cần để lại làm gì
-            return view('pages.checkout.handcash')->with('category',$cate_product)->with('brand',$brd_product);
+            // order details
+            $content = Cart::content();
+            foreach($content as $v_content){
+                $order_d_data = array();
+                $order_d_data['donhang_id'] = $result;
+                $order_d_data['sanpham_id'] = $v_content->id;
+                $order_d_data['sanpham_ten'] = $v_content->name;
+                $order_d_data['sanpham_gia'] = $v_content->price;
+                $order_d_data['ctdh_soluong'] =$v_content->qty ;
+              DB::table('chitietdonhang')->insert($order_d_data);
             }
-        else{ 
-            echo 'thẻ ghi nợ'; 
-        }
-        // return Redirect::to('/payment');
-    }
+     
+            // chi tiet trạng thái đơn hàng
+            $data_status = array();
+            $data_status['donhang_id'] = $result;
+            $data_status['trangthai_id'] = "1";
+
+            DB::table('chitiettrangthai')->insert($data_status);
+
+            if( $order_data['thanhtoan_id'] == 1){
+                echo 'Thanh toán bằng Momo';
+            }else if($order_data['thanhtoan_id'] == 2 ){
+                echo "Thanh toán khi nhận hàng";
+            }else{
+                echo "Thanh toán bằng thẻ ngân hàng";
+            }
+            // Có thể cart destroy sau khi đã đặt hàng xong
+            // Cart::destroy();
+           
+
+
+        
+            }
 
 
     ## HÀM QUẢN LÝ ORDER CỦA ADMIN:
@@ -235,30 +245,32 @@ class CheckOutController extends Controller
     }
     public function manage_orders(){
         $this->AuthenLogin();
-        $all_orders = DB::table('tbl_order')
-        ->join('tbl_customer', 'tbl_customer.customer_id', '=', 'tbl_order.customer_id')
-        ->select('tbl_order.*', 'tbl_customer.customer_name')
-        ->orderby('tbl_order.order_id', 'desc')->get(); // Thêm phương thức get() để lấy tất cả dữ liệu
+        $all_orders = DB::table('donhang')
+        ->join('khachhang', 'khachhang.khachhang_id', '=', 'donhang.khachhang_id')
+        ->join('chitiettrangthai', 'donhang.donhang_id', '=', 'chitiettrangthai.donhang_id')
+        ->join('trangthai','trangthai.trangthai_id', '=', 'chitiettrangthai.trangthai_id' )
+        ->select('donhang.*', 'khachhang.khachhang_ten', 'trangthai.trangthai_ten')
+        ->orderby('donhang.donhang_id', 'desc')->get(); // Thêm phương thức get() để lấy tất cả dữ liệu
     
-        return view ('admin.manage_orders')->with('all', $all_orders);
+        return view ('admin.order.manage_orders')->with('all', $all_orders);
         // return view('admin_layout')->with('admin.manage_orders',$manger); ## gom lại hiện chung
 
     }
 
-    public function view_order($order_id){
+    public function view_order($donhang_id){
         $this->AuthenLogin();
         ## thông tin chi tiết đơn hàng
-        $all_orders_details = DB::table('tbl_order_details')->where('order_id', $order_id)->get();
+        $all_orders_details = DB::table('chitietdonhang')->where('donhang_id', $donhang_id)->get();
      
         ## thông tin người mua + vận chuyển
-        $all_payment_customer = DB::table('tbl_order')
-        ->join('tbl_customer', 'tbl_customer.customer_id', '=', 'tbl_order.customer_id')
-        ->join('tbl_payment', 'tbl_payment.payment_id', '=', 'tbl_order.payment_id')
-        ->join('tbl_shipping', 'tbl_shipping.shipping_id', '=', 'tbl_order.shipping_id')
-        ->where('tbl_order.order_id', $order_id)
+        $all_payment_customer = DB::table('donhang')
+        ->join('khachhang', 'khachhang.khachhang_id', '=', 'donhang.khachhang_id')
+        ->join('thanhtoan', 'thanhtoan.pttt_id', '=', 'donhang.thanhtoan_id')
+        ->join('vanchuyen', 'vanchuyen.vanchuyen_id', '=', 'donhang.vanchuyen_id')
+        ->where('donhang.donhang_id', $donhang_id)
         ->get();
 
-        return view ('admin.view_order')->with('all_details', $all_orders_details)->with('customer',$all_payment_customer);
+        return view ('admin.order.view_order')->with('all_details', $all_orders_details)->with('customer',$all_payment_customer);
 
     }
 }
