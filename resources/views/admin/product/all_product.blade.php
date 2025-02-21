@@ -5,8 +5,9 @@
     <div class="panel-heading">
         Liệt kê sản phẩm
     </div>
+    <div class="panel-heading1">
     <div class="row w3-res-tb">
-      <div class="col-sm-5 m-b-xs">
+      <div class="col-sm-5 m-b-xs ">
         <select class="input-sm form-control w-sm inline v-middle">
           <option value="0">Bulk action</option>
           <option value="1">Delete selected</option>
@@ -26,9 +27,11 @@
         </div>
       </div>
     </div>
+    </div>
     <div class="table-responsive">
-      <table class="table table-striped b-t b-light">
+      <table class="table table-striped b-t b-light table-striped1">
         <thead>
+        
           <tr>
             <th style="width:20px;">
               <label class="i-checks m-b-none">
@@ -41,19 +44,20 @@
             <th>Danh mục</th>
             <th>Thương hiệu</th>
             <th>Hiển thị</th>
-            <th>Thư viện ảnh </th>
+            <th>Thư viện</th>
+         
             <th>Thao tác</th>
             <th style="width:30px;"></th>
           </tr>
         </thead>
         <tbody>
-            <?php 
-            $message = Session::get('message'); ## lấy tin nhắn có tên là message
-            if($message){
-            echo "<p id='messageStyle'> $message </p>" ;
-                Session::put('message',null); ## in ra xong set lại null
-            }
-        ?>
+          <?php 
+          $message = Session::get('message'); ## lấy tin nhắn có tên là message
+          if($message){
+          echo "<p id='messageStyle'> $message </p>" ;
+              Session::put('message',null); ## in ra xong set lại null
+          }
+      ?>
         @foreach($all as $key => $pro)
           <tr>
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
@@ -80,15 +84,9 @@
 
             </span></td>
             <td> 
-               
-              
-              
                 <a  class="custom-button" href="{{ route('add-gallery', ['product_id' => $pro->sanpham_id])}}">Xem</a>
-              
-                
-              
-
             </td>
+           
             <td>
               <a href="{{route('edit-product', ['product_id' => $pro->sanpham_id])}}" class="active" ui-toggle-class="">
                 <i class="fa fa-pencil-square-o text-success text-active"></i> 
@@ -99,6 +97,10 @@
               <a href="{{route('edit-hdsd-product', ['product_id' => $pro->sanpham_id])}}" class="active" ui-toggle-class="">
                 <i class="fa fa-info-circle text-danger text"></i> 
               </a>
+              <a href="{{route('set-sale', ['product_id' => $pro->sanpham_id])}}" class="active" ui-toggle-class="">
+                <i class="fa fa-solid fa-ticket"></i>
+              </a>
+             
           </tr>
         @endforeach
         </tbody>
