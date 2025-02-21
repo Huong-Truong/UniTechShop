@@ -33,10 +33,7 @@
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Mô tả Sản phẩm</label>
                                     <textarea name="product_content" style="resize: none" rows="8" placeholder="Mô tả sản phẩm" class="form-control" id="noidung1"></textarea>
-                                    <script>
-                                    console.log("CKEditor script loaded");
-                                    CKEDITOR.replace("noidung1");
-                                </script>
+                        
 
                                 </div>
 

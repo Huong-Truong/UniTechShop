@@ -11,8 +11,6 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckOutController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\SalesController;
-// use App\Http\Controllers\CheckOutController;
-
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');

@@ -37,20 +37,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="{{asset('admin_js/raphael-min.js')}}"></script>
 <script src="{{asset('admin_js/morris.js')}}"></script>
 
-<!-- <script src="{{asset('ckeditor/ckeditor.js')}}"></script> -->
-<script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
-<script>
-    console.log("CKEditor script loaded");
-    CKEDITOR.replace("noidung1");
-</script>
-
- 
-
-<!-- <script>
-    CKEDITOR.replace("noidung1");
-</script>
- -->
-
 
 <script type="text/javascript">
     $(document).ready(function(){
@@ -129,7 +115,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         });
 
     });
-</script>
+</>
 <style>
     p#messageStyle{
     color:rgb(94, 94, 95);
