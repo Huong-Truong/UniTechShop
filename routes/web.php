@@ -12,7 +12,7 @@ use App\Http\Controllers\CheckOutController;
 use App\Http\Controllers\GalleryController;
 
 
-use App\Http\Controllers\GalleryController;
+// use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\SalesController;
 // use App\Http\Controllers\CheckOutController;
 

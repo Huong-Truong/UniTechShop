@@ -347,11 +347,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <!-- user login dropdown start-->
         <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-<<<<<<< HEAD
-                <img alt=" " src="images/<?php echo rand(1, 3)?>.png">
-=======
+           
                 <img alt=" " src="images/huongtruong.jpg">
->>>>>>> 851d8709d3252554158477fadf598e627b92a88f
                 <span class="username">
                     <?php 
                         $name = Session::get('admin_name');
