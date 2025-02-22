@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Category;
+use App\Models\Classify;
 use Illuminate\Http\Request;
-
+use App\Models\Brand;
 use DB;
 use Session;
 use App\Http\Requests;
@@ -35,9 +36,11 @@ class CategoryProduct extends Controller
     public function all_category_product ()
     {
         $this->AuthenLogin();
-        $all_category = DB::table('danhmuc')
-        ->join('phanloaisp', 'phanloaisp.phanloai_id', '=', 'danhmuc.phanloai_id')->get(); ## lấy tấy cả dữ liêu
-        
+
+        // $all_category = DB::table('danhmuc')
+        // ->join('phanloaisp', 'phanloaisp.phanloai_id', '=', 'danhmuc.phanloai_id')->get(); ## lấy tấy cả dữ liêu
+         $all_category = Category::join('phanloaisp','phanloaisp.phanloai_id','=','danhmuc.phanloai_id')
+         ->orderBy('danhmuc_id','desc')->get();
         $manger_category = view ('admin.category.all_category_product')->with('all_category', $all_category);
         return view('admin_layout')->with('admin.category.all_category_product',$manger_category); ## gom lại hiện chung
 
@@ -46,16 +49,21 @@ class CategoryProduct extends Controller
     public function save_category_product (Request $request)    
     {
         $this->AuthenLogin();
-        $data = array();
-        $data['danhmuc_ten'] = $request->danhmuc_ten;
-        $data['danhmuc_trangthai'] = $request->danhmuc_trangthai;
-        $data['phanloai_id'] = $request->classify;
-        /*
-            $data['category_name'] : tên của cột trong database
-            $request->category_product_name: tên của name lấy bên save_category
-        */
+        // $data = array();
+        // $data['danhmuc_ten'] = $request->danhmuc_ten;
+        // $data['danhmuc_trangthai'] = $request->danhmuc_trangthai;
+        // $data['phanloai_id'] = $request->classify;
+
+        $data = $request->all();
+        $category = new Category();
+        $category->danhmuc_ten = $data['danhmuc_ten'];
+        $category->danhmuc_trangthai = $data['danhmuc_trangthai'];
+        $category->phanloai_id   = $data['classify'];
+      
+        
         /*insert vào bảng*/
-        DB::table('danhmuc')->insert($data);
+       // DB::table('danhmuc')->insert($data);
+        $category->save();
         Session::put('message','Thêm danh mục sản phẩm mới thành công!');
         return Redirect::to('add-category-product'); ## Khi thêm thành công rồi thì trả lại về thêm danh mục sản phẩm
     }
@@ -77,25 +85,35 @@ class CategoryProduct extends Controller
 
     public function edit_category_product($category_id){
         $this->AuthenLogin();
-        $category = DB::table('danhmuc')->where('danhmuc_id', $category_id)->get();
-        $manger_category = view ('admin.category.edit_category_product')->with('edit_category', $category);
+        $category = Category::where('danhmuc_id', $category_id)->get();
+        $classify = Classify::orderBy('phanloai_id','desc')->get();
+        // $category = DB::table('danhmuc')->where('danhmuc_id', $category_id)->get();
+        $manger_category = view ('admin.category.edit_category_product')
+        ->with('edit_category', $category)
+        ->with('classify',$classify);
         return view('admin_layout')->with('admin.category.edit_category_product',$manger_category); ## gom lại hiện chung
     }
 
 
     public function delete_category_product($category_id){
         $this->AuthenLogin();
-        DB::table('danhmuc')->where('danhmuc_id', $category_id)->delete();
+        $category = Category::find($category_id);
+        $category->delete();
+        // DB::table('danhmuc')->where('danhmuc_id', $category_id)->delete();
         Session::put('message','Xóa danh mục thành công');
         return Redirect::to('all-category-product'); 
     }
 
     public function update_category_product(Request $request,$category_id){
         $this->AuthenLogin();
-        $data = array();
-        $data['danhmuc_ten'] = $request->danhmuc_ten;
-
-        DB::table('danhmuc')->where('danhmuc_id', $category_id)->update($data);
+        // $data = array();
+        // $data['danhmuc_ten'] = $request->danhmuc_ten;
+        $category = Category::find( $category_id );
+        $data = $request->all();
+        $category->danhmuc_ten = $data['danhmuc_ten'];
+        $category->phanloai_id = $data['classify'];
+        //DB::table('danhmuc')->where('danhmuc_id', $category_id)->update($data);
+        $category->save();
         Session::put('message','Cập nhật danh mục thành công');
         return Redirect::to('all-category-product'); 
     }

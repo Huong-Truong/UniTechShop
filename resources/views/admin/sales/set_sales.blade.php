@@ -4,8 +4,14 @@
             <div class="col-lg-12">
                     <section class="panel ">
                         <header class="panel-heading">
-                            Thiết lập khuyến mãi
+                            Thiết lập khuyến mãi cho {{$sp->sanpham_ten}}
                         </header>
+                        <?php 
+                        $message = Session::get('message'); ## lấy tin nhắn có tên là message
+                        if($message){
+                        echo "<p id='messageStyle'> $message </p>" ;
+                            Session::put('message',null); ## in ra xong set lại null
+                        }?>
                         <div class="panel-body">
                             {{----}}
                             @if($info_sale)
@@ -26,7 +32,7 @@
                                       
                                         ?>
                                          <option value = "{{$value->km_id}}" {{ $value->km_id == $info_sale->km_id ? 'selected' : '' }}>
-                                            {{$gia.''.$value->km_donvi.' - '.$value->km_mota}}
+                                            {{$value->km_mota.' - '.$gia.$value->km_donvi}}
                                         </option>
                                       {{-- <option value = "{{$value->km_id}}">{{$gia.''.$value->km_donvi.' - '.$value->km_mota}}</option> --}}
                                        @endforeach
@@ -39,9 +45,7 @@
                                       <label for="exampleInputEmail1">Ngày kết thúc</label>
                                       <input type="date" name="end_date" class="form-control"
                                        id="exampleInputEmail1" value = "{{$info_sale->ngayketthuc}}">
-                                </div>
-                            {{----}}
-                                
+                                </div>      
                                 <button type="submit" name="add_sales" class="btn btn-info">Thiết lập</button>
                             </form>
                             </div>
@@ -76,11 +80,11 @@
                                       <input type="date" name="end_date" class="form-control" id="exampleInputEmail1" >
                                 </div>
                             {{----}}
-                            @endif
+                      
                                 <button type="submit" name="add_sales" class="btn btn-info">Thiết lập</button>
                             </form>
                             </div>
-                           
+                            @endif
                         </div>
                     </section>
 

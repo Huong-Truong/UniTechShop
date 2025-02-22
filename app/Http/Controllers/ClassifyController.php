@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Classify;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Session;
@@ -28,8 +28,8 @@ class ClassifyController extends Controller
     public function all_classify_product ()
     {
         $this->AuthenLogin();
-       $all_classify = DB::table('phanloaisp')->get(); ## lấy tấy cả dữ liêu
-        $all_classify = DB::table('phanloaisp')->get(); ## lấy tấy cả dữ liêu
+       $all_classify = Classify::orderBy('phanloai_id','desc')->get();
+       // $all_classify = DB::table('phanloaisp')->get(); ## lấy tấy cả dữ liêu
         $manger_classify = view ('admin.classify.all_classify_product')->with('all_classify', $all_classify);
         return view('admin_layout')->with('admin.all_classify_product',$manger_classify); ## gom lại hiện chung
 
@@ -37,11 +37,13 @@ class ClassifyController extends Controller
     public function save_classify_product (Request $request)    
     {
         $this->AuthenLogin();
-        $data = array();
-        $data['phanloai_ten'] = $request->classify_name;
-      
+        $classify = new Classify();
+        $data = $request->all();
+       // $data['phanloai_ten'] = $request->classify_name;
+        $classify->phanloai_ten = $data['classify_name'];
         /*insert vào bảng*/
-        DB::table('phanloaisp')->insert($data);
+        //DB::table('phanloaisp')->insert($data);
+        $classify->save();
         Session::put('message','Thêm phân loại sản phẩm mới thành công!');
         return Redirect::to('add-classify-product'); ## Khi thêm thành công rồi thì trả lại về thêm danh mục sản phẩm
     }
@@ -49,7 +51,8 @@ class ClassifyController extends Controller
 
     public function edit_classify_product($classify_id){
         $this->AuthenLogin();
-        $classify = DB::table('phanloaisp')->where('phanloai_id', $classify_id)->get();
+        $classify = Classify::where('phanloai_id',$classify_id)->get();
+       //  $classify = DB::table('phanloaisp')->where('phanloai_id', $classify_id)->get();
         $manger_classify = view ('admin.classify.edit_classify_product')->with('edit_classify', $classify);
         return view('admin_layout')->with('admin.classify.edit_classify_product',$manger_classify); ## gom lại hiện chung
     }
@@ -57,16 +60,22 @@ class ClassifyController extends Controller
 
     public function delete_classify_product($classify_id){
         $this->AuthenLogin();
-        DB::table('phanloaisp')->where('phanloai_id', $classify_id)->delete();
+        $classify = Classify::find( $classify_id );
+        $classify->delete();
+       // DB::table('phanloaisp')->where('phanloai_id', $classify_id)->delete();
         Session::put('message','Xóa phân phân loại sản phẩm thành công');
         return Redirect::to('all-classify-product'); 
     }
 
     public function update_classify_product(Request $request,$classify_id){
         $this->AuthenLogin();
-        $data = array();
-        $data['phanloai_ten'] = $request->classify_name;
-        DB::table('phanloaisp')->where('phanloai_id', $classify_id)->update($data);
+        // $data = array();
+        // $data['phanloai_ten'] = $request->classify_name;
+        $classify = Classify::find( $classify_id );
+        $data = $request->all();
+        $classify->phanloai_ten = $data['classify_name'];
+       // DB::table('phanloaisp')->where('phanloai_id', $classify_id)->update($data);
+         $classify->save();
         Session::put('message','Cập nhật phân loại sản phẩm thành công');
         return Redirect::to('all-classify-product'); 
     }

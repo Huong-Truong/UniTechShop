@@ -1,7 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Brand;
+use App\Models\Product;
+use App\Models\Category;
+use App\Models\HDSD;
+use App\Models\Service;
+use App\Models\PriceService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Session;
@@ -25,19 +30,14 @@ class ProductController extends Controller
     public function add_product ()
     {
         $this->AuthenLogin();
-        $cate_product = DB::table('danhmuc')->orderby('danhmuc_id', 'desc')->get(); ## lấy id 
-        $brand_product = DB::table('hangsanpham')->orderby('hang_id', 'desc')->get(); ## lấy id 
         
-        $cate_product = DB::table('danhmuc')
-        ->select(DB::raw('MIN(danhmuc_id) as danhmuc_id'), 'danhmuc_ten')
+       $cate_product = Category::selectRaw('MIN(danhmuc_id) as danhmuc_id, danhmuc_ten')
         ->groupBy('danhmuc_ten')
         ->get();
-        $brand_product = DB::table('hangsanpham')
-        ->select(DB::raw('MIN(hang_id) as hang_id'), 'hang_ten')
+        $brand_product = Brand::selectRaw('MIN(hang_id) as hang_id, hang_ten')
         ->groupBy('hang_ten')
         ->get();
-        // $cate_product = DB::table('danhmuc')->orderby('danhmuc_id', 'desc')->get(); ## lấy id 
-        // $brand_product = DB::table('hangsanpham')->orderby('hang_id', 'desc')->get(); ## lấy id 
+
        return view ('admin.product.add_product')->with('cate_product', $cate_product)->with('brand_product', $brand_product);
  
     }
@@ -45,9 +45,10 @@ class ProductController extends Controller
     public function all_product ()
     {
         $this->AuthenLogin();
-        $all = DB::table('sanpham')
-        ->join('danhmuc', 'danhmuc.danhmuc_id', '=', 'sanpham.danhmuc_id')
+        $all = Product::join('danhmuc', 'danhmuc.danhmuc_id', '=', 'sanpham.danhmuc_id')
         ->join('hangsanpham', 'hangsanpham.hang_id', '=', 'sanpham.hang_id')
+        ->select('sanpham.*', 'danhmuc.danhmuc_ten', 'hangsanpham.hang_ten')
+        ->orderBy('sanpham_id','desc') 
         ->get(); // Thêm phương thức get() để lấy tất cả dữ liệu
     
         $manger = view ('admin.product.all_product')->with('all', $all);
@@ -60,47 +61,46 @@ class ProductController extends Controller
         $this->AuthenLogin();
         // Lấy ra id lớn nhất
         $maxId = DB::table('sanpham')->max('sanpham_id') + 1;
+        // Lấy ra all dữ liệu 
+        $data = $request->all();
+
        // Bảng HDSD
-        $hdsd = array();
-        $hdsd['sanpham_id'] = $maxId;
-        $hdsd['HDSD_mota'] = 'Chưa có';
-        $hdsd['HDSD_video'] = 'Chưa có';
+        $hdsd = new HDSD();
+        $hdsd->sanpham_id = $maxId;
+        $hdsd->hdsd_mota = "Chưa có";
+        $hdsd->hdsd_video = "Chưa có";
+
         // Bảng SP
-        $data = array();
-        $data['sanpham_ten'] = $request->product_name;
-        $data['danhmuc_id'] = $request->category;
-        $data['hang_id'] = $request->brand;
-        $data['sanpham_mota'] = $request->product_content;
-        $data['sanpham_gia'] = $request->product_price;
-        // $data['product_imgage'] = $request->product_image;
-        $data['sanpham_trangthai'] = $request->product_status;
+        $sp = new Product();
+        $sp->sanpham_ten = $data['product_name'];
+        $sp->danhmuc_id = $data['category'];
+        $sp->hang_id = $data['brand'];
+        $sp->sanpham_mota = $data['product_content'];
+        $sp->sanpham_gia = $data['product_price'];
+        $sp->sanpham_trangthai = $data['product_status'];
         $get_image_file = $request->file('product_image');
 
 
         if($get_image_file){
-            // Lấy tên tệp tin gốc và loại bỏ phần mở rộng
-           // $get_name_image = current(explode('.', $get_image_file->getClientOriginalName()));
-            
-            // Tạo tên mới cho ảnh với phần mở rộng gốc và số ngẫu nhiên
-            // $new_image = str_replace(' ', '', $data['sanpham_ten']).'.'.$get_image_file->getClientOriginalExtension();
+
             $new_image = 'sp'.$maxId.'.'.$get_image_file->getClientOriginalExtension();
             // Di chuyển tệp tin đến thư mục đích
             $get_image_file->move('img/sp'.$maxId , $new_image);
             
             // Lưu thông tin ảnh vào cơ sở dữ liệu
-            $data['sanpham_hinhanh'] = $new_image;
+            $sp->sanpham_hinhanh = $new_image;
            // insert vô sanpham
-           DB::table('sanpham')->insert($data);
+           $sp->save();
            // insert vô hdsd
-           DB::table('hdsd')->insert($hdsd);
+           $hdsd->save();
             // Hiển thị thông báo thành công và chuyển hướng
             Session::put('message', 'Thêm sản phẩm mới thành công!');
             return Redirect::to('all-product');
         }else{
             // insert vô sanpham
-            DB::table('sanpham')->insert($data);
+            $sp->save();
             // insert vô hdsd
-            DB::table('hdsd')->insert($hdsd);
+            $hdsd->save();
             // Hiển thị thông báo thành công và chuyển hướng
             Session::put('message', 'Thêm sản phẩm mới thành công!');
             return Redirect::to('all-product');
@@ -134,9 +134,9 @@ class ProductController extends Controller
     public function edit_product($product_id)
 {
     $this->AuthenLogin();
-    $cate_product = DB::table('danhmuc')->orderBy('danhmuc_id', 'desc')->get();
-    $brd_product = DB::table('hangsanpham')->orderBy('hang_id', 'desc')->get();
-    $product = DB::table('sanpham')->where('sanpham_id', $product_id)->first();
+    $cate_product = Category::orderBy('danhmuc_id', 'desc')->get();
+    $brd_product = Brand::orderBy('hang_id', 'desc')->get();
+    $product = Product::where('sanpham_id', $product_id)->first();
     return view('admin.product.edit_product')
         ->with('edit_product', $product)
         ->with('cate_product', $cate_product)
@@ -147,7 +147,9 @@ class ProductController extends Controller
 
     public function delete_product($product_id){
         $this->AuthenLogin();
-        DB::table('sanpham')->where('sanpham_id', $product_id)->delete();
+        $pro = Product::find( $product_id );
+        $pro->delete();
+        
         Session::put('message','Xóa sản phẩm thành công');
         return Redirect::to('all-product'); 
     }
@@ -166,11 +168,7 @@ class ProductController extends Controller
 
        
         if($get_image_file){
-            // Lấy tên tệp tin gốc và loại bỏ phần mở rộng
-           // $get_name_image = current(explode('.', $get_image_file->getClientOriginalName()));
             
-            // Tạo tên mới cho ảnh với phần mở rộng gốc và số ngẫu nhiên
-            // $new_image = str_replace(' ', '', $data['sanpham_ten']).'.'.$get_image_file->getClientOriginalExtension();
             $new_image = 'sp'.$product_id.'.'.$get_image_file->getClientOriginalExtension();
             
             // Di chuyển tệp tin đến thư mục đích
@@ -188,30 +186,45 @@ class ProductController extends Controller
     }
     // Hàm hdsd
     
-    public function edit_hdsd_product($product_id)
+    public function edit_other_info_product($product_id)
 {
     $this->AuthenLogin();
-    $product = DB::table('sanpham')->where('sanpham_id',$product_id)->get();
-    $hdsd = DB::table('hdsd')->where('sanpham_id', $product_id)->get();
-    return view('admin.product.edit_hdsd_product')
-        ->with('hdsd', $hdsd)
-        ->with('product', $product);
+
+    $product = Product::find($product_id);
+    $hdsd = HDSD::where('sanpham_id', $product_id)->get();
+  //  $sp = Product::find($product_id);
+    
+    $priceSrv = DB::table('giadichvu')
+    ->where('sanpham_id', $product_id)
+    ->orderBy('dv_id', 'desc')
+    ->get();
+
+    $srv = DB::table('dichvukemtheo')
+    ->orderBy('dv_id', 'desc')
+    ->get();
+
+return view('admin.product.edit_other_info_product')
+    ->with('hdsd', $hdsd)
+    ->with('product', $product)
+    ->with('service', $srv)
+    ->with('priceSrv', $priceSrv);
+
+
+
+  
 }
 
-public function update_hdsd_product(Request $request,$product_id){
+public function update_other_info_product(Request $request,$product_id){
     $this->AuthenLogin();
-    $data = array();
-    $data['HDSD_mota'] = $request->hdsd_mota;
-    $data['HDSD_video'] = $request->hdsd_video;
-    $productName = DB::table('sanpham')
-                 ->where('sanpham_id', $product_id)
-                 ->pluck('sanpham_ten')
-                 ->first();
+    $data = $request->all();
 
-   
-    DB::table('hdsd')->where('sanpham_id', $product_id)->update($data);
-    Session::put('message','Cập nhật thành công');
-    return Redirect::to('all-product'); 
+    $hdsd = HDSD::find($product_id);
+    $hdsd->HDSD_mota = $data['hdsd_mota'];
+    $hdsd->HDSD_video = $data['hdsd_video'];
+     $hdsd->save();
+
+    // Session::put('message','Cập nhật thành công');
+    return Redirect::to('edit-other-info-product/'.$product_id); 
 }
     // end admin
 

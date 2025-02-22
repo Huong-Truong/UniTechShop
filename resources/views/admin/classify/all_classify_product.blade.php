@@ -3,9 +3,9 @@
 <div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">
-        Liệt kê thương hiệu
+        Liệt kê phân loại
     </div>
-    <div class="row w3-res-tb">
+    {{-- <div class="row w3-res-tb">
       <div class="col-sm-5 m-b-xs">
         <select class="input-sm form-control w-sm inline v-middle">
           <option value="0">Bulk action</option>
@@ -27,7 +27,7 @@
           </form>
         </div>
       </div>
-    </div>
+    </div> --}}
     <div class="table-responsive">
       <table class="table table-striped b-t b-light">
         <thead>
