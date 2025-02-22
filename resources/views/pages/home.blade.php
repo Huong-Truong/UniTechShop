@@ -141,7 +141,7 @@
         <div class="row px-xl-5">
      
             <div class="col">
-                <div class="owl-carousel vendor-carousel">
+                <div class="owl-carousel vendor-carousel">  
                 @foreach($hang as $key =>$value)
                     <?php
                     $total = 0;

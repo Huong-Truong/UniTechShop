@@ -11,11 +11,8 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckOutController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\SalesController;
-<<<<<<< HEAD
-=======
 
 
->>>>>>> huong
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
