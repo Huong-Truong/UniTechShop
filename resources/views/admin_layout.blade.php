@@ -41,7 +41,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
 
-
 <script type="text/javascript">
     $(document).ready(function(){
         // gọi hàm
@@ -120,7 +119,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         });
 
     });
-</>
+</script>
 <style>
     p#messageStyle{
     color:rgb(255, 0, 0);
@@ -339,10 +338,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <!-- user login dropdown start-->
         <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-<<<<<<< HEAD
-           
-=======
->>>>>>> a7752d475f953e6ce9347e75ed08d3711fd06df8
                 <img alt=" " src="images/huongtruong.jpg">
                 <span class="username">
                     <?php 
