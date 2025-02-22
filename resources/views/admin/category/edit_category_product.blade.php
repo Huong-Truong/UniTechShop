@@ -22,6 +22,16 @@
                                     <label for="exampleInputEmail1">Tên danh mục</label>
                                     <input value="{{ $edit_value->danhmuc_ten}}"name="danhmuc_ten" class="form-control" id="exampleInputEmail1" placeholder="Tên danh mục">
                                 </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Danh mục sản phẩm</label>
+                                    <select name="classify" class="form-control input-sm m-bot15">
+                                        @foreach ($classify as $key=>$value)
+                                            <option value = "{{$value->phanloai_id}}" {{ $value->phanloai_id == $edit_value->phanloai_id ? 'selected' : '' }}>
+                                                {{$value->phanloai_ten}}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    </div>
                                 <button type="submit" name="update_category_product" class="btn btn-info">Cập nhật danh mục</button>
                             </form>
                             </div>

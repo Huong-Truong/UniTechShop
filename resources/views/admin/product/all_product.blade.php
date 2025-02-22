@@ -44,7 +44,6 @@
             <th>Danh mục</th>
             <th>Thương hiệu</th>
             <th>Hiển thị</th>
-          
             <th>Thư viện</th>
          
             <th>Thao tác</th>
@@ -90,10 +89,7 @@
               
                 <a  class="custom-button" href="{{ route('add-gallery', ['product_id' => $pro->sanpham_id])}}">Xem</a>
               
-                
-              
-
-                <a  class="custom-button" href="{{ route('add-gallery', ['product_id' => $pro->sanpham_id])}}">Xem</a>
+          
             </td>
            
             <td>
@@ -103,7 +99,7 @@
               <a onclick="return confirm('Bạn có chắc muốn xóa ?')" href="{{route('delete-product', ['product_id' => $pro->sanpham_id])}} " class="active" ui-toggle-class=""> 
                 <i class="fa fa-times text-danger text"></i>
               </a>
-              <a href="{{route('edit-hdsd-product', ['product_id' => $pro->sanpham_id])}}" class="active" ui-toggle-class="">
+              <a href="{{route('edit-other-info-product', ['product_id' => $pro->sanpham_id])}}" class="active" ui-toggle-class="">
                 <i class="fa fa-info-circle text-danger text"></i> 
               </a>
               <a href="{{route('set-sale', ['product_id' => $pro->sanpham_id])}}" class="active" ui-toggle-class="">

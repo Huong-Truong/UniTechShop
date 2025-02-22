@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Session;
@@ -29,7 +29,8 @@ class BrandProduct extends Controller
     public function all_brand_product ()
     {
         $this->AuthenLogin();
-       $all_brand = DB::table('hangsanpham')->get(); ## lấy tấy cả dữ liêu
+       // $all_brand = DB::table('hangsanpham')->get();
+        $all_brand = Brand::orderBy('hang_id','desc')->get();
         $manger_brand = view ('admin.brand.all_brand_product')->with('all_brand', $all_brand);
         return view('admin_layout')->with('admin.brand.all_brand_product',$manger_brand); ## gom lại hiện chung
 
@@ -38,16 +39,22 @@ class BrandProduct extends Controller
     public function save_brand_product (Request $request)    
     {
         $this->AuthenLogin();
-        $data = array();
-        $data['hang_ten'] = $request->brand_name;
-        $data['hang_trangthai'] = $request->brand_status;
-        $data['hang_mota'] = $request->brand_content;
-        /*
-            $data['brand_name'] : tên của cột trong database
-            $request->brand_product_name: tên của name lấy bên save_brand
-        */
+        // Cách dùng DB
+        // $data = array();
+        // $data['hang_ten'] = $request->brand_name;
+        // $data['hang_trangthai'] = $request->brand_status;
+        // $data['hang_mota'] = $request->brand_content;
         /*insert vào bảng*/
-        DB::table('hangsanpham')->insert($data);
+        // DB::table('hangsanpham')->insert($data);
+
+        // Dùng Model
+        $data = $request->all();
+        $brand = new Brand();
+        $brand->hang_ten = $data['brand_name'];
+        $brand->hang_mota = $data['brand_content'];
+        $brand->hang_trangthai = $data['brand_status'];
+        $brand->save();
+
         Session::put('message','Thêm hãng sản phẩm mới thành công!');
         return Redirect::to('add-brand-product'); ## Khi thêm thành công rồi thì trả lại về thêm danh mục sản phẩm
     }
@@ -56,6 +63,7 @@ class BrandProduct extends Controller
     public function unactive_brand_product($brand_id){
         $this->AuthenLogin();
         DB::table('hangsanpham')->where('hang_id', $brand_id)->update(['hang_trangthai' => 0]);
+
         Session::put('message','Cập nhật hiển thị thành công');
         return Redirect::to('all-brand-product'); 
     }
@@ -69,25 +77,33 @@ class BrandProduct extends Controller
 
     public function edit_brand_product($brand_id){
         $this->AuthenLogin();
-        $brand = DB::table('hangsanpham')->where('hang_id', $brand_id)->get();
-        $manger_brand = view ('admin.brand.edit_brand_product')->with('edit_brand', $brand);
-        return view('admin_layout')->with('admin.brand.edit_brand_product',$manger_brand); ## gom lại hiện chung
+       // $brand = DB::table('hangsanpham')->where('hang_id', $brand_id)->get();
+        $brand = Brand::where('hang_id',$brand_id)->get();
+        $manager_brand = view ('admin.brand.edit_brand_product')->with('brand', $brand);
+        return view('admin_layout')->with('admin.brand.edit_brand_product',$manager_brand); ## gom lại hiện chung
     }
 
 
     public function delete_brand_product($brand_id){
         $this->AuthenLogin();
-        DB::table('hangsanpham')->where('hang_id', $brand_id)->delete();
+        $brand = Brand::find($brand_id);
+        $brand->delete();
+       // DB::table('hangsanpham')->where('hang_id', $brand_id)->delete();
         Session::put('message','Xóa hãng sản phẩm thành công');
         return Redirect::to('all-brand-product'); 
     }
 
     public function update_brand_product(Request $request,$brand_id){
         $this->AuthenLogin();
-        $data = array();
-        $data['hang_ten'] = $request->brand_name;
-        $data['hang_mota'] = $request->brand_content;
-        DB::table('hangsanpham')->where('hang_id', $brand_id)->update($data);
+        $brand = Brand::find($brand_id);
+        $data = $request->all();
+        // $data = array();
+        // $data['hang_ten'] = $request->brand_name;
+        // $data['hang_mota'] = $request->brand_content;
+      //  DB::table('hangsanpham')->where('hang_id', $brand_id)->update($data);
+        $brand->hang_ten = $data['brand_name'];
+        $brand->hang_mota = $data['brand_content'];
+        $brand->save();
         Session::put('message','Cập nhật hãng thành công');
         return Redirect::to('all-brand-product'); 
     }

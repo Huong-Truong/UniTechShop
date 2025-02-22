@@ -11,7 +11,8 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckOutController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\SalesController;
-
+use App\Http\Controllers\ServiceController;
+// use App\Http\Controllers\CheckOutController;
 
 
 
@@ -126,8 +127,8 @@ Route::get('/delete-product/{product_id}', [ProductController::class, 'delete_pr
 Route::get('/unactive-product/{product_id}', [ProductController::class, 'unactive_product'])->name('unactive-product');
 Route::get('/active-product/{product_id}', [ProductController::class, 'active_product'])->name('active-product');
 
-Route::get('/edit-hdsd-product/{product_id}', [ProductController::class, 'edit_hdsd_product'])->name('edit-hdsd-product');
-Route::post('/update-hdsd-product/{product_id}', [ProductController::class, 'update_hdsd_product'])->name('update-hdsd-product');
+Route::get('/edit-other-info-product/{product_id}', [ProductController::class, 'edit_other_info_product'])->name('edit-other-info-product');
+Route::post('/update-other-info-product/{product_id}', [ProductController::class, 'update_other_info_product'])->name('update-other-info-product');
 
 ## Gallery 
 Route::get('/add-gallery/{product_id}', [GalleryController::class, 'add_gallery'])->name('add-gallery');
@@ -143,6 +144,14 @@ Route::get('/delete-sales/{sale_id}', [SalesController::class, 'delete_sales'])-
 Route::post('/save-sales', [SalesController::class, 'save_sales'])->name('save-sales');
 Route::get('/set-sale/{product_id}', [SalesController::class, 'set_sale'])->name('set-sale');
 Route::post('/save-set-sale/{product_id}', [SalesController::class, 'save_set_sale'])->name('save-set-sale');
+
+## Service
+Route::get('/all-service', [ServiceController::class, 'all_service'])->name('all-service');
+Route::get('/add-service', [ServiceController::class, 'add_service'])->name('add-service');
+Route::get('/delete-service/{service_id}', [ServiceController::class, 'delete_service'])->name('delete-service');
+Route::post('/save-service', [ServiceController::class, 'save_service'])->name('save-service');
+# Route::get('/set-service/{product_id}', [ServiceController::class, 'set_service'])->name('set-service');
+Route::post('/save-set-service/{product_id}', [ServiceController::class, 'save_set_service'])->name('save-set-service');
 
 ## orders
 Route::get('/manage-orders', [CheckOutController::class, 'manage_orders'])->name('manage-orders');

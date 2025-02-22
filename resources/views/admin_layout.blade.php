@@ -107,7 +107,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             var gal_id = $(this).data('gal_id');
             var gal_text = $(this).text();
             var _token = $('input[name="_token"]').val();
-            if(confirm('Bạn có chắc chắn muốn xóa ảnh này ?')){
+            if(confirm('Ảnh trong thư mục gốc cũng sẽ bị xóa ?')){
                 $.ajax({
                 url:" {{ route('delete-gallery') }}",
                     method : "POST",
@@ -123,12 +123,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </>
 <style>
     p#messageStyle{
-    color:rgb(94, 94, 95);
+    color:rgb(255, 0, 0);
     font-size: 15px;
     width:100%;
     text-align: center;
     padding: 15px;
     background-color:#FFFF; 
+   
     }
     .fa-thumb-style {
     font-size: 20px;
@@ -338,7 +339,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <!-- user login dropdown start-->
         <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+<<<<<<< HEAD
            
+=======
+>>>>>>> a7752d475f953e6ce9347e75ed08d3711fd06df8
                 <img alt=" " src="images/huongtruong.jpg">
                 <span class="username">
                     <?php 
@@ -437,6 +441,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </a>
                     <ul class="sub">
 						<li><a href="{{ route('all-sales') }}">Khuyến mãi hệ thống</a></li>
+                        {{-- <li><a href="{{ route('set-sales') }}">Thiết lập khuyến mãi </a></li> --}}
+                    </ul>
+                </li>
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-book"></i>
+                        <span> Quản lý dịch vụ</span>
+                    </a>
+                    <ul class="sub">
+						<li><a href="{{ route('all-service') }}">Dịch vụ hệ thống</a></li>
                         {{-- <li><a href="{{ route('set-sales') }}">Thiết lập khuyến mãi </a></li> --}}
                     </ul>
                 </li>
