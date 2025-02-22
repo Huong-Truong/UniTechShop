@@ -80,8 +80,7 @@
                         </div>
                     </section>
                     <section class="panel">
-                      
-                    
+
                   </section>
 
             </div>
