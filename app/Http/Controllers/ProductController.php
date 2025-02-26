@@ -7,6 +7,8 @@ use App\Models\Category;
 use App\Models\HDSD;
 use App\Models\Service;
 use App\Models\PriceService;
+use App\Models\BaoHanh;
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Session;
@@ -37,8 +39,12 @@ class ProductController extends Controller
         $brand_product = Brand::selectRaw('MIN(hang_id) as hang_id, hang_ten')
         ->groupBy('hang_ten')
         ->get();
+        $bh = BaoHanh::orderBy('baohanh_thoigian','desc')->get();
 
-       return view ('admin.product.add_product')->with('cate_product', $cate_product)->with('brand_product', $brand_product);
+       return view ('admin.product.add_product')
+       ->with('cate_product', $cate_product)
+       ->with('brand_product', $brand_product)
+       ->with('baohanh',$bh);
  
     }
 
@@ -50,8 +56,13 @@ class ProductController extends Controller
         ->select('sanpham.*', 'danhmuc.danhmuc_ten', 'hangsanpham.hang_ten')
         ->orderBy('sanpham_id','desc') 
         ->get(); // Thêm phương thức get() để lấy tất cả dữ liệu
-    
-        $manger = view ('admin.product.all_product')->with('all', $all);
+        
+        $category = Category::orderBy('danhmuc_ten','desc')->get();
+        $brand = Brand::orderBy('hang_ten','desc')->get();
+
+        $manger = view ('admin.product.all_product')->with('all', $all)
+        ->with('category',$category)
+        ->with('brand',$brand);
         return view('admin_layout')->with('admin.product.all_product',$manger); ## gom lại hiện chung
 
     }
@@ -80,6 +91,7 @@ class ProductController extends Controller
         $sp->sanpham_trangthai = $data['product_status'];
         $sp->sanpham_thongso = $data['product_specificate'];
         $sp->sanpham_xuatxu = $data['product_country'];
+        $sp->baohanh_id = $data['baohanh'];
         $get_image_file = $request->file('product_image');
 
 
@@ -99,6 +111,8 @@ class ProductController extends Controller
             Session::put('message', 'Thêm sản phẩm mới thành công!');
             return Redirect::to('all-product');
         }else{
+             // Lưu thông tin ảnh vào cơ sở dữ liệu
+             $sp->sanpham_hinhanh = '';
             // insert vô sanpham
             $sp->save();
             // insert vô hdsd
@@ -139,10 +153,12 @@ class ProductController extends Controller
     $cate_product = Category::orderBy('danhmuc_id', 'desc')->get();
     $brd_product = Brand::orderBy('hang_id', 'desc')->get();
     $product = Product::where('sanpham_id', $product_id)->first();
+    $bh = BaoHanh::orderBy('baohanh_thoigian','desc')->get();
     return view('admin.product.edit_product')
         ->with('edit_product', $product)
         ->with('cate_product', $cate_product)
-        ->with('brand_product', $brd_product);
+        ->with('brand_product', $brd_product)
+        ->with('baohanh', $bh);
 }
 
 
@@ -150,8 +166,13 @@ class ProductController extends Controller
     public function delete_product($product_id){
         $this->AuthenLogin();
         $pro = Product::find( $product_id );
-        $pro->delete();
-        
+       
+        $directoryPath = "img/sp$product_id";
+
+        if (File::exists($directoryPath)) {
+            File::deleteDirectory($directoryPath);
+        } 
+        //$pro->delete();
         Session::put('message','Xóa sản phẩm thành công');
         return Redirect::to('all-product'); 
     }
@@ -167,6 +188,7 @@ class ProductController extends Controller
         $data['sanpham_thongso'] = $request->product_specificate;
         $data['sanpham_xuatxu'] = $request->product_xuatxu;
         $data['hang_id'] = $request->brand;
+        $data['baohanh_id'] = $request->baohanh;
         $product = DB::table('sanpham')->where('sanpham_id', $product_id)->first();
         $get_image_file = $request->file('product_image');
 
@@ -192,26 +214,26 @@ class ProductController extends Controller
     
     public function edit_other_info_product($product_id)
 {
-    $this->AuthenLogin();
+        $this->AuthenLogin();
 
-    $product = Product::find($product_id);
-    $hdsd = HDSD::where('sanpham_id', $product_id)->get();
-  //  $sp = Product::find($product_id);
-    
-    $priceSrv = DB::table('giadichvu')
-    ->where('sanpham_id', $product_id)
-    ->orderBy('dv_id', 'desc')
-    ->get();
+        $product = Product::find($product_id);
+        $hdsd = HDSD::where('sanpham_id', $product_id)->get();
+    //  $sp = Product::find($product_id);
+        
+        $priceSrv = DB::table('giadichvu')
+        ->where('sanpham_id', $product_id)
+        ->orderBy('dv_id', 'desc')
+        ->get();
 
-    $srv = DB::table('dichvukemtheo')
-    ->orderBy('dv_id', 'desc')
-    ->get();
+        $srv = DB::table('dichvukemtheo')
+        ->orderBy('dv_id', 'desc')
+        ->get();
 
-return view('admin.product.edit_other_info_product')
-    ->with('hdsd', $hdsd)
-    ->with('product', $product)
-    ->with('service', $srv)
-    ->with('priceSrv', $priceSrv);
+    return view('admin.product.edit_other_info_product')
+        ->with('hdsd', $hdsd)
+        ->with('product', $product)
+        ->with('service', $srv)
+        ->with('priceSrv', $priceSrv);
 
 
 
@@ -303,11 +325,57 @@ public function update_other_info_product(Request $request,$product_id){
         }else{
             return view('pages.product.product_details')->with('dichvu', $dichvu)->with('hdsd', $hdsd)->with('phanloai', $phanloai)->with('hinhanh', $hinhanh)->with('danhmuc', $cate_product)->with('sanpham', $product)->with('sanpham_tuongtu', $product_rela);
 
+            return view('pages.product.product_details')->with('hdsd', $hdsd)->with('phanloai', $phanloai)->with('hinhanh', $hinhanh)->with('danhmuc', $cate_product)->with('sanpham', $product)->with('sanpham_tuongtu', $product_rela);
         }
-      
+    }
+
+    public function filter_by_cate (Request $request)
+    {
+        $this->AuthenLogin();
+        $cate_id = $request->category;
+        if($cate_id == 'all'){
+            return $this->all_product();
+        }
+        $all = Product::join('danhmuc', 'danhmuc.danhmuc_id', '=', 'sanpham.danhmuc_id')
+        ->join('hangsanpham', 'hangsanpham.hang_id', '=', 'sanpham.hang_id')
+        ->select('sanpham.*', 'danhmuc.danhmuc_ten', 'hangsanpham.hang_ten')
+        ->where('sanpham.danhmuc_id', $cate_id)
+        ->orderBy('sanpham_id','desc') 
+        ->get(); // Thêm phương thức get() để lấy tất cả dữ liệu
         
+        $category = Category::orderBy('danhmuc_ten','desc')->get();
+        $brand = Brand::orderBy('hang_ten','desc')->get();
+
+        $manger = view ('admin.product.all_product')->with('all', $all)
+        ->with('category',$category)
+        ->with('brand',$brand);
+        return view('admin_layout')->with('admin.product.all_product',$manger); ## gom lại hiện chung
+
+    }
+
+    public function filter_by_brand (Request $request)
+    {
+        $this->AuthenLogin();
+        $brand_id = $request->brand;
+        if($brand_id == 'all'){
+            return $this->all_product();
+        }
+        $all = Product::join('danhmuc', 'danhmuc.danhmuc_id', '=', 'sanpham.danhmuc_id')
+        ->join('hangsanpham', 'hangsanpham.hang_id', '=', 'sanpham.hang_id')
+        ->select('sanpham.*', 'danhmuc.danhmuc_ten', 'hangsanpham.hang_ten')
+        ->where('sanpham.hang_id', $brand_id)
+        ->orderBy('sanpham_id','desc') 
+        ->get(); // Thêm phương thức get() để lấy tất cả dữ liệu
+        
+        $category = Category::orderBy('danhmuc_ten','desc')->get();
+        $brand = Brand::orderBy('hang_ten','desc')->get();
+
+        $manger = view ('admin.product.all_product')->with('all', $all)
+        ->with('category',$category)
+        ->with('brand',$brand);
+        return view('admin_layout')->with('admin.product.all_product',$manger); ## gom lại hiện chung
+
+    }
 
 
-   
-}
 }

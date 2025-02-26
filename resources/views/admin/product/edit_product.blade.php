@@ -83,6 +83,16 @@
                                 @endforeach
                                 </select>
                                 </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Bảo hành</label>
+                                    <select  name="baohanh" class="form-control input-sm m-bot15">
+                                    @foreach ($baohanh as $key=>$value)
+                                            <option value = "{{$value->baohanh_id}}" {{ $value->baohanh_id == $edit_product->baohanh_id ? 'selected' : '' }}>
+                                                {{$value->baohanh_thoigian}}
+                                            </option>
+                                    @endforeach
+                                    </select>
+                                    </div>
                                 <button type="submit" name="update_product" class="btn btn-info">Cập nhật sản phẩm</button>
                             </form>
                             </div>

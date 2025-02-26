@@ -83,7 +83,7 @@ class SalesController extends Controller
         $sale = KhuyenMai::orderBy('km_gia','desc')
         ->get();
         $sp = Product::find($product_id);
-        $info_sale = ThongTinKhuyenMai::where('sanpham_id', $product_id)->first();
+        $info_sale = DB::table('thongtinkhuyenmai')->where('sanpham_id', $product_id)->first();
        
             return view('admin.sales.set_sales')
             ->with('sales', $sale)
@@ -98,13 +98,13 @@ class SalesController extends Controller
     public function save_set_sale(Request $request,$product_id){
         $this->AuthenLogin();
        // $data = array();
-        $data['sanpham_id'] = $product_id;
+         $data['sanpham_id'] = $product_id;
         $data['km_id'] = $request->sale_id;
         $data['ngaybatdau'] = $request->start_date;
         $data['ngayketthuc'] = $request->end_date;
         if( $data['ngaybatdau'] <  $data['ngayketthuc']){
             if(DB::table('thongtinkhuyenmai')->where('sanpham_id',$product_id)->first()){
-                DB::table('thongtinkhuyenmai')->update($data);
+                DB::table('thongtinkhuyenmai')->where('sanpham_id',$product_id)->update($data);
                 Session::put('message','Thiết lập thành công');
                 return Redirect::to('all-product'); 
             }

@@ -6,7 +6,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 -->
 <!DOCTYPE html>
 <head>
-<title>Trang Quản Lý</title>
+<title>Quên mật khẩu</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Visitors Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
@@ -28,7 +28,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="{{ asset('admin_js/jquery2.0.3.min.js') }}"></script>
  <!-- Favicon -->
  <link href="{{asset('img/favicon.ico')}}" rel="icon">
-<style>
+ <style>
+   
     #messageStyle{
     color: rgb(230, 230, 230);
     width: 100%;
@@ -36,29 +37,28 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     }
     
   
+
+    
+
 </style>
 </head>
 <body>
  
 <div class="log-w3"><br><br>
-<div class="w3layouts-main">
-    <h2>Đăng Nhập</h2>
-    
+<div class="w3layouts-main for-got">
+    <h3>Nhập thông tin tài khoản</h3>
     <?php 
-        $message = Session::get('message'); ## lấy tin nhắn có tên là message
-        if($message){
-           echo "<span id='messageStyle'> $message </span>" ;
-            Session::put('message',null); ## in ra xong set lại null
-        }
-    ?>
-        <form action="{{route('admin-dashboard')}}" method="post">
+    $message = Session::get('message'); ## lấy tin nhắn có tên là message
+    if($message){
+       echo "<span id='messageStyle'> $message </span>" ;
+        Session::put('message',null); ## in ra xong set lại null
+    }
+?>
+        <form action="{{route('review-pass')}}" method="post">
             @csrf
-            <input type="email" class="ggg" name="admin_email" placeholder="EMAIL" required="">
-            <input type="password" class="ggg" name="admin_password" placeholder="PASSWORD" required="">
-            <span><input type="checkbox" />Ghi nhớ</span>
-            <h6><a href="{{route('forgot-pass')}}">Quên mật khẩu?</a></h6>
+            <input type="email" class="ggg" name="email" placeholder="EMAIL" required="">
                 <div class="clearfix"></div>
-                <input type="submit" value="Đăng nhập" name="login">
+                <input type="submit" value="Lấy lại mật khẩu" name="login">
         </form>
         <!-- <p>Don't Have an Account ?<a href="registration.html">Create an account</a></p> -->
 </div>
