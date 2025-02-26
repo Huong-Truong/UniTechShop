@@ -65,14 +65,22 @@
                                 </div>
                               
                                 <div class="form-group">
-                                <label for="exampleInputPassword1">Thương hiệu</label>
-                                <select name="brand" class="form-control input-sm m-bot15">
-                                 @foreach ($brand_product as $key=>$value)
-                                        <option value = "{{$value->hang_id}}">{{$value->hang_ten}}</option>
-                                @endforeach
-                                 
-                             
-                                </select>
+                                    <label for="exampleInputPassword1">Thương hiệu</label>
+                                    <select name="brand" class="form-control input-sm m-bot15">
+                                    @foreach ($brand_product as $key=>$value)
+                                            <option value = "{{$value->hang_id}}">{{$value->hang_ten}}</option>
+                                    @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Bảo hành</label>
+                                    <select  name="baohanh" class="form-control input-sm m-bot15">
+                                    @foreach ($baohanh as $key=>$value)
+                                            <option value = "{{$value->baohanh_id}}">
+                                                {{$value->baohanh_thoigian}}
+                                            </option>
+                                    @endforeach
+                                    </select>
                                 </div>
 
                                 <div class="form-group">

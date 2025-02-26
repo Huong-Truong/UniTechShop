@@ -2,7 +2,9 @@
 
 
     namespace App\Http\Controllers;
-
+    use Mail;
+    use App\Mail\Send;
+    use App\Mail\ForgotPass;
     use Illuminate\Http\Request;
     use Illuminate\Support\Facades\DB;
     use Session;
@@ -61,4 +63,61 @@ class HomeController extends Controller
         $phanloai = DB::table('phanloaisp')->orderby('phanloai_id', 'asc')->get();
         return view('pages.services')-> with('danhmuc', $cate_product)->with('hang', $brand)->with('phanloai', $phanloai);   
     }
+
+    // Quen mat khau
+    public function forgot_pass(){
+        return view('admin_forgot_password');
+    }
+    public function send_mail(){
+        $email = 'chienb2203431@student.ctu.edu.vn';
+        $new_mail = new Send();
+        Mail::to($email)->send($new_mail);
+    }
+
+    public function review_pass(Request $request) {
+        $email = $request->email;
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@#$%&';
+        $length = 6;
+        $characterLength = strlen($characters) -1;
+        $randomPassword = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomPassword .= $characters[rand(0, $characterLength - 1)];
+        }
+        
+        $new_pass = $randomPassword;
+        $data['admin_password'] = $new_pass;
+
+        $admin_email = DB::table('admin')->where('admin_email', $email)->first();
+        if($admin_email){
+            $new_mail = new ForgotPass();
+            DB::table('admin')->where('admin_email', $email)->update($data);
+            Session::put('message', 'Mật khẩu mới đã được gửi đến mail của bạn');
+            Session::put('new_pass',$new_pass);
+            Mail::to($email)->send($new_mail);
+            return Redirect::to('/admin');
+        }
+        else {
+            Session::put('message', 'Tài khoản không tồn tại, vui lòng nhập lại');
+            return Redirect::to('/forgot-pass');
+        }
+    
+      
+       
+    }
+
+    //
+//     public function review_pass(Request $request){
+//         $to_email = $request->email; 
+
+//         $data = array("name"=>"UniTechShop","body"=>"Mail cấp lại mật khẩu đã mất.");
+
+//         Mail::send('email.review_pass',$data,function($message) use($to_email){
+//             $message->to($to_email)->subject('UniTech Support');
+//             $message->from($to_email);
+//     });
+
+// }
+    
+
+
 }

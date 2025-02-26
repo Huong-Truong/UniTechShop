@@ -7,15 +7,31 @@
     </div>
     <div class="panel-heading1">
     <div class="row w3-res-tb">
-      <div class="col-sm-5 m-b-xs ">
-        <select class="input-sm form-control w-sm inline v-middle">
-          <option value="0">Bulk action</option>
-          <option value="1">Delete selected</option>
-          <option value="2">Bulk edit</option>
-          <option value="3">Export</option>
-        </select>
-        <button class="btn btn-sm btn-default">Apply</button>                
-      </div>
+        <div class="col-sm-5 m-b-xs ">
+          <form class="form-fillter" action="{{route('fill-by-cate')}}" method="get">
+            <select  name="category" class="input-sm form-control w-sm inline v-middle ">
+              <option value="all">Danh mục</option>
+              @foreach ($category as $key => $cate )
+              <option value="{{$cate->danhmuc_id}}">{{$cate->danhmuc_ten}}</option>
+              @endforeach
+            </select>
+            <button class="btn btn-sm btn-default">
+             Apply
+            </button>   
+          </form>
+          
+          <form class="form-fillter" action="{{route('fill-by-brand')}}" method="get">
+          <select name="brand"  class="input-sm form-control w-sm inline v-middle">
+            <option value="all">Thương hiệu</option>
+            @foreach ($brand as $key => $br )
+            <option value="{{$br->hang_id}}">{{$br->hang_ten}}</option>
+            @endforeach
+          </select>
+          <button class="btn btn-sm btn-default">
+            Apply
+          </button>
+          </form>
+        </div>
       <div class="col-sm-4">
       </div>
       <div class="col-sm-3">
@@ -69,7 +85,7 @@
             ?>
             </td>
             {{-- <td><img src="{{asset('img/sp'.$pro->sanpham_id.'/'.$pro->sanpham_hinhanh)}}" height="100" width="100" alt="Lỗi ảnh"></td> --}}
-            <td><img src="{{asset('img/sp'.$pro->sanpham_id.'/'.$pro->sanpham_hinhanh)}}" height="100" width="100" alt="Lỗi ảnh"></td>
+            <td><img src="{{asset('img/sp'.$pro->sanpham_id.'/'.$pro->sanpham_hinhanh)}}" height="100" width="100" alt="Chưa có ảnh"></td>
             <td>{{$pro->danhmuc_ten}}</td>
             <td>{{$pro->hang_ten}}</td>
             <td><span class="text-ellipsis">

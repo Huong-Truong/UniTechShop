@@ -12,6 +12,7 @@ use App\Http\Controllers\CheckOutController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\BaoHanhController;
 // use App\Http\Controllers\CheckOutController;
 
 
@@ -73,8 +74,13 @@ Route::get('/services', [HomeController::class, 'services'])->name('services');
 
 //  Test:
 
+// Send mail
+Route::get('/send-mail', [HomeController::class, 'send_mail'])->name('send-mail');
+
+
 // ADMIN:
 Route::get('/login', [HomeController::class, 'login'])->name('login');
+
 
 ##ClassifyProduct
 Route::get('/add-classify-product', [ClassifyController::class, 'add_classify_product'])->name('add-classify');
@@ -130,6 +136,9 @@ Route::get('/active-product/{product_id}', [ProductController::class, 'active_pr
 Route::get('/edit-other-info-product/{product_id}', [ProductController::class, 'edit_other_info_product'])->name('edit-other-info-product');
 Route::post('/update-other-info-product/{product_id}', [ProductController::class, 'update_other_info_product'])->name('update-other-info-product');
 
+Route::get('/fil-by-cate', [ProductController::class, 'filter_by_cate'])->name('fill-by-cate');
+Route::get('/fil-by-brand', [ProductController::class, 'filter_by_brand'])->name('fill-by-brand');
+
 ## Gallery 
 Route::get('/add-gallery/{product_id}', [GalleryController::class, 'add_gallery'])->name('add-gallery');
 Route::post('/select-gallery', [GalleryController::class, 'select_gallery'])->name('select-gallery');
@@ -144,6 +153,15 @@ Route::get('/delete-sales/{sale_id}', [SalesController::class, 'delete_sales'])-
 Route::post('/save-sales', [SalesController::class, 'save_sales'])->name('save-sales');
 Route::get('/set-sale/{product_id}', [SalesController::class, 'set_sale'])->name('set-sale');
 Route::post('/save-set-sale/{product_id}', [SalesController::class, 'save_set_sale'])->name('save-set-sale');
+
+## BaoHanh
+Route::get('/all-baohanh', [BaoHanhController::class, 'all_baohanh'])->name('all-baohanh');
+Route::get('/add-baohanh', [BaoHanhController::class, 'add_baohanh'])->name('add-baohanh');
+Route::get('/delete-baohanh/{baohanh_id}', [BaoHanhController::class, 'delete_baohanh'])->name('delete-baohanh');
+Route::post('/save-baohanh', [BaoHanhController::class, 'save_baohanh'])->name('save-baohanh');
+# Route::get('/set-baohanh/{product_id}', [BaoHanhController::class, 'set_sale'])->name('set-sale');
+# Route::post('/save-set-baohanh/{product_id}', [BaoHanhController::class, 'save_set_sale'])->name('save-set-sale');
+
 
 ## Service
 Route::get('/all-service', [ServiceController::class, 'all_service'])->name('all-service');
@@ -161,3 +179,7 @@ Route::get('/delete-order/{donhang_id}', [CheckOutController::class, 'manage_ord
 Route::get('/update-status', [CheckOutController::class, 'update_status'])->name('update-status');
 
 # chien
+
+// Quen MK
+Route::get('/forgot-pass', [HomeController::class, 'forgot_pass'])->name('forgot-pass');
+Route::post('/review-pass', [HomeController::class, 'review_pass'])->name('review-pass');
