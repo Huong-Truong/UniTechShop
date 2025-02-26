@@ -78,6 +78,8 @@ class ProductController extends Controller
         $sp->sanpham_mota = $data['product_content'];
         $sp->sanpham_gia = $data['product_price'];
         $sp->sanpham_trangthai = $data['product_status'];
+        $sp->sanpham_thongso = $data['product_specificate'];
+        $sp->sanpham_xuatxu = $data['product_country'];
         $get_image_file = $request->file('product_image');
 
 
@@ -162,6 +164,8 @@ class ProductController extends Controller
         $data['sanpham_gia'] = $request->product_price;
         $data['sanpham_mota'] = $request->product_content;
         $data['danhmuc_id'] = $request->category;
+        $data['sanpham_thongso'] = $request->product_specificate;
+        $data['sanpham_xuatxu'] = $request->product_xuatxu;
         $data['hang_id'] = $request->brand;
         $product = DB::table('sanpham')->where('sanpham_id', $product_id)->first();
         $get_image_file = $request->file('product_image');
@@ -270,6 +274,7 @@ public function update_other_info_product(Request $request,$product_id){
         $hinhanh = DB::table('hinhanh')->where('sanpham_id', $product->sanpham_id)->get();
         $phanloai = DB::table('phanloaisp')->orderby('phanloai_id', 'asc')->get();
 
+        $dichvu = DB::table('giadichvu')->join('dichvukemtheo', 'giadichvu.dv_id', '=', 'dichvukemtheo.dv_id')->where('sanpham_id', $sanpham_id)->get();
         $today = Date('Y-m-d');
         $khuyenmai = DB::table('thongtinkhuyenmai')
         ->join('khuyenmai','thongtinkhuyenmai.km_id', '=', 'khuyenmai.km_id')->where('thongtinkhuyenmai.sanpham_id', $sanpham_id)
@@ -294,9 +299,9 @@ public function update_other_info_product(Request $request,$product_id){
                 $update_gia = $product->sanpham_gia - $khuyenmai->km_gia;
             }
             Session::put('gia_update', $update_gia);
-            return view('pages.product.product_details')->with('hdsd', $hdsd)->with('phanloai', $phanloai)->with('price_update', $update_gia)->with('hinhanh', $hinhanh)->with('danhmuc', $cate_product)->with('sanpham', $product)->with('sanpham_tuongtu', $product_rela);
+            return view('pages.product.product_details')->with('dichvu', $dichvu)->with('hdsd', $hdsd)->with('phanloai', $phanloai)->with('price_update', $update_gia)->with('hinhanh', $hinhanh)->with('danhmuc', $cate_product)->with('sanpham', $product)->with('sanpham_tuongtu', $product_rela);
         }else{
-            return view('pages.product.product_details')->with('hdsd', $hdsd)->with('phanloai', $phanloai)->with('hinhanh', $hinhanh)->with('danhmuc', $cate_product)->with('sanpham', $product)->with('sanpham_tuongtu', $product_rela);
+            return view('pages.product.product_details')->with('dichvu', $dichvu)->with('hdsd', $hdsd)->with('phanloai', $phanloai)->with('hinhanh', $hinhanh)->with('danhmuc', $cate_product)->with('sanpham', $product)->with('sanpham_tuongtu', $product_rela);
 
         }
       

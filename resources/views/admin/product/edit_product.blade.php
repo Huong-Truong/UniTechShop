@@ -34,10 +34,34 @@
                                     <input type="file" name="product_image" class="form-control" id="exampleInputEmail1" >
                                 </div>
                                 <div class="form-group">
+                                    <label for="exampleInputEmail1">Xuất xứ</label>
+                                    <input value="{{ $edit_product->sanpham_xuatxu}}"name="product_xuatxu" class="form-control" id="exampleInputEmail1">
+                                </div>
+                                <div class="form-group">
                                     <label for="exampleInputPassword1">Nội dung sản phẩm</label>
                                         <textarea  name="product_content" style="resize: none" rows = "8"  placeholder="Mô tả danh mục" class="form-control" name="" id="exampleInputPassword1">
                                             {{ $edit_product->sanpham_mota}}
                                         </textarea>
+                                </div>
+                         
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Thông số Sản phẩm</label>
+                                    <textarea name="product_specificate" style="resize: none" rows="8" placeholder="Mô tả sản phẩm" class="ckeditor form-control" id="noidung1">  {{ $edit_product->sanpham_thongso}}</textarea>
+                                    <script src="{{asset('ckeditor/ckeditor.js')}}"></script> 
+                                    <script>
+                                    // Disable auto inline editing
+                                    CKEDITOR.disableAutoInline = true;
+
+                                    document.addEventListener("DOMContentLoaded", function() {
+                                        if (CKEDITOR.instances['noidung1']) {
+                                            CKEDITOR.instances['noidung1'].destroy();
+                                        }
+                                        CKEDITOR.replace('noidung1');
+                                    });
+                                    </script>
+
+                                    
+ 
                                 </div>
                                 <div class="form-group">
                                 <label for="exampleInputPassword1">Danh mục sản phẩm</label>
