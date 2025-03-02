@@ -180,7 +180,8 @@ class CategoryProduct extends Controller
             ->with('danhmuc', $cate_product)
             ->with('sanpham', $product)
             ->with('hang', $brand)
-            ->with('phanloai', $phanloai)->with('ten_page', $ten_page);
+            ->with('phanloai', $phanloai)
+            ->with('ten_page', $ten_page);
     }
     
     // public function hienthi_danhmuc(){

@@ -295,7 +295,7 @@ public function update_other_info_product(Request $request,$product_id){
         join('hangsanpham', 'hangsanpham.hang_id', '=', 'sanpham.hang_id')->first();
         $hinhanh = DB::table('hinhanh')->where('sanpham_id', $product->sanpham_id)->get();
         $phanloai = DB::table('phanloaisp')->orderby('phanloai_id', 'asc')->get();
-
+        $baohanh = DB::table('baohanh')->where('baohanh_id', $product->baohanh_id)->first();
         $dichvu = DB::table('giadichvu')->join('dichvukemtheo', 'giadichvu.dv_id', '=', 'dichvukemtheo.dv_id')->where('sanpham_id', $sanpham_id)->get();
         $today = Date('Y-m-d');
         $khuyenmai = DB::table('thongtinkhuyenmai')
@@ -321,11 +321,11 @@ public function update_other_info_product(Request $request,$product_id){
                 $update_gia = $product->sanpham_gia - $khuyenmai->km_gia;
             }
             Session::put('gia_update', $update_gia);
-            return view('pages.product.product_details')->with('dichvu', $dichvu)->with('hdsd', $hdsd)->with('phanloai', $phanloai)->with('price_update', $update_gia)->with('hinhanh', $hinhanh)->with('danhmuc', $cate_product)->with('sanpham', $product)->with('sanpham_tuongtu', $product_rela);
+            return view('pages.product.product_details')->with('baohanh', $baohanh)->with('dichvu', $dichvu)->with('hdsd', $hdsd)->with('phanloai', $phanloai)->with('price_update', $update_gia)->with('hinhanh', $hinhanh)->with('danhmuc', $cate_product)->with('sanpham', $product)->with('sanpham_tuongtu', $product_rela);
         }else{
-            return view('pages.product.product_details')->with('dichvu', $dichvu)->with('hdsd', $hdsd)->with('phanloai', $phanloai)->with('hinhanh', $hinhanh)->with('danhmuc', $cate_product)->with('sanpham', $product)->with('sanpham_tuongtu', $product_rela);
+            return view('pages.product.product_details')->with('baohanh', $baohanh)->with('dichvu', $dichvu)->with('hdsd', $hdsd)->with('phanloai', $phanloai)->with('hinhanh', $hinhanh)->with('danhmuc', $cate_product)->with('sanpham', $product)->with('sanpham_tuongtu', $product_rela);
 
-            return view('pages.product.product_details')->with('hdsd', $hdsd)->with('phanloai', $phanloai)->with('hinhanh', $hinhanh)->with('danhmuc', $cate_product)->with('sanpham', $product)->with('sanpham_tuongtu', $product_rela);
+           
         }
     }
 

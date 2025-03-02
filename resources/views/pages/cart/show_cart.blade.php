@@ -7,7 +7,7 @@
             <div class="col-lg-9 table-responsive mb-5">
             <div class="text-center mb-4">
             <h2 class="section-title px-5"><span class="px-2">Chi tiết giỏ hàng</span></h2>
-        </div>
+                 </div>
                 <table class="table table-bordered text-center mb-0">
                     <?php 
                     $content = Cart::content();
@@ -16,7 +16,7 @@
                         <tr>
                             <th>Hình ảnh</th>
                             <th>Sản phẩm</th>
-                            <th>Giá</th>
+                            <th>Giá </th>
                             <th>Số lượng</th>
                             <th>Tổng tiền</th>
                             <th>Xóa</th>
@@ -39,6 +39,8 @@
                                 </div>
                                 </form>
                             </td>
+                        
+   
                             <td class="align-middle"><?php 
                                 $sub = $v_content->price * $v_content->qty;
                                 echo number_format($sub) . ' VNĐ';
@@ -48,16 +50,37 @@
                        @endforeach
                     </tbody>
                 </table>
+                <h2 class="section-title px-5 mt-4"><span class="px-2">Dịch vụ đi kèm</span></h2>
+<table class="table table-bordered text-center mb-0">
+    <thead class="bg-secondary text-dark">
+        <tr>
+             <th>Sản phẩm</th>
+
+            <th>Dịch vụ</th>
+            <th>Giá dịch vụ</th>
+        </tr>
+    </thead>
+    <tbody class="align-middle">
+        @if(empty($dichvu) || count($dichvu) === 0)
+            <tr>
+                <td colspan="2">Không có dịch vụ đi kèm</td>
+            </tr>
+        @else
+            @foreach($dichvu as $dv)
+            <tr>
+                <td class="align-middle">{{$dv->sanpham_ten}} </td>
+
+                <td class="align-middle">{{ $dv->dv_ten }}</td>
+                <td class="align-middle">{{ number_format($dv->giadichvu) }} VNĐ</td>
+            </tr>
+            @endforeach
+        @endif
+    </tbody>
+</table>
+
             </div>
             <div class="col-lg-3">
-                <form class="mb-5" action="">
-                    <div class="input-group">
-                        <input type="text" class="form-control p-4" placeholder="Coupon Code">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary">Nhập mã giảm giá</button>
-                        </div>
-                    </div>
-                </form>
+               
                 <div class="card border-secondary mb-5">
                     <div class="card-header bg-secondary border-0">
                         <h4 class="font-weight-semi-bold m-0">Đơn giá giỏ hàng</h4>
@@ -94,7 +117,7 @@
                         <?php }else{  ?>
                             <a href="{{route('login-checkout')}}" class="btn btn-block btn-primary my-3 py-3">Thanh toán đơn hàng</a>
                     
-                        <?php  }?>
+                        <?php }?>
                 
                     </div>
                 </div>

@@ -101,13 +101,12 @@
                 </form>
             </div>
             <div class="col-lg-3 col-6 text-right">
-                <a href="" class="btn border">
-                    <i class="fas fa-heart text-primary"></i>
-                    <span class="badge">0</span>
-                </a>
-                <a href="" class="btn border">
+                <a href="{{route('show-cart')}}" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
-                    <span class="badge">0</span>
+                    <?php 
+                      $count = Cart::content()->count();
+                    ?>
+                    <span class="badge"><?php echo $count ?></span>
                 </a>
             </div>
         </div>
@@ -184,7 +183,7 @@
                                 </div>
                             </div> -->
                             <a href="{{route('contact')}}" class="nav-item nav-link">Liên Hệ</a>
-                            <a href="{{route('services')}}" class="nav-item nav-link">Dịch vụ</a>
+                        
 
                         </div>
                         <div class="navbar-nav ml-auto py-0">

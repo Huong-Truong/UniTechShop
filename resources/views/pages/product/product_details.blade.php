@@ -62,8 +62,8 @@
                    
                 </div>
                 <div class="d-flex align-items-center mb-4 pt-2">
-                <form action="{{route('save-cart')}}" method="post">
-    @csrf
+                <form action="{{route('save-cart')}}" method="post" id="cartForm">
+             @csrf
     <div class="d-flex justify-content-between align-items-center">
         <div class="input-group quantity" style="width: 100px;">
             <div class="input-group-btn">
@@ -79,7 +79,14 @@
                 </button>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary px-3 ml-3"><i class="fa fa-shopping-cart mr-1"></i> Thêm vào giỏ hàng</button>
+        <button id="sendButton" type="submit" class="btn btn-primary px-3 ml-3"><i class="fa fa-shopping-cart mr-1"></i> Thêm vào giỏ hàng</button>
+        <script>
+                                            document.getElementById('sendButton').addEventListener('click', function() {
+                                alert('Đã thêm sản phẩm vào giỏ hàng');
+                                document.getElementById('cartForm').submit(); // Gửi form sau khi hiện thông báo
+                            });
+
+        </script>
 
         
     </div>
@@ -233,10 +240,9 @@
               </div> <div class="tab-pane fade " id="tab-pane-5">
                   
                   <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                  
-              
                   <h4>Thông tin bảo hành sản phẩm</h4>
-                              </div>
+                  <h5>{{$baohanh->baohanh_mota}}</h5>
+                    </div>
                  
                  
               </div>
@@ -246,27 +252,35 @@
                             <div class="col-md-6">
                                 <h4 class="mb-4">Dịch vụ đính kèm</h4>
                                 <div class="media mb-4 card-body border-left border-right text-center p-0 pt-4 pb-3">
-                                <table class="table table-bordered text-center mb-0">
-                  
-                                    <thead class="bg-secondary text-dark">
-                                        <tr>
-                                            <th>Tên dịch vụ</th>
-                                            <th>Giá dịch vụ</th>
-                                            <th>Lựa chọn đính kèm theo sản phẩm</th>
-                                        </tr>
-                                    </thead>
-                                    @foreach($dichvu as $key => $value)
-                                        <tbody class="align-middle">
-                                    
-                                            <tr>
-                                                <td class="align-middle">{{$value->dv_ten}}</td>
-                                                <td class="align-middle">{{$value->giadichvu}}</td>
-                                                <td class="align-middle"><button class="btn btn-primary"><i class="fa fa-check "></i></button></td>
-                                            </tr>
-                        
-                                        </tbody>
-                                        @endforeach
+                              
+                                    <form action="{{ route('add-service-cart') }}" method="post">
+                                        @csrf
+                                        <table class="table table-bordered text-center mb-0">
+                                            <thead class="bg-secondary text-dark">
+                                                <tr>
+                                                    <th>Chọn</th>
+                                                    <th>Dịch vụ</th>
+                                                    <th>Giá dịch vụ</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="align-middle">
+                                                @foreach($dichvu as $key => $value)
+                                                <tr>
+                                                    <td class="align-middle">
+                                                        <input type="checkbox" name="dichvu_chon[]" value="{{ $value->dv_id }}">
+                                                    </td>
+                                                    <td class="align-middle">{{ $value->dv_ten }}</td>
+                                                    <td class="align-middle">{{ number_format($value->giadichvu) }} VNĐ</td>
+                                                    <input type="hidden" name="sanpham_id_hidden" value="{{ $sanpham->sanpham_id }}">
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
                                         </table>
+                                        <div class="text-center mt-4">
+                                            <button type="submit" class="btn btn-primary">Thêm dịch vụ đã chọn</button>
+                                        </div>
+                                    </form>
+                             
                           
                             </div>
                            
@@ -306,6 +320,7 @@
 
                         <a href="{{route('xem-san-pham', ['sanpham_id' => $value->sanpham_id])}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết</a>
                         <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ hàng</a>
+                        
          
                     </div>
                  

@@ -39,6 +39,10 @@ Route::get('/thuong-hieu/{hang_id}', [BrandProduct::class, 'show_thuonghieu_home
 ## tìm kiếm sản phẩm trên home
 Route::post('/Search', [HomeController::class, 'Search'])->name('Search');
 
+
+## Thêm dịch vụ của sản phẩm vào giỏ hàng
+Route::post('/add-service-cart', [CartController::class, 'add_service_cart'])->name('add-service-cart');
+
 ## Giỏ hàng
 Route::post('/save-cart', [CartController::class, 'save_cart'])->name('save-cart');
 Route::get('/show-cart', [CartController::class, 'show_cart'])->name('show-cart');
@@ -69,13 +73,13 @@ Route::get('/logout', [AdminController::class, 'logout'])->name('logout');
 
 //trang lien he
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
-//trang dich vu
-Route::get('/services', [HomeController::class, 'services'])->name('services');
+
 
 //  Test:
 
 // Send mail
 Route::get('/send-mail', [HomeController::class, 'send_mail'])->name('send-mail');
+Route::post('/send-order',[HomeController::class, 'send_order'])->name('send-order');
 
 
 // ADMIN:
@@ -183,3 +187,4 @@ Route::get('/update-status', [CheckOutController::class, 'update_status'])->name
 // Quen MK
 Route::get('/forgot-pass', [HomeController::class, 'forgot_pass'])->name('forgot-pass');
 Route::post('/review-pass', [HomeController::class, 'review_pass'])->name('review-pass');
+Route::post('/send-contact', [HomeController::class, 'send_contact'])->name('send-contact');

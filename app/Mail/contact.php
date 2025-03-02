@@ -8,9 +8,16 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Session;
+use App\Http\Requests;
+use Illuminate\Support\Facades\Redirect; ## trả về cái trang thành công hay thất bại
 
-class Send extends Mailable
+
+class contact extends Mailable
 {
+    
     use Queueable, SerializesModels;
 
     /**
@@ -26,10 +33,18 @@ class Send extends Mailable
      */
     public function envelope(): Envelope
     {
-        
-        return new Envelope(
-            subject: 'Haha',
-        );
+        if(Session::get('subject')){
+            return  new Envelope(
+          
+                subject: Session::get('subject'),
+            );
+        }else{
+            return new Envelope(
+          
+                subject: 'Contact',
+            );
+        }
+
     }
 
     /**
@@ -38,13 +53,8 @@ class Send extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'email.send_mail',
+            view: 'email.review_contact',
         );
-    }
-    public function forgot_pass()
-    {
-        return $this->view('email.send_mail')
-                    ->subject('Forgot The Password');
     }
 
     /**

@@ -9,39 +9,43 @@
             <div class="col-lg-7 mb-5">
                 <div class="contact-form">
                     <div id="success"></div>
-                    <form  name="sentMessage" id="contactForm" novalidate="novalidate">
+                    <!-- name="sentMessage" id="contactForm" -->
+                    <form  action="{{route('send-contact')}}" method="post" id="contactForm" >
+                        @csrf
                         <div class="control-group">
                             <input type="text" class="form-control" id="name" placeholder="Tên"
-                                required="required" data-validation-required-message="Please enter your name" />
+                                 required="required" 
+                                 name="khachhang_ten"/>
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
-                            <input type="email" class="form-control" id="email" placeholder="Email"
-                                required="required" data-validation-required-message="Please enter your email" />
+                            <input type="email" class="form-control" id="email" placeholder="Email" name="email_kh"
+                                required="required"  />
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
-                            <input type="text" class="form-control" id="subject" placeholder="Tiêu đề"
-                                required="required" data-validation-required-message="Please enter a subject" />
+                            <input type="text" class="form-control" id="subject" placeholder="Tiêu đề" name="subject"
+                                required="required"  />
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
-                            <textarea class="form-control" rows="6" id="message" placeholder="Nội dung"
+                            <textarea class="form-control" rows="6" id="message" placeholder="Nội dung" name="content"
                                 required="required"
-                                data-validation-required-message="Please enter your message"></textarea>
+                             ></textarea>
                             <p class="help-block text-danger"></p>
                         </div>
                         <div>
-                            <button class="btn btn-primary py-2 px-4" type="submit" id="sendMessageButton">Gửi</button>
+                            <button type="button" class="btn btn-primary py-2 px-4" id="sendButton">Gửi</button>
                         </div>
+                        <script>
+                            document.getElementById('sendButton').addEventListener('click', function() {
+                                alert('Cảm ơn bạn đã gửi ý kiến, chúng tôi sẽ phản hồi sớm nhất có thể.');
+                                document.getElementById('contactForm').submit(); // Gửi form sau khi hiện thông báo
+                            });
+                        </script>
+
                     </form>
-                    <script>
-                    document.getElementById('contactForm').addEventListener('submit', function(event) {
-                        // event.preventDefault(); // Ngăn chặn form submit thông thường
-                        alert('Form đã được gửi thành công!');
-                        // Ở đây bạn có thể thêm mã để xử lý form sau khi gửi
-                    });
-                    </script>
+
                 </div>
             </div>
             <div class="col-lg-5 mb-5">
