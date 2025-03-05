@@ -8,19 +8,20 @@
     <div class="panel-heading1">
       <div class="row w3-res-tb">
           <div class="col-sm-5 m-b-xs  ">
-           
+            
           </div>
         <div class="col-sm-4">
+        
         </div>
         <div class="col-sm-3">
           <form action="{{route('import-classify')}}" method="POST" enctype="multipart/form-data" class="form-search">
             @csrf
-    <label for="file-upload" class="custom-file-upload btn">
-        Chọn tệp
-    </label>
-    <input id="file-upload" type="file" name="file" accept=".xlsx" style="display: none;">
-    <br>
-    <input type="submit" value="import CSV" name="import_classify" class="custom-file-upload">
+          <label class="custom-file-upload btn" for ="fileToUpload">
+              Chọn tệp
+          </label>
+          <input  type="file" name="fileToUpload" id="fileToUpload" accept=".csv" style="display: none;">
+          <br>
+          <input type="submit" value="import CSV" name="import_classify" class="custom-file-upload">
           </form>
   
         </div>
@@ -41,13 +42,13 @@
           </tr>
         </thead>
         <tbody>
-            <?php 
-            $message = Session::get('message'); ## lấy tin nhắn có tên là message
-            if($message){
-            echo "<p id='messageStyle'> $message </p>" ;
-                Session::put('message',null); ## in ra xong set lại null
-            }
-        ?>
+          <?php 
+          $message = Session::get('message'); ## lấy tin nhắn có tên là message
+          if($message){
+          echo "<p id='messageStyle'> $message </p>" ;
+              Session::put('message',null); ## in ra xong set lại null
+          }
+      ?>
             @foreach($all_classify as $key => $pl)
           <tr>
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>

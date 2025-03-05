@@ -94,20 +94,45 @@ class ClassifyController extends Controller
     }
     
     // Import csv
-    public function import_classify(){
-
-    }
-
-    //Export
-    public function export_classify(){
-           $path = $request->file('file')->getRealPath();
-        Excel::import(new ExcelImport, $path);
-        return back();
-
-    }
+    public function import_classify(Request $request)
+    {
+        // Kiểm tra xem tệp có được tải lên hay không
+        if ($request->hasFile('fileToUpload')) {
+            $file = $request->file('fileToUpload');
+            $fileType = strtolower($file->getClientOriginalExtension());
     
+            // Kiểm tra loại tệp
+            if ($fileType != 'csv') {
+                Session::put('message', 'Chỉ chấp nhận csv');
+                return Redirect::to('/all-classify-product');
+            }
+    
+            // Di chuyển tệp đến thư mục lưu trữ
+            $target_dir = 'excel/';
+            $target_file = $target_dir . $file->getClientOriginalName();
+            $file->move($target_dir, $file->getClientOriginalName());
+    
+            // Đọc và xử lý tệp CSV
+            if (($handle = fopen($target_file, 'r')) !== FALSE) {
+                fgetcsv($handle); // Bỏ qua dòng tiêu đề
+                while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
+                    $classify = new Classify();
+                    $classify->phanloai_ten = $data[0];
+                    $classify->save();
+                }
+                fclose($handle);
+                Session::put('message', 'Thêm thành công');
+            } else {
+                Session::put('message', 'Không thể mở tệp CSV');
+            }
+        } else {
+            Session::put('message', 'Chưa file nào được chọn');
+        }
+    
+        return Redirect::to('/all-classify-product');
+    }
     
    
-    // end function admin
+    
 
 }

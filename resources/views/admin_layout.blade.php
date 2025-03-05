@@ -122,7 +122,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </script>
 <style>
     p#messageStyle{
-    color:rgb(255, 0, 0);
+    color:rgb(79, 78, 78);
     font-size: 15px;
     width:100%;
     text-align: center;
