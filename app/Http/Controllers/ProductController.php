@@ -327,7 +327,7 @@ public function update_other_info_product(Request $request,$product_id){
         $this->AuthenLogin();
         $cate_id = $request->category;
         if($cate_id == 'all'){
-            return $this->all_product();
+            return Redirect('/all-product');
         }
         $all = Product::join('danhmuc', 'danhmuc.danhmuc_id', '=', 'sanpham.danhmuc_id')
         ->join('hangsanpham', 'hangsanpham.hang_id', '=', 'sanpham.hang_id')
@@ -351,12 +351,33 @@ public function update_other_info_product(Request $request,$product_id){
         $this->AuthenLogin();
         $brand_id = $request->brand;
         if($brand_id == 'all'){
-            return $this->all_product();
+            return Redirect('/all-product');
         }
         $all = Product::join('danhmuc', 'danhmuc.danhmuc_id', '=', 'sanpham.danhmuc_id')
         ->join('hangsanpham', 'hangsanpham.hang_id', '=', 'sanpham.hang_id')
         ->select('sanpham.*', 'danhmuc.danhmuc_ten', 'hangsanpham.hang_ten')
         ->where('sanpham.hang_id', $brand_id)
+        ->orderBy('sanpham_id','desc') 
+        ->get(); // Thêm phương thức get() để lấy tất cả dữ liệu
+        
+        $category = Category::orderBy('danhmuc_ten','desc')->get();
+        $brand = Brand::orderBy('hang_ten','desc')->get();
+
+        $manger = view ('admin.product.all_product')->with('all', $all)
+        ->with('category',$category)
+        ->with('brand',$brand);
+        return view('admin_layout')->with('admin.product.all_product',$manger); ## gom lại hiện chung
+
+    }
+
+    public function search_product(Request $request)
+    {
+        $this->AuthenLogin();
+        $key = $request->key;
+        $all = Product::join('danhmuc', 'danhmuc.danhmuc_id', '=', 'sanpham.danhmuc_id')
+        ->join('hangsanpham', 'hangsanpham.hang_id', '=', 'sanpham.hang_id')
+        ->select('sanpham.*', 'danhmuc.danhmuc_ten', 'hangsanpham.hang_ten')
+        ->where('sanpham.sanpham_ten','like','%'.$key.'%')
         ->orderBy('sanpham_id','desc') 
         ->get(); // Thêm phương thức get() để lấy tất cả dữ liệu
         

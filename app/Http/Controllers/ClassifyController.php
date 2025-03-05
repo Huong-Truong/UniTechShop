@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Session;
 use App\Http\Requests;
+use App\Imports\ExcelImport;
+use App\Exports\ExcelExport;
+use Excel;
+
 use Illuminate\Support\Facades\Redirect; ## trả về cái trang thành công hay thất bại
 session_start();
 
@@ -88,6 +92,20 @@ class ClassifyController extends Controller
          return view('admin.classify.all_classify_product')->with('all_classify', $all_classify);
 
     }
+    
+    // Import csv
+    public function import_classify(){
+
+    }
+
+    //Export
+    public function export_classify(){
+           $path = $request->file('file')->getRealPath();
+        Excel::import(new ExcelImport, $path);
+        return back();
+
+    }
+    
     
    
     // end function admin

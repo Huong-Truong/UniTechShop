@@ -13,6 +13,8 @@ use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\BaoHanhController;
+use App\Http\Controllers\NhaCungCapController;
+use App\Http\Controllers\StorageController;
 // use App\Http\Controllers\CheckOutController;
 
 
@@ -94,6 +96,10 @@ Route::get('/delete-classify-product/{classify_id}', [ClassifyController::class,
 
 Route::get('/search-classify-product', [ClassifyController::class, 'search_classify_product'])->name('search-classify');
 
+Route::post('/import-classify', [ClassifyController::class, 'import_classify'])->name('import-classify');
+Route::post('/export-classify', [ClassifyController::class, 'export_classify'])->name('export-classify');
+
+
 ## CategoryProduct
 
 Route::get('/add-category-product', [CategoryProduct::class, 'add_category_product'])->name('add-category');
@@ -139,6 +145,8 @@ Route::post('/update-other-info-product/{product_id}', [ProductController::class
 Route::get('/fil-by-cate', [ProductController::class, 'filter_by_cate'])->name('fill-by-cate');
 Route::get('/fil-by-brand', [ProductController::class, 'filter_by_brand'])->name('fill-by-brand');
 
+Route::get('/search-product', [ProductController::class, 'search_product'])->name('search-product');
+
 ## Gallery 
 Route::get('/add-gallery/{product_id}', [GalleryController::class, 'add_gallery'])->name('add-gallery');
 Route::post('/select-gallery', [GalleryController::class, 'select_gallery'])->name('select-gallery');
@@ -183,3 +191,16 @@ Route::get('/update-status', [CheckOutController::class, 'update_status'])->name
 // Quen MK
 Route::get('/forgot-pass', [HomeController::class, 'forgot_pass'])->name('forgot-pass');
 Route::post('/review-pass', [HomeController::class, 'review_pass'])->name('review-pass');
+
+// Nha cung cap
+Route::get('/all-nhacungcap', [NhaCungCapController::class, 'all_nhacungcap'])->name('all-nhacungcap');
+Route::get('/add-nhacungcap', [NhaCungCapController::class, 'add_nhacungcap'])->name('add-nhacungcap');
+Route::get('/delete-nhacungcap/{nhacungcap_id}', [NhaCungCapController::class, 'delete_nhacungcap'])->name('delete-nhacungcap');
+Route::post('/save-nhacungcap', [NhaCungCapController::class, 'save_nhacungcap'])->name('save-nhacungcap');
+Route::get('/edit-nhacungcap/{nhacungcap_id}', [NhaCungCapController::class, 'edit_nhacungcap'])->name('edit-nhacungcap');
+Route::post('/update-nhacungcap/{nhacungcap_id}', [NhaCungCapController::class, 'update_nhacungcap'])->name('update-nhacungcap');
+
+// Storage
+Route::get('/store-product', [StorageController::class, 'store'])->name('store-product');
+Route::get('/fill-kho', [StorageController::class, 'fill_kho'])->name('fill-kho');
+Route::get('/search-kho', [StorageController::class, 'search_kho'])->name('search-kho');

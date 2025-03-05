@@ -35,12 +35,12 @@
       <div class="col-sm-4">
       </div>
       <div class="col-sm-3">
-        <div class="input-group">
-          <input type="text" class="input-sm form-control" placeholder="Search">
-          <span class="input-group-btn">
-            <button class="btn btn-sm btn-default" type="button">Go!</button>
-          </span>
-        </div>
+        {{-- <div class="input-group"> --}}
+          <form  action="{{route('search-product')}}" method="get" class="form-search" >
+            <input type="text" name="key" class="input-sm form-control" placeholder="Search" >
+            <button class="btn btn-sm btn-default " type="submit" >Go!</button>
+          </form>
+        {{-- </div> --}}
       </div>
     </div>
     </div>

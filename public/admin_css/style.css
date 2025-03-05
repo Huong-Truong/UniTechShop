@@ -817,7 +817,7 @@ div.panel-default{
     color:black;
 }
 .table-striped{
-    background-color:rgba(249, 250, 250, 0.5);
+    background-color:rgba(249, 250, 250, 0.8);
     color:black;
     font-size: 12px;
 }
@@ -3227,7 +3227,8 @@ a.active.font-icon{
     border: 1px solid #a4adb6;
     border-radius: 4px;
     font-size: 13px;
-    /* font-weight: bold; */
+    margin: 5px;
+ 
 }
 
 .custom-file-upload:hover {
@@ -3294,4 +3295,10 @@ a.active{
     font-size: 20px;
     color: gray;
 }
+
+.form-search  {
+    display: flex;
+     align-items: center;
+}
+
 

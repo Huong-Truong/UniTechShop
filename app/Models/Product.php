@@ -31,6 +31,12 @@ class Product extends Model
         return $this->hasMany('App\PriceService','sanpham_id');
     }
 
+    public function tonkho(){
+        return $this->hasMany('App\TonKho','sanpham_id');
+        
+    }
+
+
 
 
 
