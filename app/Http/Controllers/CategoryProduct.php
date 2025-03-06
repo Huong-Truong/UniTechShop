@@ -143,8 +143,8 @@ class CategoryProduct extends Controller
                 while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
                     $cate = new Category();
                     $cate->danhmuc_ten = $data[0];
-                    $cate->danhmuc_trangthai = $data[1];
-                    $cate->phanloai_id = $data[2];
+                    $cate->phanloai_id = $data[1];
+                    $cate->danhmuc_trangthai = 1;
                     $cate->save();
                 }
                 fclose($handle);

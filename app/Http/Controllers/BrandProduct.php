@@ -134,7 +134,7 @@ class BrandProduct extends Controller
                     $brand = new Brand();
                     $brand->hang_ten = $data[0];
                     $brand->hang_mota = $data[1];
-                    $brand->hang_trangthai = $data[2];
+                    $brand->hang_trangthai = 1;
                     $brand->save();
                 }
                 fclose($handle);

@@ -286,8 +286,8 @@ public function import_product(Request $request)
                     $sp->sanpham_gia = $data[3];
                     $sp->sanpham_hinhanh = $data[4];
                     $sp->sanpham_mota = $data[5];
-                    $sp->sanpham_trangthai = $data[6];
-                    $sp->baohanh_id = $data[7];
+                    $sp->sanpham_trangthai = 1;
+                    $sp->baohanh_id = 1;
                     if(!$sp->save()){
                         Session::put('message','File CSV không khớp');
                     }
