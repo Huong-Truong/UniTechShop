@@ -6,13 +6,7 @@
                         <header class="panel-heading">
                             Thêm danh mục sản phẩm
                         </header>
-                        <?php 
-                        $message = Session::get('message'); ## lấy tin nhắn có tên là message
-                        if($message){
-                        echo "<p id='messageStyle'> $message </p>" ;
-                            Session::put('message',null); ## in ra xong set lại null
-                        }
-                        ?>
+                     
                         <div class="panel-body">
                             <div class="position-center">
                                 <form role="form" action="{{route('save-category')}}" method="post">

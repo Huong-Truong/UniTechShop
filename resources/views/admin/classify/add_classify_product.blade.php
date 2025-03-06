@@ -6,13 +6,7 @@
                         <header class="panel-heading">
                             Thêm phân loại
                         </header>
-                        <?php 
-                        $message = Session::get('message'); ## lấy tin nhắn có tên là message
-                        if($message){
-                        echo "<p id='messageStyle'> $message </p>" ;
-                            Session::put('message',null); ## in ra xong set lại null
-                        }
-                        ?>
+                       
                         <div class="panel-body">
                             {{--Tên --}}
                             <div class="position-center">

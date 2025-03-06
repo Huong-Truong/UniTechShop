@@ -248,6 +248,70 @@ public function update_other_info_product(Request $request,$product_id){
     // Session::put('message','Cập nhật thành công');
     return Redirect::to('edit-other-info-product/'.$product_id); 
 }
+
+public function import_product(Request $request)
+    {
+        // Kiểm tra xem tệp có được tải lên hay không
+        if ($request->hasFile('fileToUpload')) {
+            $file = $request->file('fileToUpload');
+            
+            $fileType = strtolower($file->getClientOriginalExtension());
+    
+            // Kiểm tra loại tệp
+            if ($fileType != 'csv') {
+                Session::put('message', 'Chỉ chấp nhận csv');
+                return Redirect::to('/all-product');
+            }
+    
+            // Di chuyển tệp đến thư mục lưu trữ
+            $target_dir = 'excel/';
+            $target_file = $target_dir . $file->getClientOriginalName();
+            $file->move($target_dir, $file->getClientOriginalName());
+
+            // Lấy ra id lớn nhất
+                $maxId = DB::table('sanpham')->max('sanpham_id') ;
+                $id_hdsd = $maxId  ;
+
+            
+    
+            // Đọc và xử lý tệp CSV
+            if (($handle = fopen($target_file, 'r')) !== FALSE) {
+                fgetcsv($handle); // Bỏ qua dòng tiêu đề
+                while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
+                    $maxId = DB::table('sanpham')->max('sanpham_id') + 1;
+                    $sp = new Product();
+                    $sp->sanpham_ten = $data[0];
+                    $sp->hang_id = $data[1];
+                    $sp->danhmuc_id = $data[2];
+                    $sp->sanpham_gia = $data[3];
+                    $sp->sanpham_hinhanh = $data[4];
+                    $sp->sanpham_mota = $data[5];
+                    $sp->sanpham_trangthai = $data[6];
+                    $sp->baohanh_id = $data[7];
+                    if(!$sp->save()){
+                        Session::put('message','File CSV không khớp');
+                    }
+                    else {
+                           // Bảng HDSD
+                    $hdsd = new HDSD();
+                    $hdsd->sanpham_id = $maxId;
+                    $hdsd->hdsd_mota = "Chưa có";
+                    $hdsd->hdsd_video = "Chưa có"; 
+                 
+                    $hdsd->save();
+                    }
+                }
+                fclose($handle);
+                Session::put('message', 'Thêm thành công');
+            } else {
+                Session::put('message', 'Không thể mở tệp CSV');
+            }
+        } else {
+            Session::put('message', 'Chưa file nào được chọn');
+        }
+    
+        return Redirect::to('/all-product');
+    }
     // end admin
 
     ## hiện sản phẩm trên trang "SẢN PHẨM"

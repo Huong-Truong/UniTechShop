@@ -99,6 +99,7 @@ class ClassifyController extends Controller
         // Kiểm tra xem tệp có được tải lên hay không
         if ($request->hasFile('fileToUpload')) {
             $file = $request->file('fileToUpload');
+            
             $fileType = strtolower($file->getClientOriginalExtension());
     
             // Kiểm tra loại tệp
@@ -118,7 +119,10 @@ class ClassifyController extends Controller
                 while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
                     $classify = new Classify();
                     $classify->phanloai_ten = $data[0];
-                    $classify->save();
+                    if(!$classify->save()){
+                        Session::put('message','File CSV không khớp');
+                    }
+                  
                 }
                 fclose($handle);
                 Session::put('message', 'Thêm thành công');
