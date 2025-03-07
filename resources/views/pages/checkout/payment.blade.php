@@ -42,7 +42,7 @@
                             <td class="align-middle"> {{$v_content->name}}</td>
                             <td class="align-middle">{{ number_format($v_content->price). ' VNĐ' }}</td>
                             <td class="align-middle">
-                                <form action="{{route('update-cart-qty')}}" method="post">
+                                <form action="{{route('update-cart-qty')}}" method="post" id="contactForm">
                                     @csrf
                                 <div class="input-group quantity mx-auto" style="width: 100px;">
 
@@ -101,7 +101,7 @@
                         </div>
                     </div>
 
-                   @endforeach
+                  
                 </div> 
                  
             </div>
@@ -139,7 +139,7 @@
                         <h4 class="font-weight-semi-bold m-0">Thanh toán</h4>
                     </div>
                     <div class="card-body">
-                        <form action="{{route('order-place')}}" method="post">
+                        <form action="{{route('send-order')}}" method="post" id="paymentForm">
                             @csrf
                         <div class="form-group">
                             <div class="custom-control custom-radio">
@@ -156,18 +156,46 @@
                         <div class="">
                             <div class="custom-control custom-radio">
                                 <input type="radio" class="custom-control-input"name="payment_option" value ="3"id="banktransfer">
-                                <label class="custom-control-label" for="banktransfer">Thẻ ngân hàng</label>
+                                <label class="custom-control-label" for="banktransfer">Thanh toán VNPAY</label>
                             </div>
                         </div>
-                      
+                        <input type="hidden" name="vanchuyen" value="{{$v_vanchuyen->vanchuyen_id}}">
                     </div>
                     <div class="card-footer border-secondary bg-transparent">
-                        <button type="submit" class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Đặt hàng</button>
+                        <button type="submit" id="sendButton" class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Đặt hàng</button>
+           
+                                
+                    <script>
+                        document.getElementById('paymentForm').addEventListener('submit', function(event) {
+                            var paymentOptions = document.getElementsByName('payment_option');
+                            var selectedOption = false;
+
+                            for (var i = 0; i < paymentOptions.length; i++) {
+                                if (paymentOptions[i].checked) {
+                                    selectedOption = true;
+                                    break;
+                                }
+                            }
+
+                            if (!selectedOption) {
+                                event.preventDefault(); // Ngăn chặn form gửi đi
+                                alert('Vui lòng chọn phương thức thanh toán');
+                            } else {
+                                alert('Cảm ơn đã đặt hàng. Vui lòng kiểm tra đơn hàng trong mail');
+                            }
+                        });
+                    </script>
                     </div>
+                    @endforeach
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    <form action="{{route('vnpay_payment')}}" method="get">
+        @csrf
+        <button type="submit" name="redirect" class="custom-control-label" for="banktransfer">Thanh toán VNPAY</button>
+    </form>
+
     <!-- Checkout End -->
 @endsection

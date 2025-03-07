@@ -4,7 +4,9 @@
     namespace App\Http\Controllers;
     use Mail;
     use App\Mail\Send;
+    use App\Mail\contact;
     use App\Mail\ForgotPass;
+    use App\Mail\OrderDetails;
     use Illuminate\Http\Request;
     use Illuminate\Support\Facades\DB;
     use Session;
@@ -57,13 +59,7 @@ class HomeController extends Controller
         return view('pages.contact')-> with('danhmuc', $cate_product)->with('hang', $brand)->with('phanloai', $phanloai);
     }
 
-    public function services(){
-        $cate_product = DB::table('danhmuc')->where('danhmuc_trangthai', 1)->orderby('danhmuc_id', 'desc')->get(); // lấy id category
-        $brand = DB::table('hangsanpham')->where('hang_trangthai', 1)->orderby('hang_id', 'desc')->get();
-        $phanloai = DB::table('phanloaisp')->orderby('phanloai_id', 'asc')->get();
-        return view('pages.services')-> with('danhmuc', $cate_product)->with('hang', $brand)->with('phanloai', $phanloai);   
-    }
-
+  
     // Quen mat khau
     public function forgot_pass(){
         return view('admin_forgot_password');
@@ -105,19 +101,44 @@ class HomeController extends Controller
        
     }
 
-    //
-//     public function review_pass(Request $request){
-//         $to_email = $request->email; 
+    // public function send_mail(){
+    //     $email = 'chienb2203431@student.ctu.edu.vn';
+    //     $new_mail = new Send();
+    //     Mail::to($email)->send($new_mail);
+    // }
+    public function send_contact(Request $request){
+        {
+        $emails = [ 'chienb2203431@student.ctu.edu.vn', 'huongb2203445@student.ctu.edu.vn'];
 
-//         $data = array("name"=>"UniTechShop","body"=>"Mail cấp lại mật khẩu đã mất.");
-
-//         Mail::send('email.review_pass',$data,function($message) use($to_email){
-//             $message->to($to_email)->subject('UniTech Support');
-//             $message->from($to_email);
-//     });
-
-// }
+        $email_nguoigui = $request->email_kh;
+        $subject = $request->subject;
     
+        $content = $request->content;
+        $ten = $request->khachhang_ten;
+        Session::put('subject', $subject);
+        Session::put('content', $content);
+        Session::put('mailgui', $email_nguoigui);
+        Session::put('tengui', $ten);
+        $new_mail = new contact();
+        Mail::to($emails)->send($new_mail);
+        return Redirect::to('/contact');
+    }
 
+  
+}
+
+        public function send_order(Request $request ){
+            $vc = DB::table('vanchuyen')->where('vanchuyen_id', $request->vanchuyen)->first();
+            $mail_nhan = $vc->vanchuyen_email;
+            $subject = "THÔNG TIN ĐƠN HÀNG";
+            Session::put('subject_order', $subject); ## lấy tiêu đề (title của mail)
+            Session::put('shipping_order', $vc->vanchuyen_id );
+            $payment = DB::table('thanhtoan')->where('pttt_id', $request->payment_option)->pluck('pttt_ten')->first();
+            Session::put('payment_order', $payment);
+            $new_mail = new OrderDetails();
+            Mail::to($mail_nhan)->send($new_mail);
+            return Redirect::to('/trang-chu');
+
+        }
 
 }

@@ -31,6 +31,10 @@
                                     <input type="file" name="product_image" class="form-control" id="exampleInputEmail1" >
                                 </div>
                                 <div class="form-group">
+                                    <label for="exampleInputEmail1">Xuất Xứ</label>
+                                    <input name="product_country" class="form-control" id="exampleInputEmail1" placeholder="Tên danh mục">
+                                </div>
+                                <div class="form-group">
                                     <label for="exampleInputEmail1">Mô tả sản phẩm </label>
                                     <textarea name="product_content" style="resize: none" rows="8" placeholder="Mô tả sản phẩm" class="form-control" ></textarea>
                                 </div>

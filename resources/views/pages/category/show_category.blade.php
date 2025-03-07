@@ -11,17 +11,19 @@
                 <!-- Price Start -->
                 <div class="border-bottom mb-4 pb-4">
     <h5 class="font-weight-semi-bold mb-4">Lọc theo loại sản phẩm</h5>
-    <form>
+ 
       
-        @foreach($phanloai as $key => $pl)
-        <form action="{{route('phan-loai',['phanloai_id' => $pl->phanloai_id])}}" method="get" >
+    @foreach($phanloai as $key => $pl)
+    <form action="{{route('phan-loai',['phanloai_id' => $pl->phanloai_id])}}" method="get">
         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-            <input type="checkbox" class="custom-control-input" id="price-{{$pl->phanloai_id}}" name="{{$pl->phanloai_id}} " onchange="this.form.submit()">
+            <input type="checkbox" class="custom-control-input" id="price-{{$pl->phanloai_id}}" name="{{$pl->phanloai_id}}" onchange="this.form.submit()">
             <label class="custom-control-label" for="price-{{$pl->phanloai_id}}">{{$pl->phanloai_ten}}</label>
             <span class="badge border font-weight-normal">150</span>
         </div>
-        </form>
-        @endforeach
+    </form>
+@endforeach
+
+
     </form>
     </div>
 <!-- Price End -->
@@ -89,6 +91,7 @@
                 <div class="card-footer d-flex justify-content-between bg-light border">
                     <a href="{{route('xem-san-pham', ['sanpham_id' => $value->sanpham_id])}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết</a>
                     <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ hàng</a>
+                    
                 </div>
             </div>
         </div>

@@ -62,8 +62,8 @@
                    
                 </div>
                 <div class="d-flex align-items-center mb-4 pt-2">
-                <form action="{{route('save-cart')}}" method="post">
-    @csrf
+                <form action="{{route('save-cart')}}" method="post" id="cartForm">
+             @csrf
     <div class="d-flex justify-content-between align-items-center">
         <div class="input-group quantity" style="width: 100px;">
             <div class="input-group-btn">
@@ -79,7 +79,14 @@
                 </button>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary px-3 ml-3"><i class="fa fa-shopping-cart mr-1"></i> Thêm vào giỏ hàng</button>
+        <button id="sendButton" type="submit" class="btn btn-primary px-3 ml-3"><i class="fa fa-shopping-cart mr-1"></i> Thêm vào giỏ hàng</button>
+        <script>
+                                            document.getElementById('sendButton').addEventListener('click', function() {
+                                alert('Đã thêm sản phẩm vào giỏ hàng');
+                                document.getElementById('cartForm').submit(); // Gửi form sau khi hiện thông báo
+                            });
+
+        </script>
 
         
     </div>
@@ -125,50 +132,21 @@
         <div class="row px-xl-5">
             <div class="col">
                 <div class="nav nav-tabs justify-content-center border-secondary mb-4">
+                <a class="nav-item nav-link  active" data-toggle="tab" href="#tab-pane-1" id="dv" >Dịch vụ</a>
                     <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-4">Hướng dẫn sử dụng & Video</a>
                     <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-2">Các thông số</a>
                     <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">Đánh giá (10)</a>
-                    <a class="nav-item nav-link  active" data-toggle="tab" href="#tab-pane-1" id="dv" >Dịch vụ</a>
+                
+                    <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-5"  >Bảo hành</a>
                 </div>
                 <div class="tab-content">
                    
                     <div class="tab-pane fade" id="tab-pane-2">
                         <h4 class="mb-3">Thông số kỹ thuật</h4>
-                        <p>Eos no lorem eirmod diam diam, eos elitr et gubergren diam sea. Consetetur vero aliquyam invidunt duo dolores et duo sit. Vero diam ea vero et dolore rebum, dolor rebum eirmod consetetur invidunt sed sed et, lorem duo et eos elitr, sadipscing kasd ipsum rebum diam. Dolore diam stet rebum sed tempor kasd eirmod. Takimata kasd ipsum accusam sadipscing, eos dolores sit no ut diam consetetur duo justo est, sit sanctus diam tempor aliquyam eirmod nonumy rebum dolor accusam, ipsum kasd eos consetetur at sit rebum, diam kasd invidunt tempor lorem, ipsum lorem elitr sanctus eirmod takimata dolor ea invidunt.</p>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item px-0">
-                                        Sit erat duo lorem duo ea consetetur, et eirmod takimata.
-                                    </li>
-                                    <li class="list-group-item px-0">
-                                        Amet kasd gubergren sit sanctus et lorem eos sadipscing at.
-                                    </li>
-                                    <li class="list-group-item px-0">
-                                        Duo amet accusam eirmod nonumy stet et et stet eirmod.
-                                    </li>
-                                    <li class="list-group-item px-0">
-                                        Takimata ea clita labore amet ipsum erat justo voluptua. Nonumy.
-                                    </li>
-                                  </ul> 
-                            </div>
-                            <div class="col-md-6">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item px-0">
-                                        Sit erat duo lorem duo ea consetetur, et eirmod takimata.
-                                    </li>
-                                    <li class="list-group-item px-0">
-                                        Amet kasd gubergren sit sanctus et lorem eos sadipscing at.
-                                    </li>
-                                    <li class="list-group-item px-0">
-                                        Duo amet accusam eirmod nonumy stet et et stet eirmod.
-                                    </li>
-                                    <li class="list-group-item px-0">
-                                        Takimata ea clita labore amet ipsum erat justo voluptua. Nonumy.
-                                    </li>
-                                  </ul> 
-                            </div>
-                        </div>
+                                <?php echo "{$sanpham->sanpham_thongso}" ?>
+                            
+                           
+                        
                     </div>
                     <div class="tab-pane fade" id="tab-pane-3">
                         <div class="row">
@@ -241,57 +219,59 @@
                           @endforeach
                       </div>
               </div>
+               <div class="tab-pane fade " id="tab-pane-4">
+                  
+    
+              </div> <div class="tab-pane fade " id="tab-pane-5">
+                  
+                  <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                  <h4>Thông tin bảo hành sản phẩm</h4>
+                  <h5>{{$baohanh->baohanh_mota}}</h5>
+                    </div>
+                 
+                 
+              </div>
                     <div class="tab-pane fade show active" id="tab-pane-1">
-                        <div class="row">
+                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                        <div class="row justify-content-center align-items-center">
                             <div class="col-md-6">
-                                <h4 class="mb-4">Dịch vụ tập huấn sử dụng sản phẩm</h4>
-                                <div class="media mb-4">
-                                    <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
-                                    <div class="media-body">
-                                        <h6>John Doe<small> - <i>01 Jan 2045</i></small></h6>
-                                        <div class="text-primary mb-2">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star-half-alt"></i>
-                                            <i class="far fa-star"></i>
+                                <h4 class="mb-4">Dịch vụ đính kèm</h4>
+                                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3"">
+                              
+                                    <form action="{{ route('add-service-cart') }}" method="post">
+                                        @csrf
+                                        <table class="table table-bordered text-center mb-0">
+                                            <thead class="bg-secondary text-dark">
+                                                <tr>
+                                                    <th>Chọn</th>
+                                                    <th>Dịch vụ</th>
+                                                    <th>Giá dịch vụ</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="align-middle">
+                                                @foreach($dichvu as $key => $value)
+                                                <tr>
+                                                    <td class="align-middle">
+                                                        <input type="checkbox" name="dichvu_chon[]" value="{{ $value->dv_id }}">
+                                                    </td>
+                                                    <td class="align-middle">{{ $value->dv_ten }}</td>
+                                                    <td class="align-middle">{{ number_format($value->giadichvu) }} VNĐ</td>
+                                                    <input type="hidden" name="sanpham_id_hidden" value="{{ $sanpham->sanpham_id }}">
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                        <div class="text-center mt-4">
+                                            <button type="submit" class="btn btn-primary">Thêm dịch vụ đã chọn</button>
                                         </div>
-                                        <p>Diam amet duo labore stet elitr ea clita ipsum, tempor labore accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.</p>
-                                    </div>
-                                </div>
+                                    </form>
+                             
+                          
                             </div>
-                            <div class="col-md-6">
-                                <h4 class="mb-4">Leave a review</h4>
-                                <small>Your email address will not be published. Required fields are marked *</small>
-                                <div class="d-flex my-3">
-                                    <p class="mb-0 mr-2">Your Rating * :</p>
-                                    <div class="text-primary">
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                    </div>
-                                </div>
-                                <form>
-                                    <div class="form-group">
-                                        <label for="message">Your Review *</label>
-                                        <textarea id="message" cols="30" rows="5" class="form-control"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="name">Your Name *</label>
-                                        <input type="text" class="form-control" id="name">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email">Your Email *</label>
-                                        <input type="email" class="form-control" id="email">
-                                    </div>
-                                    <div class="form-group mb-0">
-                                        <input type="submit" value="Leave Your Review" class="btn btn-primary px-3">
-                                    </div>
-                                </form>
+                           
                             </div>
                         </div>
+                     </div>
                     </div>
                 </div>
             </div>
@@ -325,6 +305,7 @@
 
                         <a href="{{route('xem-san-pham', ['sanpham_id' => $value->sanpham_id])}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết</a>
                         <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ hàng</a>
+                        
          
                     </div>
                  

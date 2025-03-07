@@ -106,10 +106,11 @@
           <tr>
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
             <td>{{$pro->sanpham_ten}}</td>
-           
+
             <td>
               <?php
-          echo  $formattedVND = number_format(preg_replace('/\D/', '',$pro->sanpham_gia), 0, ',', '.') . ' VND';
+               $formattedVND = number_format(preg_replace('/\D/', '',$pro->sanpham_gia), 0, ',', '.') . ' VND';
+               echo $formattedVND;
             ?>
             </td>
             {{-- <td><img src="{{asset('img/sp'.$pro->sanpham_id.'/'.$pro->sanpham_hinhanh)}}" height="100" width="100" alt="Lỗi ảnh"></td> --}}

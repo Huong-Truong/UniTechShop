@@ -9,7 +9,7 @@ class Product extends Model
     //
     public $timestamps = false;
     protected $fillable = [
-        'sanpham_ten', 'sanpham_gia','sanpham_hinhanh','sanpham_mota','sanpham_trangthai'
+        'sanpham_ten', 'sanpham_gia','sanpham_hinhanh','sanpham_mota','sanpham_trangthai', 'sanpham_thongso', 'sanpham_xuatxu'
     ];
 
     protected $primaryKey = 'sanpham_id';
