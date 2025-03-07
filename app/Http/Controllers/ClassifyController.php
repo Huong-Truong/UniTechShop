@@ -101,6 +101,7 @@ class ClassifyController extends Controller
     // Import csv
     public function import_classify(Request $request)
     {
+        $this->AuthenLogin();
         // Kiểm tra xem tệp có được tải lên hay không
         if ($request->hasFile('fileToUpload')) {
             $file = $request->file('fileToUpload');
@@ -135,6 +136,7 @@ class ClassifyController extends Controller
                     if(!$classify->save()){
                         Session::put('message','File CSV không khớp');
                     }
+                    $maxID++;
                   
                 }
                 fclose($handle);
@@ -148,8 +150,10 @@ class ClassifyController extends Controller
     
         return Redirect::to('/all-classify-product');
     }
+
+  
     
    
     
-
+    
 }

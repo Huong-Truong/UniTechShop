@@ -25,6 +25,7 @@
                 </a>
                 <ul class="dropdown-menu extended logout">
                     <li><a href="/download-brand"><i class="fa fa-download"></i> Lấy mẫu csv</a></li>
+                    <li><a href="/export-brand"><i class="fa fa-download"></i> Export csv</a></li>
                 </ul>
           </label>
 

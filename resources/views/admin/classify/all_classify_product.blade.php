@@ -24,7 +24,8 @@
                   <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu extended logout">
-                    <li><a href="/download-classify"><i class="fa fa-download"></i> Lấy mẫu csv</a></li>
+                    <li><a href="/download-classify"><i class="fa fa-download"></i> Lấy mẫu </a></li>
+                    <li><a href="/export-classify"><i class="fa fa-download"></i> Export csv</a></li>
                 </ul>
           </label>
 

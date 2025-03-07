@@ -110,6 +110,8 @@ Route::post('/import-classify', [ClassifyController::class, 'import_classify'])-
 
 
 
+
+
 ## CategoryProduct
 
 Route::get('/add-category-product', [CategoryProduct::class, 'add_category_product'])->name('add-category');
@@ -225,3 +227,8 @@ Route::get('/download-classify', [FileController::class, 'download_classify'])->
 Route::get('/download-cate', [FileController::class, 'download_cate'])->name('file-cate');
 Route::get('/download-brand', [FileController::class, 'download_brand'])->name('file-brand');
 Route::get('/download-product', [FileController::class, 'download_product'])->name('file-product');
+// Export
+Route::get('/export-classify', [FileController::class, 'export_classify'])->name('export-classify');
+Route::get('/export-category', [FileController::class, 'export_category'])->name('export-category');
+Route::get('/export-brand', [FileController::class, 'export_brand'])->name('export-brand');
+Route::get('/export-product', [FileController::class, 'export_product'])->name('export-product');
