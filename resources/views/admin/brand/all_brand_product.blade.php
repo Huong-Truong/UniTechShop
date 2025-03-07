@@ -5,7 +5,44 @@
     <div class="panel-heading">
         Liệt kê thương hiệu
     </div>
-    
+    <div class="panel-heading1">
+      <div class="row w3-res-tb">
+          <div class="col-sm-5 m-b-xs  ">
+            
+          </div>
+        <div class="col-sm-4">
+        
+        </div>
+        <div class="col-sm-3">
+          <form action="{{route('import-brand')}}" method="POST" enctype="multipart/form-data" class="form-search">
+            @csrf
+          <label class="custom-file-upload btn" >
+            Chọn file
+            <input  type="file" name="fileToUpload" id="fileToUpload" accept=".csv" style="display: none;">
+            
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                  <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu extended logout">
+                    <li><a href="/download-brand"><i class="fa fa-download"></i> Lấy mẫu csv</a></li>
+                </ul>
+          </label>
+
+          <p id="fileName"></p>
+
+          <script>
+              document.getElementById('fileToUpload').addEventListener('change', function(event) {
+                  var fileName = event.target.files[0].name;
+                  document.getElementById('fileName').textContent = fileName;
+              });
+          </script>
+          <br>
+          <input type="submit" value="import CSV" name="import_brand" class="custom-file-upload">
+          </form>
+           
+        </div>
+      </div>
+      </div>
     <div class="table-responsive">
       <table class="table table-striped b-t b-light">
         <thead>
@@ -15,6 +52,7 @@
                 <input type="checkbox"><i></i>
               </label>
             </th>
+       
             <th>Tên danh mục</th>
             <th>Mô tả</th>
             <th>Hiển thị</th>
@@ -23,16 +61,13 @@
           </tr>
         </thead>
         <tbody>
-            <?php 
-            $message = Session::get('message'); ## lấy tin nhắn có tên là message
-            if($message){
-            echo "<p id='messageStyle'> $message </p>" ;
-                Session::put('message',null); ## in ra xong set lại null
-            }
-        ?>
+        
             @foreach($all_brand as $key => $brand)
           <tr>
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
+            <td>
+          
+             </td>
             <td>{{$brand->hang_ten}}</td>
             <td>{{$brand->hang_mota}}</td>
             <td><span class="text-ellipsis">

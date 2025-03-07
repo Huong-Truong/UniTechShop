@@ -122,7 +122,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </script>
 <style>
     p#messageStyle{
-    color:rgb(255, 0, 0);
+    color:rgb(79, 78, 78);
     font-size: 15px;
     width:100%;
     text-align: center;
@@ -459,7 +459,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         {{-- <li><a href="{{ route('set-sales') }}">Thiết lập khuyến mãi </a></li> --}}
                     </ul>
                 </li>
-                
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-th"></i>
+                        <span>Quản lý kho</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="{{route('all-nhacungcap')}}">Quản lý nhà cung cấp</a></li>
+                        <li><a href="{{route('store-product')}}">Quản lý kho hàng</a></li>
+                    </ul>
+                </li>
                 <li>
                     <a href="fontawesome.html">
                         <i class="fa fa-bullhorn"></i>

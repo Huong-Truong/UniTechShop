@@ -6,13 +6,7 @@
                         <header class="panel-heading">
                            Chỉnh sửa thương hiệu sản phẩm
                         </header>
-                        <?php 
-                        $message = Session::get('message'); ## lấy tin nhắn có tên là message
-                        if($message){
-                        echo "<p id='messageStyle'> $message </p>" ;
-                            Session::put('message',null); ## in ra xong set lại null
-                        }
-                        ?>
+                       
                         <div class="panel-body">
                             @foreach($brand as $br)
                             <div class="position-center">

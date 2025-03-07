@@ -13,6 +13,9 @@ use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\BaoHanhController;
+use App\Http\Controllers\NhaCungCapController;
+use App\Http\Controllers\StorageController;
+use App\Http\Controllers\FileController;
 // use App\Http\Controllers\CheckOutController;
 
 
@@ -103,6 +106,10 @@ Route::get('/delete-classify-product/{classify_id}', [ClassifyController::class,
 
 Route::get('/search-classify-product', [ClassifyController::class, 'search_classify_product'])->name('search-classify');
 
+Route::post('/import-classify', [ClassifyController::class, 'import_classify'])->name('import-classify');
+
+
+
 ## CategoryProduct
 
 Route::get('/add-category-product', [CategoryProduct::class, 'add_category_product'])->name('add-category');
@@ -116,6 +123,7 @@ Route::get('/delete-category-product/{category_id}', [CategoryProduct::class, 'd
 Route::get('/unactive-category-product/{category_id}', [CategoryProduct::class, 'unactive_category_product'])->name('unactive-category');
 Route::get('/active-category-product/{category_id}', [CategoryProduct::class, 'active_category_product'])->name('active-category');
 
+Route::post('/import-category', [CategoryProduct::class, 'import_category'])->name('import-category');
 
 ## Brand_product
 Route::get('/add-brand-product', [BrandProduct::class, 'add_brand_product'])->name('add-brand');
@@ -128,6 +136,8 @@ Route::get('/delete-brand-product/{brand_id}', [BrandProduct::class, 'delete_bra
 
 Route::get('/unactive-brand-product/{brand_id}', [BrandProduct::class, 'unactive_brand_product'])->name('unactive-brand');
 Route::get('/active-brand-product/{brand_id}', [BrandProduct::class, 'active_brand_product'])->name('active-brand');
+
+Route::post('/import-brand', [BrandProduct::class, 'import_brand'])->name('import-brand');
 
 
 ## product
@@ -147,6 +157,9 @@ Route::post('/update-other-info-product/{product_id}', [ProductController::class
 
 Route::get('/fil-by-cate', [ProductController::class, 'filter_by_cate'])->name('fill-by-cate');
 Route::get('/fil-by-brand', [ProductController::class, 'filter_by_brand'])->name('fill-by-brand');
+
+Route::get('/search-product', [ProductController::class, 'search_product'])->name('search-product');
+Route::post('/import-product', [ProductController::class, 'import_product'])->name('import-product');
 
 ## Gallery 
 Route::get('/add-gallery/{product_id}', [GalleryController::class, 'add_gallery'])->name('add-gallery');
@@ -193,3 +206,22 @@ Route::get('/update-status', [CheckOutController::class, 'update_status'])->name
 Route::get('/forgot-pass', [HomeController::class, 'forgot_pass'])->name('forgot-pass');
 Route::post('/review-pass', [HomeController::class, 'review_pass'])->name('review-pass');
 Route::post('/send-contact', [HomeController::class, 'send_contact'])->name('send-contact');
+
+// Nha cung cap
+Route::get('/all-nhacungcap', [NhaCungCapController::class, 'all_nhacungcap'])->name('all-nhacungcap');
+Route::get('/add-nhacungcap', [NhaCungCapController::class, 'add_nhacungcap'])->name('add-nhacungcap');
+Route::get('/delete-nhacungcap/{nhacungcap_id}', [NhaCungCapController::class, 'delete_nhacungcap'])->name('delete-nhacungcap');
+Route::post('/save-nhacungcap', [NhaCungCapController::class, 'save_nhacungcap'])->name('save-nhacungcap');
+Route::get('/edit-nhacungcap/{nhacungcap_id}', [NhaCungCapController::class, 'edit_nhacungcap'])->name('edit-nhacungcap');
+Route::post('/update-nhacungcap/{nhacungcap_id}', [NhaCungCapController::class, 'update_nhacungcap'])->name('update-nhacungcap');
+
+// Storage
+Route::get('/store-product', [StorageController::class, 'store'])->name('store-product');
+Route::get('/fill-kho', [StorageController::class, 'fill_kho'])->name('fill-kho');
+Route::get('/search-kho', [StorageController::class, 'search_kho'])->name('search-kho');
+
+// File
+Route::get('/download-classify', [FileController::class, 'download_classify'])->name('file-classify');
+Route::get('/download-cate', [FileController::class, 'download_cate'])->name('file-cate');
+Route::get('/download-brand', [FileController::class, 'download_brand'])->name('file-brand');
+Route::get('/download-product', [FileController::class, 'download_product'])->name('file-product');

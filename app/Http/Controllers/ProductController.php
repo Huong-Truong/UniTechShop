@@ -172,7 +172,7 @@ class ProductController extends Controller
         if (File::exists($directoryPath)) {
             File::deleteDirectory($directoryPath);
         } 
-        //$pro->delete();
+        $pro->delete();
         Session::put('message','Xóa sản phẩm thành công');
         return Redirect::to('all-product'); 
     }
@@ -252,6 +252,70 @@ public function update_other_info_product(Request $request,$product_id){
     // Session::put('message','Cập nhật thành công');
     return Redirect::to('edit-other-info-product/'.$product_id); 
 }
+
+public function import_product(Request $request)
+    {
+        // Kiểm tra xem tệp có được tải lên hay không
+        if ($request->hasFile('fileToUpload')) {
+            $file = $request->file('fileToUpload');
+            
+            $fileType = strtolower($file->getClientOriginalExtension());
+    
+            // Kiểm tra loại tệp
+            if ($fileType != 'csv') {
+                Session::put('message', 'Chỉ chấp nhận csv');
+                return Redirect::to('/all-product');
+            }
+    
+            // Di chuyển tệp đến thư mục lưu trữ
+            $target_dir = 'excel/';
+            $target_file = $target_dir . $file->getClientOriginalName();
+            $file->move($target_dir, $file->getClientOriginalName());
+
+            // Lấy ra id lớn nhất
+                $maxId = DB::table('sanpham')->max('sanpham_id') ;
+                $id_hdsd = $maxId  ;
+
+            
+    
+            // Đọc và xử lý tệp CSV
+            if (($handle = fopen($target_file, 'r')) !== FALSE) {
+                fgetcsv($handle); // Bỏ qua dòng tiêu đề
+                while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
+                    $maxId = DB::table('sanpham')->max('sanpham_id') + 1;
+                    $sp = new Product();
+                    $sp->sanpham_ten = $data[0];
+                    $sp->hang_id = $data[1];
+                    $sp->danhmuc_id = $data[2];
+                    $sp->sanpham_gia = $data[3];
+                    $sp->sanpham_hinhanh = $data[4];
+                    $sp->sanpham_mota = $data[5];
+                    $sp->sanpham_trangthai = 1;
+                    $sp->baohanh_id = 1;
+                    if(!$sp->save()){
+                        Session::put('message','File CSV không khớp');
+                    }
+                    else {
+                           // Bảng HDSD
+                    $hdsd = new HDSD();
+                    $hdsd->sanpham_id = $maxId;
+                    $hdsd->hdsd_mota = "Chưa có";
+                    $hdsd->hdsd_video = "Chưa có"; 
+                 
+                    $hdsd->save();
+                    }
+                }
+                fclose($handle);
+                Session::put('message', 'Thêm thành công');
+            } else {
+                Session::put('message', 'Không thể mở tệp CSV');
+            }
+        } else {
+            Session::put('message', 'Chưa file nào được chọn');
+        }
+    
+        return Redirect::to('/all-product');
+    }
     // end admin
 
     ## hiện sản phẩm trên trang "SẢN PHẨM"
@@ -334,7 +398,7 @@ public function update_other_info_product(Request $request,$product_id){
         $this->AuthenLogin();
         $cate_id = $request->category;
         if($cate_id == 'all'){
-            return $this->all_product();
+            return Redirect('/all-product');
         }
         $all = Product::join('danhmuc', 'danhmuc.danhmuc_id', '=', 'sanpham.danhmuc_id')
         ->join('hangsanpham', 'hangsanpham.hang_id', '=', 'sanpham.hang_id')
@@ -358,12 +422,33 @@ public function update_other_info_product(Request $request,$product_id){
         $this->AuthenLogin();
         $brand_id = $request->brand;
         if($brand_id == 'all'){
-            return $this->all_product();
+            return Redirect('/all-product');
         }
         $all = Product::join('danhmuc', 'danhmuc.danhmuc_id', '=', 'sanpham.danhmuc_id')
         ->join('hangsanpham', 'hangsanpham.hang_id', '=', 'sanpham.hang_id')
         ->select('sanpham.*', 'danhmuc.danhmuc_ten', 'hangsanpham.hang_ten')
         ->where('sanpham.hang_id', $brand_id)
+        ->orderBy('sanpham_id','desc') 
+        ->get(); // Thêm phương thức get() để lấy tất cả dữ liệu
+        
+        $category = Category::orderBy('danhmuc_ten','desc')->get();
+        $brand = Brand::orderBy('hang_ten','desc')->get();
+
+        $manger = view ('admin.product.all_product')->with('all', $all)
+        ->with('category',$category)
+        ->with('brand',$brand);
+        return view('admin_layout')->with('admin.product.all_product',$manger); ## gom lại hiện chung
+
+    }
+
+    public function search_product(Request $request)
+    {
+        $this->AuthenLogin();
+        $key = $request->key;
+        $all = Product::join('danhmuc', 'danhmuc.danhmuc_id', '=', 'sanpham.danhmuc_id')
+        ->join('hangsanpham', 'hangsanpham.hang_id', '=', 'sanpham.hang_id')
+        ->select('sanpham.*', 'danhmuc.danhmuc_ten', 'hangsanpham.hang_ten')
+        ->where('sanpham.sanpham_ten','like','%'.$key.'%')
         ->orderBy('sanpham_id','desc') 
         ->get(); // Thêm phương thức get() để lấy tất cả dữ liệu
         

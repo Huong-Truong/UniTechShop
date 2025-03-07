@@ -117,6 +117,47 @@ class CategoryProduct extends Controller
         Session::put('message','Cập nhật danh mục thành công');
         return Redirect::to('all-category-product'); 
     }
+
+    public function import_category(Request $request)
+    {
+        // Kiểm tra xem tệp có được tải lên hay không
+        if ($request->hasFile('fileToUpload')) {
+            $file = $request->file('fileToUpload');
+            
+            $fileType = strtolower($file->getClientOriginalExtension());
+    
+            // Kiểm tra loại tệp
+            if ($fileType != 'csv') {
+                Session::put('message', 'Chỉ chấp nhận csv');
+                return Redirect::to('/all-category-product');
+            }
+    
+            // Di chuyển tệp đến thư mục lưu trữ
+            $target_dir = 'excel/';
+            $target_file = $target_dir . $file->getClientOriginalName();
+            $file->move($target_dir, $file->getClientOriginalName());
+    
+            // Đọc và xử lý tệp CSV
+            if (($handle = fopen($target_file, 'r')) !== FALSE) {
+                fgetcsv($handle); // Bỏ qua dòng tiêu đề
+                while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
+                    $cate = new Category();
+                    $cate->danhmuc_ten = $data[0];
+                    $cate->phanloai_id = $data[1];
+                    $cate->danhmuc_trangthai = 1;
+                    $cate->save();
+                }
+                fclose($handle);
+                Session::put('message', 'Thêm thành công');
+            } else {
+                Session::put('message', 'Không thể mở tệp CSV');
+            }
+        } else {
+            Session::put('message', 'Chưa file nào được chọn');
+        }
+    
+        return Redirect::to('/all-category-product');
+    }
     //  End function của admin
 
 

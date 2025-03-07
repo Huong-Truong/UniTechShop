@@ -371,19 +371,20 @@ class CheckOutController extends Controller
                 // Ví dụ: $order = Order::find($orderId);
                 // $order->status = 'paid';
                 // $order->save();
-    
-                return response()->json([
-                    'code' => '00',
-                    'message' => 'Giao dịch thành công',
-                    'data' => $inputData
-                ]);
+                // return response()->json([
+                //     'code' => '00',
+                //     'message' => 'Giao dịch thành công',
+                //     'data' => $inputData
+                // ]);
+                return Redirect::to('/check-out');
             } else {
                 // Giao dịch thất bại
-                return response()->json([
-                    'code' => $vnp_ResponseCode,
-                    'message' => 'Giao dịch không thành công',
-                    'data' => $inputData
-                ]);
+                // return response()->json([
+                //     'code' => $vnp_ResponseCode,
+                //     'message' => 'Giao dịch không thành công',
+                //     'data' => $inputData
+                // ]);
+                return Redirect::to('/check-out');
             }
         } else {
             // Chữ ký không hợp lệ

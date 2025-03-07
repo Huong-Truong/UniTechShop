@@ -5,27 +5,45 @@
     <div class="panel-heading">
         Liệt kê danh mục sản phẩm
     </div>
-    {{-- <div class="row w3-res-tb">
-      <div class="col-sm-5 m-b-xs">
-        <select class="input-sm form-control w-sm inline v-middle">
-          <option value="0">Bulk action</option>
-          <option value="1">Delete selected</option>
-          <option value="2">Bulk edit</option>
-          <option value="3">Export</option>
-        </select>
-        <button class="btn btn-sm btn-default">Apply</button>                
-      </div>
-      <div class="col-sm-4">
-      </div>
-      <div class="col-sm-3">
-        <div class="input-group">
-          <input type="text" class="input-sm form-control" placeholder="Search">
-          <span class="input-group-btn">
-            <button class="btn btn-sm btn-default" type="button">Go!</button>
-          </span>
+    <div class="panel-heading1">
+      <div class="row w3-res-tb">
+          <div class="col-sm-5 m-b-xs  ">
+            
+          </div>
+        <div class="col-sm-4">
+        
+        </div>
+        <div class="col-sm-3">
+          <form action="{{route('import-category')}}" method="POST" enctype="multipart/form-data" class="form-search">
+            @csrf
+          <label class="custom-file-upload btn" >
+            Chọn file
+            <input  type="file" name="fileToUpload" id="fileToUpload" accept=".csv" style="display: none;">
+            
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                  <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu extended logout">
+                    <li><a href="/download-cate"><i class="fa fa-download"></i> Lấy mẫu csv</a></li>
+                </ul>
+          </label>
+
+          <p id="fileName"></p>
+
+          <script>
+              document.getElementById('fileToUpload').addEventListener('change', function(event) {
+                  var fileName = event.target.files[0].name;
+                  document.getElementById('fileName').textContent = fileName;
+              });
+          </script>
+          <br>
+          <input type="submit" value="import CSV" name="import_category" class="custom-file-upload">
+          </form>
+           
+        
         </div>
       </div>
-    </div> --}}
+      </div>
     <div class="table-responsive">
       <table class="table table-striped b-t b-light">
         <thead>

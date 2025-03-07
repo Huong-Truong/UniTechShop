@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Session;
 use App\Http\Requests;
+use App\Imports\ExcelImport;
+use App\Exports\ExcelExport;
+use Excel;
+
 use Illuminate\Support\Facades\Redirect; ## trả về cái trang thành công hay thất bại
 session_start();
 
@@ -89,7 +93,50 @@ class ClassifyController extends Controller
 
     }
     
+    // Import csv
+    public function import_classify(Request $request)
+    {
+        // Kiểm tra xem tệp có được tải lên hay không
+        if ($request->hasFile('fileToUpload')) {
+            $file = $request->file('fileToUpload');
+            
+            $fileType = strtolower($file->getClientOriginalExtension());
+    
+            // Kiểm tra loại tệp
+            if ($fileType != 'csv') {
+                Session::put('message', 'Chỉ chấp nhận csv');
+                return Redirect::to('/all-classify-product');
+            }
+    
+            // Di chuyển tệp đến thư mục lưu trữ
+            $target_dir = 'excel/';
+            $target_file = $target_dir . $file->getClientOriginalName();
+            $file->move($target_dir, $file->getClientOriginalName());
+    
+            // Đọc và xử lý tệp CSV
+            if (($handle = fopen($target_file, 'r')) !== FALSE) {
+                fgetcsv($handle); // Bỏ qua dòng tiêu đề
+                while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
+                    $classify = new Classify();
+                    $classify->phanloai_ten = $data[0];
+                    if(!$classify->save()){
+                        Session::put('message','File CSV không khớp');
+                    }
+                  
+                }
+                fclose($handle);
+                Session::put('message', 'Thêm thành công');
+            } else {
+                Session::put('message', 'Không thể mở tệp CSV');
+            }
+        } else {
+            Session::put('message', 'Chưa file nào được chọn');
+        }
+    
+        return Redirect::to('/all-classify-product');
+    }
+    
    
-    // end function admin
+    
 
 }

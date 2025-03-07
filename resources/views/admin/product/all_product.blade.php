@@ -4,6 +4,7 @@
   <div class="panel panel-default">
     <div class="panel-heading">
         Liệt kê sản phẩm
+        
     </div>
     <div class="panel-heading1">
     <div class="row w3-res-tb">
@@ -33,14 +34,41 @@
           </form>
         </div>
       <div class="col-sm-4">
+        <form  action="{{route('search-product')}}" method="get" class="form-search" >
+          <input type="text" name="key" class="input-sm form-control" placeholder="Search" >
+          <button class="btn btn-sm btn-default " type="submit" >Go!</button>
+        </form>
+        <br>
+       
       </div>
       <div class="col-sm-3">
-        <div class="input-group">
-          <input type="text" class="input-sm form-control" placeholder="Search">
-          <span class="input-group-btn">
-            <button class="btn btn-sm btn-default" type="button">Go!</button>
-          </span>
-        </div>
+          <form action="{{route('import-product')}}" method="POST" enctype="multipart/form-data" class="form-search">
+            @csrf
+          <label class="btn btn-sm btn-default" >
+            Chọn file
+            <input  type="file" name="fileToUpload" id="fileToUpload"  accept=".csv" style="display: none;">
+            
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                  <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu extended logout">
+                    <li><a href="/download-product"><i class="fa fa-download"></i> Lấy mẫu csv</a></li>
+                </ul>
+          </label>
+
+          <p id="fileName"></p>
+  
+          <script>
+              document.getElementById('fileToUpload').addEventListener('change', function(event) {
+                  var fileName = event.target.files[0].name;
+                  document.getElementById('fileName').textContent = fileName;
+              });
+          </script>
+         
+          <input type="submit" value="import CSV" name="import_product" class="btn btn-sm btn-default">
+          </form>
+          <br>
+      
       </div>
     </div>
     </div>
