@@ -41,9 +41,14 @@ class ClassifyController extends Controller
     public function save_classify_product (Request $request)    
     {
         $this->AuthenLogin();
+       if(!$maxID = Classify::max('phanloai_id')) {
+             $maxID = 0;
+       }
         $classify = new Classify();
+
         $data = $request->all();
        // $data['phanloai_ten'] = $request->classify_name;
+        $classify->phanloai_id = $maxID + 1;
         $classify->phanloai_ten = $data['classify_name'];
         /*insert vào bảng*/
         //DB::table('phanloaisp')->insert($data);
@@ -117,7 +122,15 @@ class ClassifyController extends Controller
             if (($handle = fopen($target_file, 'r')) !== FALSE) {
                 fgetcsv($handle); // Bỏ qua dòng tiêu đề
                 while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
+                     // Chuyển đổi encoding của từng cột
+                    $data = array_map(function($value) {
+                        return mb_convert_encoding($value, 'UTF-8', 'auto');
+                    }, $data);
+                    if(!$maxID = Classify::max('phanloai_id')) {
+                        $maxID = 0;
+                  }
                     $classify = new Classify();
+                    $classify->phanloai_id = $maxID + 1;
                     $classify->phanloai_ten = $data[0];
                     if(!$classify->save()){
                         Session::put('message','File CSV không khớp');

@@ -55,7 +55,7 @@
                 <input type="checkbox"><i></i>
               </label>
             </th>
-            
+            <th>STT</th>
             <th>Tên phân loại</th>
             <th>Thao tác</th>
             <th style="width:30px;"></th>
@@ -73,6 +73,12 @@
             @foreach($all_classify as $key => $pl)
           <tr>
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
+            
+            <td><?php
+              echo $i;
+               $i++;
+               ?>
+            </td>
           
             <td>{{$pl->phanloai_ten}}</td>
 

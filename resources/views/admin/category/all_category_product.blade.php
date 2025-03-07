@@ -53,6 +53,7 @@
                 <input type="checkbox"><i></i>
               </label>
             </th>
+            <th>STT</th>
             <th>Tên danh mục</th>
             <th>Phân loại</th>
             <th>Hiển thị</th>
@@ -67,10 +68,18 @@
             echo "<p id='messageStyle'> $message </p>" ;
                 Session::put('message',null); ## in ra xong set lại null
             }
+            $i = 1;
         ?>
             @foreach($all_category as $key => $cate)
           <tr>
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
+            
+            <td><?php
+              echo $i;
+               $i++;
+               ?>
+            </td>
+          
             <td>{{$cate->danhmuc_ten}}</td>
             <td>{{$cate->phanloai_ten}}</td>
             <td><span class="text-ellipsis">

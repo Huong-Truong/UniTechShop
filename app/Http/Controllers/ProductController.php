@@ -167,10 +167,10 @@ class ProductController extends Controller
        
         $directoryPath = "img/sp$product_id";
 
-        if (File::exists($directoryPath)) {
-            File::deleteDirectory($directoryPath);
-        } 
-        //$pro->delete();
+        // if (File::exists($directoryPath)) {
+        //     File::deleteDirectory($directoryPath);
+        // } 
+        $pro->delete();
         Session::put('message','Xóa sản phẩm thành công');
         return Redirect::to('all-product'); 
     }
@@ -278,6 +278,10 @@ public function import_product(Request $request)
             if (($handle = fopen($target_file, 'r')) !== FALSE) {
                 fgetcsv($handle); // Bỏ qua dòng tiêu đề
                 while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
+                      // Chuyển đổi encoding của từng cột
+                      $data = array_map(function($value) {
+                        return mb_convert_encoding($value, 'UTF-8', 'auto');
+                    }, $data);
                     $maxId = DB::table('sanpham')->max('sanpham_id') + 1;
                     $sp = new Product();
                     $sp->sanpham_ten = $data[0];

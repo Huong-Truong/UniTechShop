@@ -131,6 +131,10 @@ class BrandProduct extends Controller
             if (($handle = fopen($target_file, 'r')) !== FALSE) {
                 fgetcsv($handle); // Bỏ qua dòng tiêu đề
                 while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
+                      // Chuyển đổi encoding của từng cột
+                      $data = array_map(function($value) {
+                        return mb_convert_encoding($value, 'UTF-8', 'auto');
+                    }, $data);
                     $brand = new Brand();
                     $brand->hang_ten = $data[0];
                     $brand->hang_mota = $data[1];
