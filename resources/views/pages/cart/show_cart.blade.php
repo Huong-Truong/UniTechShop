@@ -1,6 +1,7 @@
 
 @extends('layout')
 @section('content')
+
     <!-- Cart Start -->
     <div class="container-fluid pt-5">
         <div class="row px-xl-5">
@@ -61,17 +62,16 @@
             <th>Xóa</th>
         </tr>
     </thead>
+    <?php 
+                    $tien_dv = 0;
+    ?>
     <tbody class="align-middle">
-        @if(empty($dichvu) || count($dichvu) === 0)
+        @if(empty($dichvu) || count($dichvu) === 0 )
             <tr>
                 <td colspan="4">Không có dịch vụ đi kèm</td>
             </tr>
         @else
-                <?php 
-                    $tien_dv = 0;
-                ?>
             @foreach($dichvu as $dv)
-
             <tr>
                 <td class="align-middle">{{$dv->sanpham_ten}} </td>
                 <td class="align-middle">{{ $dv->dv_ten }}</td>
@@ -85,13 +85,13 @@
 </table>
 </div>
 <?php
-$subtotal = Cart::subtotal();
-$subtotal = preg_replace('/[^\d.]/', '', $subtotal); // Loại bỏ các ký tự không phải số
+// $subtotal = Cart::subtotal();
+// $subtotal = preg_replace('/[^\d.]/', '', $subtotal); // Loại bỏ các ký tự không phải số
 
-if (is_numeric($subtotal)) {
-    $subtotal = floatval($subtotal); // Chuyển đổi thành giá trị số thập phân
-    $total = $subtotal + $tien_dv; // Cộng thêm phí dịch vụ vào tổng số
-}
+// if (is_numeric($subtotal) && ($tien_dv)) {
+//     $subtotal = floatval($subtotal); // Chuyển đổi thành giá trị số thập phân
+//     $total = $subtotal + $tien_dv; // Cộng thêm phí dịch vụ vào tổng số
+// }
 
 ?>
 
@@ -111,6 +111,7 @@ if (is_numeric($subtotal)) {
             </div>
             <div class="d-flex justify-content-between">
                 <h6 class="font-weight-medium">Phí dịch vụ</h6>
+                
                 <h6 class="font-weight-medium">{{ number_format($tien_dv) }}</h6>
             </div>
             <div class="d-flex justify-content-between">
