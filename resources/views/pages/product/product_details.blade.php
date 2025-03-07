@@ -221,22 +221,7 @@
               </div>
                <div class="tab-pane fade " id="tab-pane-4">
                   
-                  <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                      @foreach($hdsd as $v_hdsd)
-                  <h4 class="mb-3">Hướng dẫn sử dụng</h4>
-                  <h5>Documents</h5>
-                  <a href="{{$v_hdsd->HDSD_mota}}">Nhấn vào đây </a>
-                  <div class="form-group">
-                              <h5 for="exampleInputEmail1">Video</h5><br>
-                              <iframe width="700" height="400" src="https://www.youtube.com/embed/{{$v_hdsd->HDSD_video}}" 
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowfullscreen></iframe>
-                              <br>
-                              
-                          </div>
-                          @endforeach
-                      </div>
+    
               </div> <div class="tab-pane fade " id="tab-pane-5">
                   
                   <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
@@ -251,7 +236,7 @@
                         <div class="row justify-content-center align-items-center">
                             <div class="col-md-6">
                                 <h4 class="mb-4">Dịch vụ đính kèm</h4>
-                                <div class="media mb-4 card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3"">
                               
                                     <form action="{{ route('add-service-cart') }}" method="post">
                                         @csrf

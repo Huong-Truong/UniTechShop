@@ -156,14 +156,14 @@
                         <div class="">
                             <div class="custom-control custom-radio">
                                 <input type="radio" class="custom-control-input"name="payment_option" value ="3"id="banktransfer">
-                                <label class="custom-control-label" for="banktransfer">Thẻ ngân hàng</label>
+                                <label class="custom-control-label" for="banktransfer">Thanh toán VNPAY</label>
                             </div>
                         </div>
                         <input type="hidden" name="vanchuyen" value="{{$v_vanchuyen->vanchuyen_id}}">
                     </div>
                     <div class="card-footer border-secondary bg-transparent">
                         <button type="submit" id="sendButton" class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Đặt hàng</button>
-                        
+           
                                 
                     <script>
                         document.getElementById('paymentForm').addEventListener('submit', function(event) {
@@ -192,5 +192,10 @@
             </div>
         </div>
     </div>
+    <form action="{{route('vnpay_payment')}}" method="get">
+        @csrf
+        <button type="submit" name="redirect" class="custom-control-label" for="banktransfer">Thanh toán VNPAY</button>
+    </form>
+
     <!-- Checkout End -->
 @endsection
