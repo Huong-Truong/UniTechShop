@@ -320,7 +320,7 @@ public function import_product(Request $request)
                 Session::put('message', 'Không thể mở tệp CSV');
             }
         } else {
-            Session::put('message', 'Chưa file nào được chọn');
+            Session::put('message', 'Vui lòng chọn file');
         }
     
         return Redirect::to('/all-product');

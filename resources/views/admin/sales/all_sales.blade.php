@@ -64,7 +64,7 @@
             <td>{{$value->km_mota}}</td>
 
             <td>
-               <a onclick="return confirm('Bạn có chắc muốn xóa ?')" href="{{route('delete-sales', ['sale_id' => $value->km_id])}}"> <i class="fa fa-times text-danger text"></i></a> 
+               <a onclick="return confirm('Bạn có chắc muốn xóa ?')" class="active"  href="{{route('delete-sales', ['sale_id' => $value->km_id])}}"> <i class="fa fa-times text-danger text"></i></a> 
             </td>
           </tr>
         @endforeach

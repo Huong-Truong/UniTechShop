@@ -37,6 +37,7 @@
                 <input type="checkbox"><i></i>
               </label>
             </th>
+            <th>Số thứ tự</th>
             <th>Người đặt</th>
             <th>Tổng giá tiền kèm thuế</th>
             <th>Tình trạng</th>
@@ -51,10 +52,16 @@
             echo "<span id='messageStyle'> $message </span>" ;
                 Session::put('message',null); ## in ra xong set lại null
             }
+            $i=1;
         ?>
             @foreach($all as $key => $cate_pro)
           <tr>
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
+            <td><?php
+              echo $i;
+               $i++;
+               ?>
+            </td>
             <td>{{$cate_pro->khachhang_ten}}</td>
             <td>{{$cate_pro->donhang_tongtien}}</td>
 
@@ -77,7 +84,7 @@
             </td>
             <td>
               <a href="{{route('view-order', ['donhang_id' => $cate_pro->donhang_id])}}" class="active" ui-toggle-class=""><i class="fa fa-pencil-square-o text-success text-active"></i>  </a>
-              <a onclick="return confirm('Bạn có chắc muốn xóa ?')" href="{{route('delete-order', ['donhang_id' => $cate_pro->donhang_id])}}"> <i class="fa fa-times text-danger text"></i></a>
+              <a onclick="return confirm('Bạn có chắc muốn xóa ?')" class="active"  href="{{route('delete-order', ['donhang_id' => $cate_pro->donhang_id])}}"> <i class="fa fa-times text-danger text"></i></a>
             </td>
           </tr>
         @endforeach

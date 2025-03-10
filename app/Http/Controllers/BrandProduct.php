@@ -36,14 +36,12 @@ class BrandProduct extends Controller
 
     }
 
-    public function save_brand_product (Request $request)    
+      
+    public function save_brand_product(Request $request)    
     {
         $this->AuthenLogin();
-        if(!$maxID = Brand::max('phanloai_id')) {
-            $maxID = 0;
-      }
-     
-
+        $maxID = Brand::max('hang_id') ?? 0;
+        
         // Dùng Model
         $data = $request->all();
         $brand = new Brand();
@@ -51,12 +49,25 @@ class BrandProduct extends Controller
         $brand->hang_ten = $data['brand_name'];
         $brand->hang_mota = $data['brand_content'];
         $brand->hang_trangthai = $data['brand_status'];
+        $get_image_file = $request->file('brand_image');
+        
+        if ($get_image_file) {
+            $new_image = 'brand' . ($maxID + 1) . '.' . $get_image_file->getClientOriginalExtension();
+            // Di chuyển tệp tin đến thư mục đích
+            $get_image_file->move('img/brand', $new_image);
+            $brand->hang_hinhanh = $new_image;
+        } else {
+            // Lưu thông tin ảnh vào cơ sở dữ liệu
+            $brand->hang_hinhanh = "";
+        }
+        
+        // insert vô sanpham
         $brand->save();
-
-        Session::put('message','Thêm hãng sản phẩm mới thành công!');
-        return Redirect::to('add-brand-product'); ## Khi thêm thành công rồi thì trả lại về thêm danh mục sản phẩm
+        
+        // Hiển thị thông báo thành công và chuyển hướng
+        Session::put('message', 'Thêm hãng mới thành công!');
+        return Redirect::to('all-brand-product');
     }
-
 
     public function unactive_brand_product($brand_id){
         $this->AuthenLogin();
@@ -95,12 +106,20 @@ class BrandProduct extends Controller
         $this->AuthenLogin();
         $brand = Brand::find($brand_id);
         $data = $request->all();
-        // $data = array();
-        // $data['hang_ten'] = $request->brand_name;
-        // $data['hang_mota'] = $request->brand_content;
-      //  DB::table('hangsanpham')->where('hang_id', $brand_id)->update($data);
+      
         $brand->hang_ten = $data['brand_name'];
         $brand->hang_mota = $data['brand_content'];
+        $get_image_file = $request->file('brand_image');
+        
+        if ($get_image_file) {
+            $new_image = 'brand' . ($maxID + 1) . '.' . $get_image_file->getClientOriginalExtension();
+            // Di chuyển tệp tin đến thư mục đích
+            $get_image_file->move('img/brand', $new_image);
+            $brand->hang_hinhanh = $new_image;
+        } else {
+            // Lưu thông tin ảnh vào cơ sở dữ liệu
+            $brand->hang_hinhanh = "";
+        }
         $brand->save();
         Session::put('message','Cập nhật hãng thành công');
         return Redirect::to('all-brand-product'); 

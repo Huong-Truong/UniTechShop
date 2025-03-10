@@ -79,7 +79,10 @@
                 <td>{{$value->tonkho_soluong}}</td>
     
                 <td>
-                   <a onclick="return confirm('Bạn có chắc muốn xóa ?')" href=""> <i class="fa fa-times text-danger text"></i></a> 
+                   <a onclick="return confirm('Bạn có chắc muốn xóa ?')" class="active" 
+                    href="{{route('delete-store',['sanpham_id' => $value->sanpham_id,'kho_id' => $value->kho_id])}}"> 
+                    <i class="fa fa-times text-danger text"></i>
+                  </a> 
                 </td>
               </tr>
                 

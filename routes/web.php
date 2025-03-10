@@ -16,6 +16,7 @@ use App\Http\Controllers\BaoHanhController;
 use App\Http\Controllers\NhaCungCapController;
 use App\Http\Controllers\StorageController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\CustomerController;
 // use App\Http\Controllers\CheckOutController;
 
 
@@ -221,6 +222,7 @@ Route::post('/update-nhacungcap/{nhacungcap_id}', [NhaCungCapController::class, 
 Route::get('/store-product', [StorageController::class, 'store'])->name('store-product');
 Route::get('/fill-kho', [StorageController::class, 'fill_kho'])->name('fill-kho');
 Route::get('/search-kho', [StorageController::class, 'search_kho'])->name('search-kho');
+Route::get('/delete-store/{sanpham_id}/{kho_id}', [StorageController::class, 'delete_store'])->name('delete-store');
 
 // File
 Route::get('/download-classify', [FileController::class, 'download_classify'])->name('file-classify');
@@ -232,3 +234,10 @@ Route::get('/export-classify', [FileController::class, 'export_classify'])->name
 Route::get('/export-category', [FileController::class, 'export_category'])->name('export-category');
 Route::get('/export-brand', [FileController::class, 'export_brand'])->name('export-brand');
 Route::get('/export-product', [FileController::class, 'export_product'])->name('export-product');
+
+// Customer
+Route::get('/all-customer', [CustomerController::class, 'all_customer'])->name('all-customer');
+Route::get('/edit-customer/{customer_id}', [CustomerController::class, 'edit_customer'])->name('edit-customer');
+Route::get('/delete-customer/{customer_id}', [CustomerController::class, 'delete_customer'])->name('delete-customer');
+Route::post('/update-customer/{customer_id}', [CustomerController::class, 'update_customer'])->name('update-customer');
+
