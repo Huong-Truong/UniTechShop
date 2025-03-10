@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Session;
@@ -9,6 +9,7 @@ use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect; ## trả về cái trang thành công hay thất bại
 session_start();
 use Cart;
+use App\Mail\OrderDetails;
 
 class CheckOutController extends Controller
 {
@@ -290,21 +291,42 @@ class CheckOutController extends Controller
 
     }
 
-     public function vnpay_payment(Request $request)
+    public function send_order(Request $request)
+    {
+        $vc = DB::table('vanchuyen')->where('vanchuyen_id', $request->vanchuyen)->first();
+        $mail_nhan = $vc->vanchuyen_email;
+        $subject = "THÔNG TIN ĐƠN HÀNG";
+        Session::put('subject_order', $subject); // lấy tiêu đề (title của mail)
+        Session::put('shipping_order', $vc->vanchuyen_id);
+        $payment = DB::table('thanhtoan')->where('pttt_id', $request->payment_option)->pluck('pttt_ten')->first();
+        Session::put('payment_order', $payment);
+    
+        if ($request->payment_option == "3") {
+            return $this->vnpay_payment($request); // Gọi hàm vnpay_payment
+        }
+    
+        $this->send_order_email($mail_nhan);
+        return Redirect::to('/trang-chu');
+    }
+    
+    public function vnpay_payment(Request $request)
     {
         $vnp_TmnCode = config('vnpay.vnp_TmnCode');
         $vnp_HashSecret = config('vnpay.vnp_HashSecret');
         $vnp_Url = config('vnpay.vnp_Url');
         $vnp_ReturnUrl = config('vnpay.vnp_ReturnUrl');
-
+    
         $vnp_TxnRef = date("YmdHis"); // Mã đơn hàng
         $vnp_OrderInfo = "Thanh toán đơn hàng";
         $vnp_OrderType = 'billpayment';
-        $vnp_Amount = 100000 * 100;
+        $subtotal = Cart::subtotal();
+        $subtotal = preg_replace('/[^\d.]/', '', $subtotal); // Loại bỏ các ký tự không phải số
+        $subtotal = floatval($subtotal);
+        $vnp_Amount =  $subtotal  * 100;
         $vnp_Locale = 'vn';
         // $vnp_BankCode = 'NCB';
         $vnp_IpAddr = $request->ip();
-
+    
         $inputData = array(
             "vnp_Version" => "2.1.0",
             "vnp_TmnCode" => $vnp_TmnCode,
@@ -320,7 +342,7 @@ class CheckOutController extends Controller
             "vnp_TxnRef" => $vnp_TxnRef,
             // "vnp_BankCode" => $vnp_BankCode
         );
-
+    
         ksort($inputData);
         $query = "";
         $i = 0;
@@ -334,16 +356,16 @@ class CheckOutController extends Controller
             }
             $query .= urlencode($key) . "=" . urlencode($value) . '&';
         }
-        
+    
         $vnp_Url = $vnp_Url . "?" . $query;
         if (isset($vnp_HashSecret)) {
             $vnpSecureHash = hash_hmac('sha512', $hashdata, $vnp_HashSecret);
             $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
         }
-        
-
+    
         return redirect($vnp_Url);
     }
+    
     public function return(Request $request)
     {
         $vnp_HashSecret = config('vnpay.vnp_HashSecret');
@@ -364,28 +386,18 @@ class CheckOutController extends Controller
             // Chữ ký hợp lệ, tiến hành xử lý kết quả thanh toán
             $orderId = $inputData['vnp_TxnRef'];
             $vnp_ResponseCode = $inputData['vnp_ResponseCode'];
-            
+    
             if ($vnp_ResponseCode == '00') {
                 // Thanh toán thành công
                 // Cập nhật trạng thái đơn hàng trong cơ sở dữ liệu
                 // Ví dụ: $order = Order::find($orderId);
                 // $order->status = 'paid';
                 // $order->save();
-                // return response()->json([
-                //     'code' => '00',
-                //     'message' => 'Giao dịch thành công',
-                //     'data' => $inputData
-                // ]);
-                return Redirect::to('/check-out');
-            } else {
-                // Giao dịch thất bại
-                // return response()->json([
-                //     'code' => $vnp_ResponseCode,
-                //     'message' => 'Giao dịch không thành công',
-                //     'data' => $inputData
-                // ]);
-                return Redirect::to('/check-out');
+                $mail_nhan = DB::table('vanchuyen')->where('vanchuyen_id', Session::get('shipping_order'))->pluck('vanchuyen_email')->first();
+                $this->send_order_email($mail_nhan);
+                return Redirect::to('/');
             }
+        
         } else {
             // Chữ ký không hợp lệ
             return response()->json([
@@ -394,6 +406,15 @@ class CheckOutController extends Controller
             ]);
         }
     }
+    
+    public function send_order_email($mail_nhan)
+    {
+        $new_mail = new OrderDetails();
+        Mail::to($mail_nhan)->send($new_mail);
+    
+    }
+    
+    
     
 
 }

@@ -127,18 +127,6 @@ class HomeController extends Controller
   
 }
 
-        public function send_order(Request $request ){
-            $vc = DB::table('vanchuyen')->where('vanchuyen_id', $request->vanchuyen)->first();
-            $mail_nhan = $vc->vanchuyen_email;
-            $subject = "THÔNG TIN ĐƠN HÀNG";
-            Session::put('subject_order', $subject); ## lấy tiêu đề (title của mail)
-            Session::put('shipping_order', $vc->vanchuyen_id );
-            $payment = DB::table('thanhtoan')->where('pttt_id', $request->payment_option)->pluck('pttt_ten')->first();
-            Session::put('payment_order', $payment);
-            $new_mail = new OrderDetails();
-            Mail::to($mail_nhan)->send($new_mail);
-            return Redirect::to('/trang-chu');
-
-        }
+  
 
 }

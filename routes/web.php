@@ -82,13 +82,13 @@ Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 
 // Send mail
 Route::get('/send-mail', [HomeController::class, 'send_mail'])->name('send-mail');
-Route::post('/send-order',[HomeController::class, 'send_order'])->name('send-order');
+Route::post('/send-order',[CheckOutController::class, 'send_order'])->name('send-order');
 
 
 //  Cổng thanh toán
 // routes/web.php
 Route::get('vnpay_payment', [CheckOutController::class, 'vnpay_payment'])->name('vnpay_payment');
-Route::get('vnpay_return', [CheckOutController::class, 'return'])->name('vnpay.return');
+Route::get('vnpay_return', [CheckOutController::class, 'return'])->name('vnpay_return');
 
 // ADMIN:
 Route::get('/login', [HomeController::class, 'login'])->name('login');

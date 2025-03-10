@@ -156,7 +156,7 @@
                         <div class="">
                             <div class="custom-control custom-radio">
                                 <input type="radio" class="custom-control-input"name="payment_option" value ="3"id="banktransfer">
-                                <label class="custom-control-label" for="banktransfer">Thanh toán VNPAY</label>
+                                <label class="custom-control-label" name="redirect" for="banktransfer">Thanh toán VNPAY</label>
                             </div>
                         </div>
                         <input type="hidden" name="vanchuyen" value="{{$v_vanchuyen->vanchuyen_id}}">
@@ -165,7 +165,7 @@
                         <button type="submit" id="sendButton" class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Đặt hàng</button>
            
                                 
-                    <script>
+                        <script>
                         document.getElementById('paymentForm').addEventListener('submit', function(event) {
                             var paymentOptions = document.getElementsByName('payment_option');
                             var selectedOption = false;
@@ -181,21 +181,30 @@
                                 event.preventDefault(); // Ngăn chặn form gửi đi
                                 alert('Vui lòng chọn phương thức thanh toán');
                             } else {
-                                alert('Cảm ơn đã đặt hàng. Vui lòng kiểm tra đơn hàng trong mail');
+                                event.preventDefault(); // Ngăn chặn form gửi đi để xử lý
+                                var form = this;
+                                // Gửi form sau 1 giây
+                                setTimeout(function() {
+                                    form.submit();
+                                    // Hiện thông báo sau khi gửi form
+                                    setTimeout(function() {
+                                        alert('Cảm ơn đã đặt hàng.');
+                                    }, 1000);
+                                }, 1000);
                             }
                         });
                     </script>
-                    </div>
+                                        </div>
                     @endforeach
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    <form action="{{route('vnpay_payment')}}" method="get">
+    <!-- <form action="{{route('vnpay_payment')}}" method="get">
         @csrf
         <button type="submit" name="redirect" class="custom-control-label" for="banktransfer">Thanh toán VNPAY</button>
-    </form>
+    </form> -->
 
     <!-- Checkout End -->
 @endsection
