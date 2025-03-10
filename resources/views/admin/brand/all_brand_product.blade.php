@@ -25,6 +25,7 @@
                 </a>
                 <ul class="dropdown-menu extended logout">
                     <li><a href="/download-brand"><i class="fa fa-download"></i> Lấy mẫu csv</a></li>
+                    <li><a href="/export-brand"><i class="fa fa-download"></i> Export csv</a></li>
                 </ul>
           </label>
 
@@ -52,8 +53,8 @@
                 <input type="checkbox"><i></i>
               </label>
             </th>
-       
-            <th>Tên danh mục</th>
+            <th>STT</th>
+            <th>Tên thương hiệu</th>
             <th>Mô tả</th>
             <th>Hiển thị</th>
             <th>Thao tác</th>
@@ -61,13 +62,17 @@
           </tr>
         </thead>
         <tbody>
-        
+        <?php $i = 1?>
             @foreach($all_brand as $key => $brand)
           <tr>
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
-            <td>
+            
+            <td><?php
+              echo $i;
+               $i++;
+               ?>
+            </td>
           
-             </td>
             <td>{{$brand->hang_ten}}</td>
             <td>{{$brand->hang_mota}}</td>
             <td><span class="text-ellipsis">

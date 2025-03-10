@@ -469,7 +469,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <li><a href="{{route('store-product')}}">Quản lý kho hàng</a></li>
                     </ul>
                 </li>
-                <li>
+                {{-- <li>
                     <a href="fontawesome.html">
                         <i class="fa fa-bullhorn"></i>
                         <span>Font awesome </span>
@@ -536,7 +536,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<li><a href="404.html">404 Error</a></li>
                         <li><a href="registration.html">Registration</a></li>
                     </ul>
-                </li>
+                </li> --}}
                 <li>
                     <a href="login.html">
                         <i class="fa fa-user"></i>

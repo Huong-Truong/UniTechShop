@@ -39,17 +39,15 @@ class BrandProduct extends Controller
     public function save_brand_product (Request $request)    
     {
         $this->AuthenLogin();
-        // Cách dùng DB
-        // $data = array();
-        // $data['hang_ten'] = $request->brand_name;
-        // $data['hang_trangthai'] = $request->brand_status;
-        // $data['hang_mota'] = $request->brand_content;
-        /*insert vào bảng*/
-        // DB::table('hangsanpham')->insert($data);
+        if(!$maxID = Brand::max('phanloai_id')) {
+            $maxID = 0;
+      }
+     
 
         // Dùng Model
         $data = $request->all();
         $brand = new Brand();
+        $brand->hang_id = $maxID + 1;
         $brand->hang_ten = $data['brand_name'];
         $brand->hang_mota = $data['brand_content'];
         $brand->hang_trangthai = $data['brand_status'];
@@ -131,11 +129,20 @@ class BrandProduct extends Controller
             if (($handle = fopen($target_file, 'r')) !== FALSE) {
                 fgetcsv($handle); // Bỏ qua dòng tiêu đề
                 while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
+                      // Chuyển đổi encoding của từng cột
+                      $data = array_map(function($value) {
+                        return mb_convert_encoding($value, 'UTF-8', 'auto');
+                    }, $data);
+                    if(!$maxID = Brand::max('hang_id')) {
+                        $maxID = 0;
+                  }
                     $brand = new Brand();
+                    $brand->hang_id = $maxID + 1;
                     $brand->hang_ten = $data[0];
                     $brand->hang_mota = $data[1];
                     $brand->hang_trangthai = 1;
                     $brand->save();
+                    $maxID++;
                 }
                 fclose($handle);
                 Session::put('message', 'Thêm thành công');

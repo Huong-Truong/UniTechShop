@@ -83,6 +83,7 @@ class ProductController extends Controller
 
         // Bảng SP
         $sp = new Product();
+        $sp->sanpham_id = $maxId + 1;
         $sp->sanpham_ten = $data['product_name'];
         $sp->danhmuc_id = $data['category'];
         $sp->hang_id = $data['brand'];
@@ -282,8 +283,13 @@ public function import_product(Request $request)
             if (($handle = fopen($target_file, 'r')) !== FALSE) {
                 fgetcsv($handle); // Bỏ qua dòng tiêu đề
                 while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
+                      // Chuyển đổi encoding của từng cột
+                      $data = array_map(function($value) {
+                        return mb_convert_encoding($value, 'UTF-8', 'auto');
+                    }, $data);
                     $maxId = DB::table('sanpham')->max('sanpham_id') + 1;
                     $sp = new Product();
+                    $sp->sanpham_id = $maxId + 1;
                     $sp->sanpham_ten = $data[0];
                     $sp->hang_id = $data[1];
                     $sp->danhmuc_id = $data[2];
@@ -291,6 +297,8 @@ public function import_product(Request $request)
                     $sp->sanpham_hinhanh = $data[4];
                     $sp->sanpham_mota = $data[5];
                     $sp->sanpham_trangthai = 1;
+                    $sp->sanpham_thongso = $data[6];
+                    $sp->sanpham_xuatxu = $data[7];
                     $sp->baohanh_id = 1;
                     if(!$sp->save()){
                         Session::put('message','File CSV không khớp');
@@ -304,6 +312,7 @@ public function import_product(Request $request)
                  
                     $hdsd->save();
                     }
+                    $maxId++;
                 }
                 fclose($handle);
                 Session::put('message', 'Thêm thành công');

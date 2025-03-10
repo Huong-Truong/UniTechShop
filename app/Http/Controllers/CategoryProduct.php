@@ -49,13 +49,13 @@ class CategoryProduct extends Controller
     public function save_category_product (Request $request)    
     {
         $this->AuthenLogin();
-        // $data = array();
-        // $data['danhmuc_ten'] = $request->danhmuc_ten;
-        // $data['danhmuc_trangthai'] = $request->danhmuc_trangthai;
-        // $data['phanloai_id'] = $request->classify;
+        if(!$maxID = Classify::max('phanloai_id')) {
+            $maxID = 0;
+      }
 
         $data = $request->all();
         $category = new Category();
+        $category->danhmuc_id = $maxID + 1;
         $category->danhmuc_ten = $data['danhmuc_ten'];
         $category->danhmuc_trangthai = $data['danhmuc_trangthai'];
         $category->phanloai_id   = $data['classify'];
@@ -141,11 +141,20 @@ class CategoryProduct extends Controller
             if (($handle = fopen($target_file, 'r')) !== FALSE) {
                 fgetcsv($handle); // Bỏ qua dòng tiêu đề
                 while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
+                      // Chuyển đổi encoding của từng cột
+                      $data = array_map(function($value) {
+                        return mb_convert_encoding($value, 'UTF-8', 'auto');
+                    }, $data);
+                    if(!$maxID = Category::max('danhmuc_id')) {
+                        $maxID = 0;
+                  }
                     $cate = new Category();
+                    $cate->danhmuc_id = $maxID + 1;
                     $cate->danhmuc_ten = $data[0];
                     $cate->phanloai_id = $data[1];
                     $cate->danhmuc_trangthai = 1;
                     $cate->save();
+                    $maxID++;
                 }
                 fclose($handle);
                 Session::put('message', 'Thêm thành công');
