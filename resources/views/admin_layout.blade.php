@@ -37,7 +37,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="{{asset('admin_js/raphael-min.js')}}"></script>
 <script src="{{asset('admin_js/morris.js')}}"></script>
 
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
 
@@ -352,7 +352,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             </a>
             <ul class="dropdown-menu extended logout">
                 <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
-                <li><a href="#"><i class="fa fa-lock"></i></i></i> Đổi mật khẩu</a></li>
+                <li><a href="{{ route('change-pass') }}"><i class="fa fa-lock"></i></i></i> Đổi mật khẩu</a></li>
                 <li><a href="{{ route('logout') }}"><i class="fa fa-key"></i> Đăng xuất</a></li>
             </ul>
         </li>

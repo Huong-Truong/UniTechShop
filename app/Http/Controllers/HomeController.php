@@ -101,11 +101,7 @@ class HomeController extends Controller
        
     }
 
-    // public function send_mail(){
-    //     $email = 'chienb2203431@student.ctu.edu.vn';
-    //     $new_mail = new Send();
-    //     Mail::to($email)->send($new_mail);
-    // }
+   
     public function send_contact(Request $request){
         {
         $emails = [ 'chienb2203431@student.ctu.edu.vn', 'huongb2203445@student.ctu.edu.vn'];
@@ -139,6 +135,11 @@ class HomeController extends Controller
             Mail::to($mail_nhan)->send($new_mail);
             return Redirect::to('/trang-chu');
 
+        }
+
+        // DOi mk
+        public function change_pass(){
+            
         }
 
 }

@@ -17,6 +17,7 @@ use App\Http\Controllers\NhaCungCapController;
 use App\Http\Controllers\StorageController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ThongKeController;
 // use App\Http\Controllers\CheckOutController;
 
 
@@ -209,6 +210,9 @@ Route::get('/update-status', [CheckOutController::class, 'update_status'])->name
 Route::get('/forgot-pass', [HomeController::class, 'forgot_pass'])->name('forgot-pass');
 Route::post('/review-pass', [HomeController::class, 'review_pass'])->name('review-pass');
 Route::post('/send-contact', [HomeController::class, 'send_contact'])->name('send-contact');
+// Doi MK
+Route::get('/change-pass', [HomeController::class, 'change_pass'])->name('change-pass');
+
 
 // Nha cung cap
 Route::get('/all-nhacungcap', [NhaCungCapController::class, 'all_nhacungcap'])->name('all-nhacungcap');
@@ -240,4 +244,7 @@ Route::get('/all-customer', [CustomerController::class, 'all_customer'])->name('
 Route::get('/edit-customer/{customer_id}', [CustomerController::class, 'edit_customer'])->name('edit-customer');
 Route::get('/delete-customer/{customer_id}', [CustomerController::class, 'delete_customer'])->name('delete-customer');
 Route::post('/update-customer/{customer_id}', [CustomerController::class, 'update_customer'])->name('update-customer');
+
+// Thong Ke
+Route::get('/thongke_donhang', [ThongKeController::class, 'thongke_donhang'])->name('thongke-donhang');
 

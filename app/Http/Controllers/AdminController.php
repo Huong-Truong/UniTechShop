@@ -1,6 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Classify;
+use App\Models\Product;
+use Carbon\Carbon;
 
 use Illuminate\Http\Request;
 use DB;
@@ -33,12 +38,9 @@ class AdminController extends Controller
       
     }## không có pages. gì hết vì cùng cấp
 
-
-
     public function showDashboard()
 {
-    $this->AuthenLogin();
-    return view('admin.dashboard');
+   return view('admin.dashboard');
 }
 
     public function dashboard(Request $request)

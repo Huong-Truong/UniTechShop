@@ -3307,3 +3307,26 @@ a.active{
     border: #01a7b3;
    
 } */
+
+
+.form-inline {
+    display: inline;
+    align-items: center;
+}
+
+.input-small {
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    height: 26px;
+    width: 32px;
+    text-align: center;
+}
+.input-medium {
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    height: 26px;
+    width: 64px;
+    text-align: center;
+}
