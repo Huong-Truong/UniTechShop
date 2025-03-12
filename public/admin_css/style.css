@@ -3210,7 +3210,7 @@ span.fa-thumbs-style.fa.fa-thumbs-down {
     color:gray;
 }
 a.active.font-icon{
-    font-size:20px;
+    font-size:30px;
 }
  /* Ẩn giao diện textbox của thẻ input file */
     #exampleInputAddImg {
@@ -3264,7 +3264,7 @@ a.active.font-icon{
 }
 
 a.active{
-    font-size: 15px;
+    font-size: 18px;
 }
 
 .panel-heading1{
@@ -3301,4 +3301,32 @@ a.active{
      align-items: center;
 }
 
+/* .fa-user{
+    padding: 10px;
+   font-size: 50px;
+    border: #01a7b3;
+   
+} */
 
+
+.form-inline {
+    display: inline;
+    align-items: center;
+}
+
+.input-small {
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    height: 26px;
+    width: 32px;
+    text-align: center;
+}
+.input-medium {
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    height: 26px;
+    width: 64px;
+    text-align: center;
+}

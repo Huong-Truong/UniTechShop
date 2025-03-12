@@ -51,7 +51,7 @@ class FileController extends Controller
 
     public function export_classify(Request $request){
         $this->AuthenLogin();
-        $filename = "Classifys.csv";
+        $filename = "exported/Classifys.csv";
         $classifys= Classify::all();
 
         $handle = fopen($filename, 'w');
@@ -69,7 +69,7 @@ class FileController extends Controller
 
     public function export_category(Request $request){
         $this->AuthenLogin();
-        $filename = "Categorys.csv";
+        $filename = "exported/Categorys.csv";
         $categorys= Category::all();
 
         $handle = fopen($filename, 'w');
@@ -87,7 +87,7 @@ class FileController extends Controller
 
     public function export_brand(Request $request){
         $this->AuthenLogin();
-        $filename = "Brands.csv";
+        $filename = "exported/Brands.csv";
         $brands=  Brand::all();
 
         $handle = fopen($filename, 'w');
@@ -106,15 +106,15 @@ class FileController extends Controller
     
     public function export_product(Request $request){
         $this->AuthenLogin();
-        $filename = "Products.csv";
+        $filename = "exported/Products.csv";
         $products=  Product::all();
 
         $handle = fopen($filename, 'w');
-        fputcsv($handle, ['sanpham_ten','hang_id','dong_id','sanpham_gia','sanpham_hinhanh',
+        fputcsv($handle, ['sanpham_ten','hang_id','danhmuc_id','sanpham_gia','sanpham_hinhanh',
        ' sanpham_mota','sanpham_thongso','sanpham_xuatxu']);
 
         foreach ($products as $product) {
-            fputcsv($handle, [$product->sanpham_ten,$product->hang_id,$product->dong_id,
+            fputcsv($handle, [$product->sanpham_ten,$product->hang_id,$product->danhmuc_id,
             $product->sanpham_gia,$product->sanpham_hinhanh,$product->sanpham_mota,$product->sanpham_thongso,$product->xuatxu]);
         }
 

@@ -85,7 +85,7 @@
 
             <td>
               <a href="{{route('edit-classify', ['classify_id' => $pl->phanloai_id])}}" class="active" ui-toggle-class=""><i class="fa fa-pencil-square-o text-success text-active"></i>  </a>
-              <a onclick="return confirm('Bạn có chắc muốn xóa ?')" href="{{route('delete-classify', ['classify_id' => $pl->phanloai_id])}}"> <i class="fa fa-times text-danger text"></i></a>
+              <a onclick="return confirm('Bạn có chắc muốn xóa ?')" class="active"  href="{{route('delete-classify', ['classify_id' => $pl->phanloai_id])}}"> <i class="fa fa-times text-danger text"></i></a>
             </td>
           </tr>
         @endforeach

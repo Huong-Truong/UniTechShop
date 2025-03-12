@@ -22,7 +22,7 @@ class StorageController extends Controller
            return Redirect::to('admin')->send(); ## hàm send() có thể không cần thiết
         }
     }
-    public function store(Request $request){
+    public function store(){
         $this->AuthenLogin();
         $id_begin = Storage::pluck('kho_id')->first();
         $name_begin = Storage::find($id_begin);
@@ -79,6 +79,22 @@ class StorageController extends Controller
         ->with('store', $store)
         ->with('storage', $storage)
         ->with('kho', $kho);
+     
+    }
+
+    public function delete_store($sanpham_id,$kho_id){
+        $this->AuthenLogin();  
+        $soluong['tonkho_soluong'] = 0;
+          $store = DB::table('tonkho')
+          ->where('sanpham_id', $sanpham_id)
+          ->where('kho_id', $kho_id)->update($soluong);
+
+
+            
+        
+      
+       
+        return $this->store();
      
     }
 }
