@@ -42,16 +42,38 @@ class ThongKeController extends Controller
     
         return $daysInMonth;
     }
+    
+    // function getMonthsInYear( $year) {
+    //     $monthsInYear = [];
+    //         // Tạo mảng chứa tất cả các ngày trong tháng
+    //     $startDate = Carbon::create($year, 1);
+    //     $endDate = $startDate->copy()->endOfMonth();
+        
+    // for ($date = $startDate; $date->lte($endDate); $date->addDay()) {
+    //     $monthsInYear[$date->format('m')] = 0;
+    // }
+    
+    //     return  $monthsInYear;
+    // }
 
-    public function thongke_donhang(){
+    public function thongke_don_thang(Request $request){
         $this->AuthenLogin();
-        $year = 2025;
-        $month = 2;
+        if($request->month && $request->year){
+            $year = $request->year;
+            $month = $request->month;
+        }
+        else {
+            $year = date('Y');
+            $month = date('m');
+        }
+      
+       
         
         $soluong = $this->getDaysInMonth($month,$year);
        
         // Lấy dữ liệu đơn hàng từ cơ sở dữ liệu
-        $orders = DB::table('donhang')->selectRaw('DAY(donhang_ngaytao) as date, COUNT(*) as count')
+        $orders = DB::table('donhang')
+        ->selectRaw('LPAD(DAY(donhang_ngaytao), 2, "0") as date, COUNT(*) as count')
         ->whereYear('donhang_ngaytao', $year)
         ->whereMonth('donhang_ngaytao', $month)
         ->groupBy('date')
@@ -61,8 +83,42 @@ class ThongKeController extends Controller
             $soluong[$order->date] = $order->count;
         }
         
-        return view('admin.thongke.thongkedonhang', compact('soluong'));
+        return view('admin.thongke.thongkedon_thang', compact('soluong','year','month'));
         
     }
+
+    public function thongke_don_nam(Request $request){
+        $this->AuthenLogin();
+        if($request->year){
+            $year = $request->year;
+            
+        }
+        else {
+            $year = date('Y');
+          
+        }
+      
+       
+        
+        $soluong = [];
+        for($i=01; $i <= 12; $i++){
+            $soluong[$i] = 0;
+        }
+       
+        // Lấy dữ liệu đơn hàng từ cơ sở dữ liệu
+        $orders = DB::table('donhang')
+        ->selectRaw('MONTH(donhang_ngaytao) as date, COUNT(*) as count')
+        ->whereYear('donhang_ngaytao', $year)
+        ->groupBy('date')
+        ->get();
+    
+         foreach ($orders as $order) {
+            $soluong[$order->date] = $order->count;
+        }
+        
+        return view('admin.thongke.thongkedon_nam', compact('soluong','year'));
+        
+    }
+    
 
 }
