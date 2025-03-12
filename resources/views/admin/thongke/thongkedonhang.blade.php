@@ -9,9 +9,9 @@
                             Thống kê đơn hàng trong 
                             <form action="" class="form-inline">
                                tháng
-                                <input type="text" name = "month" class="input-small">
-                                năm
-                                <input type="text"  name = "year" class="input-medium">
+                                <input type="text" name = "month" class="input-small" value="2">
+                                /
+                                <input type="text"  name = "year" class="input-medium" value="2025">
                                 <input type="submit" class = "btn btn-sm btn-default" value="Xem">
                             </form>
                         </header>
