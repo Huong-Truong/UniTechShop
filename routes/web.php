@@ -16,7 +16,7 @@ use App\Http\Controllers\BaoHanhController;
 use App\Http\Controllers\NhaCungCapController;
 use App\Http\Controllers\StorageController;
 use App\Http\Controllers\FileController;
-// use App\Http\Controllers\CheckOutController;
+use App\Http\Controllers\PayPalController;
 
 
 
@@ -89,6 +89,15 @@ Route::post('/send-order',[CheckOutController::class, 'send_order'])->name('send
 // routes/web.php
 Route::get('vnpay_payment', [CheckOutController::class, 'vnpay_payment'])->name('vnpay_payment');
 Route::get('vnpay_return', [CheckOutController::class, 'return'])->name('vnpay_return');
+
+
+
+Route::get('paypal', [PayPalController::class, 'index'])->name('paypal.index');
+Route::get('paypal/success', [PayPalController::class, 'paymentSuccess'])->name('paypal.success');
+Route::get('/paypal/payment-cancel', [PayPalController::class, 'paymentCancel'])->name('paypal.payment.cancel');
+Route::get('paypal/cancel', [PayPalController::class, 'cancel'])->name('paypal.cancel');
+Route::get('paypal/payment', [PayPalController::class, 'payment'])->name('paypal.payment');
+
 
 // ADMIN:
 Route::get('/login', [HomeController::class, 'login'])->name('login');

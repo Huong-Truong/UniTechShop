@@ -61,6 +61,36 @@
                        @endforeach
                     </tbody>
                         </table>
+
+                        <table class="table table-bordered text-center mb-0">
+    <thead class="bg-secondary text-dark">
+        <tr>
+             <th>Sản phẩm</th>
+
+            <th>Dịch vụ</th>
+            <th>Giá dịch vụ</th>
+        </tr>
+    </thead>
+    <?php 
+                    $tien_dv = 0;
+    ?>
+    <tbody class="align-middle">
+        @if(empty($dichvu) || count($dichvu) === 0 )
+            <tr>
+                <td colspan="4">Không có dịch vụ đi kèm</td>
+            </tr>
+        @else
+            @foreach($dichvu as $dv)
+            <tr>
+                <td class="align-middle">{{$dv->sanpham_ten}} </td>
+                <td class="align-middle">{{ $dv->dv_ten }}</td>
+                <td class="align-middle">{{ number_format($dv->giadichvu) }} VNĐ</td>
+                <?php $tien_dv = $tien_dv + $dv->giadichvu; ?>
+            </tr>
+            @endforeach
+        @endif
+    </tbody>
+</table>
                     </div>
 
             <div class="col-lg-8">
@@ -130,7 +160,21 @@
                     <div class="card-footer border-secondary bg-transparent">
                         <div class="d-flex justify-content-between mt-2">
                             <h5 class="font-weight-bold">Thành tiền</h5>
-                            <h5 class="font-weight-bold">{{Cart::total()}}</h5>
+<!--                             
+                            <h5 class="font-weight-bold">{{Cart::total()}}</h5> -->
+                            <!-- <h5 class="font-weight-bold">{{Cart::subtotal()}}</h5>  -->
+                            <?php
+                            $subtotal = Cart::total();
+                            $subtotal = preg_replace('/[^\d.]/', '', $subtotal); // Loại bỏ các ký tự không phải số
+
+                            if (is_numeric($subtotal)) {
+                                $subtotal = floatval($subtotal); // Chuyển đổi thành giá trị số thập phân
+                                $total = $subtotal + $tien_dv; // Cộng thêm phí dịch vụ vào tổng số
+                                echo '<h5 class="font-weight-bold">' . number_format($total, 2) . '</h5>';
+                            } else {
+                                echo 'Giá trị không hợp lệ: ' . $subtotal;
+                            }
+                              ?>
                         </div>
                     </div>
                 </div>
@@ -145,6 +189,7 @@
                             <div class="custom-control custom-radio">
                                 <input type="radio" class="custom-control-input" name="payment_option" value ="1" id="paypal">
                                 <label class="custom-control-label" for="paypal">Momo</label>
+                                <a href="{{ route('paypal.payment') }}" class="btn btn-success">Pay with PayPal </a>
                             </div>
                         </div>
                         <div class="form-group">

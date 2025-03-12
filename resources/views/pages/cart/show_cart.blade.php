@@ -122,6 +122,7 @@
         <div class="card-footer border-secondary bg-transparent">
             <div class="d-flex justify-content-between mt-2">
                 <h5 class="font-weight-bold">Thành tiền</h5>
+                
                 <?php
                     $subtotal = Cart::subtotal();
                     $subtotal = preg_replace('/[^\d.]/', '', $subtotal); // Loại bỏ các ký tự không phải số

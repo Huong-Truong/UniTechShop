@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Redirect; ## trả về cái trang thành công h
 session_start();
 use Cart;
 use App\Mail\OrderDetails;
+use Http\Controllers\PayPaController;
 
 class CheckOutController extends Controller
 {
@@ -37,7 +38,7 @@ class CheckOutController extends Controller
         $result = DB::table('khachhang')->where('khachhang_email', $email)->where('khachhang_matkhau',$password)->pluck('khachhang_id')->first();
         if($result){
             Session::put('khachhang_id', $result); // Lưu ID vào session
-            return Redirect::to('/checkout');
+            return Redirect::to('/');
         }else{
             return Redirect::to('/login-checkout');
         }
@@ -85,7 +86,8 @@ class CheckOutController extends Controller
             $khachhang = DB::table('khachhang')->where('khachhang_id', $khachhang_id)->first(); // Access the session data as an integer
             $vanchuyen_id = Session::get('vanchuyen_id');
             $vanchuyen = DB::table('vanchuyen')->where('vanchuyen_id', $vanchuyen_id)->get();
-            return view('pages.checkout.payment')->with('danhmuc', $cate_product)->with('hang', $brand)->with('vanchuyen', $vanchuyen)->with('phanloai', $phanloai)->with('khachhang', $khachhang);
+            $dichvu = Session::get('dichvu');
+            return view('pages.checkout.payment')->with('dichvu', $dichvu)->with('danhmuc', $cate_product)->with('hang', $brand)->with('vanchuyen', $vanchuyen)->with('phanloai', $phanloai)->with('khachhang', $khachhang);
         } else {
             return Redirect::to('/login-checkout');
         }
@@ -303,6 +305,9 @@ class CheckOutController extends Controller
     
         if ($request->payment_option == "3") {
             return $this->vnpay_payment($request); // Gọi hàm vnpay_payment
+        }else if ($request->payment_option=="1"){
+            ## Goi paypal controller
+        
         }
     
         $this->send_order_email($mail_nhan);
@@ -319,10 +324,26 @@ class CheckOutController extends Controller
         $vnp_TxnRef = date("YmdHis"); // Mã đơn hàng
         $vnp_OrderInfo = "Thanh toán đơn hàng";
         $vnp_OrderType = 'billpayment';
+        $tiendv = 0;
+        $dichvu = Session::get('dichvu');
+        $tien_dv = 0;
+        foreach($dichvu as $dv){
+            $tiendv = $tiendv + $dv->giadichvu;
+        }
         $subtotal = Cart::subtotal();
         $subtotal = preg_replace('/[^\d.]/', '', $subtotal); // Loại bỏ các ký tự không phải số
         $subtotal = floatval($subtotal);
-        $vnp_Amount =  $subtotal  * 100;
+       
+        $subtotal = Cart::total();
+        $subtotal = preg_replace('/[^\d.]/', '', $subtotal); // Loại bỏ các ký tự không phải số
+
+        if (is_numeric($subtotal)) {
+            $subtotal = floatval($subtotal); // Chuyển đổi thành giá trị số thập phân
+            $subtotal = $subtotal + $tien_dv; // Cộng thêm phí dịch vụ vào tổng số
+        }
+         $vnp_Amount =  $subtotal  * 100;
+     
+
         $vnp_Locale = 'vn';
         // $vnp_BankCode = 'NCB';
         $vnp_IpAddr = $request->ip();
