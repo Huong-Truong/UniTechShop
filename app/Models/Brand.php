@@ -9,7 +9,7 @@ class Brand extends Model
     //
     public $timestamps = false;
     protected $fillable = [
-        'hang_ten', 'hang_trangthai','hang_mota'
+        'hang_ten', 'hang_trangthai','hang_mota','hang_hinhanh'
     ];
     protected $primaryKey = 'hang_id';
     protected $table = 'hangsanpham';

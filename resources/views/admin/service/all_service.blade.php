@@ -47,7 +47,7 @@
              </td>
             <td>{{$value->dv_ten}}</td>
             <td>
-               <a onclick="return confirm('Bạn có chắc muốn xóa ?')" href="{{route('delete-service', ['service_id' => $value->dv_id])}}"> <i class="fa fa-times text-danger text"></i></a> 
+               <a onclick="return confirm('Bạn có chắc muốn xóa ?')" class="active"  href="{{route('delete-service', ['service_id' => $value->dv_id])}}"> <i class="fa fa-times text-danger text"></i></a> 
             </td>
           </tr>
         @endforeach

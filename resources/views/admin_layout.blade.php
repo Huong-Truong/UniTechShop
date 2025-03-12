@@ -37,7 +37,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="{{asset('admin_js/raphael-min.js')}}"></script>
 <script src="{{asset('admin_js/morris.js')}}"></script>
 
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
 
@@ -332,13 +332,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <div class="top-nav clearfix">
     <!--search & user info start-->
     <ul class="nav pull-right top-menu">
-        <li>
+        {{-- <li>
             <input type="text" class="form-control search" placeholder=" Search">
-        </li>
+        </li> --}}
         <!-- user login dropdown start-->
         <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                 <img alt=" " src="images/huongtruong.jpg">
+                {{-- <i class="fa fa-user"></i> --}}
                 <span class="username">
                     <?php 
                         $name = Session::get('admin_name');
@@ -351,7 +352,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             </a>
             <ul class="dropdown-menu extended logout">
                 <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
-                <li><a href="#"><i class="fa fa-lock"></i></i></i> Đổi mật khẩu</a></li>
+                <li><a href="{{ route('change-pass') }}"><i class="fa fa-lock"></i></i></i> Đổi mật khẩu</a></li>
                 <li><a href="{{ route('logout') }}"><i class="fa fa-key"></i> Đăng xuất</a></li>
             </ul>
         </li>
@@ -538,10 +539,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </ul>
                 </li> --}}
                 <li>
-                    <a href="login.html">
+                    <a href="{{route('all-customer')}}">
                         <i class="fa fa-user"></i>
-                        <span>Login Page</span>
+                       Khách hàng
                     </a>
+
                 </li>
             </ul>            </div>
         <!-- sidebar menu end-->

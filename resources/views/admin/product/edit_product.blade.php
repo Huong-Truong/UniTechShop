@@ -30,7 +30,7 @@
 
                                     <label for="exampleInputEmail1">Hình ảnh</label>
                                     <br>
-                                  <img class="img_edit"src="{{asset('img/sp'.$edit_product->sanpham_id.'/'.$edit_product->sanpham_hinhanh)}}" height="100" width="100" alt="">
+                                  <img class="img_edit"src="{{asset('img/sp'.$edit_product->sanpham_id.'/'.$edit_product->sanpham_hinhanh)}}" height="200" width="200" alt="">
                                     <input type="file" name="product_image" class="form-control" id="exampleInputEmail1" >
                                 </div>
                                 <div class="form-group">

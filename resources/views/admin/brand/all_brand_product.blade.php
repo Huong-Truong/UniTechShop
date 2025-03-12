@@ -55,6 +55,7 @@
             </th>
             <th>STT</th>
             <th>Tên thương hiệu</th>
+            <th>Hinh ảnh</th>
             <th>Mô tả</th>
             <th>Hiển thị</th>
             <th>Thao tác</th>
@@ -74,7 +75,9 @@
             </td>
           
             <td>{{$brand->hang_ten}}</td>
+            <td><img class="img_edit"src="{{asset('img/brand/'.$brand->hang_hinhanh)}}" height="150" width="150" alt=""></td>
             <td>{{$brand->hang_mota}}</td>
+
             <td><span class="text-ellipsis">
             <?php 
             if ($brand->hang_trangthai == 0) {
@@ -91,7 +94,7 @@
 
             <td>
               <a href="{{route('edit-brand', ['brand_id' => $brand->hang_id])}}" class="active" ui-toggle-class=""><i class="fa fa-pencil-square-o text-success text-active"></i>  </a>
-              <a onclick="return confirm('Bạn có chắc muốn xóa ?')" href="{{route('delete-brand', ['brand_id' => $brand->hang_id])}}"> <i class="fa fa-times text-danger text"></i></a>
+              <a onclick="return confirm('Bạn có chắc muốn xóa ?')" class="active"  href="{{route('delete-brand', ['brand_id' => $brand->hang_id])}}"> <i class="fa fa-times text-danger text"></i></a>
             </td>
           </tr>
         @endforeach

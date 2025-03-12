@@ -17,6 +17,12 @@
                                     <input value="{{ $br->hang_ten}}"name="brand_name" class="form-control" id="exampleInputEmail1" placeholder="Tên danh mục">
                                 </div> 
                                 <div class="form-group">
+                                    <label for="exampleInputEmail1">Hình ảnh</label>
+                                    <br>
+                                  <img class="img_edit"src="{{asset('img/brand/'.$br->hang_hinhanh)}}" height="150" width="150" alt="">
+                                    <input type="file" name="brand_image" class="form-control" id="exampleInputEmail1" >
+                                </div>
+                                <div class="form-group">
                                     <label for="exampleInputPassword1">Mô tả Hãng</label>
                                         <textarea  name="brand_content" style="resize: none" rows = "8"  placeholder="Mô tả sản phẩm" class="form-control" name="" id="exampleInputPassword1">
                                             {{ $br->hang_mota}}
