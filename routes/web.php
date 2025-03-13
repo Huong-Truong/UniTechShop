@@ -246,6 +246,7 @@ Route::get('/delete-customer/{customer_id}', [CustomerController::class, 'delete
 Route::post('/update-customer/{customer_id}', [CustomerController::class, 'update_customer'])->name('update-customer');
 
 // Thong Ke
-Route::get('/thongke_don_thang', [ThongKeController::class, 'thongke_don_thang'])->name('thongke-don-thang');
-Route::get('/thongke_don_nam', [ThongKeController::class, 'thongke_don_nam'])->name('thongke-don-nam');
+Route::get('/thongke-don-thang', [ThongKeController::class, 'thongke_don_thang'])->name('thongke-don-thang');
+Route::get('/thongke-don-nam', [ThongKeController::class, 'thongke_don_nam'])->name('thongke-don-nam');
+Route::get('/thongke-sp', [ThongKeController::class, 'thongke_sp'])->name('thongke-sp');
 

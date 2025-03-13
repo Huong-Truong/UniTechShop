@@ -33,7 +33,7 @@ class FileController extends Controller
     public function download_cate()
     {
         $this->AuthenLogin();
-        $file = '..\public\excel\cate.csv'; // Đường dẫn tới tệp bạn muốn tải xuống
+        $file = '..\public\excel\category.csv'; // Đường dẫn tới tệp bạn muốn tải xuống
         return response()->download(storage_path($file));
     }
     public function download_brand()

@@ -33,6 +33,7 @@
             <th>Số điện thoại</th>
             <th>Email</th>
             <th>Địa chỉ</th>
+            <th>Trạng thái</th>
             <th>Thao tác</th>
             <th style="width:30px;"></th>
           </tr>
@@ -62,7 +63,9 @@
             <td>{{$value->khachhang_email}}</td>
 
             <td>{{$value->khachhang_diachi}}</td>
-
+            <td>
+              <i class="fa fa-square-o"></i>
+          </td>
 
             <td class = "icon-size">
               <a href="{{route('edit-customer', ['customer_id' => $value->khachhang_id])}}" class="active" ui-toggle-class="">

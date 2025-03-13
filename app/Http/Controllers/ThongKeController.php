@@ -58,6 +58,14 @@ class ThongKeController extends Controller
 
     public function thongke_don_thang(Request $request){
         $this->AuthenLogin();
+
+        if($request->trangthai){
+            $trangthai = $request->trangthai ;
+        }
+        else {
+            $trangthai = 0;
+        }
+        
         if($request->month && $request->year){
             $year = $request->year;
             $month = $request->month;
@@ -66,59 +74,94 @@ class ThongKeController extends Controller
             $year = date('Y');
             $month = date('m');
         }
-      
+        
        
         
-        $soluong = $this->getDaysInMonth($month,$year);
+        $chart = $this->getDaysInMonth($month,$year);
        
         // Lấy dữ liệu đơn hàng từ cơ sở dữ liệu
-        $orders = DB::table('donhang')
-        ->selectRaw('LPAD(DAY(donhang_ngaytao), 2, "0") as date, COUNT(*) as count')
-        ->whereYear('donhang_ngaytao', $year)
-        ->whereMonth('donhang_ngaytao', $month)
-        ->groupBy('date')
-        ->get();
-    
-         foreach ($orders as $order) {
-            $soluong[$order->date] = $order->count;
+        if($trangthai == '0'){
+            $orders = DB::table('donhang')
+            ->selectRaw('LPAD(DAY(donhang_ngaytao), 2, "0") as date, COUNT(*) as count')
+            ->whereYear('donhang_ngaytao', $year)
+            ->whereMonth('donhang_ngaytao', $month)
+            ->groupBy('date')
+            ->get();
+            foreach ($orders as $order) {
+                $chart[$order->date] = $order->count;
+            }
         }
+        else{
+            $orders = DB::table('donhang')
+            ->selectRaw('LPAD(DAY(donhang_ngaytao), 2, "0") as date, SUM(donhang_tongtien) as total_amount')
+            ->whereYear('donhang_ngaytao', $year)
+            ->whereMonth('donhang_ngaytao', $month)
+            ->groupBy('date')
+            ->get();
+            foreach ($orders as $order) {
+                $chart[$order->date] = $order->total_amount;
+            }
+        }
+       
+    
         
-        return view('admin.thongke.thongkedon_thang', compact('soluong','year','month'));
+        
+        return view('admin.thongke.thongkedon_thang', compact('chart','year','month','trangthai'));
         
     }
 
     public function thongke_don_nam(Request $request){
         $this->AuthenLogin();
+        
+        if($request->trangthai){
+            $trangthai = $request->trangthai ;
+        }
+        else {
+            $trangthai = 0;
+        }
+
         if($request->year){
             $year = $request->year;
-            
         }
         else {
             $year = date('Y');
-          
         }
       
        
-        
-        $soluong = [];
+        $chart = [];
         for($i=01; $i <= 12; $i++){
-            $soluong[$i] = 0;
+            $chart[$i] = 0;
         }
        
-        // Lấy dữ liệu đơn hàng từ cơ sở dữ liệu
-        $orders = DB::table('donhang')
-        ->selectRaw('MONTH(donhang_ngaytao) as date, COUNT(*) as count')
-        ->whereYear('donhang_ngaytao', $year)
-        ->groupBy('date')
-        ->get();
-    
-         foreach ($orders as $order) {
-            $soluong[$order->date] = $order->count;
+        if($trangthai == '0'){
+            $orders = DB::table('donhang')
+            ->selectRaw('MONTH(donhang_ngaytao)  as date, COUNT(*) as count')
+            ->whereYear('donhang_ngaytao', $year)
+            ->groupBy('date')
+            ->get();
+            foreach ($orders as $order) {
+                $chart[$order->date] = $order->count;
+            }
+        }
+        else{
+            $orders = DB::table('donhang')
+            ->selectRaw('MONTH(donhang_ngaytao) as date, SUM(donhang_tongtien) as total_amount')
+            ->whereYear('donhang_ngaytao', $year)
+            ->groupBy('date')
+            ->get();
+            foreach ($orders as $order) {
+                $chart[$order->date] = $order->total_amount;
+            }
         }
         
-        return view('admin.thongke.thongkedon_nam', compact('soluong','year'));
+        return view('admin.thongke.thongkedon_nam', compact('chart','year','trangthai'));
         
+    }
+
+    public function thongke_sp(){
+        return view('admin.thongke.thongkesanpham');
     }
     
 
 }
+

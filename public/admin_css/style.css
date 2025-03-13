@@ -3205,6 +3205,14 @@ span.fa-thumbs-style.fa.fa-thumbs-up {
     font-size:20px;
     color:gray;
 }
+span.fa-thumbs-style.fa.fa-check-square-o {
+    font-size:20px;
+    color:gray;
+}
+span.fa-thumbs-style.fa.fa-square-o {
+    font-size:20px;
+    color:gray;
+}
 span.fa-thumbs-style.fa.fa-thumbs-down {
     font-size:15px;
     color:gray;
@@ -3330,3 +3338,50 @@ a.active{
     width: 64px;
     text-align: center;
 }
+
+.styled-button {
+    background-color: #ffffff; /* Green */
+    border: none;
+    color: rgb(95, 95, 95);
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: background-color 0.3s ease;
+}
+
+.styled-button:hover {
+   
+    box-shadow: 2px 2px 1px #343434;
+}
+
+.styled-button a {
+    color: rgb(66, 66, 66);
+    text-decoration: none;
+}
+
+/* .active:hover {
+    position: relative;
+    font-size: 25px;
+} */
+
+.fa:hover{
+    color: #3d3d3d;
+}
+
+.caret{
+    font-size: 40px;
+    size: 30px;
+    color: #000000;
+}
+
+
+
+  .img-show:hover{
+    size: 160px;
+    box-shadow: 1px 1px 1px 1px #9a9a9a;
+  }
