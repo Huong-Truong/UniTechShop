@@ -3213,6 +3213,14 @@ span.fa-thumbs-style.fa.fa-square-o {
     font-size:20px;
     color:gray;
 }
+span.fa-thumbs-style.fa.fa-check-square-o:hover {
+    font-size:20px;
+    color:rgb(70, 70, 70);
+}
+span.fa-thumbs-style.fa.fa-square-o:hover {
+    font-size:20px;
+    color:rgb(74, 74, 74);
+}
 span.fa-thumbs-style.fa.fa-thumbs-down {
     font-size:15px;
     color:gray;
@@ -3382,6 +3390,10 @@ a.active{
 
 
   .img-show:hover{
-    size: 160px;
+  
+    box-shadow: 1px 1px 1px 1px #9a9a9a;
+  }
+  .img_edit:hover{
+   
     box-shadow: 1px 1px 1px 1px #9a9a9a;
   }
