@@ -2,6 +2,7 @@
  @section('content')
  <!-- Featured Start -->
  
+ 
  <div class="container-fluid pt-5">
         <div class="row px-xl-5 pb-3">
             <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
@@ -39,7 +40,7 @@
         <div class="row px-xl-5">
             <div class="col-md-6 pb-4">
                 <div class="position-relative bg-secondary text-center text-md-right text-white mb-2 py-5 px-5">
-                 
+                <img src="{{ asset('img/viture.png') }}" alt="Viture Image">
                     <div class="position-relative" style="z-index: 1;">
                         <h5 class="text-uppercase text-primary mb-3">Giảm 20% các sản phẩm của Viture</h5>
                         <h1 class="mb-4 font-weight-semi-bold">Kính VR</h1>
@@ -49,7 +50,7 @@
             </div>
             <div class="col-md-6 pb-4">
                 <div class="position-relative bg-secondary text-center text-md-left text-white mb-2 py-5 px-5">
-                 
+                         <img src="{{ asset('img/snaptainbg.png') }}" alt="Viture Image">
                     <div class="position-relative" style="z-index: 1;">
                         <h5 class="text-uppercase text-primary mb-3">Giảm 25% các sản phẩm của Snaptain</h5>
                         <h1 class="mb-4 font-weight-semi-bold">Drones</h1>
@@ -134,6 +135,35 @@
 
     
     <!-- Vendor Start -->
+     <style>
+
+
+.vendor-item {
+    width: 180px; /* Fixed width for uniformity */
+    height: 210px; /* Fixed height for uniformity */
+    display: flex;
+    flex-direction: column; /* Stack content vertically */
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+    border: 1px solid #ddd; /* Optional: Add a border */
+    padding: 10px; /* Add inner spacing */
+    box-sizing: border-box; /* Include padding and border in the total size */
+    overflow: hidden; /* Ensures no content spills out */
+}
+
+.vendor-item img {
+    width: 75%; /* Ensures the image scales horizontally */
+    height: auto; /* Maintains the aspect ratio */
+    max-width: 150px; /* Limit maximum width to avoid overflow */
+    max-height: 150px; /* Limit maximum height to avoid overflow */
+    object-fit: contain; /* Fit the entire image without distortion */
+    display: block; /* Prevent unwanted inline gaps */
+    margin: auto; /* Center the image */
+}
+
+
+
+     </style>
     <div class="container-fluid py-5">
     <div class="text-center mb-4">
             <h2 class="section-title px-5"><span class="px-2">Một số thương hiệu</span></h2>
@@ -153,16 +183,15 @@
                         }
                         
                         ?>
-                    <div class="vendor-item border p-4 bg-primary">
-                    <div class="cat-item d-flex flex-column border mb-4" style="padding: 10px;">
-                    
-                    <p class="text-right">{{$total}} Products</p>
-                    <a href="{{route('thuong-hieu',['hang_id' => $value->hang_id])}}" class="cat-img position-relative overflow-hidden mb-3">
-                    <h4 class="font-weight-semi-bold m-0">{{$value->hang_ten}}</h4>
+                                   
+
+                    <div class="vendor-item border">
+                     
+                    <a href="{{route('thuong-hieu',['hang_id' => $value->hang_id])}}" class="">
+                    <img src="img/brand/{{$value->hang_hinhanh}}" alt="">
                     </a>
-                 </div>
-                
                     </div>
+                    
                 @endforeach
                    
                 </div>

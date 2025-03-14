@@ -16,6 +16,14 @@
 
 class HomeController extends Controller
 {
+
+    public function login_backup(){
+        return view('login_backup');
+    }
+
+    public function signup(){
+        return view('signup');
+    }
     public function index()
     {
   

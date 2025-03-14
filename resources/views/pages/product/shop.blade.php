@@ -100,9 +100,33 @@
                 <input type="hidden" name="sanpham_id_hidden" value="{{$value->sanpham_id}}">
                 <input type="hidden" name="qty" value="1">
                     <h6 class="text-truncate mb-3">{{$value->sanpham_ten}}</h6>
+                    <?php 
+                    $update_gia = null; // Default value if no discount is applied
+                    ?>
+
+                    @foreach($khuyenmai as $key => $value2)
+                        @if($value2->sanpham_id == $value->sanpham_id)
+                            <?php 
+                            if ($value2->km_donvi == '%') {
+                                $update_gia = $value->sanpham_gia - ($value->sanpham_gia * $value2->km_gia) / 100;
+                            } else if ($value2->km_donvi == 'VND') {
+                                $update_gia = $value->sanpham_gia - $value2->km_gia;
+                            }
+                            ?>
+                            @break {{-- Exit the loop once a matching discount is found --}}
+                        @endif
+                    @endforeach
+
+                    @if($update_gia !== null)
                     <div class="d-flex justify-content-center">
-                      <h6>{{number_format($value->sanpham_gia) . ' VNĐ'}}</h6>
+                        <s style="font-size: 12px;">{{ number_format($value->sanpham_gia) . ' VNĐ' }}</s> &nbsp; 
+                        <h6>{{ number_format($update_gia) . ' VNĐ' }}</h6>
+                        </div>
+                    @else
+                    <div class="d-flex justify-content-center">
+                        <h6>{{ number_format($value->sanpham_gia) . ' VNĐ' }}</h6>
                     </div>
+                    @endif
                 </div>
                 <div class="card-footer d-flex justify-content-between bg-light border">
                     <a href="{{route('xem-san-pham', ['sanpham_id' => $value->sanpham_id])}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết</a>

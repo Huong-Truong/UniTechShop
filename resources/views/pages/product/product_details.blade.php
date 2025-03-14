@@ -45,7 +45,7 @@
                 <?php 
                 if(isset($price_update) && $price_update ){
                     ?>
-                <h3 class="font-weight-semi-bold mb-4">       <s>{{number_format($sanpham->sanpham_gia) . ' VNĐ'}}</s></h3>
+                <h5 class="font-weight-semi-bold mb-4">       <s>{{number_format($sanpham->sanpham_gia) . ' VNĐ'}}</s></h5>
                 <h3 class="font-weight-semi-bold mb-4">Giá khuyến mãi: {{number_format($price_update) . ' VNĐ'}}</h3>
                 <?php }else{ ?>
                     <h3 class="font-weight-semi-bold mb-4">{{number_format($sanpham->sanpham_gia) . ' VNĐ'}}</h3>
@@ -61,6 +61,10 @@
                     <p class="text-dark font-weight-medium mb-0 mr-3">Danh mục: {{$sanpham->danhmuc_ten}}</p>
                    
                 </div>
+                <div class="d-flex mb-4">
+                    <p class="text-dark font-weight-medium mb-0 mr-3">Xuất xứ: {{$sanpham->sanpham_xuatxu}}</p>
+                   
+                </div>
                 <div class="d-flex align-items-center mb-4 pt-2">
                 <form action="{{route('save-cart')}}" method="post" id="cartForm">
              @csrf
@@ -73,6 +77,11 @@
             </div>
             <input type="text" name="qty" class="form-control form-control-sm bg-secondary text-center" value="1">
             <input type="hidden" name="sanpham_id_hidden" value="{{$sanpham->sanpham_id}}">
+            <?php 
+                if(isset($price_update) && $price_update ){
+                    ?>
+            <input type="hidden" name="gia_update" value="{{$price_update}}">
+            <?php }?>
             <div class="input-group-btn">
                 <button class="btn btn-sm btn-primary btn-plus" type="button">
                     <i class="fa fa-plus"></i>
@@ -135,7 +144,7 @@
                 <a class="nav-item nav-link  active" data-toggle="tab" href="#tab-pane-1" id="dv" >Dịch vụ</a>
                     <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-4">Hướng dẫn sử dụng & Video</a>
                     <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-2">Các thông số</a>
-                    <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">Đánh giá (10)</a>
+                    <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">Đánh giá  ({{ count($danhgia) }})</a>
                 
                     <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-5"  >Bảo hành</a>
                 </div>
@@ -149,57 +158,129 @@
                         
                     </div>
                     <div class="tab-pane fade" id="tab-pane-3">
+                     
+           
+            
                         <div class="row">
-                            <div class="col-md-6">
-                                <h4 class="mb-4">1 review for "Colorful Stylish Shirt"</h4>
-                                <div class="media mb-4">
-                                    <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
-                                    <div class="media-body">
-                                        <h6>John Doe<small> - <i>01 Jan 2045</i></small></h6>
-                                        <div class="text-primary mb-2">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star-half-alt"></i>
-                                            <i class="far fa-star"></i>
-                                        </div>
-                                        <p>Diam amet duo labore stet elitr ea clita ipsum, tempor labore accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.</p>
+                        <div class="col-md-6">
+                        <h4 class="mb-4">Các đánh giá ({{ count($danhgia) }})</h4>
+                        <div style="max-height: 300px; overflow-y: auto;">
+                            @foreach($danhgia as $key => $value)
+                            <div class="media mb-4" >
+                                <img src="{{ asset('img/profile.jpg') }}" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+                                <div class="media-body">
+                                    <h6>{{$value->khachhang_ten}}<small> - <i>{{$value->dg_ngay}}</i></small></h6>
+                                    <div class="text-primary mb-2">
+                                        {{-- Display stars based on dg_xephang --}}
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            @if ($i <= floor($value->dg_xephang)) 
+                                                <i class="fas fa-star"></i> {{-- Full star --}}
+                                            @elseif ($i == ceil($value->dg_xephang) && $value->dg_xephang - floor($value->dg_xephang) > 0)
+                                                <i class="fas fa-star-half-alt"></i> {{-- Half star --}}
+                                            @else
+                                                <i class="far fa-star"></i> {{-- Empty star --}}
+                                            @endif
+                                        @endfor
                                     </div>
+                                    <p>{{$value->dg_noidung}}</p>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <h4 class="mb-4">Leave a review</h4>
-                                <small>Your email address will not be published. Required fields are marked *</small>
-                                <div class="d-flex my-3">
-                                    <p class="mb-0 mr-2">Your Rating * :</p>
-                                    <div class="text-primary">
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                    </div>
                                 </div>
-                                <form>
-                                    <div class="form-group">
-                                        <label for="message">Your Review *</label>
-                                        <textarea id="message" cols="30" rows="5" class="form-control"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="name">Your Name *</label>
-                                        <input type="text" class="form-control" id="name">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email">Your Email *</label>
-                                        <input type="email" class="form-control" id="email">
-                                    </div>
-                                    <div class="form-group mb-0">
-                                        <input type="submit" value="Leave Your Review" class="btn btn-primary px-3">
-                                    </div>
-                                </form>
+                            @endforeach
                             </div>
                         </div>
+                            <div class="col-md-6">
+                            <h4 class="mb-4">Gửi đánh giá sản phẩm</h4>
+                            <div class="d-flex my-3">
+                                <p class="mb-0 mr-2">Đánh giá của bạn* :</p>
+                                <div class="stars">
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                            <form id="review-form" action="{{route('add-review')}}" method="post" enctype="multipart/form-data">
+                                @csrf
+                                <div class="form-group">
+                                    <label for="message">Nội dung đánh giá *</label>
+                                    <textarea name="noidung" id="message" cols="30" rows="5" class="form-control"></textarea>
+                                    <input type="hidden" name="sanpham_id" value="{{$sanpham->sanpham_id}}">
+                                    <?php 
+                                        $khachhang_id = Session::get('khachhang_id');
+                                        if(!$khachhang_id){
+                                            $khachhang_id = 13;
+                                        }
+                                    ?>
+                                  <input type="hidden" name="khachhang_id" value="{{ $khachhang_id }}">
+                                    <input type="hidden" name="sanpham_id" value="{{$sanpham->sanpham_id}}">
+                                </div>
+                                <div class="form-group mb-0">
+                                    <input type="submit" value="Gửi đánh giá" class="btn btn-primary px-3">
+                                </div>
+                            </form>
+                        </div>
+
+
+                            <script>
+                                                // Biến lưu số sao đã chọn
+                                                        // Biến lưu số sao đã chọn
+                                    let selectedRating = 0;
+
+                                    // Chọn tất cả các ngôi sao
+                                    const stars = document.querySelectorAll('.stars i');
+
+                                    // Thêm sự kiện nhấp chuột cho từng ngôi sao
+                                    stars.forEach((star, index) => {
+                                        star.addEventListener('click', () => {
+                                            // Reset tất cả các ngôi sao
+                                            stars.forEach(s => {
+                                                s.classList.remove('fas');
+                                                s.classList.add('far');
+                                            });
+
+                                            // Kích hoạt các ngôi sao được chọn
+                                            for (let i = 0; i <= index; i++) {
+                                                stars[i].classList.remove('far');
+                                                stars[i].classList.add('fas');
+                                            }
+
+                                            // Gán số sao đã chọn vào biến
+                                            selectedRating = index + 1;
+                                            console.log('Số sao đã chọn:', selectedRating);
+                                        });
+                                    });
+
+                                    // Xử lý gửi biểu mẫu
+                                    const form = document.getElementById('review-form');
+                                    form.addEventListener('submit', (e) => {
+                                        // Kiểm tra nếu người dùng chưa chọn sao
+                                        if (selectedRating === 0) {
+                                            alert('Vui lòng chọn xếp hạng sao!');
+                                            e.preventDefault();
+                                            return;
+                                        }
+
+                                        // Thêm giá trị xếp hạng sao vào form trước khi gửi
+                                        let ratingInput = document.querySelector('input[name="rating"]');
+                                        if (!ratingInput) {
+                                            ratingInput = document.createElement('input');
+                                            ratingInput.type = 'hidden';
+                                            ratingInput.name = 'rating';
+                                            form.appendChild(ratingInput);
+                                        }
+                                        ratingInput.value = selectedRating;
+
+                                        console.log('Số sao đã chọn (truyền vào form):', ratingInput.value);
+
+                                        // Form sẽ tự động được gửi nhờ method="post" và action trong HTML
+                                    });
+
+                            </script>
+                            <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+                        </div>
                     </div>
+                  
                     <div class="tab-pane fade " id="tab-pane-4">
                   
                   <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">

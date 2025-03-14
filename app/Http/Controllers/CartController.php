@@ -28,8 +28,8 @@ class CartController extends Controller
         $data['id'] = $product_info->sanpham_id;
         $data['qty'] = $quantity;
         $data['name'] = $product_info->sanpham_ten;
-        if(Session::get('gia_update')){
-            $data['price'] = Session::get('gia_update');
+        if(isset($request->gia_update)){
+            $data['price'] = $request->gia_update;
         }else{
             $data['price'] = $product_info->sanpham_gia;
         }

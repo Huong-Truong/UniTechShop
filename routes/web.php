@@ -22,6 +22,9 @@ use App\Http\Controllers\ThongKeController;
 // use App\Http\Controllers\CheckOutController;
 
 
+// login backup
+Route::get('/login-backup', [HomeController::class, 'login_backup'])->name('login-backup');
+Route::get('/signup', [HomeController::class, 'signup'])->name('signup');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/trang-chu', [HomeController::class, 'index'])->name('trang-chu');
@@ -38,6 +41,7 @@ Route::get('/phan-loai/{phanloai_id}', [CategoryProduct::class, 'show_phanloai_l
 ## hiển thị sản phẩm theo danh mục home
 Route::get('/danh-muc/{danhmuc_id}', [CategoryProduct::class, 'show_danhmuc_home'])->name('danh-muc');
 Route::get('/xem-san-pham/{sanpham_id}', [ProductController::class, 'show_chitiet_sanpham'])->name('xem-san-pham');
+Route::post('/add-review', [ProductController::class, 'add_review'])->name('add-review');
 
 ## hiển thị sản phẩm theo thuong hieu home
 Route::get('/thuong-hieu/{hang_id}', [BrandProduct::class, 'show_thuonghieu_home'])->name('thuong-hieu');

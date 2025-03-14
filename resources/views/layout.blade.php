@@ -58,6 +58,21 @@
                 </div>
             </div>
         </div>
+        @if ($message = Session::get('success'))
+    <script>
+        alert("{{ $message }}"); // Displays a success alert
+    </script>
+    <?php Session::forget('success'); ?>
+@endif
+
+@if ($message = Session::get('error'))
+    <script>
+        alert("{{ $message }}"); // Displays an error alert
+    </script>
+    <?php Session::forget('error'); ?>
+@endif
+
+                          
         <div class="row align-items-center py-3 px-xl-5">
             <div class="col-lg-3 d-none d-lg-block">
                 <a href="{{route('trang-chu')}}" class="text-decoration-none">
@@ -69,24 +84,6 @@
                 </a>
             </div>
             <div class="col-lg-6 col-6 text-left">
-            <!-- <form action="{{route('Search')}}" method="post">
-							@csrf
-						<div class="search_box pull-right">
-							<input type="text" name="keywords_submit" placeholder="Tìm kiếm sản phẩm"/> 
-							<input type="submit" style="margin-top: 0;color:black" name="search-items"class="btn btn-success btn-sm" value="Tìm kiếm" >
-						</div>
-	
-						</form> -->
-                        <!-- <div class="col-sm-5">
-						<form action="{{route('Search')}}" method="post">
-							@csrf
-						<div class="search_box pull-right">
-							<input type="text" name="keywords" placeholder="Tìm kiếm sản phẩm"/> 
-							<input type="submit" style="margin-top: 0;color:black" name="search-items" class="btn btn-success btn-sm" value="Tìm kiếm" >
-						</div>
-	
-						</form>
-					</div> -->
 
                 <form action="{{route('Search')}}" method="post" >
                     @csrf
@@ -191,11 +188,13 @@
                             $khachhang_id = Session::get('khachhang_id');
                             if($khachhang_id!= NULL){
                             ?>
+
+                        <a href="{{route('logout-checkout')}}" class="nav-item nav-link">Tài khoản</a>
                         <a href="{{route('logout-checkout')}}" class="nav-item nav-link">Đăng xuất</a>
                         <!-- Sẽ làm thêm bấm đăng nhập kh thì nó hiện trang chủ, còn đăng nhập từ nút thanh toán thì sau khi đăng nhập qua thanh toán -->
                         <?php }else{  ?>
+                            
                             <a href="{{route('login-checkout')}}" class="nav-item nav-link">Đăng Nhập</a>
-                            <a href="" class="nav-item nav-link">Đăng ký</a>
                         <?php  }?>
                            
                         </div>

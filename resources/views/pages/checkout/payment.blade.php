@@ -188,8 +188,8 @@
                         <div class="form-group">
                             <div class="custom-control custom-radio">
                                 <input type="radio" class="custom-control-input" name="payment_option" value ="1" id="paypal">
-                                <label class="custom-control-label" for="paypal">Momo</label>
-                                <a href="{{ route('paypal.payment') }}" class="btn btn-success">Pay with PayPal </a>
+                                <label class="custom-control-label" for="paypal">Thanh toán PayPal</label>
+                                <!-- <a href="{{ route('paypal.payment') }}" class="btn btn-success">Pay with PayPal </a> -->
                             </div>
                         </div>
                         <div class="form-group">
