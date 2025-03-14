@@ -244,7 +244,12 @@ Route::get('/all-customer', [CustomerController::class, 'all_customer'])->name('
 Route::get('/edit-customer/{customer_id}', [CustomerController::class, 'edit_customer'])->name('edit-customer');
 Route::get('/delete-customer/{customer_id}', [CustomerController::class, 'delete_customer'])->name('delete-customer');
 Route::post('/update-customer/{customer_id}', [CustomerController::class, 'update_customer'])->name('update-customer');
+Route::get('/unactive-customer/{customer_id}', [CustomerController::class, 'unactive_customer'])->name('unactive-customer');
+Route::get('/active-customer/{customer_id}', [CustomerController::class, 'active_customer'])->name('active-customer');
+
 
 // Thong Ke
-Route::get('/thongke_donhang', [ThongKeController::class, 'thongke_donhang'])->name('thongke-donhang');
+Route::get('/thongke-don-thang', [ThongKeController::class, 'thongke_don_thang'])->name('thongke-don-thang');
+Route::get('/thongke-don-nam', [ThongKeController::class, 'thongke_don_nam'])->name('thongke-don-nam');
+Route::get('/thongke-sp', [ThongKeController::class, 'thongke_sp'])->name('thongke-sp');
 

@@ -1,7 +1,10 @@
 @extends('admin_layout')
 @section('admin-content')
-<div>
-    <button><a href="{{route('thongke-donhang')}}">Thống kê đơn hàng</a></button>
-</div>
+<button class="styled-button">
+    <a href="{{route('thongke-don-thang')}}">Thống kê đơn hàng</a>
+</button>
+{{-- <button class="styled-button">
+    <a href="{{route('thongke-sp')}}">Thống kê sản phẩm</a>
+</button> --}}
 
 @endsection

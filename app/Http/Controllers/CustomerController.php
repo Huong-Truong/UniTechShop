@@ -68,5 +68,22 @@ class CustomerController extends Controller
         return Redirect::to('all-customer'); 
     }
 
+    
+    public function unactive_customer($customer_id){
+        $this->AuthenLogin();
+        DB::table('khachhang')->where('khachhang_id', $customer_id)->update(['khachhang_trangthai' => 0]);
+
+       // Session::put('message','Cập nhật hiển thị thành công');
+        return Redirect::to('all-customer'); 
+    }
+
+    public function active_customer($customer_id){
+        $this->AuthenLogin();
+        DB::table('khachhang')->where('khachhang_id', $customer_id)->update(['khachhang_trangthai' => 1]);
+
+        //Session::put('message','Cập nhật hiển thị thành công');
+        return Redirect::to('all-customer'); 
+    }
+
 
 }

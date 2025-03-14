@@ -42,27 +42,126 @@ class ThongKeController extends Controller
     
         return $daysInMonth;
     }
-
-    public function thongke_donhang(){
-        $this->AuthenLogin();
-        $year = 2025;
-        $month = 2;
-        
-        $soluong = $this->getDaysInMonth($month,$year);
-       
-        // Lấy dữ liệu đơn hàng từ cơ sở dữ liệu
-        $orders = DB::table('donhang')->selectRaw('DAY(donhang_ngaytao) as date, COUNT(*) as count')
-        ->whereYear('donhang_ngaytao', $year)
-        ->whereMonth('donhang_ngaytao', $month)
-        ->groupBy('date')
-        ->get();
     
-         foreach ($orders as $order) {
-            $soluong[$order->date] = $order->count;
+    // function getMonthsInYear( $year) {
+    //     $monthsInYear = [];
+    //         // Tạo mảng chứa tất cả các ngày trong tháng
+    //     $startDate = Carbon::create($year, 1);
+    //     $endDate = $startDate->copy()->endOfMonth();
+        
+    // for ($date = $startDate; $date->lte($endDate); $date->addDay()) {
+    //     $monthsInYear[$date->format('m')] = 0;
+    // }
+    
+    //     return  $monthsInYear;
+    // }
+
+    public function thongke_don_thang(Request $request){
+        $this->AuthenLogin();
+
+        if($request->trangthai){
+            $trangthai = $request->trangthai ;
+        }
+        else {
+            $trangthai = 0;
         }
         
-        return view('admin.thongke.thongkedonhang', compact('soluong'));
+        if($request->month && $request->year){
+            $year = $request->year;
+            $month = $request->month;
+        }
+        else {
+            $year = date('Y');
+            $month = date('m');
+        }
+        
+       
+        
+        $chart = $this->getDaysInMonth($month,$year);
+       
+        // Lấy dữ liệu đơn hàng từ cơ sở dữ liệu
+        if($trangthai == '0'){
+            $orders = DB::table('donhang')
+            ->selectRaw('LPAD(DAY(donhang_ngaytao), 2, "0") as date, COUNT(*) as count')
+            ->whereYear('donhang_ngaytao', $year)
+            ->whereMonth('donhang_ngaytao', $month)
+            ->groupBy('date')
+            ->get();
+            foreach ($orders as $order) {
+                $chart[$order->date] = $order->count;
+            }
+        }
+        else{
+            $orders = DB::table('donhang')
+            ->selectRaw('LPAD(DAY(donhang_ngaytao), 2, "0") as date, SUM(donhang_tongtien) as total_amount')
+            ->whereYear('donhang_ngaytao', $year)
+            ->whereMonth('donhang_ngaytao', $month)
+            ->groupBy('date')
+            ->get();
+            foreach ($orders as $order) {
+                $chart[$order->date] = $order->total_amount;
+            }
+        }
+       
+    
+        
+        
+        return view('admin.thongke.thongkedon_thang', compact('chart','year','month','trangthai'));
         
     }
 
+    public function thongke_don_nam(Request $request){
+        $this->AuthenLogin();
+        
+        if($request->trangthai){
+            $trangthai = $request->trangthai ;
+        }
+        else {
+            $trangthai = 0;
+        }
+
+        if($request->year){
+            $year = $request->year;
+        }
+        else {
+            $year = date('Y');
+        }
+      
+       
+        $chart = [];
+        for($i=01; $i <= 12; $i++){
+            $chart[$i] = 0;
+        }
+       
+        if($trangthai == '0'){
+            $orders = DB::table('donhang')
+            ->selectRaw('MONTH(donhang_ngaytao)  as date, COUNT(*) as count')
+            ->whereYear('donhang_ngaytao', $year)
+            ->groupBy('date')
+            ->get();
+            foreach ($orders as $order) {
+                $chart[$order->date] = $order->count;
+            }
+        }
+        else{
+            $orders = DB::table('donhang')
+            ->selectRaw('MONTH(donhang_ngaytao) as date, SUM(donhang_tongtien) as total_amount')
+            ->whereYear('donhang_ngaytao', $year)
+            ->groupBy('date')
+            ->get();
+            foreach ($orders as $order) {
+                $chart[$order->date] = $order->total_amount;
+            }
+        }
+        
+        return view('admin.thongke.thongkedon_nam', compact('chart','year','trangthai'));
+        
+    }
+
+    public function thongke_sp(){
+        return view('admin.thongke.thongkesanpham');
+    }
+    
+
 }
+

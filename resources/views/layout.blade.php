@@ -9,8 +9,8 @@
     <meta content="Free HTML Templates" name="description">
 
     <!-- Favicon -->
-    <link href="{{asset('img/favicon.ico')}}" rel="icon">
-
+    {{-- <link href="{{asset('img/favicon.ico')}}" rel="icon"> --}}
+    <link rel="shortcut icon" href="{{asset('images/logo.png')}}">
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 

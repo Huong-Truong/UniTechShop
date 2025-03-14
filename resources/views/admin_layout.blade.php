@@ -15,7 +15,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <meta name="keywords" content="Visitors Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
  <!-- Favicon -->
- <link href="{{asset('img/favicon.ico')}}" rel="icon">
+ {{-- <link rel="shortcut icon" href="https://assets.pngwing.com/public/css/favicon.ico"> --}}
+ <link rel="shortcut icon" href="{{asset('images/logo.png')}}">
+ {{-- <link href="{{asset('images/logo1.png')}}" rel="icon"  type="image/png"> --}}
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- bootstrap-css -->
 <link rel="stylesheet" href="{{asset('admin_css/bootstrap.min.css')}}" >
