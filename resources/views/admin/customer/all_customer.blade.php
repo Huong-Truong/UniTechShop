@@ -63,17 +63,28 @@
             <td>{{$value->khachhang_email}}</td>
 
             <td>{{$value->khachhang_diachi}}</td>
-            <td>
-              <i class="fa fa-square-o"></i>
-          </td>
+            
+          
+              <td><span class="text-ellipsis">
+                <?php 
+                if ($value->khachhang_trangthai == 0) {
+                  //  echo "Đang ẩn  ";
+                    echo "<a href=\"" . route('active-customer', ['customer_id' => $value->khachhang_id]) . "\"><span class=\"fa-thumbs-style fa fa-square-o\"></span></a>";
+                } else {
+                  //  echo "Đang hiển thị   ";
+                    echo "<a href=\"" . route('unactive-customer', ['customer_id' => $value->khachhang_id]) . "\"><span class=\"fa-thumbs-style fa fa-check-square-o\"></span></a>";
+                }
+                ?>
+                </span></td>
+         
 
-            <td class = "icon-size">
+            <td >
               <a href="{{route('edit-customer', ['customer_id' => $value->khachhang_id])}}" class="active" ui-toggle-class="">
                 <i class="fa fa-pencil-square-o text-success text-active"></i>
               </a>
-              <a onclick="return confirm('Bạn có chắc muốn xóa ?')" class="active"  href="{{route('delete-customer', ['customer_id' => $value->khachhang_id])}}">
+               <a onclick="return confirm('Bạn có chắc muốn xóa ?')" class="active"  href="{{route('delete-customer', ['customer_id' => $value->khachhang_id])}}">
                  <i class="fa fa-times text-danger text"></i>
-                </a>
+                </a> 
             </td>
           </tr>
         @endforeach
