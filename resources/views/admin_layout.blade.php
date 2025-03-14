@@ -470,6 +470,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <ul class="sub">
                         <li><a href="{{route('all-nhacungcap')}}">Quản lý nhà cung cấp</a></li>
                         <li><a href="{{route('store-product')}}">Quản lý kho hàng</a></li>
+                        
                     </ul>
                 </li>
                 {{-- <li>
