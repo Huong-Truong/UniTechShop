@@ -11,7 +11,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Visitors Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
-<link rel="shortcut icon" href="{{asset('images/logo.png')}}">
+<link rel="shortcut icon" href="https://assets.pngwing.com/public/css/favicon.ico" style="filter: hue-rotate(90deg);">
+{{-- <link rel="shortcut icon" href="{{asset('images/logo.png')}}"> --}}
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- bootstrap-css -->
 <link rel="stylesheet" href="{{ asset('admin_css/bootstrap.min.css') }}" >
@@ -34,6 +35,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     width: 100%;
     text-align: center;
     }
+    #favicon_title {
+    filter: hue-rotate(90deg);
+  }
     
   
 </style>
