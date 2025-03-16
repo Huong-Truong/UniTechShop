@@ -1728,6 +1728,7 @@ p.hd-title {
     color: #f05050;
 }
 .btn-default {
+    
     color: #58666e !important;
     background-color: #fcfdfd;
     background-color: #fff;
@@ -1735,6 +1736,9 @@ p.hd-title {
     border-bottom-color: #d8e1e3;
     -webkit-box-shadow: 0 1px 1px rgba(90, 90, 90, 0.1);
     box-shadow: 0 1px 1px rgba(90, 90, 90, 0.1);
+}
+.btn-default a{
+    color: #656565;
 }
 select.input-sm {
     height: 30px;
@@ -3246,6 +3250,18 @@ a.active.font-icon{
     margin: 5px;
  
 }
+.custom-o {
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    background-color: hsl(0, 0%, 100%);
+    color: rgb(0, 0, 0);
+    border: 1px solid #a4adb6;
+    border-radius: 4px;
+    font-size: 13px;
+    margin: 5px;
+ 
+}
 
 .custom-file-upload:hover {
     background-color: #dddddd;
@@ -3390,6 +3406,7 @@ a.active{
 
 
   .img-show:hover{
+
   
     box-shadow: 1px 1px 1px 1px #9a9a9a;
   }
