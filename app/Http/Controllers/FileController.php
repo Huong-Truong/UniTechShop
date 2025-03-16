@@ -49,6 +49,14 @@ class FileController extends Controller
         return response()->download(storage_path($file));
     }
 
+    public function download_hdn()
+    {
+        $this->AuthenLogin();
+        $file = '..\public\excel\hoadonnhap.csv'; // Đường dẫn tới tệp bạn muốn tải xuống
+        return response()->download(storage_path($file));
+    }
+
+
     public function export_classify(Request $request){
         $this->AuthenLogin();
         $filename = "exported/Classifys.csv";

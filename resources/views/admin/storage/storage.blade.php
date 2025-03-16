@@ -25,9 +25,13 @@
               @endforeach
             </select>
             <button class="btn btn-sm btn-default">
-             Chọn
+              Vào
             </button>   
+            
           </form>
+          <button class="btn btn-sm btn-default">
+            <a  href="{{route('nhapkho',['kho_id' => $kho->kho_id])}}">Nhập kho</a> 
+           </button>
          
         </div>
       <div class="col-sm-4">
@@ -35,10 +39,16 @@
       <div class="col-sm-3">
         {{-- <div class="input-group"> --}}
           <form  action="{{route('search-kho')}}" method="get" class="form-search" >
+          
+             
+          
             <input type="hidden" name="id_kho" value="{{$kho->kho_id}}">
             <input type="text" name="key" class="input-sm form-control" placeholder="Search" >
             <button class="btn btn-sm btn-default " type="submit" >Go!</button>
           </form>
+        
+       
+         
         {{-- </div> --}}
       </div>
     </div>

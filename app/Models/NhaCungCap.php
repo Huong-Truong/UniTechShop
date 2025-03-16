@@ -14,7 +14,7 @@ class NhaCungCap extends Model
     protected $primaryKey = 'nhacungcap_id';
     protected $table = 'nhacungcap';
 
-    // public function hoadonnhap(){
-    //     return $this->hasMany('App\HoaDonNhap','nhacungcap_id');
-    // }
+    public function hoadonnhap(){
+        return $this->hasMany('App\HoaDonNhap','nhacungcap_id');
+    }
 }

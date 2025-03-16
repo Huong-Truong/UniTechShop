@@ -244,12 +244,16 @@ Route::get('/store-product', [StorageController::class, 'store'])->name('store-p
 Route::get('/fill-kho', [StorageController::class, 'fill_kho'])->name('fill-kho');
 Route::get('/search-kho', [StorageController::class, 'search_kho'])->name('search-kho');
 Route::get('/delete-store/{sanpham_id}/{kho_id}', [StorageController::class, 'delete_store'])->name('delete-store');
+Route::get('/nhapkho/{kho_id}', [StorageController::class, 'nhapkho'])->name('nhapkho');
+Route::get('/chitiet-hdn/{hdn_id}', [StorageController::class, 'chitiet_hdn'])->name('chitiet-hdn');
+Route::post('/import-hdn/{kho_id}', [StorageController::class, 'import_hdn'])->name('import-hdn');
 
 // File
 Route::get('/download-classify', [FileController::class, 'download_classify'])->name('file-classify');
 Route::get('/download-cate', [FileController::class, 'download_cate'])->name('file-cate');
 Route::get('/download-brand', [FileController::class, 'download_brand'])->name('file-brand');
 Route::get('/download-product', [FileController::class, 'download_product'])->name('file-product');
+Route::get('/download-hdn', [FileController::class, 'download_hdn'])->name('file-hdn');
 // Export
 Route::get('/export-classify', [FileController::class, 'export_classify'])->name('export-classify');
 Route::get('/export-category', [FileController::class, 'export_category'])->name('export-category');

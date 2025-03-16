@@ -19,4 +19,7 @@ class Storage extends Model
          return $this->hasMany('App\TonKho','kho_id');
      }
 
+     public function hoadonnhap(){
+        return $this->hasMany('App\HoaDonNhap','kho_id');
+    }
 }
