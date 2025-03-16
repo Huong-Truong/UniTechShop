@@ -133,6 +133,7 @@ class StorageController extends Controller
     public function import_hdn(Request $request, $kho_id)
     {
         $this->AuthenLogin();
+       
     
         if (!$request->hasFile('fileToUpload')) {
             Session::put('message', 'Chưa có file nào được chọn');
@@ -155,7 +156,7 @@ class StorageController extends Controller
     
         $hdn = new HoaDonNhap();
         $hdn->hdn_id = $maxID_hdn + 1;
-        $hdn->hdn_ngay = date('d-m-y');
+        $hdn->hdn_ngay = date('y-m-d');
         $hdn->nhacungcap_id = $request->nhacungcap;
         
         $hdn->kho_id = $kho_id;
