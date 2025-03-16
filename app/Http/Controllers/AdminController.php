@@ -68,5 +68,8 @@ class AdminController extends Controller
         return view('admin_login');
 }
 
+    public function delete_session($name){
+        Session::forget($name);
+    }
 
 }

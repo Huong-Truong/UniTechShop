@@ -1,5 +1,15 @@
 @extends('admin_layout')
 @section('admin-content')
+<?php
+    $message = Session::get('message');
+    if($message){?>
+    <div id="errorBox" class="error-box">
+        {{$message}}
+    </div>
+<?php
+    Session::forget('message');
+    }
+?>
 <div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">
@@ -47,11 +57,7 @@
         </thead>
         <tbody>
             <?php 
-            $message = Session::get('message'); ## lấy tin nhắn có tên là message
-            if($message){
-            echo "<span id='messageStyle'> $message </span>" ;
-                Session::put('message',null); ## in ra xong set lại null
-            }
+           
             $i=1;
         ?>
             @foreach($all as $key => $cate_pro)

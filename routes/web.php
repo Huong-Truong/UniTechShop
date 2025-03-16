@@ -18,12 +18,14 @@ use App\Http\Controllers\StorageController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ThongKeController;
+use App\Http\Middleware\HandleError;
 // use App\Http\Controllers\CheckOutController;
 
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/trang-chu', [HomeController::class, 'index'])->name('trang-chu');
+
 
 
 
@@ -223,13 +225,13 @@ Route::get('/edit-nhacungcap/{nhacungcap_id}', [NhaCungCapController::class, 'ed
 Route::post('/update-nhacungcap/{nhacungcap_id}', [NhaCungCapController::class, 'update_nhacungcap'])->name('update-nhacungcap');
 
 // Storage
-Route::get('/store-product', [StorageController::class, 'store'])->name('store-product');
-Route::get('/fill-kho', [StorageController::class, 'fill_kho'])->name('fill-kho');
-Route::get('/search-kho', [StorageController::class, 'search_kho'])->name('search-kho');
-Route::get('/delete-store/{sanpham_id}/{kho_id}', [StorageController::class, 'delete_store'])->name('delete-store');
-Route::get('/nhapkho/{kho_id}', [StorageController::class, 'nhapkho'])->name('nhapkho');
-Route::get('/chitiet-hdn/{hdn_id}', [StorageController::class, 'chitiet_hdn'])->name('chitiet-hdn');
-Route::post('/import-hdn/{kho_id}', [StorageController::class, 'import_hdn'])->name('import-hdn');
+Route::get('/store-product', [StorageController::class, 'store'])->name('store-product')->middleware(HandleError::class);
+Route::get('/fill-kho', [StorageController::class, 'fill_kho'])->name('fill-kho')->middleware(HandleError::class);
+Route::get('/search-kho', [StorageController::class, 'search_kho'])->name('search-kho')->middleware(HandleError::class);
+Route::get('/delete-store/{sanpham_id}/{kho_id}', [StorageController::class, 'delete_store'])->name('delete-store')->middleware(HandleError::class);
+Route::get('/nhapkho/{kho_id}', [StorageController::class, 'nhapkho'])->name('nhapkho')->middleware(HandleError::class);
+Route::get('/chitiet-hdn/{hdn_id}', [StorageController::class, 'chitiet_hdn'])->name('chitiet-hdn')->middleware(HandleError::class);
+Route::post('/import-hdn/{kho_id}', [StorageController::class, 'import_hdn'])->name('import-hdn')->middleware(HandleError::class);
 
 // File
 Route::get('/download-classify', [FileController::class, 'download_classify'])->name('file-classify');

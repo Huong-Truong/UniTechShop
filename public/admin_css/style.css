@@ -3414,3 +3414,19 @@ a.active{
    
     box-shadow: 1px 1px 1px 1px #9a9a9a;
   }
+
+  .error-box {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    background-color: #c5c5c5;
+    color: #3f3f3f;
+    padding: 30px;
+    padding-left: 10px;
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+    box-shadow: 1px 1px 10px rgba(162, 0, 0, 0.1);
+    font-weight:400;
+    font-size: 14px;
+    text-align: left;
+}

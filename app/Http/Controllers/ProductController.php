@@ -71,7 +71,7 @@ class ProductController extends Controller
     {
         $this->AuthenLogin();
         // Lấy ra id lớn nhất
-        $maxId = DB::table('sanpham')->max('sanpham_id') + 1;
+        $maxId = DB::table('sanpham')->max('sanpham_id') + 1 ?? 0;
         // Lấy ra all dữ liệu 
         $data = $request->all();
 
@@ -166,6 +166,18 @@ class ProductController extends Controller
 
     public function delete_product($product_id){
         $this->AuthenLogin();
+        // Check đơn hàng
+        $checkDonHang = DB::table('chitietdonhang')->where('sanpham_id', $product_id)->count();
+        if($checkDonHang > 0){
+            Session::put('message', 'Không thể thực hiện thao tác do sản phẩm này đang ở trong đơn hàng');
+            return Redirect::to('all-product'); 
+        }
+        $checkKho = DB::table('tonkho')->where('sanpham_id', $product_id)->count();;
+        if ($checkKho){
+            Session::put('message', 'Không thể xóa do sản phẩm này đang ở trong kho hàng ');
+            return Redirect::to('all-product'); 
+        }
+
         $pro = Product::find( $product_id );
        
         $directoryPath = "img/sp$product_id";

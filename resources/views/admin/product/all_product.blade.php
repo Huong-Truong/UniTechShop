@@ -1,7 +1,18 @@
 @extends('admin_layout')
 @section('admin-content')
+<?php
+    $message = Session::get('message');
+    if($message){?>
+    <div id="errorBox" class="error-box">
+        {{$message}}
+    </div>
+<?php
+    Session::forget('message');
+    }
+?>
 <div class="table-agile-info">
   <div class="panel panel-default">
+ 
     <div class="panel-heading">
         Liệt kê sản phẩm
         
@@ -98,14 +109,9 @@
           </tr>
         </thead>
         <tbody>
-          <?php 
-          $message = Session::get('message'); ## lấy tin nhắn có tên là message
-          if($message){
-          echo "<p id='messageStyle'> $message </p>" ;
-              Session::put('message',null); ## in ra xong set lại null
-          }
-      ?>
-        @foreach($all as $key => $pro)
+      
+
+          @foreach($all as $key => $pro)
           <tr>
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
             <td>{{$pro->sanpham_ten}}</td>
@@ -144,7 +150,7 @@
               <a href="{{route('edit-product', ['product_id' => $pro->sanpham_id])}}" class="active" ui-toggle-class="">
                 <i class="fa fa-pencil-square-o text-success text-active"></i> 
                </a>
-              <a onclick="return confirm('Bạn có chắc muốn xóa ?')" class="active"  href="{{route('delete-product', ['product_id' => $pro->sanpham_id])}} " class="active" ui-toggle-class=""> 
+              <a onclick="return confirm('Bạn có chắc muốn xóa ?')" class="active"  id="deleteProductBtn" href="{{route('delete-product', ['product_id' => $pro->sanpham_id])}} " class="active" ui-toggle-class=""> 
                 <i class="fa fa-times text-danger text"></i>
               </a>
               <a href="{{route('edit-other-info-product', ['product_id' => $pro->sanpham_id])}}" class="active" ui-toggle-class="">
