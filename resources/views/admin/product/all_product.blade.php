@@ -44,17 +44,19 @@
       <div class="col-sm-3">
           <form action="{{route('import-product')}}" method="POST" enctype="multipart/form-data" class="form-search">
             @csrf
+            <label class="btn btn-sm btn-default" >
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+              <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu extended logout">
+                <li><a href="/download-product"><i class="fa fa-download"></i> Lấy mẫu csv</a></li>
+                <li><a href="/export-product"><i class="fa fa-download"></i> Export csv</a></li>
+            </ul>
+          </label>
           <label class="btn btn-sm btn-default" >
             Chọn file
             <input  type="file" name="fileToUpload" id="fileToUpload"  accept=".csv" style="display: none;">
             
-                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                  <b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu extended logout">
-                    <li><a href="/download-product"><i class="fa fa-download"></i> Lấy mẫu csv</a></li>
-                    <li><a href="/export-product"><i class="fa fa-download"></i> Export csv</a></li>
-                </ul>
           </label>
 
           <p id="fileName"></p>
@@ -115,15 +117,15 @@
             ?>
             </td>
             {{-- <td><img src="{{asset('img/sp'.$pro->sanpham_id.'/'.$pro->sanpham_hinhanh)}}" height="100" width="100" alt="Lỗi ảnh"></td> --}}
-            <td><img src="{{asset('img/sp'.$pro->sanpham_id.'/'.$pro->sanpham_hinhanh)}}" height="100" width="100" alt="Chưa có ảnh"></td>
+            <td><img class = "img-show"src="{{asset('img/sp'.$pro->sanpham_id.'/'.$pro->sanpham_hinhanh)}}" height="100" width="100" alt="Chưa có ảnh"></td>
             <td>{{$pro->danhmuc_ten}}</td>
             <td>{{$pro->hang_ten}}</td>
             <td><span class="text-ellipsis">
             <?php 
             if ($pro->sanpham_trangthai == 0) {
-                echo "<a href=\"" . route('active-product', ['product_id' => $pro->sanpham_id]) . "\"><span class=\"fa-thumbs-style fa fa-thumbs-down\"></span></a>";
+                echo "<a href=\"" . route('active-product', ['product_id' => $pro->sanpham_id]) . "\"><span class=\"fa-thumbs-style fa fa-square-o\"></span></a>";
             } else {
-                echo "<a href=\"" . route('unactive-product', ['product_id' => $pro->sanpham_id]) . "\"><span class=\"fa-thumbs-style fa fa-thumbs-up\"></span></a>";
+                echo "<a href=\"" . route('unactive-product', ['product_id' => $pro->sanpham_id]) . "\"><span class=\"fa-thumbs-style fa fa-check-square-o\"></span></a>";
             }
             ?>
 

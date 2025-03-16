@@ -52,7 +52,7 @@ Route::post('/Search', [HomeController::class, 'Search'])->name('Search');
 
 ## Thêm dịch vụ của sản phẩm vào giỏ hàng
 Route::post('/add-service-cart', [CartController::class, 'add_service_cart'])->name('add-service-cart');
-
+Route::get('/delete-service-cart', [CartController::class, 'delete_service_cart'])->name('delete-service-cart');
 ## Giỏ hàng
 Route::post('/save-cart', [CartController::class, 'save_cart'])->name('save-cart');
 Route::get('/show-cart', [CartController::class, 'show_cart'])->name('show-cart');
@@ -189,8 +189,11 @@ Route::post('/delete-gallery', [GalleryController::class, 'delete_gallery'])->na
 ## Sales
 Route::get('/all-sales', [SalesController::class, 'all_sales'])->name('all-sales');
 Route::get('/add-sales', [SalesController::class, 'add_sales'])->name('add-sales');
+Route::get('/add-sales-brand', [SalesController::class, 'add_sales_brand'])->name('add-sales-brand');
+
 Route::get('/delete-sales/{sale_id}', [SalesController::class, 'delete_sales'])->name('delete-sales');
 Route::post('/save-sales', [SalesController::class, 'save_sales'])->name('save-sales');
+Route::post('/save-sales-brand', [SalesController::class, 'save_sales_brand'])->name('save-sales-brand');
 Route::get('/set-sale/{product_id}', [SalesController::class, 'set_sale'])->name('set-sale');
 Route::post('/save-set-sale/{product_id}', [SalesController::class, 'save_set_sale'])->name('save-set-sale');
 
@@ -258,7 +261,12 @@ Route::get('/all-customer', [CustomerController::class, 'all_customer'])->name('
 Route::get('/edit-customer/{customer_id}', [CustomerController::class, 'edit_customer'])->name('edit-customer');
 Route::get('/delete-customer/{customer_id}', [CustomerController::class, 'delete_customer'])->name('delete-customer');
 Route::post('/update-customer/{customer_id}', [CustomerController::class, 'update_customer'])->name('update-customer');
+Route::get('/unactive-customer/{customer_id}', [CustomerController::class, 'unactive_customer'])->name('unactive-customer');
+Route::get('/active-customer/{customer_id}', [CustomerController::class, 'active_customer'])->name('active-customer');
+
 
 // Thong Ke
-Route::get('/thongke_donhang', [ThongKeController::class, 'thongke_donhang'])->name('thongke-donhang');
+Route::get('/thongke-don-thang', [ThongKeController::class, 'thongke_don_thang'])->name('thongke-don-thang');
+Route::get('/thongke-don-nam', [ThongKeController::class, 'thongke_don_nam'])->name('thongke-don-nam');
+Route::get('/thongke-sp', [ThongKeController::class, 'thongke_sp'])->name('thongke-sp');
 

@@ -16,17 +16,19 @@
         <div class="col-sm-3">
           <form action="{{route('import-brand')}}" method="POST" enctype="multipart/form-data" class="form-search">
             @csrf
+            <label class="custom-file-upload btn" >
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+              <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu extended logout">
+                <li><a href="/download-brand"><i class="fa fa-download"></i> Lấy mẫu csv</a></li>
+                <li><a href="/export-brand"><i class="fa fa-download"></i> Export csv</a></li>
+            </ul>
+          </label>
           <label class="custom-file-upload btn" >
             Chọn file
             <input  type="file" name="fileToUpload" id="fileToUpload" accept=".csv" style="display: none;">
             
-                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                  <b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu extended logout">
-                    <li><a href="/download-brand"><i class="fa fa-download"></i> Lấy mẫu csv</a></li>
-                    <li><a href="/export-brand"><i class="fa fa-download"></i> Export csv</a></li>
-                </ul>
           </label>
 
           <p id="fileName"></p>
@@ -75,17 +77,17 @@
             </td>
           
             <td>{{$brand->hang_ten}}</td>
-            <td><img class="img_edit"src="{{asset('img/brand/'.$brand->hang_hinhanh)}}" height="150" width="150" alt=""></td>
+            <td><img class="img_edit image-show" src="{{asset('img/brand/'.$brand->hang_hinhanh)}}" height="150" width="150" alt=""></td>
             <td>{{$brand->hang_mota}}</td>
 
             <td><span class="text-ellipsis">
             <?php 
             if ($brand->hang_trangthai == 0) {
               //  echo "Đang ẩn  ";
-                echo "<a href=\"" . route('active-brand', ['brand_id' => $brand->hang_id]) . "\"><span class=\"fa-thumbs-style fa fa-thumbs-down\"></span></a>";
+                echo "<a href=\"" . route('active-brand', ['brand_id' => $brand->hang_id]) . "\"><span class=\"fa-thumbs-style fa fa-square-o\"></span></a>";
             } else {
               //  echo "Đang hiển thị   ";
-                echo "<a href=\"" . route('unactive-brand', ['brand_id' => $brand->hang_id]) . "\"><span class=\"fa-thumbs-style fa fa-thumbs-up\"></span></a>";
+                echo "<a href=\"" . route('unactive-brand', ['brand_id' => $brand->hang_id]) . "\"><span class=\"fa-thumbs-style fa fa-check-square-o\"></span></a>";
             }
             ?>
 

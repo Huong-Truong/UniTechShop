@@ -31,15 +31,33 @@
 
             <div class="col-lg-7 pb-5">
                 <h3 class="font-weight-semi-bold">{{$sanpham->sanpham_ten}}</h3>
+                <?php 
+                if(count($danhgia) >= 1){
+                    $avg_star = 0;
+                    foreach($danhgia as $v_danhgia){
+                        $avg_star = $avg_star + $v_danhgia->dg_xephang;
+                    }
+                    $avg_star =  $avg_star/count($danhgia);
+                }else{
+                    $avg_star = 0;
+                }
+                   
+                
+                ?>
                 <div class="d-flex mb-3">
-                    <div class="text-primary mr-2">
-                        <small class="fas fa-star"></small>
-                        <small class="fas fa-star"></small>
-                        <small class="fas fa-star"></small>
-                        <small class="fas fa-star-half-alt"></small>
-                        <small class="far fa-star"></small>
-                    </div>
-                    <small class="pt-1">(50 Reviews)</small>
+                <div class="text-primary mb-2">
+                                        {{-- Display stars based on dg_xephang --}}
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            @if ($i <= floor( $avg_star)) 
+                                                <small class="fas fa-star"></small> {{-- Full star --}}
+                                            @elseif ($i == ceil( $avg_star) &&  $avg_star - floor( $avg_star) > 0)
+                                                <small class="fas fa-star-half-alt"></small> {{-- Half star --}}
+                                            @else
+                                                <small class="far fa-star"></small> {{-- Empty star --}}
+                                            @endif
+                                        @endfor
+                                    </div>
+                    <small class="pt-1">({{count($danhgia)}} Đánh giá)</small>
                 </div>
          
                 <?php 
@@ -90,14 +108,35 @@
         </div>
         <button id="sendButton" type="submit" class="btn btn-primary px-3 ml-3"><i class="fa fa-shopping-cart mr-1"></i> Thêm vào giỏ hàng</button>
         <script>
-                                            document.getElementById('sendButton').addEventListener('click', function() {
-                                alert('Đã thêm sản phẩm vào giỏ hàng');
-                                document.getElementById('cartForm').submit(); // Gửi form sau khi hiện thông báo
-                            });
+
+
+
+                document.getElementById('sendButton').addEventListener('click', function() {
+                    // Gửi form
+                    document.getElementById('cartForm').submit();
+
+                    // Lưu trạng thái vào localStorage
+                    localStorage.setItem('formSubmitted', true);
+
+                    // Hiện thông báo
+                    // alert('Đã thêm sản phẩm vào giỏ hàng, bạn có muốn xem các dịch vụ ?');
+                });
+                // Kiểm tra trạng thái khi tải lại trang
+                window.addEventListener('load', function() {
+                    if (localStorage.getItem('formSubmitted')) {
+                        // Hiện thông báo khác
+                        alert('Đã thêm sản phẩm vào giỏ hàng, bạn có muốn xem các dịch vụ?');
+                        document.getElementById('dv').scrollIntoView({ behavior: 'smooth' });
+                        // Xóa trạng thái để không hiện thông báo nữa
+                        localStorage.removeItem('formSubmitted');
+                    }
+                });
+
+
 
         </script>
-
         
+
     </div>
   
 </form>

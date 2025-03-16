@@ -32,11 +32,16 @@
 	border-radius: 5px;
 	padding: 25px;
     border-color: lightgray;
+    background-color:rgba(194, 194, 194, 0.2) !important;
 }
 
 form label{
 
     font-weight: bold !important;
+}
+h2{
+    padding: 10px;
+    text-align: center;
 }
 </style>
 </head>

@@ -9,7 +9,7 @@ class Customer extends Model
     //
     public $timestamps = false;
     protected $fillable = [
-        'khachhang_ten', 'khachhang_email','khachhang_sdt','khachhang_matkhau','khachhang_diachi'
+        'khachhang_ten', 'khachhang_email','khachhang_sdt','khachhang_matkhau','khachhang_diachi','khachhang_trangthai'
     ];
     protected $primaryKey = 'khachhang_id';
     protected $table = 'khachhang';

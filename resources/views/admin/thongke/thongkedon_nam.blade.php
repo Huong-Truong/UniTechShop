@@ -6,20 +6,47 @@
                     <section class="panel ">
                         
                         <header class="panel-heading">
-                            Thống kê đơn hàng trong 
-                            <form action="" class="form-inline">
-                               tháng
-                                <input type="text" name = "month" class="input-small" value="2">
-                                /
-                                <input type="text"  name = "year" class="input-medium" value="2025">
-                                <input type="submit" class = "btn btn-sm btn-default" value="Xem">
-                            </form>
-                        </header>
+                            Thống kê đơn hàng trong năm
+                            <form action="" class="form-inline" method="get">
+                                
+                                 <input type="text"  name = "year" class="input-medium" value="{{$year}}">
+                                 
+                                 <input type="submit" class = "btn btn-sm btn-default" value="Xem">
+                           
+                         </header>
+         <div class="row w3-res-tb">
+         <div class="col-sm-5 m-b-xs">
+             <select  name="trangthai" class="input-sm form-control w-sm inline v-middle ">
+               @if ($trangthai == 1)
+                 <option value="1">Doanh số</option> 
+                 <option value="0">Số lượng</option>
+             @else
+                 <option value="0">Số lượng</option>
+                 <option value="1">Doanh số</option>
+              @endif
+             </select>
+                
+         </form>  
+
+      </div>
+      <div class="col-sm-4">
+      </div>
+      <div class="col-sm-3">
+        <div class="input-group">
+        
+          <span class="input-group-btn">
+       
+            <button class="btn btn-sm btn-default" type="button"> <a href="{{route('thongke-don-thang')}}"> Xem thống kê theo tháng</a></button>
+
+          </span>
+        </div>
+      </div>
+    </div>
                        
                         <div class="panel-body">
                             {{----}}
                          
-                                <div style="width: 90%;">
+                                <div style="width: 80%;">
                                     <canvas id="donhangChart"></canvas>
                                 </div>
                                 <script>
@@ -27,10 +54,10 @@
                                     var sanphamChart = new Chart(ctx, {
                                         type: 'bar',
                                         data: {
-                                            labels: @json( array_keys($soluong)),
+                                            labels: @json( array_map(function($date) { return 'Tháng ' . $date; }, array_keys($chart))),
                                             datasets: [{
-                                                label: 'Số lượng đơn hàng',
-                                                data: @json(array_values($soluong)),
+                                                label: '<?php  echo $tieude = ($trangthai == 0) ? "Số lượng đơn hàng" : "Tổng doanh số (triệu VND)";?>',
+                                                data: @json(array_values( $chart)),
                                                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
                                                 borderColor: 'rgba(54, 162, 235, 1)',
                                                 borderWidth: 1

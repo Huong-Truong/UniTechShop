@@ -44,7 +44,7 @@
                     <div class="position-relative" style="z-index: 1;">
                         <h5 class="text-uppercase text-primary mb-3">Giảm 20% các sản phẩm của Viture</h5>
                         <h1 class="mb-4 font-weight-semi-bold">Kính VR</h1>
-                        <a href="" class="btn btn-outline-primary py-md-2 px-md-3">Xem ngay</a>
+                        <a href="{{route('thuong-hieu',['hang_id' => 6])}}" class="btn btn-outline-primary py-md-2 px-md-3">Xem ngay</a>
                     </div>
                 </div>
             </div>
@@ -54,7 +54,7 @@
                     <div class="position-relative" style="z-index: 1;">
                         <h5 class="text-uppercase text-primary mb-3">Giảm 25% các sản phẩm của Snaptain</h5>
                         <h1 class="mb-4 font-weight-semi-bold">Drones</h1>
-                        <a href="" class="btn btn-outline-primary py-md-2 px-md-3">Xem ngay</a>
+                        <a href="{{route('thuong-hieu',['hang_id' => 1])}}" class="btn btn-outline-primary py-md-2 px-md-3">Xem ngay</a>
                     </div>
                 </div>
             </div>
@@ -105,22 +105,52 @@
                     </a>
                     </div>
                     <form action="{{route('save-cart')}}" method="post">
-                        @csrf
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">{{$value->sanpham_ten}}</h6>
-                        <input type="hidden" name="sanpham_id_hidden" value="{{$value->sanpham_id}}">
-                        <input type="hidden" name="qty" value="1">
-                        <div class="d-flex justify-content-center">
-                        <h6> {{number_format($value->sanpham_gia) . ' VNĐ'}}</h6>
-                            <!-- <h6>$123.00</h6><h6 class="text-muted ml-2"><del>$123.00</del></h6> -->
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
+                @csrf
+                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                <input type="hidden" name="sanpham_id_hidden" value="{{$value->sanpham_id}}">
+                <input type="hidden" name="qty" value="1">
+                
+                    <h6 class="text-truncate mb-3">{{$value->sanpham_ten}}</h6>
+                    <?php 
+                    $price_update = null; // Default value if no discount is applied
+                    ?>
 
-                        <a href="{{route('xem-san-pham', ['sanpham_id' => $value->sanpham_id])}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết</a>
-                        <button type="submit"  class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ hàng</button>
+                    @foreach($khuyenmai as $key => $value2)
+                        @if($value2->sanpham_id == $value->sanpham_id)
+                            <?php 
+                            if ($value2->km_donvi == '%') {
+                                $price_update = $value->sanpham_gia - ($value->sanpham_gia * $value2->km_gia) / 100;
+                            } else if ($value2->km_donvi == 'VND') {
+                                $price_update = $value->sanpham_gia - $value2->km_gia;
+                            }
+                            ?>
+                            @break {{-- Exit the loop once a matching discount is found --}}
+                        @endif
+                    @endforeach
+
+                    @if($price_update !== null)
+                    <div class="d-flex justify-content-center">
+                        <s style="font-size: 12px;">{{ number_format($value->sanpham_gia) . ' VNĐ' }}</s> &nbsp; 
+                        <h6>{{ number_format($price_update) . ' VNĐ' }}</h6>
+                        </div>
+                    @else
+                    <div class="d-flex justify-content-center">
+                        <h6>{{ number_format($value->sanpham_gia) . ' VNĐ' }}</h6>
                     </div>
-                    </form>
+                    @endif
+                </div>
+                <?php 
+                    if(isset($price_update) && $price_update ){
+                        ?>
+                   <input type="hidden" name="gia_update" value="{{$price_update}}">
+                     <?php }?>
+                <div class="card-footer d-flex justify-content-between bg-light border">
+                    <a href="{{route('xem-san-pham', ['sanpham_id' => $value->sanpham_id])}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết</a>
+                   
+                    <button type="submit" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ hàng</button>
+                   
+                </div>
+                </form>
                 </div>
                 
             

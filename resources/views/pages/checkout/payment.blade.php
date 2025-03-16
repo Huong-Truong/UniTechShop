@@ -73,6 +73,7 @@
     </thead>
     <?php 
                     $tien_dv = 0;
+                    $count = Cart::content()->count();
     ?>
     <tbody class="align-middle">
         @if(empty($dichvu) || count($dichvu) === 0 )
@@ -152,6 +153,10 @@
                             <h6 class="font-weight-medium">Thuế</h6>
                             <h6 class="font-weight-medium">{{Cart::tax()}}</h6>
                         </div>
+                        <div class="d-flex justify-content-between mb-3 pt-1">
+                        <h6 class="font-weight-medium">Phí dịch vụ</h6>
+                        <h6 class="font-weight-medium">{{ number_format($tien_dv) }}</h6>
+                    </div>
                         <div class="d-flex justify-content-between">
                             <h6 class="font-weight-medium">Phí ship</h6>
                             <h6 class="font-weight-medium"></h6>
@@ -221,7 +226,8 @@
                                     break;
                                 }
                             }
-
+              
+                            
                             if (!selectedOption) {
                                 event.preventDefault(); // Ngăn chặn form gửi đi
                                 alert('Vui lòng chọn phương thức thanh toán');
