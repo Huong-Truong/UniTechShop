@@ -13,7 +13,8 @@
         "anayarojo/shoppingcart": "^4.2",
         "laravel/framework": "^11.31",
         "laravel/tinker": "^2.9",
-        "maatwebsite/excel": "^1.1"
+        "maatwebsite/excel": "^1.1",
+        "srmklive/paypal": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
