@@ -3430,3 +3430,7 @@ a.active{
     font-size: 14px;
     text-align: left;
 }
+
+.fa-star {
+    color: rgb(177, 177, 0);
+}

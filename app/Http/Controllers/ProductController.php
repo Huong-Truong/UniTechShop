@@ -70,6 +70,9 @@ class ProductController extends Controller
     public function save_product (Request $request)    
     {
         $this->AuthenLogin();
+     
+
+        
         // Lấy ra id lớn nhất
         $maxId = DB::table('sanpham')->max('sanpham_id') + 1 ?? 0;
         // Lấy ra all dữ liệu 
@@ -94,7 +97,17 @@ class ProductController extends Controller
         $sp->sanpham_xuatxu = $data['product_country'];
         $sp->baohanh_id = $data['baohanh'];
         $get_image_file = $request->file('product_image');
-
+        // Kiêm tra tí
+        foreach($data as $key ){
+            if($key == null){
+                Session::put('message', 'Không được để trống ');
+                return Redirect::to('add-product');
+            }
+        }
+        if( (int)$data['product_price'] == 0 ){
+            Session::put('message', 'Giá nhập vào không hợp lệ!');
+            return Redirect::to('all-product');
+        }
 
         if($get_image_file){
 
@@ -202,7 +215,18 @@ class ProductController extends Controller
         $data['sanpham_xuatxu'] = $request->product_xuatxu;
         $data['hang_id'] = $request->brand;
         $data['baohanh_id'] = $request->baohanh;
-        $product = DB::table('sanpham')->where('sanpham_id', $product_id)->first();
+        // Kiêm tra tí
+        foreach($data as $key ){
+            if($key == null){
+                Session::put('message', 'Không được để trống bất ô nào ');
+                return $this->edit_product($product_id);
+            }
+        }
+        if( (int)$request->product_price == 0 ){
+            Session::put('message', 'Giá nhập vào không hợp lệ!');
+            return $this->edit_product($product_id);
+        }
+       // $product = DB::table('sanpham')->where('sanpham_id', $product_id)->first();
         $get_image_file = $request->file('product_image');
 
        

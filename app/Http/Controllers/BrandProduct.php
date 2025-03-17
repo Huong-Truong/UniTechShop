@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Brand;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Session;
@@ -95,6 +96,11 @@ class BrandProduct extends Controller
 
     public function delete_brand_product($brand_id){
         $this->AuthenLogin();
+        $checkBrand = Product::where('hang_id',$brand_id)->count();
+        if( $checkBrand > 0){
+            Session::put('message','Không thể xóa. Đang có '.$checkBrand.' sản phẩm thuộc thương hiệu này');
+            return Redirect::to('all-brand-product'); 
+        }
         $brand = Brand::find($brand_id);
         $brand->delete();
        // DB::table('hangsanpham')->where('hang_id', $brand_id)->delete();

@@ -76,11 +76,7 @@
         </thead>
         <tbody>
             <?php 
-            $message = Session::get('message'); ## lấy tin nhắn có tên là message
-            if($message){
-            echo "<p id='messageStyle'> $message </p>" ;
-                Session::put('message',null); ## in ra xong set lại null
-            }
+           
             $i = 1;
         ?>
             @foreach($all_category as $key => $cate)
@@ -109,7 +105,7 @@
 
             <td>
               <a href="{{route('edit-category', ['category_id' => $cate->danhmuc_id])}}" class="active" ui-toggle-class=""><i class="fa fa-pencil-square-o text-success text-active"></i>  </a>
-              <a onclick="return confirm('Bạn có chắc muốn xóa ?')" href="{{route('delete-category', ['category_id' => $cate->danhmuc_id])}}"> <i class="fa fa-times text-danger text"></i></a>
+              <a onclick="return confirm('Bạn có chắc muốn xóa ?')" class="active"  href="{{route('delete-category', ['category_id' => $cate->danhmuc_id])}}"> <i class="fa fa-times text-danger text"></i></a>
             </td>
           </tr>
         @endforeach

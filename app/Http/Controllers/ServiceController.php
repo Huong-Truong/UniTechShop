@@ -60,10 +60,16 @@ class ServiceController extends Controller
         $this->AuthenLogin();
         $dv_ids = $request->input('dv_id');
         $giadichvus = $request->input('giadichvu');
+       
     
         foreach ($dv_ids as $index => $dv_id) {
             $giadichvu = preg_replace('/[^\d]/', '', $giadichvus[$index]);
-    
+
+            if( (int)$giadichvus[$index] == 0 && $giadichvus[$index] !='Chưa thiết lập' ){
+                Session::put('message', 'Giá dịch vụ nhập vào không hợp lệ!');
+                return Redirect::to('/edit-other-info-product/'.$product_id);
+            }
+            
             $existingRecord = DB::table('giadichvu')
                 ->where('sanpham_id', $product_id)
                 ->where('dv_id', $dv_id)

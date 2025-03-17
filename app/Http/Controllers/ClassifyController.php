@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Classify;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Session;
@@ -15,6 +16,8 @@ session_start();
 
 class ClassifyController extends Controller
 {
+    
+
     public function AuthenLogin(){
         $admin_id = Session::get('admin_id');
         if($admin_id){
@@ -69,6 +72,11 @@ class ClassifyController extends Controller
 
     public function delete_classify_product($classify_id){
         $this->AuthenLogin();
+        $checkClassify = Category::where('phanloai_id',$classify_id)->count();
+        if( $checkClassify > 0){
+            Session::put('message','Không thể xóa. Đang có '.$checkClassify.' danh mục thuộc phân lọai này');
+            return Redirect::to('all-classify-product'); 
+        }
         $classify = Classify::find( $classify_id );
         $classify->delete();
        // DB::table('phanloaisp')->where('phanloai_id', $classify_id)->delete();

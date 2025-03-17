@@ -118,8 +118,11 @@
 
             <td>
               <?php
-               $formattedVND = number_format(preg_replace('/\D/', '',$pro->sanpham_gia), 0, ',', '.') . ' VND';
-               echo $formattedVND;
+              if((int)$pro->sanpham_gia != 0){
+                $formattedVND = number_format(preg_replace('/\D/', '',$pro->sanpham_gia), 0, ',', '.') . ' VND';
+                echo $formattedVND;
+              }
+              
             ?>
             </td>
             {{-- <td><img src="{{asset('img/sp'.$pro->sanpham_id.'/'.$pro->sanpham_hinhanh)}}" height="100" width="100" alt="Lỗi ảnh"></td> --}}
@@ -158,6 +161,9 @@
               </a>
               <a href="{{route('set-sale', ['product_id' => $pro->sanpham_id])}}" class="active" ui-toggle-class="">
                 <i class="fa fa-solid fa-ticket"></i>
+              </a>
+              <a href="{{route('show-dg', ['product_id' => $pro->sanpham_id,'xephang'=> 'all'])}}" class="active" ui-toggle-class="">
+                <i class="fa fa-comment"></i>
               </a>
              
           </tr>

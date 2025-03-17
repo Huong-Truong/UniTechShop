@@ -80,7 +80,7 @@
                                       }
                                      ?>
                                     @endforeach
-                                    <input value="{{$last_gia}}"name="giadichvu[]" class="form-control" id="exampleInputEmail1" >
+                                    <input  value="{{$last_gia}}"name="giadichvu[]" class="form-control" id="exampleInputEmail1" >
                                 </div>
                             @endforeach 
                             <button type="submit" name="update_other_info_product" class="btn btn-info">Cập nhật</button>

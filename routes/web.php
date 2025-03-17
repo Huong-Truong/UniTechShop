@@ -19,6 +19,7 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ThongKeController;
 use App\Http\Middleware\HandleError;
+use App\Http\Controllers\DanhGiaController;
 // use App\Http\Controllers\CheckOutController;
 
 
@@ -259,3 +260,6 @@ Route::get('/thongke-don-thang', [ThongKeController::class, 'thongke_don_thang']
 Route::get('/thongke-don-nam', [ThongKeController::class, 'thongke_don_nam'])->name('thongke-don-nam');
 Route::get('/thongke-sp', [ThongKeController::class, 'thongke_sp'])->name('thongke-sp');
 
+// Danh gia
+Route::get('/show-dg/{product_id}/{xephang}', [DanhGiaController::class, 'show_dg'])->name('show-dg');
+Route::get('/delete-dg/{dg_id}', [DanhGiaController::class, 'delete_dg'])->name('delete-dg');
