@@ -30,14 +30,17 @@
  .dn, .login-form, .signup-form {
     border: 1px dashed #000000; /* 2px wide black border */
 	border-radius: 5px;
-	padding: 25px;
+	padding: 20px;
     border-color: lightgray;
     background-color:rgba(194, 194, 194, 0.2) !important;
 }
-
 form label{
-
+    margin: -8px;
     font-weight: bold !important;
+}
+form input{
+    margin-bottom: 5px;
+  
 }
 h2{
     padding: 10px;
@@ -141,24 +144,26 @@ h2{
     <section id="form" >
     <div class="container ">
         <div class="row justify-content-center align-items-center">
-            <div class=" col-sm-7 col-sm-offset-2 form border-3">
-                <div class="login-form dn">
-                    <h2>Đăng nhập</h2>
-                    <form action="{{route('login-khachhang')}}" method="POST">
+            <div class="col-sm-8">
+                <div class="signup-form dn">
+                    <h2>Đăng ký</h2>
+                    <form action="{{route('dangky-khachhang')}}" method="POST">
                         @csrf
-                        
-                        <label for="" class=" px-2"  style="margin: -8px;" >Email</label>
-                        <input name="khachhang_email" style="margin-bottom: 15px;" type="text" class="form-control border-1 px-4" name="email_account" placeholder="Email tài khoản" />
+                        <label  class=" py-2  "   for="">Tên tài khoản</label>
+                        <input name="name" class="form-control border-1 py-2" type="text" placeholder=""/>
+                       <br>
+                        <label  class=" py-2  " for="">Địa chỉ email</label>
+                        <input name="email" class="form-control border-1 py-2" type="email" placeholder=""/>
                         <br>
-                        
-                        <label for="" class=" px-2"  style="margin: -8px;">Mật Khẩu</label>
-                        <input name="khachhang_matkhau"  style="margin-bottom: 15px;" type="password" class="form-control border-1 " name="password_account" placeholder="Mật khẩu" />
-                        <label  class=" py-2 " for=""></label>
-                        <span>
-                            <input type="checkbox" class="checkbox"> 
-                            Ghi nhớ
-                        </span>
+                        <label  class=" py-2  " for="">Địa chỉ</label>
+                        <input name="address" class="form-control border-1 py-2" type="text" placeholder=""/>
                         <br>
+                        <label   class=" py-2 " for="">Mật khẩu</label>
+                        <input name="pass" class="form-control border-1 py-2" type="password" placeholder=""/>
+                        <br>
+                        <label  class=" py-2 " for="">Số điện thoại</label>
+                        <input name="phone" class=" form-control border-1 py-2" type="text" placeholder=""/>
+
                         <hr>
                         <span>
                      Bằng cách tiếp tục, bạn đồng ý với  <a href=""> Điều khoản và Điều kiện</a>  <a href=" ">Chính sách Quyền riêng tư</a>, và  <a href="">Điều khoản Chương trình UniTech™</a>.
@@ -166,42 +171,18 @@ h2{
                     </span>
                         <hr>
                         <span>
-                         <b> Chưa có tài khoản?  </b> <a href="{{route('signup')}}">Đăng ký tại đây</a>
+                         <b> Đã có tài khoản </b> <a href="{{route('login-checkout')}}"> Đăng nhập</a>
                         </span>
                         <hr>
                         <div class="px-3"></div>
                      
-                   
-                <div class="clearfix"></div>
-                        <button type="submit" class="btn btn-primary btn-block border-0 py-3">Đăng nhập</button>
-                    </form>
-                </div>
-            </div>
-            <!-- <div class="col-sm-1">
-				<h5>Hoặc</h5>
-			</div> -->
-            <!-- <div class="col-sm-5">
-                <div class="signup-form dn">
-                    <h2>Đăng ký</h2>
-                    <form action="{{route('dangky-khachhang')}}" method="POST">
-                        @csrf
-                        <label  class=" py-2  "  for="">Tên tài khoản</label>
-                        <input name="name" class="form-control border-1 py-4" type="text" placeholder=""/>
-                        <label  class=" py-2  " for="">Địa chỉ email</label>
-                        <input name="email" class="form-control border-1 py-4" type="email" placeholder=""/>
-                        <label  class=" py-2  " for="">Địa chỉ</label>
-                        <input name="address" class="form-control border-1 py-4" type="text" placeholder=""/>
-                        <label   class=" py-2  " for="">Mật khẩu</label>
-                        <input name="pass" class="form-control border-1 py-4" type="password" placeholder=""/>
-                        <label  class=" py-2 " for="">Số điện thoại</label>
-                        <input name="phone" class="form-control border-1 py-4" type="text" placeholder=""/>
-                        <label  class=" py-2 " for=""></label>
                         <button name="submit" type="submit" class="btn btn-primary btn-block border-0 py-3">Đăng ký</button>
                     </form>
                 </div>
-            </div> -->
+            </div>
         </div>
     </div>
+    
 </section>
 
 

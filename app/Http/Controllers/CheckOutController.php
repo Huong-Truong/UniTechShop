@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Session;
@@ -9,6 +9,8 @@ use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect; ## trả về cái trang thành công hay thất bại
 session_start();
 use Cart;
+use App\Mail\OrderDetails;
+use App\Http\Controllers\PayPalController;
 
 class CheckOutController extends Controller
 {
@@ -26,7 +28,11 @@ class CheckOutController extends Controller
         
         Session::put('khachhang_id', $insert_khachhang); // Lưu ID vào session
         Session::put('khachhang_ten', $request->name); // Lưu tên khách hàng vào session
-        return Redirect::to('/checkout');
+        if(Cart::content()->count() > 0){
+            return Redirect::to('/checkout');
+        }else{
+            return Redirect::to('/');
+        }
         
     }
 
@@ -36,7 +42,13 @@ class CheckOutController extends Controller
         $result = DB::table('khachhang')->where('khachhang_email', $email)->where('khachhang_matkhau',$password)->pluck('khachhang_id')->first();
         if($result){
             Session::put('khachhang_id', $result); // Lưu ID vào session
-            return Redirect::to('/checkout');
+            if(Cart::content()->count() > 0){
+                return Redirect::to('/checkout');
+            }else{
+                return Redirect::to('/');
+            }
+           
+          
         }else{
             return Redirect::to('/login-checkout');
         }
@@ -84,7 +96,8 @@ class CheckOutController extends Controller
             $khachhang = DB::table('khachhang')->where('khachhang_id', $khachhang_id)->first(); // Access the session data as an integer
             $vanchuyen_id = Session::get('vanchuyen_id');
             $vanchuyen = DB::table('vanchuyen')->where('vanchuyen_id', $vanchuyen_id)->get();
-            return view('pages.checkout.payment')->with('danhmuc', $cate_product)->with('hang', $brand)->with('vanchuyen', $vanchuyen)->with('phanloai', $phanloai)->with('khachhang', $khachhang);
+            $dichvu = Session::get('dichvu');
+            return view('pages.checkout.payment')->with('dichvu', $dichvu)->with('danhmuc', $cate_product)->with('hang', $brand)->with('vanchuyen', $vanchuyen)->with('phanloai', $phanloai)->with('khachhang', $khachhang);
         } else {
             return Redirect::to('/login-checkout');
         }
@@ -290,21 +303,70 @@ class CheckOutController extends Controller
 
     }
 
-     public function vnpay_payment(Request $request)
+    public function send_order(Request $request)
+    {
+        $vc = DB::table('vanchuyen')->where('vanchuyen_id', $request->vanchuyen)->first();
+        $mail_nhan = $vc->vanchuyen_email;
+        $subject = "THÔNG TIN ĐƠN HÀNG";
+        Session::put('subject_order', $subject); // lấy tiêu đề (title của mail)
+        Session::put('shipping_order', $vc->vanchuyen_id);
+        $payment = DB::table('thanhtoan')->where('pttt_id', $request->payment_option)->pluck('pttt_ten')->first();
+        Session::put('payment_order', $payment);
+    
+        if ($request->payment_option == "3") {
+            return $this->vnpay_payment($request); // Gọi hàm vnpay_payment
+        }else if ($request->payment_option=="1"){
+            
+        return (new PayPalController())->payment($request);
+
+        }
+    
+        $this->send_order_email($mail_nhan);
+        return Redirect::to('/trang-chu');
+    }
+    
+    public function vnpay_payment(Request $request)
     {
         $vnp_TmnCode = config('vnpay.vnp_TmnCode');
         $vnp_HashSecret = config('vnpay.vnp_HashSecret');
         $vnp_Url = config('vnpay.vnp_Url');
         $vnp_ReturnUrl = config('vnpay.vnp_ReturnUrl');
-
+    
         $vnp_TxnRef = date("YmdHis"); // Mã đơn hàng
         $vnp_OrderInfo = "Thanh toán đơn hàng";
         $vnp_OrderType = 'billpayment';
-        $vnp_Amount = 100000 * 100;
+        $tiendv = 0;
+        $dichvu = Session::get('dichvu');
+    
+        if($dichvu){
+            foreach($dichvu as $dv){
+                $tiendv = $tiendv + $dv->giadichvu;
+            }
+            $subtotal = Cart::subtotal();
+            $subtotal = preg_replace('/[^\d.]/', '', $subtotal); // Loại bỏ các ký tự không phải số
+            $subtotal = floatval($subtotal);
+           
+            $subtotal = Cart::total();
+            $subtotal = preg_replace('/[^\d.]/', '', $subtotal); // Loại bỏ các ký tự không phải số
+    
+            if (is_numeric($subtotal)) {
+                $subtotal = floatval($subtotal); // Chuyển đổi thành giá trị số thập phân
+                $subtotal = $subtotal + $tien_dv; // Cộng thêm phí dịch vụ vào tổng số
+            }
+             $vnp_Amount =  $subtotal  * 100;
+        }else{
+            $subtotal = Cart::total();
+            $subtotal = preg_replace('/[^\d.]/', '', $subtotal); // Loại bỏ các ký tự không phải số
+            $subtotal = floatval($subtotal);
+            $vnp_Amount =  $subtotal  * 100;
+        }
+       
+     
+
         $vnp_Locale = 'vn';
         // $vnp_BankCode = 'NCB';
         $vnp_IpAddr = $request->ip();
-
+    
         $inputData = array(
             "vnp_Version" => "2.1.0",
             "vnp_TmnCode" => $vnp_TmnCode,
@@ -320,7 +382,7 @@ class CheckOutController extends Controller
             "vnp_TxnRef" => $vnp_TxnRef,
             // "vnp_BankCode" => $vnp_BankCode
         );
-
+    
         ksort($inputData);
         $query = "";
         $i = 0;
@@ -334,16 +396,16 @@ class CheckOutController extends Controller
             }
             $query .= urlencode($key) . "=" . urlencode($value) . '&';
         }
-        
+    
         $vnp_Url = $vnp_Url . "?" . $query;
         if (isset($vnp_HashSecret)) {
             $vnpSecureHash = hash_hmac('sha512', $hashdata, $vnp_HashSecret);
             $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
         }
-        
-
+    
         return redirect($vnp_Url);
     }
+    
     public function return(Request $request)
     {
         $vnp_HashSecret = config('vnpay.vnp_HashSecret');
@@ -364,28 +426,24 @@ class CheckOutController extends Controller
             // Chữ ký hợp lệ, tiến hành xử lý kết quả thanh toán
             $orderId = $inputData['vnp_TxnRef'];
             $vnp_ResponseCode = $inputData['vnp_ResponseCode'];
-            
+    
             if ($vnp_ResponseCode == '00') {
                 // Thanh toán thành công
                 // Cập nhật trạng thái đơn hàng trong cơ sở dữ liệu
                 // Ví dụ: $order = Order::find($orderId);
                 // $order->status = 'paid';
                 // $order->save();
-                // return response()->json([
-                //     'code' => '00',
-                //     'message' => 'Giao dịch thành công',
-                //     'data' => $inputData
-                // ]);
-                return Redirect::to('/check-out');
-            } else {
-                // Giao dịch thất bại
-                // return response()->json([
-                //     'code' => $vnp_ResponseCode,
-                //     'message' => 'Giao dịch không thành công',
-                //     'data' => $inputData
-                // ]);
-                return Redirect::to('/check-out');
+                $mail_nhan = DB::table('vanchuyen')->where('vanchuyen_id', Session::get('shipping_order'))->pluck('vanchuyen_email')->first();
+                $this->send_order_email($mail_nhan);
+                $tb="Thanh toán thành công, vui lòng kiểm tra email";
+                Session::put('success',  $tb);
+                return Redirect::to('/');
+            }else{
+                $tb="Thanh toán không thành công";
+                Session::put('error',  $tb);
+                return Redirect::to('/');
             }
+        
         } else {
             // Chữ ký không hợp lệ
             return response()->json([
@@ -394,6 +452,15 @@ class CheckOutController extends Controller
             ]);
         }
     }
+    
+    public function send_order_email($mail_nhan)
+    {
+        $new_mail = new OrderDetails();
+        Mail::to($mail_nhan)->send($new_mail);
+    
+    }
+    
+    
     
 
 }

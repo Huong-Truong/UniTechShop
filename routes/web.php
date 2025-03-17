@@ -16,11 +16,15 @@ use App\Http\Controllers\BaoHanhController;
 use App\Http\Controllers\NhaCungCapController;
 use App\Http\Controllers\StorageController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ThongKeController;
 // use App\Http\Controllers\CheckOutController;
 
 
+// login backup
+Route::get('/login-backup', [HomeController::class, 'login_backup'])->name('login-backup');
+Route::get('/signup', [HomeController::class, 'signup'])->name('signup');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/trang-chu', [HomeController::class, 'index'])->name('trang-chu');
@@ -37,6 +41,7 @@ Route::get('/phan-loai/{phanloai_id}', [CategoryProduct::class, 'show_phanloai_l
 ## hiển thị sản phẩm theo danh mục home
 Route::get('/danh-muc/{danhmuc_id}', [CategoryProduct::class, 'show_danhmuc_home'])->name('danh-muc');
 Route::get('/xem-san-pham/{sanpham_id}', [ProductController::class, 'show_chitiet_sanpham'])->name('xem-san-pham');
+Route::post('/add-review', [ProductController::class, 'add_review'])->name('add-review');
 
 ## hiển thị sản phẩm theo thuong hieu home
 Route::get('/thuong-hieu/{hang_id}', [BrandProduct::class, 'show_thuonghieu_home'])->name('thuong-hieu');
@@ -47,7 +52,7 @@ Route::post('/Search', [HomeController::class, 'Search'])->name('Search');
 
 ## Thêm dịch vụ của sản phẩm vào giỏ hàng
 Route::post('/add-service-cart', [CartController::class, 'add_service_cart'])->name('add-service-cart');
-
+Route::get('/delete-service-cart', [CartController::class, 'delete_service_cart'])->name('delete-service-cart');
 ## Giỏ hàng
 Route::post('/save-cart', [CartController::class, 'save_cart'])->name('save-cart');
 Route::get('/show-cart', [CartController::class, 'show_cart'])->name('show-cart');
@@ -84,13 +89,22 @@ Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 
 // Send mail
 Route::get('/send-mail', [HomeController::class, 'send_mail'])->name('send-mail');
-Route::post('/send-order',[HomeController::class, 'send_order'])->name('send-order');
+Route::post('/send-order',[CheckOutController::class, 'send_order'])->name('send-order');
 
 
 //  Cổng thanh toán
 // routes/web.php
 Route::get('vnpay_payment', [CheckOutController::class, 'vnpay_payment'])->name('vnpay_payment');
-Route::get('vnpay_return', [CheckOutController::class, 'return'])->name('vnpay.return');
+Route::get('vnpay_return', [CheckOutController::class, 'return'])->name('vnpay_return');
+
+
+
+Route::get('paypal', [PayPalController::class, 'index'])->name('paypal.index');
+Route::get('paypal/success', [PayPalController::class, 'paymentSuccess'])->name('paypal.success');
+Route::get('/paypal/payment-cancel', [PayPalController::class, 'paymentCancel'])->name('paypal.payment.cancel');
+Route::get('paypal/cancel', [PayPalController::class, 'cancel'])->name('paypal.cancel');
+Route::get('paypal/payment', [PayPalController::class, 'payment'])->name('paypal.payment');
+
 
 // ADMIN:
 Route::get('/login', [HomeController::class, 'login'])->name('login');
@@ -175,8 +189,11 @@ Route::post('/delete-gallery', [GalleryController::class, 'delete_gallery'])->na
 ## Sales
 Route::get('/all-sales', [SalesController::class, 'all_sales'])->name('all-sales');
 Route::get('/add-sales', [SalesController::class, 'add_sales'])->name('add-sales');
+Route::get('/add-sales-brand', [SalesController::class, 'add_sales_brand'])->name('add-sales-brand');
+
 Route::get('/delete-sales/{sale_id}', [SalesController::class, 'delete_sales'])->name('delete-sales');
 Route::post('/save-sales', [SalesController::class, 'save_sales'])->name('save-sales');
+Route::post('/save-sales-brand', [SalesController::class, 'save_sales_brand'])->name('save-sales-brand');
 Route::get('/set-sale/{product_id}', [SalesController::class, 'set_sale'])->name('set-sale');
 Route::post('/save-set-sale/{product_id}', [SalesController::class, 'save_set_sale'])->name('save-set-sale');
 

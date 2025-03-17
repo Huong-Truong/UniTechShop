@@ -41,6 +41,10 @@ class SalesController extends Controller
         $sale->km_mota = $data['sale_content'];
         $dv =  $data['sale_unit'];
         $gia = (int)$data['sale_price'];
+        $get_name_brand = DB::table('hangsanpham')->where('hang_id', $request->sale_brand)->pluck('hang_ten')->first();
+        if( $get_name_brand){
+            $sale->brand = $get_name_brand;
+        }
         // $data = array();
         //  $data['km_gia'] = (int)$request->sale_price;
         //  $data['km_donvi'] = $request->sale_unit;
@@ -63,6 +67,44 @@ class SalesController extends Controller
         /*insert vào bảng*/
        
     }
+    public function save_sales_brand(Request $request)    
+    {
+        // Thêm vào bảng khuyến mãi
+        
+        $this->save_sales($request);
+       
+        $get_id_sale = DB::table('khuyenmai')->where('km_mota',$request->sale_content)->pluck('km_id')->first();
+      
+        // Cập nhật khuyến mãi cho các sản phẩm thuộc hãng
+        $product = DB::table('sanpham')->where('hang_id', $request->sale_brand)->get();
+        foreach ($product as $key=>$value){
+            $data = array();
+             $data['sanpham_id'] = $value->sanpham_id;
+             $data['km_id'] =$get_id_sale;
+             $data['ngaybatdau'] = $request->start_date;
+             $data['ngayketthuc'] = $request->end_date;
+             if( $data['ngaybatdau'] <  $data['ngayketthuc']){
+                 if(DB::table('thongtinkhuyenmai')->where('sanpham_id', $value->sanpham_id)->first()){
+                     DB::table('thongtinkhuyenmai')->where('sanpham_id', $value->sanpham_id)->update($data);
+                     Session::put('message','Thiết lập thành công');
+                   
+                 }
+                 else {
+                     DB::table('thongtinkhuyenmai')->insert($data);
+                     Session::put('message','Thiết lập thành công');
+                
+                 }
+             }
+             else {
+                 Session::put('message','Ngày kết thúc phải lớn hơn ngày bắt đầu');
+                    return redirect()->back();
+             }
+            
+        }
+        return redirect()->back();
+    }
+
+
     public function all_sales(){
         $this->AuthenLogin();
         $all_sales = KhuyenMai::orderBy('km_id','desc')->get();
@@ -80,8 +122,7 @@ class SalesController extends Controller
     public function set_sale($product_id)
     {
         $this->AuthenLogin();
-        $sale = KhuyenMai::orderBy('km_gia','desc')
-        ->get();
+        $sale = KhuyenMai::orderBy('km_gia','desc')->where('brand', NULL)->get();
         $sp = Product::find($product_id);
         $info_sale = DB::table('thongtinkhuyenmai')->where('sanpham_id', $product_id)->first();
        
@@ -91,14 +132,16 @@ class SalesController extends Controller
             ->with('product_id', $product_id)
             ->with('sp',$sp);
         
-        
-       
+    }
+    public function add_sales_brand(){
+        $brand = DB::table('hangsanpham')->get();
+        return view('admin.sales.add_sales_brand')->with('thuonghieu', $brand);
     }
 
     public function save_set_sale(Request $request,$product_id){
         $this->AuthenLogin();
        // $data = array();
-         $data['sanpham_id'] = $product_id;
+        $data['sanpham_id'] = $product_id;
         $data['km_id'] = $request->sale_id;
         $data['ngaybatdau'] = $request->start_date;
         $data['ngayketthuc'] = $request->end_date;
@@ -121,5 +164,8 @@ class SalesController extends Controller
        
       
     }
+
+
+    
   
 }

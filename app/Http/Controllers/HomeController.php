@@ -16,6 +16,14 @@
 
 class HomeController extends Controller
 {
+
+    public function login_backup(){
+        return view('login_backup');
+    }
+
+    public function signup(){
+        return view('signup');
+    }
     public function index()
     {
   
@@ -24,7 +32,14 @@ class HomeController extends Controller
             $brand = DB::table('hangsanpham')->where('hang_trangthai', 1)->orderby('hang_id', 'desc')->get();
             $phanloai = DB::table('phanloaisp')->orderby('phanloai_id', 'asc')->get();
             $count_product_brand = DB::table('sanpham')->select('hang_id', DB::raw('count(*) as total'))->groupBy('hang_id')->get(); ## đếm số sản phẩm có trong hãng
-            return view('pages.home')->with('count_prd_brand', $count_product_brand)->with('danhmuc', $cate_product)->with('sanpham', $product)->with('hang', $brand)->with('phanloai', $phanloai);
+            $today = Date('Y-m-d');
+            $khuyenmai = DB::table('thongtinkhuyenmai')
+            ->join('khuyenmai','thongtinkhuyenmai.km_id', '=', 'khuyenmai.km_id')
+            ->join('sanpham', 'sanpham.sanpham_id','=', 'thongtinkhuyenmai.sanpham_id')
+            ->whereDate('thongtinkhuyenmai.ngaybatdau' ,'<=', $today)
+            ->whereDate('thongtinkhuyenmai.ngayketthuc', '>=', $today)->get();
+            
+            return view('pages.home')->with('khuyenmai', $khuyenmai)->with('count_prd_brand', $count_product_brand)->with('danhmuc', $cate_product)->with('sanpham', $product)->with('hang', $brand)->with('phanloai', $phanloai);
        
         
     }
@@ -123,19 +138,7 @@ class HomeController extends Controller
   
 }
 
-        public function send_order(Request $request ){
-            $vc = DB::table('vanchuyen')->where('vanchuyen_id', $request->vanchuyen)->first();
-            $mail_nhan = $vc->vanchuyen_email;
-            $subject = "THÔNG TIN ĐƠN HÀNG";
-            Session::put('subject_order', $subject); ## lấy tiêu đề (title của mail)
-            Session::put('shipping_order', $vc->vanchuyen_id );
-            $payment = DB::table('thanhtoan')->where('pttt_id', $request->payment_option)->pluck('pttt_ten')->first();
-            Session::put('payment_order', $payment);
-            $new_mail = new OrderDetails();
-            Mail::to($mail_nhan)->send($new_mail);
-            return Redirect::to('/trang-chu');
-
-        }
+  
 
         // DOi mk
         public function change_pass(){
