@@ -103,7 +103,10 @@ class ThongKeController extends Controller
             }
         }
        
-    
+        $soluong = DB::table('donhang')
+        ->whereYear('donhang_ngaytao', $year)
+        ->whereMonth('donhang_ngaytao', $month)
+        ->sum('donhang_id');
         
         
         return view('admin.thongke.thongkedon_thang', compact('chart','year','month','trangthai'));
@@ -159,7 +162,13 @@ class ThongKeController extends Controller
     }
 
     public function thongke_sp(){
-        return view('admin.thongke.thongkesanpham');
+        $this->AuthenLogin(); 
+        
+        $proudcts = Product::join('tonkho','tonkho.sanpham_id','=','sanpham.sanpham_id')->get();       
+    
+        
+        
+        return view('admin.thongke.thongke_sp')->with('products',$proudcts);
     }
     
 

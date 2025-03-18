@@ -47,11 +47,11 @@
         </div>
         <div class="content">
             <p>Xin chào,</p>
-            <p>Chúng tôi muốn thông báo rằng người dùng <strong>{{username}}</strong> đã vi phạm tiêu chuẩn khi bình luận:</p>
+            <p>Chúng tôi muốn thông báo rằng người dùng <strong> <?php echo Session::get('ten');?></strong> đã vi phạm tiêu chuẩn khi bình luận:</p>
             <blockquote>
-                "{{comment}}"
+            "<?php echo Session::get('nd');?>" <br> Thời gian: <?php echo Session::get('ngay');?>
             </blockquote>
-            <p>Vui lòng kiểm tra và xử lý vi phạm này theo quy định của chúng tôi.</p>
+            <p>Chúng tôi xin phép được xóa bình luận của bạn vì nhận thấy từ ngữ không phù hợp.</p>
             <p>Trân trọng,</p>
             <p>Đội ngũ quản trị</p>
         </div>

@@ -118,7 +118,7 @@ class BrandProduct extends Controller
         $get_image_file = $request->file('brand_image');
         
         if ($get_image_file) {
-            $new_image = 'brand' . ($maxID + 1) . '.' . $get_image_file->getClientOriginalExtension();
+            $new_image = 'brand' . ($brand_id) . '.' . $get_image_file->getClientOriginalExtension();
             // Di chuyển tệp tin đến thư mục đích
             $get_image_file->move('img/brand', $new_image);
             $brand->hang_hinhanh = $new_image;

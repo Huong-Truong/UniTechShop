@@ -61,9 +61,23 @@ class DanhGiaController extends Controller
 
         public function delete_dg($dg_id) {
             $this->AuthenLogin();
-            $email = 'chienb2203431@student.ctu.edu.vn';
+
+
+            $dg = DanhGia::join('khachhang', 'khachhang.khachhang_id', '=', 'danhgia.khachhang_id')
+            ->where('danhgia.dg_id', $dg_id)->first();
+
+            $ten = $dg->khachhang_ten;
+            $nd = $dg->dg_noidung;
+            $ngay = $dg->dg_ngay;
+
+            Session::put('ten', $ten);
+            Session::put('nd', $nd);
+            Session::put('ngay', $ngay);
+            $email = $dg->khachhang_email;
             $new_mail = new ThongBaoViPham();
             Mail::to($email)->send($new_mail);
+            Session::put(',message', 'Xóa bình luận thành công');
+            return Redirect::to('/all-product');
         }
 
       

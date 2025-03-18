@@ -11,10 +11,10 @@
     }
 ?>
 <button class="styled-button">
-    <a href="{{route('thongke-don-thang')}}">Thống kê đơn hàng</a>
+    <a href="{{route('thongke-don-thang')}}">Tháng này bán được <p class="red">{{$soluongdon}}</p> đơn</a>
 </button>
-{{-- <button class="styled-button">
+<button class="styled-button">
     <a href="{{route('thongke-sp')}}">Thống kê sản phẩm</a>
-</button> --}}
+</button>
 
 @endsection

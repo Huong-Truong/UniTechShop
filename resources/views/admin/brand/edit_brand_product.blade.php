@@ -20,7 +20,7 @@
                         <div class="panel-body">
                             @foreach($brand as $br)
                             <div class="position-center">
-                                <form role="form" action="{{route('update-brand', ['brand_id' => $br->hang_id])}}" method="post">
+                                <form role="form" action="{{route('update-brand', ['brand_id' => $br->hang_id])}}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Tên hãng</label>

@@ -3434,3 +3434,8 @@ a.active{
 .fa-star {
     color: rgb(177, 177, 0);
 }
+
+.red{
+    display: inline;
+    color: rgb(210, 0, 0);
+}

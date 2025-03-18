@@ -5,6 +5,7 @@
         "This file is @generated automatically"
     ],
     "content-hash": "c65e8194ab3d319b82c8abdc11997374",
+    // "content-hash": "a34b4f6037fd0f948201a6b8377f50b6",
     "packages": [
         {
             "name": "anayarojo/shoppingcart",

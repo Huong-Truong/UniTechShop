@@ -61,6 +61,37 @@
                        @endforeach
                     </tbody>
                         </table>
+
+                        <table class="table table-bordered text-center mb-0">
+    <thead class="bg-secondary text-dark">
+        <tr>
+             <th>Sản phẩm</th>
+
+            <th>Dịch vụ</th>
+            <th>Giá dịch vụ</th>
+        </tr>
+    </thead>
+    <?php 
+                    $tien_dv = 0;
+                    $count = Cart::content()->count();
+    ?>
+    <tbody class="align-middle">
+        @if(empty($dichvu) || count($dichvu) === 0 )
+            <tr>
+                <td colspan="4">Không có dịch vụ đi kèm</td>
+            </tr>
+        @else
+            @foreach($dichvu as $dv)
+            <tr>
+                <td class="align-middle">{{$dv->sanpham_ten}} </td>
+                <td class="align-middle">{{ $dv->dv_ten }}</td>
+                <td class="align-middle">{{ number_format($dv->giadichvu) }} VNĐ</td>
+                <?php $tien_dv = $tien_dv + $dv->giadichvu; ?>
+            </tr>
+            @endforeach
+        @endif
+    </tbody>
+</table>
                     </div>
 
             <div class="col-lg-8">
@@ -122,6 +153,10 @@
                             <h6 class="font-weight-medium">Thuế</h6>
                             <h6 class="font-weight-medium">{{Cart::tax()}}</h6>
                         </div>
+                        <div class="d-flex justify-content-between mb-3 pt-1">
+                        <h6 class="font-weight-medium">Phí dịch vụ</h6>
+                        <h6 class="font-weight-medium">{{ number_format($tien_dv) }}</h6>
+                    </div>
                         <div class="d-flex justify-content-between">
                             <h6 class="font-weight-medium">Phí ship</h6>
                             <h6 class="font-weight-medium"></h6>
@@ -130,7 +165,21 @@
                     <div class="card-footer border-secondary bg-transparent">
                         <div class="d-flex justify-content-between mt-2">
                             <h5 class="font-weight-bold">Thành tiền</h5>
-                            <h5 class="font-weight-bold">{{Cart::total()}}</h5>
+<!--                             
+                            <h5 class="font-weight-bold">{{Cart::total()}}</h5> -->
+                            <!-- <h5 class="font-weight-bold">{{Cart::subtotal()}}</h5>  -->
+                            <?php
+                            $subtotal = Cart::total();
+                            $subtotal = preg_replace('/[^\d.]/', '', $subtotal); // Loại bỏ các ký tự không phải số
+
+                            if (is_numeric($subtotal)) {
+                                $subtotal = floatval($subtotal); // Chuyển đổi thành giá trị số thập phân
+                                $total = $subtotal + $tien_dv; // Cộng thêm phí dịch vụ vào tổng số
+                                echo '<h5 class="font-weight-bold">' . number_format($total, 2) . '</h5>';
+                            } else {
+                                echo 'Giá trị không hợp lệ: ' . $subtotal;
+                            }
+                              ?>
                         </div>
                     </div>
                 </div>
@@ -144,7 +193,8 @@
                         <div class="form-group">
                             <div class="custom-control custom-radio">
                                 <input type="radio" class="custom-control-input" name="payment_option" value ="1" id="paypal">
-                                <label class="custom-control-label" for="paypal">Momo</label>
+                                <label class="custom-control-label" for="paypal">Thanh toán PayPal</label>
+                                <!-- <a href="{{ route('paypal.payment') }}" class="btn btn-success">Pay with PayPal </a> -->
                             </div>
                         </div>
                         <div class="form-group">
@@ -156,7 +206,7 @@
                         <div class="">
                             <div class="custom-control custom-radio">
                                 <input type="radio" class="custom-control-input"name="payment_option" value ="3"id="banktransfer">
-                                <label class="custom-control-label" for="banktransfer">Thanh toán VNPAY</label>
+                                <label class="custom-control-label" name="redirect" for="banktransfer">Thanh toán VNPAY</label>
                             </div>
                         </div>
                         <input type="hidden" name="vanchuyen" value="{{$v_vanchuyen->vanchuyen_id}}">
@@ -165,7 +215,7 @@
                         <button type="submit" id="sendButton" class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Đặt hàng</button>
            
                                 
-                    <script>
+                        <script>
                         document.getElementById('paymentForm').addEventListener('submit', function(event) {
                             var paymentOptions = document.getElementsByName('payment_option');
                             var selectedOption = false;
@@ -176,26 +226,36 @@
                                     break;
                                 }
                             }
-
+              
+                            
                             if (!selectedOption) {
                                 event.preventDefault(); // Ngăn chặn form gửi đi
                                 alert('Vui lòng chọn phương thức thanh toán');
                             } else {
-                                alert('Cảm ơn đã đặt hàng. Vui lòng kiểm tra đơn hàng trong mail');
+                                event.preventDefault(); // Ngăn chặn form gửi đi để xử lý
+                                var form = this;
+                                // Gửi form sau 1 giây
+                                setTimeout(function() {
+                                    form.submit();
+                                    // Hiện thông báo sau khi gửi form
+                                    setTimeout(function() {
+                                        alert('Cảm ơn đã đặt hàng.');
+                                    }, 1000);
+                                }, 1000);
                             }
                         });
                     </script>
-                    </div>
+                                        </div>
                     @endforeach
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    <form action="{{route('vnpay_payment')}}" method="get">
+    <!-- <form action="{{route('vnpay_payment')}}" method="get">
         @csrf
         <button type="submit" name="redirect" class="custom-control-label" for="banktransfer">Thanh toán VNPAY</button>
-    </form>
+    </form> -->
 
     <!-- Checkout End -->
 @endsection

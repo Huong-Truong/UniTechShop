@@ -32,7 +32,7 @@
                                         data: {
                                             labels: @json($products->pluck('sanpham_ten')),
                                             datasets: [{
-                                                label: 'Số lượng sản phẩm',
+                                                label: 'Số lượng:',
                                                 data: @json($products->pluck('tonkho_soluong')),
                                                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
                                                 borderColor: 'rgba(54, 162, 235, 1)',

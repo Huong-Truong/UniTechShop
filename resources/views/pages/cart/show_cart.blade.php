@@ -76,7 +76,10 @@
                 <td class="align-middle">{{$dv->sanpham_ten}} </td>
                 <td class="align-middle">{{ $dv->dv_ten }}</td>
                 <td class="align-middle">{{ number_format($dv->giadichvu) }} VNĐ</td>
-                <td class="align-middle"><a href="" class="btn btn-sm btn-primary"><i class="fa fa-times"></i></a></td>
+                <form action="{{route('delete-service-cart')}}">
+                <input type="hidden"  name ="dichvu_xoa"class="align-middle" value="{{ $dv->dv_ten }}">
+                <td class="align-middle"><button type="submit" href="" class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></td>
+                </form>
                 <?php $tien_dv = $tien_dv + $dv->giadichvu; ?>
             </tr>
             @endforeach
@@ -122,8 +125,9 @@
         <div class="card-footer border-secondary bg-transparent">
             <div class="d-flex justify-content-between mt-2">
                 <h5 class="font-weight-bold">Thành tiền</h5>
+                
                 <?php
-                    $subtotal = Cart::subtotal();
+                    $subtotal = Cart::total();
                     $subtotal = preg_replace('/[^\d.]/', '', $subtotal); // Loại bỏ các ký tự không phải số
 
                     if (is_numeric($subtotal)) {
@@ -137,12 +141,14 @@
             </div>
             <?php
                 $khachhang_id = Session::get('khachhang_id');
-                if ($khachhang_id != NULL) {
+                if ($khachhang_id != NULL && Cart::content()->count()>=1) {
             ?>
             <a href="{{ route('checkout') }}" class="btn btn-block btn-primary my-3 py-3">Thanh toán đơn hàng</a>
-            <?php } else { ?>
+            <?php } else if($khachhang_id == NULL && Cart::content()->count()>=1) { ?>
             <a href="{{ route('login-checkout') }}" class="btn btn-block btn-primary my-3 py-3">Thanh toán đơn hàng</a>
-            <?php } ?>
+            <?php }else{ ?>
+                <a href="" class="btn btn-block btn-primary my-3 py-3">Thanh toán đơn hàng</a>
+                <?php }?>
         </div>
     </div>
 </div>

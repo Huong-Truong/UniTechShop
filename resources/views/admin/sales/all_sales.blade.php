@@ -25,7 +25,10 @@
         <div class="col-sm-3">
           <div class="input-group">
             <a  class="custom-button" href="{{ route('add-sales')}}">Thêm khuyến mãi</a> 
+            <span>    </span>
+            <a  class="custom-button" href="{{ route('add-sales-brand')}}">Thêm khuyến mãi theo thương hiệu</a> 
           </div>
+
         </div>
       </div>
     </div>
@@ -41,6 +44,7 @@
             <th>STT</th>
             <th>Khuyến mãi</th>
             <th>Mô tả</th>
+            <th>Thương hiệu</th>
             <th>Thao tác</th>
             <th style="width:30px;"></th>
           </tr>
@@ -66,7 +70,16 @@
             ?>
             <td>{{$gia}} {{$value->km_donvi}}  </td>
             <td>{{$value->km_mota}}</td>
+            <td>
+                <?php 
+                if($value->brand == NULL){
+                    echo "Không";
+                }else{
+                  echo $value->brand;
+                }
+                  ?>
 
+            </td>
             <td>
                <a onclick="return confirm('Bạn có chắc muốn xóa ?')" class="active"  href="{{route('delete-sales', ['sale_id' => $value->km_id])}}"> <i class="fa fa-times text-danger text"></i></a> 
             </td>

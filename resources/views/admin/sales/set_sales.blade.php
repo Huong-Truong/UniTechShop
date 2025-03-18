@@ -74,11 +74,13 @@
                                         if(strtoupper($value->km_donvi) == 'VND') {
                                             $gia = number_format(preg_replace('/\D/', '',$gia), 0, ',', '.');
                                         }
+                                      
                                         ?>
                                         
                                          
-                                   
+                                         
                                          <option value = "{{$value->km_id}}">{{$gia.''.$value->km_donvi.' - '.$value->km_mota}}</option>
+                                        
                                        @endforeach
                                       </select>
                                       <br>

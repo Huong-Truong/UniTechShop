@@ -9,7 +9,7 @@ class khuyenMai extends Model
     //
     public $timestamps = false;
     protected $fillable = [
-        'km_gia', 'km_donvi','km_mota'
+        'km_gia', 'km_donvi','km_mota', 'brand'
     ];
 
     protected $primaryKey = 'km_id';

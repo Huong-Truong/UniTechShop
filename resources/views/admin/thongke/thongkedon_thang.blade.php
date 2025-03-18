@@ -16,7 +16,7 @@
                     <section class="panel ">
                         
                         <header class="panel-heading">
-                            Thống kê đơn hàng trong 
+                            Thống kê đơn hàng 
                             <form action="" class="form-inline" method="get">
                                tháng
                                 <input type="text" name = "month" class="input-small" value="{{$month}}">
