@@ -70,6 +70,11 @@ Route::get('/payment', [CheckOutController::class, 'payment'])->name('payment');
 ## user
 Route::post('/login-khachhang', [CheckOutController::class, 'login_khachhang'])->name('login-khachhang');
 Route::post('/dangky-khachhang', [CheckOutController::class, 'dangky_khachhang'])->name('dangky-khachhang');
+## account
+Route::get('/account', [CheckOutController::class, 'account'])->name('account');
+Route::post('/update-info', [CheckOutController::class, 'update_info'])->name('update-info');
+
+
 
 
 ## đặt hàng
@@ -217,6 +222,7 @@ Route::post('/save-set-service/{product_id}', [ServiceController::class, 'save_s
 ## orders
 Route::get('/manage-orders', [CheckOutController::class, 'manage_orders'])->name('manage-orders');
 Route::get('/view-order/{donhang_id}', [CheckOutController::class, 'view_order'])->name('view-order');
+
 Route::get('/delete-order/{donhang_id}', [CheckOutController::class, 'manage_orders'])->name('delete-order');
 ## cập nhật trang thái đơn hàng
 Route::get('/update-status', [CheckOutController::class, 'update_status'])->name('update-status');
@@ -247,7 +253,8 @@ Route::get('/delete-store/{sanpham_id}/{kho_id}', [StorageController::class, 'de
 Route::get('/nhapkho/{kho_id}', [StorageController::class, 'nhapkho'])->name('nhapkho');
 Route::get('/chitiet-hdn/{hdn_id}', [StorageController::class, 'chitiet_hdn'])->name('chitiet-hdn');
 Route::post('/import-hdn/{kho_id}', [StorageController::class, 'import_hdn'])->name('import-hdn');
-
+// cập nhật trạng thái sản phẩm dựa vào số lượng kho
+Route::get('unactive-product-storage', [StorageController::class, 'unactive_product_storage'])->name('unactive-product-storage');
 // File
 Route::get('/download-classify', [FileController::class, 'download_classify'])->name('file-classify');
 Route::get('/download-cate', [FileController::class, 'download_cate'])->name('file-cate');

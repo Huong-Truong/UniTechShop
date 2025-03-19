@@ -37,7 +37,7 @@
                 <input type="checkbox"><i></i>
               </label>
             </th>
-            <th>Số thứ tự</th>
+            <th>Mã đơn hàng</th>
             <th>Người đặt</th>
             <th>Tổng giá tiền kèm thuế</th>
             <th>Tình trạng</th>
@@ -57,10 +57,7 @@
             @foreach($all as $key => $cate_pro)
           <tr>
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
-            <td><?php
-              echo $i;
-               $i++;
-               ?>
+            <td> <a href="{{route('view-order', ['donhang_id' => $cate_pro->donhang_id])}}">DH{{$cate_pro->donhang_id}}</a>
             </td>
             <td>{{$cate_pro->khachhang_ten}}</td>
             <td>{{$cate_pro->donhang_tongtien}}</td>
@@ -78,7 +75,7 @@
                     </option>
                     @endforeach
               </select>
-              <input type="submit" class="btn btn-primary" name="submit" value="Sửa">
+              <input type="submit" class="btn btn-primary" name="submit" value="Sửa"> 
             </div>
             </form>
             </td>

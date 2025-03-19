@@ -3,7 +3,7 @@
 <div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">
-        Liệt kê chi tiết đơn hàng
+            CHI TIẾT ĐƠN HÀNG
     </div>
 {{--     
     <div class="row w3-res-tb">
@@ -73,7 +73,7 @@
 <div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">
-        Liệt kê thông tin người mua và vận chuyển
+            THÔNG TIN ĐẶT HÀNG & VẬN CHUYỂN
     </div>
     {{-- <div class="row w3-res-tb">
       <div class="col-sm-5 m-b-xs">

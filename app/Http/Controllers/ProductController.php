@@ -20,6 +20,8 @@ session_start();
 
 class ProductController extends Controller
 {
+
+  
     
     public function AuthenLogin(){
         $admin_id = Session::get('admin_id');
@@ -28,6 +30,7 @@ class ProductController extends Controller
         }else{
            return Redirect::to('admin')->send(); ## hàm send() có thể không cần thiết
         }
+
     }
     public function add_product ()
     {
@@ -328,8 +331,9 @@ public function import_product(Request $request)
     // end admin
 
     ## hiện sản phẩm trên trang "SẢN PHẨM" ---------------------------------------------
-
+    
     public function show_product(){
+        
 
         $cate_product = DB::table('danhmuc')->where('danhmuc_trangthai', 1)->orderby('danhmuc_id', 'desc')->get();
         $product = DB::table('sanpham')->where('sanpham_trangthai', 1)->orderby('sanpham_id', 'desc')->paginate(9);
@@ -341,7 +345,6 @@ public function import_product(Request $request)
         ->join('sanpham', 'sanpham.sanpham_id','=', 'thongtinkhuyenmai.sanpham_id')
         ->whereDate('thongtinkhuyenmai.ngaybatdau' ,'<=', $today)
         ->whereDate('thongtinkhuyenmai.ngayketthuc', '>=', $today)->get();
-        
             return view('pages.product.shop')->with('danhmuc', $cate_product)->with('sanpham', $product)->with('phanloai', $phanloai)->with('hang', $brand)->with('khuyenmai',$khuyenmai);
        
     }
@@ -384,8 +387,17 @@ public function import_product(Request $request)
         ->whereDate('thongtinkhuyenmai.ngaybatdau' ,'<=', $today)
         ->whereDate('thongtinkhuyenmai.ngayketthuc', '>=', $today)->
         first();
-        
+        $khuyenmai2 = DB::table('thongtinkhuyenmai')
+        ->join('khuyenmai','thongtinkhuyenmai.km_id', '=', 'khuyenmai.km_id')
+        ->join('sanpham', 'sanpham.sanpham_id','=', 'thongtinkhuyenmai.sanpham_id')
+        ->whereDate('thongtinkhuyenmai.ngaybatdau' ,'<=', $today)
+        ->whereDate('thongtinkhuyenmai.ngayketthuc', '>=', $today)->get();
         $hdsd = DB::table('hdsd')->where('sanpham_id',$sanpham_id)->get();
+        // kho (tồn)
+        $sl_kho = DB::table('tonkho')->where('sanpham_id', $sanpham_id)->sum('tonkho_soluong');
+    
+        // nếu sl = 0 => cập nhật trạng thái luôn
+   
         //  Lấy đánh giá sản phẩm
         $review = DB::table('danhgia')
         ->where('sanpham_id', $sanpham_id)
@@ -393,13 +405,10 @@ public function import_product(Request $request)
         ->select('khachhang_ten', 'dg_noidung', 'dg_xephang', 'dg_ngay')
         ->get();
         $product_rela = DB::table('sanpham')
-        ->where('danhmuc_id', $product->danhmuc_id)
+        ->where('danhmuc_id', $product->danhmuc_id)->where('sanpham_trangthai', 1)
         ->whereNotIn('sanpham_id', [$product->sanpham_id])
         ->limit(4)
         ->get();
-
-
-
         if($khuyenmai){
             if($khuyenmai->km_donvi == '%'){
                 $update_gia = $product->sanpham_gia - ($product->sanpham_gia * $khuyenmai->km_gia)/100;
@@ -407,9 +416,9 @@ public function import_product(Request $request)
             }else if($khuyenmai->km_donvi == 'VND'){
                 $update_gia = $product->sanpham_gia - $khuyenmai->km_gia;
             }
-            return view('pages.product.product_details')->with('danhgia', $review)->with('baohanh', $baohanh)->with('dichvu', $dichvu)->with('hdsd', $hdsd)->with('phanloai', $phanloai)->with('price_update', $update_gia)->with('hinhanh', $hinhanh)->with('danhmuc', $cate_product)->with('sanpham', $product)->with('sanpham_tuongtu', $product_rela);
+            return view('pages.product.product_details')->with('kho',  $sl_kho)->with('khuyenmai',$khuyenmai2)->with('danhgia', $review)->with('baohanh', $baohanh)->with('dichvu', $dichvu)->with('hdsd', $hdsd)->with('phanloai', $phanloai)->with('price_update', $update_gia)->with('hinhanh', $hinhanh)->with('danhmuc', $cate_product)->with('sanpham', $product)->with('sanpham_tuongtu', $product_rela);
         }else{
-            return view('pages.product.product_details')->with('danhgia', $review)->with('baohanh', $baohanh)->with('dichvu', $dichvu)->with('hdsd', $hdsd)->with('phanloai', $phanloai)->with('hinhanh', $hinhanh)->with('danhmuc', $cate_product)->with('sanpham', $product)->with('sanpham_tuongtu', $product_rela);
+            return view('pages.product.product_details')->with('kho',  $sl_kho)->with('khuyenmai',$khuyenmai2)->with('danhgia', $review)->with('baohanh', $baohanh)->with('dichvu', $dichvu)->with('hdsd', $hdsd)->with('phanloai', $phanloai)->with('hinhanh', $hinhanh)->with('danhmuc', $cate_product)->with('sanpham', $product)->with('sanpham_tuongtu', $product_rela);
         }
     }
 

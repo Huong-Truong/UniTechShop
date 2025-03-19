@@ -83,13 +83,16 @@
                     <p class="text-dark font-weight-medium mb-0 mr-3">Xuất xứ: {{$sanpham->sanpham_xuatxu}}</p>
                    
                 </div>
+                <div class="d-flex mb-4">
+                    <small class="text-dark font-weight-small mb-0 mr-3">Kho: {{$kho}} </small>
+                </div>
                 <div class="d-flex align-items-center mb-4 pt-2">
                 <form action="{{route('save-cart')}}" method="post" id="cartForm">
              @csrf
     <div class="d-flex justify-content-between align-items-center">
         <div class="input-group quantity" style="width: 100px;">
             <div class="input-group-btn">
-                <button class="btn btn-sm btn-primary btn-minus" type="button">
+                <button class="btn btn-sm btn-primary btn-minus" type="button" onclick="decrementQty(this)" >
                     <i class="fa fa-minus"></i>
                 </button>
             </div>
@@ -101,13 +104,50 @@
             <input type="hidden" name="gia_update" value="{{$price_update}}">
             <?php }?>
             <div class="input-group-btn">
-                <button class="btn btn-sm btn-primary btn-plus" type="button">
+                <button class="btn btn-sm btn-primary btn-plus" type="button" onclick="incrementQty(this)">
                     <i class="fa fa-plus"></i>
                 </button>
             </div>
         </div>
         <button id="sendButton" type="submit" class="btn btn-primary px-3 ml-3"><i class="fa fa-shopping-cart mr-1"></i> Thêm vào giỏ hàng</button>
         <script>
+            const maxQty = <?= $kho; ?>;
+function incrementQty(button) {
+    let input = button.closest('.quantity').querySelector('input[name="qty"]');
+    let currentValue = parseInt(input.value) || 0;
+
+    // if (currentValue < maxQty-1) { // Limit to 5
+    //     input.value = currentValue + 1;
+    // }
+
+    // Disable the button if the value is 5
+    if (currentValue + 1 >= maxQty) {
+        button.disabled = true;
+    } else {
+        button.disabled = false;
+    }
+
+    // Ensure the minus button is always enabled
+    let minusButton = button.closest('.quantity').querySelector('.btn-minus');
+    minusButton.disabled = false;
+}
+
+function decrementQty(button) {
+    let input = button.closest('.quantity').querySelector('input[name="qty"]');
+    let currentValue = parseInt(input.value) || 0;
+
+    if (currentValue > 1) { // Prevent going below 1
+      
+
+        // Re-enable the "plus" button if the value drops below 5
+        let plusButton = button.closest('.quantity').querySelector('.btn-plus');
+        if (currentValue - 1 < maxQty) {
+            plusButton.disabled = false;
+        }
+    } else {
+        alert("Bạn không thể giảm số lượng nhỏ hơn 1.");
+    }
+}
 
 
 
@@ -356,7 +396,7 @@
                         <div class="row justify-content-center align-items-center">
                             <div class="col-md-6">
                                 <h4 class="mb-4">Dịch vụ đính kèm</h4>
-                                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3"">
+                                <div class="card-body border-left borderz-right text-center p-0 pt-4 pb-3"">
                               
                                     <form action="{{ route('add-service-cart') }}" method="post">
                                         @csrf
@@ -414,20 +454,52 @@
                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
                    <a href="{{route('xem-san-pham', ['sanpham_id' => $value->sanpham_id])}}"><img class="img-fluid w-100" src="{{ asset('img/sp' . $value->sanpham_id . '/' . $value->sanpham_hinhanh) }}" alt=""></a> 
                     </div>
-                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">{{$value->sanpham_ten}}</h6>
-                        <div class="d-flex justify-content-center">
-                        <h6>{{number_format($value->sanpham_gia) . ' VNĐ'}}</h6>
-                            <!-- <h6>$123.00</h6><h6 class="text-muted ml-2"><del>$123.00</del></h6> -->
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light border">
+                    <form action="{{route('save-cart')}}" method="post">
+                @csrf
+                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                <input type="hidden" name="sanpham_id_hidden" value="{{$value->sanpham_id}}">
+                <input type="hidden" name="qty" value="1">
+                    <h6 class="text-truncate mb-3">{{$value->sanpham_ten}}</h6>
+                    <?php 
+                    $price_update = null; // Default value if no discount is applied
+                    ?>
 
-                        <a href="{{route('xem-san-pham', ['sanpham_id' => $value->sanpham_id])}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ hàng</a>
-                        
-         
+                    @foreach($khuyenmai as $key => $value2)
+                        @if($value2->sanpham_id == $value->sanpham_id)
+                            <?php 
+                            if ($value2->km_donvi == '%') {
+                                $price_update = $value->sanpham_gia - ($value->sanpham_gia * $value2->km_gia) / 100;
+                            } else if ($value2->km_donvi == 'VND') {
+                                $price_update = $value->sanpham_gia - $value2->km_gia;
+                            }
+                            ?>
+                            @break {{-- Exit the loop once a matching discount is found --}}
+                        @endif
+                    @endforeach
+
+                    @if($price_update!== null)
+                    <div class="d-flex justify-content-center">
+                        <s style="font-size: 12px;">{{ number_format($value->sanpham_gia) . ' VNĐ' }}</s> &nbsp; 
+                        <h6>{{ number_format($price_update) . ' VNĐ' }}</h6>
+                        </div>
+                    @else
+                    <div class="d-flex justify-content-center">
+                        <h6>{{ number_format($value->sanpham_gia) . ' VNĐ' }}</h6>
                     </div>
+                    @endif
+                </div>
+                <?php 
+                    if(isset($price_update) && $price_update ){
+                        ?>
+                   <input type="hidden" name="gia_update" value="{{$price_update}}">
+                     <?php }?>
+                <div class="card-footer d-flex justify-content-between bg-light border">
+                    <a href="{{route('xem-san-pham', ['sanpham_id' => $value->sanpham_id])}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết</a>
+                   
+                    <button type="submit" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ hàng</button>
+                   
+                </div>
+                </form>
                  
                 </div>
           

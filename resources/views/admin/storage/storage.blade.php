@@ -32,6 +32,8 @@
           <button class="btn btn-sm btn-default">
             <a  href="{{route('nhapkho',['kho_id' => $kho->kho_id])}}">Nhập kho</a> 
            </button>
+
+         
          
         </div>
       <div class="col-sm-4">

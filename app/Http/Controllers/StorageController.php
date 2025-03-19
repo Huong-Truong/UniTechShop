@@ -17,6 +17,20 @@ session_start();
 class StorageController extends Controller
 {
     //
+    public function unactive_product_storage(){
+        $this->AuthenLogin();
+        $sp =   DB::table('sanpham')->get();
+        foreach($sp as $key => $value){
+            $sl_kho = DB::table('tonkho')->where('sanpham_id', $value->sanpham_id)->sum('tonkho_soluong');
+            if($sl_kho == 0){
+                DB::table('sanpham')->where('sanpham_id', $value->sanpham_id)->update(['sanpham_trangthai' => 0]);
+            }else{
+                DB::table('sanpham')->where('sanpham_id', $value->sanpham_id)->update(['sanpham_trangthai' => 1]);
+            }
+        }    
+        Session::put('success','Cập nhật hiển thị thành công');
+        return redirect()->back();
+    }
     public function AuthenLogin(){
         $admin_id = Session::get('admin_id');
         if($admin_id){
@@ -55,8 +69,6 @@ class StorageController extends Controller
        ->where('khohang.kho_id',$id_kho)
        ->orderBy('sanpham.sanpham_id', 'desc')
        ->get();
-       
-   
        return   view ('admin.storage.storage')
        ->with('store', $store)
        ->with('storage', $storage)
@@ -155,7 +167,7 @@ class StorageController extends Controller
     
         $hdn = new HoaDonNhap();
         $hdn->hdn_id = $maxID_hdn + 1;
-        $hdn->hdn_ngay = date('d-m-y');
+        $hdn->hdn_ngay = date('y-m-d');
         $hdn->nhacungcap_id = $request->nhacungcap;
         
         $hdn->kho_id = $kho_id;
@@ -194,7 +206,9 @@ class StorageController extends Controller
                     'hdn_soluong' => $data[2],
                     'hdn_id' => $maxID_hdn + 1
                 ];
-    
+
+                DB::table('sanpham')->where('sanpham_id', $data[0])->update(['sanpham_trangthai' => 1]);
+
                 if (!DB::table('chitiethoadonnhap')->insert($chitiet)) {
                     Session::put('message', 'File CSV không khớp');
                     fclose($handle);
@@ -208,7 +222,9 @@ class StorageController extends Controller
         } else {
             Session::put('message', 'Không thể mở tệp CSV');
         }
-    
+        $sp =   DB::table('sanpham')->get();
+
+
         return Redirect::to('/nhapkho/' . $kho_id);
     }
 

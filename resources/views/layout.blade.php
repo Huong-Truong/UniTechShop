@@ -98,7 +98,19 @@
                     </div>
                 </form>
             </div>
+            
             <div class="col-lg-3 col-6 text-right">
+                <?php 
+                    if(Session::get('khachhang_id')){
+
+                
+                ?>
+             <a href="{{route('account')}}" class="btn border">
+                    <i class="	fas fa-user-alt text-primary"></i>
+                </a>
+                <?php
+                    }
+                ?>
                 <a href="{{route('show-cart')}}" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
                     <?php 
@@ -107,6 +119,7 @@
                     <span class="badge"><?php echo $count ?></span>
                 </a>
             </div>
+
         </div>
     </div>
     <!-- Topbar End -->
@@ -121,7 +134,7 @@
                     <i class="fa fa-angle-down text-dark"></i>
                 </a>
                 <nav class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0" id="navbar-vertical">
-                <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
+                <div class="navbar-nav w-100 overflow-hidden" style="height: 350px">
                     @foreach($phanloai as $pl)
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link" data-toggle="dropdown">
@@ -191,7 +204,7 @@
                             if($khachhang_id!= NULL){
                             ?>
 
-                        <a href="{{route('logout-checkout')}}" class="nav-item nav-link">Tài khoản</a>
+                        <a href="{{route('account')}}" class="nav-item nav-link">Tài khoản</a>
                         <a href="{{route('logout-checkout')}}" class="nav-item nav-link">Đăng xuất</a>
                         <!-- Sẽ làm thêm bấm đăng nhập kh thì nó hiện trang chủ, còn đăng nhập từ nút thanh toán thì sau khi đăng nhập qua thanh toán -->
                         <?php }else{  ?>
