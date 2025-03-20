@@ -18,16 +18,19 @@
     <div class = "panel-heading1">
       <div class="row w3-res-tb ">
         <div class="col-sm-5 m-b-xs">    
-              
+          <div class="input-group">
+            <a  class="custom-button" href="{{ route('add-sales')}}">Thêm khuyến mãi</a> 
+          
+          </div>
         </div>
         <div class="col-sm-4">
         </div>
         <div class="col-sm-3">
           <div class="input-group">
-            <a  class="custom-button" href="{{ route('add-sales')}}">Thêm khuyến mãi</a> 
-            <span>    </span>
             <a  class="custom-button" href="{{ route('add-sales-brand')}}">Thêm khuyến mãi theo thương hiệu</a> 
+        
           </div>
+          
 
         </div>
       </div>

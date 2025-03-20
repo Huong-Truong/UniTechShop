@@ -27,27 +27,35 @@ class StorageController extends Controller
     }
     public function store(){
         $this->AuthenLogin();
-        $id_begin = Storage::pluck('kho_id')->first();
-        $name_begin = Storage::find($id_begin);
+        $kho = new Storage();
+        $kho->kho_ten = 'tất cả kho';
+        $kho->kho_id = 0;
         $storage = Storage::get();
         $store = DB::table('tonkho')
         ->join('sanpham', 'sanpham.sanpham_id', '=', 'tonkho.sanpham_id')
-        ->join('khohang', 'khohang.kho_id', '=', 'tonkho.kho_id')
-        ->where('khohang.kho_id',$id_begin)
+        ->select(
+            'sanpham.sanpham_id',
+            'sanpham.sanpham_ten',
+            DB::raw('SUM(tonkho.tonkho_soluong) as tonkho_soluong')
+        )
+        ->groupBy('sanpham.sanpham_id', 'sanpham.sanpham_ten',)
         ->orderBy('sanpham.sanpham_id', 'desc')
         ->get();
+
         
-    
         return   view ('admin.storage.storage')
         ->with('store', $store)
         ->with('storage', $storage)
-        ->with('kho',$name_begin);
+        ->with('kho',$kho);
     }
 
     public function fill_kho(Request $request){
         $this->AuthenLogin();
+        if($request->kho == 0){
+            return Redirect::to('/store-product');
+        }
        $id_kho =  $request->kho;
-       $kho = Storage::find($id_kho);
+       $kho = Storage::find($request->kho);
        $storage = Storage::get();
        $store = DB::table('tonkho')
        ->join('sanpham', 'sanpham.sanpham_id', '=', 'tonkho.sanpham_id')
@@ -87,11 +95,18 @@ class StorageController extends Controller
 
     public function delete_store($sanpham_id,$kho_id){
         $this->AuthenLogin();  
-        $soluong['tonkho_soluong'] = 0;
-          $store = DB::table('tonkho')
-          ->where('sanpham_id', $sanpham_id)
-          ->where('kho_id', $kho_id)->update($soluong);
-        return $this->store();
+        $soluong = DB::table('tonkho')->where('sanpham_id', $sanpham_id)
+        ->where('kho_id', $kho_id)->value('tonkho_soluong');
+        if ($soluong !== null) {
+            $soluong = (int)$soluong - 1;
+            DB::table('tonkho')
+                ->where('sanpham_id', $sanpham_id)
+                ->where('kho_id', $kho_id)
+                ->update(['tonkho_soluong' => $soluong]);
+        } 
+        $request = new Request();
+        $request->kho = $kho_id;
+        return $this->fill_kho($request);
      
     }
 
@@ -125,10 +140,6 @@ class StorageController extends Controller
     }
 
 
-    public function add_hdn($kho_id){
-
-
-    }
     
     public function import_hdn(Request $request, $kho_id)
     {

@@ -18,7 +18,46 @@
     <div class="panel-heading1">
       <div class="row w3-res-tb">
           <div class="col-sm-5 m-b-xs  ">
+            <div class="custom-o btn" >
+              <br>
+              <br>
+           
+              <form action="{{route('loc-kh')}}" method="GET" enctype="multipart/form-data" class="form-search">
+                @csrf
+                <div class="btn">
+                  <select name="trangthai" class="form-control input-sm m-bot15">
+                   <option value="1"  {{ $t == 1 ? 'selected' : '' }}>Lượt mua</option>
+                   <option value="2" {{ $t == 2 ? 'selected' : '' }}>Tổng tiền</option> 
+                  </select>
+              </div>
+              <div class="btn">
+                <select name="month" class="form-control input-sm m-bot15">
+                  <option value="0" {{ $m == 0 ? 'selected' : '' }}>Tất cả</option>
+                  @for ($i = 1; $i <= 12; $i++)
+                      <option value="{{ $i }}" {{ $i == (int)$m ? 'selected' : '' }}>Tháng {{ $i }}</option>
+                  @endfor
+              </select>
+            </div>
+            <div class="btn">
+              <select name="year" class="form-control input-sm m-bot15">
+               
+                <option value="0">Tất cả</option>
+                <?php $nam = date('Y');?>
+                @for ($i = $nam - 5; $i <= $nam + 5; $i ++)
+                <option value="{{$i}}" {{ $i == $y ? 'selected' : '' }} >{{$i}}</option>
+                @endfor
+            </select>
+          </div>
+                
+                <p id="fileName"></p>
             
+                <br>
+                <input type="submit" value="Lọc" name="import_hdn" class="custom-file-upload">
+              </form>
+            <br>
+            
+          </div>
+             
           </div>
         <div class="col-sm-4">
         
@@ -42,9 +81,11 @@
             <th>Họ tên</th>
             <th>Số điện thoại</th>
             <th>Email</th>
-            <th>Địa chỉ</th>
+            <th>Sô lần mua hàng</th>
+            <th>Tổng tiền</th>
             <th>Trạng thái</th>
-            <th>Thao tác</th>
+            <th>Thao  tác</th>
+          
             <th style="width:30px;"></th>
           </tr>
         </thead>
@@ -66,8 +107,15 @@
 
             <td>{{$value->khachhang_email}}</td>
 
-            <td>{{$value->khachhang_diachi}}</td>
-            
+            <td>{{$value->total}}</td>
+           
+            <td> <?php
+              if((int)$value->total_amount != 0){
+                $formattedVND = number_format(preg_replace('/\D/', '',$value->total_amount), 0, ',', '.') . ' VND';
+                echo $formattedVND;
+              }
+              
+            ?></td>
           
               <td><span class="text-ellipsis">
                 <?php 
@@ -86,9 +134,9 @@
               <a href="{{route('edit-customer', ['customer_id' => $value->khachhang_id])}}" class="active" ui-toggle-class="">
                 <i class="fa fa-pencil-square-o text-success text-active"></i>
               </a>
-               {{-- <a onclick="return confirm('Bạn có chắc muốn xóa ?')" class="active"  href="{{route('delete-customer', ['customer_id' => $value->khachhang_id])}}">
+                {{-- <a onclick="return confirm('Bạn có chắc muốn xóa ?')" class="active"  href="{{route('delete-customer', ['customer_id' => $value->khachhang_id])}}">
                  <i class="fa fa-times text-danger text"></i>
-                </a>  --}}
+                </a>   --}}
             </td>
           </tr>
         @endforeach

@@ -270,12 +270,14 @@ Route::get('/delete-customer/{customer_id}', [CustomerController::class, 'delete
 Route::post('/update-customer/{customer_id}', [CustomerController::class, 'update_customer'])->name('update-customer');
 Route::get('/unactive-customer/{customer_id}', [CustomerController::class, 'unactive_customer'])->name('unactive-customer');
 Route::get('/active-customer/{customer_id}', [CustomerController::class, 'active_customer'])->name('active-customer');
+Route::get('/loc-kh', [CustomerController::class, 'loc_khachhang'])->name('loc-kh');
 
 
 // Thong Ke
 Route::get('/thongke-don-thang', [ThongKeController::class, 'thongke_don_thang'])->name('thongke-don-thang');
 Route::get('/thongke-don-nam', [ThongKeController::class, 'thongke_don_nam'])->name('thongke-don-nam');
 Route::get('/thongke-sp', [ThongKeController::class, 'thongke_sp'])->name('thongke-sp');
+Route::get('/thongke-kh', [ThongKeController::class, 'thongke_kh'])->name('thongke-kh');
 
 // Danh gia
 Route::get('/show-dg/{product_id}/{xephang}', [DanhGiaController::class, 'show_dg'])->name('show-dg');

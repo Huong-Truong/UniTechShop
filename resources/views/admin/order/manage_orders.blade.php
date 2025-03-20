@@ -77,14 +77,14 @@
             <input type="hidden" name="donhang_id" value="{{$cate_pro->donhang_id}}">
               <select name="trangthai_donhang" class="input-sm m-bot15">
                      @foreach ($trangthai as $key=>$value)
-                    
-                    <option value = "{{$value->trangthai_id}}" {{ $value->trangthai_id == $cate_pro->trangthai_id? 'selected' : '' }} >
-                        
-                     {{$value->trangthai_ten}}
-                    </option>
+                     <option value="{{ $value->trangthai_id }}"
+                      {{ $value->trangthai_id < $cate_pro->trangthai_id ? 'disabled' : '' }}
+                      {{ $value->trangthai_id == $cate_pro->trangthai_id ? 'selected' : '' }}>
+                      {{$value->trangthai_ten}}
+                  </option>
                     @endforeach
               </select>
-              <input type="submit" class="btn btn-primary" name="submit" value="Sửa">
+              <input type="submit" class="btn custom-button" name="submit" value="Cập nhật">
             </div>
             </form>
             </td>

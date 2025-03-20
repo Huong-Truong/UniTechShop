@@ -68,13 +68,7 @@
                 <br>
                 <input type="submit" value="Tạo" name="import_hdn" class="custom-file-upload">
             </form>
-            <?php 
-          $message = Session::get('message'); ## lấy tin nhắn có tên là message
-          if($message){
-          echo "<p > $message </p>" ;
-              Session::put('message',null); ## in ra xong set lại null
-          }
-      ?>
+            
             <br>
             
           </div>

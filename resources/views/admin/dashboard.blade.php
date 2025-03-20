@@ -16,5 +16,9 @@
 <button class="styled-button">
     <a href="{{route('thongke-sp')}}">Thống kê sản phẩm</a>
 </button>
+<button class="styled-button">
+    <a href="{{route('thongke-kh')}}">Thống kê khách hàng</a>
+</button>
+
 
 @endsection

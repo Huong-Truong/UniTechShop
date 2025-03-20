@@ -115,7 +115,27 @@ class SalesController extends Controller
     public function delete_sales($sale_id){
         $this->AuthenLogin();
         $sale = KhuyenMai::find($sale_id);
+        $date = date('y-m-d');
+        $checkKM = DB::table('thongtinkhuyenmai')
+        ->where('km_id', $sale_id)
+        ->where('ngaybatdau', '<=', $date)
+        ->where('ngayketthuc', '>=', $date)
+        ->first(); 
+      
+        if($checkKM){
+            Session::put('message','Đang có sản phẩm áp dụng khuyến mãi này');
+            return Redirect::to('all-sales'); 
+        }
+        else {
+            if(DB::table('thongtinkhuyenmai')->where('km_id',$sale_id)->get()){
+   
+                DB::table('thongtinkhuyenmai')->where('km_id',$sale_id)->delete();
+            }
+        
+        }
+
         $sale->delete();
+        Session::put('message','Xóa thành công');
         return Redirect::to('all-sales'); 
     }
 

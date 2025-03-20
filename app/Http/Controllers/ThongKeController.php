@@ -163,14 +163,53 @@ class ThongKeController extends Controller
 
     public function thongke_sp(){
         $this->AuthenLogin(); 
+             
+        $products = DB::table('chitietdonhang')
+        ->join('sanpham', 'sanpham.sanpham_id', '=', 'chitietdonhang.sanpham_id')
+        ->select(
+            'sanpham.sanpham_id',
+            'sanpham.sanpham_ten',
+            DB::raw('SUM(chitietdonhang.ctdh_soluong) as ctdh_soluong')
+        )
+        ->groupBy('sanpham.sanpham_id', 'sanpham.sanpham_ten')
+        ->orderBy('sanpham.sanpham_id', 'desc')
+        ->get();
+
         
-        $proudcts = Product::join('tonkho','tonkho.sanpham_id','=','sanpham.sanpham_id')->get();       
-    
         
         
-        return view('admin.thongke.thongke_sp')->with('products',$proudcts);
+        return view('admin.thongke.thongke_sp')->with('products',$products);
     }
+
+    public function thongke_kh(Request $request) {
+        $this->AuthenLogin(); 
+        $m = $request->month ?? 0;
+        $y = $request->year ?? date('Y');
+
+        $trangthai = $request->trangthai ?? 1;
+        $query = DB::table('donhang')
+            ->join('khachhang', 'khachhang.khachhang_id', '=', 'donhang.khachhang_id')
+            ->select('khachhang.khachhang_sdt', DB::raw($trangthai == 1 ? 'count(donhang.donhang_id) as total' : 'SUM(donhang.donhang_tongtien) as total'))
+            ->groupBy('khachhang.khachhang_sdt')
+            ->orderBy('total', 'desc');
     
+        if ($request->number) {
+            $query->limit($request->number);
+        }
+        if ($request->year){
+            $query->whereYear('donhang_ngaytao', $request->year);
+            if($request->month){
+                $query->whereMonth('donhang_ngaytao', $request->month);
+            }
+        }
+        $khachhangs = $query->get();
+    
+        return view('admin.thongke.thongke_kh')
+            ->with('khachhangs', $khachhangs)
+            ->with('t', $trangthai)
+            ->with('y',$y)
+            ->with('m',$m);
+    }
 
 }
 

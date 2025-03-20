@@ -13,25 +13,24 @@
 <div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">
-        Thông tin @if ($kho->kho_ten)
+        Thông tin 
           {{$kho->kho_ten}}
-        @endif
+       
     </div>
     <div class="panel-heading1">
     <div class="row w3-res-tb">
         <div class="col-sm-5 m-b-xs ">
           <form class="form-fillter" action="{{route('fill-kho')}}" method="get">
+            
             <select  name="kho" class="input-sm form-control w-sm inline v-middle ">
+              <option value="0">Tất cả</option>
               @foreach ($storage as $key => $value )
-              @if ($kho->kho_id)
+            
               <option value = "{{$value->kho_id}}" {{ $value->kho_id == $kho->kho_id ? 'selected' : '' }}>
                 {{$value->kho_ten}}
              </option>
-             @else
-             <option value = "{{$value->kho_id}}" >
-              {{$value->kho_ten}}
-            </option>
-             @endif
+            
+        
               @endforeach
             </select>
             <button class="btn btn-sm btn-default">
@@ -39,9 +38,12 @@
             </button>   
             
           </form>
+          @if ($kho->kho_id != 0)
           <button class="btn btn-sm btn-default">
             <a  href="{{route('nhapkho',['kho_id' => $kho->kho_id])}}">Nhập kho</a> 
            </button>
+          @endif
+          
          
         </div>
       <div class="col-sm-4">
@@ -49,9 +51,6 @@
       <div class="col-sm-3">
         {{-- <div class="input-group"> --}}
           <form  action="{{route('search-kho')}}" method="get" class="form-search" >
-          
-             
-          
             <input type="hidden" name="id_kho" value="{{$kho->kho_id}}">
             <input type="text" name="key" class="input-sm form-control" placeholder="Search" >
             <button class="btn btn-sm btn-default " type="submit" >Go!</button>
@@ -75,8 +74,11 @@
             </th>
             <th>STT</th>
             <th>Tên sản phẩm</th>
-            <th>Số lượng</th>
+            <th>Số lượng tồn</th>
+            @if ($kho->kho_id!=0)
             <th>Thao tác</th>
+            @endif
+            
             <th style="width:30px;"></th>
           </tr>
         </thead>
@@ -99,10 +101,13 @@
                 <td>{{$value->tonkho_soluong}}</td>
     
                 <td>
-                   <a onclick="return confirm('Bạn có chắc muốn xóa ?')" class="active" 
-                    href="{{route('delete-store',['sanpham_id' => $value->sanpham_id,'kho_id' => $value->kho_id])}}"> 
-                    <i class="fa fa-times text-danger text"></i>
-                  </a> 
+                  @if ($kho->kho_id!=0)
+                  <a onclick="return confirm('Bạn có chắc muốn xóa 1 sản phẩm trong kho ?')" class="active" 
+                  href="{{route('delete-store',['sanpham_id' => $value->sanpham_id,'kho_id' => $kho->kho_id])}}"> 
+                  <i class="fa fa-times text-danger text"></i>
+                </a> 
+                  @endif
+                 
                 </td>
               </tr>
                 

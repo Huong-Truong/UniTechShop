@@ -9,9 +9,9 @@ class ThongTinKhuyenMai extends Model
     //
     public $timestamps = false;
     protected $fillable = [
-        'ngaybatdau', 'ngayketthuc'
+        'ngaybatdau', 'ngayketthuc','sanpham_id'
     ];
 
-    protected $primaryKey = ['sanpham_id', 'km_id'];
+    protected $primaryKey = ['km_id'];
     protected $table = 'thongtinkhuyenmai';
 }

@@ -64,9 +64,21 @@
         
             <td>{{$cate_pro->donhang_id}}</td>
             <td>{{$cate_pro->sanpham_ten}}</td>
-            <td>{{$cate_pro->sanpham_gia}}</td>
+            <td>
+              <?php
+              if((int)$cate_pro->sanpham_gia != 0){
+                $formattedVND = number_format(preg_replace('/\D/', '',$cate_pro->sanpham_gia), 0, ',', '.') . ' VND';
+                echo $formattedVND;
+              }
+            ?>
+            </td>
             <td>{{$cate_pro->ctdh_soluong}}</td>
-            <td>{{$cate_pro->sanpham_gia*$cate_pro->ctdh_soluong}}</td>
+            <td>
+              <?php
+                $formattedVND = number_format(preg_replace('/\D/', '',$cate_pro->sanpham_gia*$cate_pro->ctdh_soluong), 0, ',', '.') . ' VND';
+                echo $formattedVND;
+               ?>
+            </td>
             
           </tr>
         @endforeach
