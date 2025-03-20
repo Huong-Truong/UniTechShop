@@ -81,7 +81,11 @@
                   </option>
                     @endforeach
               </select>
+<<<<<<< HEAD
               <input type="submit" class="btn custom-button" name="submit" value="Cập nhật">
+=======
+              <input type="submit" class="btn btn-primary" name="submit" value="Sửa"> 
+>>>>>>> 64fd946b7690df810e98decf4a8eeb40bfec6773
             </div>
             </form>
             </td>
