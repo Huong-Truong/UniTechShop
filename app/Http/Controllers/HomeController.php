@@ -24,9 +24,22 @@ class HomeController extends Controller
     public function signup(){
         return view('signup');
     }
+
+
+    public function unactive_product_storage(){
+        $sp =   DB::table('sanpham')->get();
+        foreach($sp as $key => $value){
+            $sl_kho = DB::table('tonkho')->where('sanpham_id', $value->sanpham_id)->sum('tonkho_soluong');
+            if($sl_kho == 0){
+                DB::table('sanpham')->where('sanpham_id', $value->sanpham_id)->update(['sanpham_trangthai' => 0]);
+            }else{
+                DB::table('sanpham')->where('sanpham_id', $value->sanpham_id)->update(['sanpham_trangthai' => 1]);
+            }
+        }    
+    }
     public function index()
     {
-  
+         $this->unactive_product_storage();
             $cate_product = DB::table('danhmuc')->where('danhmuc_trangthai', 1)->orderby('danhmuc_id', 'desc')->get(); // lấy id category
             $product = DB::table('sanpham')->where('sanpham_trangthai', 1)->orderby('sanpham_id', 'desc')->limit(8)->get();
             $brand = DB::table('hangsanpham')->where('hang_trangthai', 1)->orderby('hang_id', 'desc')->get();
@@ -37,11 +50,9 @@ class HomeController extends Controller
             ->join('khuyenmai','thongtinkhuyenmai.km_id', '=', 'khuyenmai.km_id')
             ->join('sanpham', 'sanpham.sanpham_id','=', 'thongtinkhuyenmai.sanpham_id')
             ->whereDate('thongtinkhuyenmai.ngaybatdau' ,'<=', $today)
-            ->whereDate('thongtinkhuyenmai.ngayketthuc', '>=', $today)->get();
-            
+            ->whereDate('thongtinkhuyenmai.ngayketthuc', '>=', $today)->get();  
             return view('pages.home')->with('khuyenmai', $khuyenmai)->with('count_prd_brand', $count_product_brand)->with('danhmuc', $cate_product)->with('sanpham', $product)->with('hang', $brand)->with('phanloai', $phanloai);
        
-        
     }
 
    

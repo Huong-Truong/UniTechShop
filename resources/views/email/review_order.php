@@ -1,6 +1,7 @@
 <?php
 $vc = Session::get('shipping_order');
 $vanchuyen = DB::table('vanchuyen')->where('vanchuyen_id', $vc)->first();
+$dichvu = Session::get('dichvu',[]);
 ?>
 
 <!DOCTYPE html>

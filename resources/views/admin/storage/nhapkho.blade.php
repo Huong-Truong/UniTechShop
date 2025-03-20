@@ -118,7 +118,7 @@
                     ?>
                    </td>
 
-                   <td> {{$value->hdn_id}}</td> 
+                   <td> HDN{{$value->hdn_id}}</td> 
 
                    <td> {{$value->nhacungcap_ten}}</td> 
                  

@@ -24,23 +24,31 @@
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
     <style>
+        body{
+               background-color: #f0f2f4!important; 
+        }
 .container{
-    padding: 100px;
+    padding-top: 25px;
+    padding-bottom: 100px;
 }
  .dn, .login-form, .signup-form {
-    border: 1px dashed #000000; /* 2px wide black border */
+ 
 	border-radius: 5px;
-	padding: 20px;
-    border-color: lightgray;
-    background-color:rgba(194, 194, 194, 0.2) !important;
+	padding: 25px;
+    background-color:rgb(255, 255, 255) !important;
 }
+
 form label{
-    margin: -8px;
+	padding: 15px;
     font-weight: bold !important;
+   
 }
 form input{
-    margin-bottom: 5px;
-  
+    margin-top: -8px;
+    margin-bottom: -10px;
+}
+.dn .form-control{
+    border: 1px  rgb(130, 130, 130)  solid ;
 }
 h2{
     padding: 10px;
@@ -144,7 +152,7 @@ h2{
     <section id="form" >
     <div class="container ">
         <div class="row justify-content-center align-items-center">
-            <div class="col-sm-8">
+            <div class="col-sm-6">
                 <div class="signup-form dn">
                     <h2>Đăng ký</h2>
                     <form action="{{route('dangky-khachhang')}}" method="POST">
@@ -165,10 +173,10 @@ h2{
                         <input name="phone" class=" form-control border-1 py-2" type="text" placeholder=""/>
 
                         <hr>
-                        <span>
+                        <small>
                      Bằng cách tiếp tục, bạn đồng ý với  <a href=""> Điều khoản và Điều kiện</a>  <a href=" ">Chính sách Quyền riêng tư</a>, và  <a href="">Điều khoản Chương trình UniTech™</a>.
                      của chúng tôi.   
-                    </span>
+                    </small>
                         <hr>
                         <span>
                          <b> Đã có tài khoản </b> <a href="{{route('login-checkout')}}"> Đăng nhập</a>
