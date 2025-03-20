@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Classify;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Brand;
 use DB;
@@ -97,6 +98,11 @@ class CategoryProduct extends Controller
 
     public function delete_category_product($category_id){
         $this->AuthenLogin();
+        $checkCate = Product::where('danhmuc_id',$category_id)->count();
+        if( $checkCate > 0){
+            Session::put('message','Không thể xóa. Đang có '.$checkCate.' sản phẩm thuộc danh mục này');
+            return Redirect::to('all-category-product'); 
+        }
         $category = Category::find($category_id);
         $category->delete();
         // DB::table('danhmuc')->where('danhmuc_id', $category_id)->delete();

@@ -1,17 +1,21 @@
 @extends('admin_layout')
 @section('admin-content')
+<?php
+    $message = Session::get('message');
+    if($message){?>
+    <div id="errorBox" class="error-box">
+        {{$message}}
+    </div>
+<?php
+    Session::forget('message');
+    }
+?>
 <div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">
        Quản lý nhà cung cấp
     </div>
-    <?php 
-        $message = Session::get('message'); ## lấy tin nhắn có tên là message
-        if($message){
-        echo "<p id='messageStyle'> $message </p>" ;
-            Session::put('message',null); ## in ra xong set lại null
-        }
-    ?>
+
     <div class = "panel-heading1">
       <div class="row w3-res-tb ">
         <div class="col-sm-5 m-b-xs">    

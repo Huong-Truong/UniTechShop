@@ -1,12 +1,22 @@
 @extends('admin_layout')
 @section('admin-content')
+<?php
+    $message = Session::get('message');
+    if($message){?>
+    <div id="errorBox" class="error-box">
+        {{$message}}
+    </div>
+<?php
+    Session::forget('message');
+    }
+?>
 
 <div class="row">
             <div class="col-lg-12">
                     <section class="panel ">
                         
                         <header class="panel-heading">
-                            Thống kê đơn hàng trong 
+                            Thống kê đơn hàng 
                             <form action="" class="form-inline" method="get">
                                tháng
                                 <input type="text" name = "month" class="input-small" value="{{$month}}">

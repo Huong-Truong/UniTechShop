@@ -40,7 +40,13 @@ class AdminController extends Controller
 
     public function showDashboard()
 {
-   return view('admin.dashboard');
+    $year = date('Y');
+    $month = date('m');
+    $soluongdon = DB::table('donhang')
+    ->whereYear('donhang_ngaytao', $year)
+    ->whereMonth('donhang_ngaytao', $month)
+    ->count('donhang_id');
+   return view('admin.dashboard')->with('soluongdon',$soluongdon);
 }
 
     public function dashboard(Request $request)
@@ -68,5 +74,8 @@ class AdminController extends Controller
         return view('admin_login');
 }
 
+    public function delete_session($name){
+        Session::forget($name);
+    }
 
 }

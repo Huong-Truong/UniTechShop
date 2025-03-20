@@ -1,5 +1,15 @@
 @extends('admin_layout')
 @section('admin-content')
+<?php
+    $message = Session::get('message');
+    if($message){?>
+    <div id="errorBox" class="error-box">
+        {{$message}}
+    </div>
+<?php
+    Session::forget('message');
+    }
+?>
 
 <div class="row">
             <div class="col-lg-12">
@@ -11,6 +21,7 @@
                        
                         <div class="panel-body">
                             {{----}}
+                           
                          
                                 <div style="width: 90%;">
                                     <canvas id="sanphamChart"></canvas>
@@ -22,7 +33,7 @@
                                         data: {
                                             labels: @json($products->pluck('sanpham_ten')),
                                             datasets: [{
-                                                label: 'Số lượng sản phẩm',
+                                                label: 'Số lượng:',
                                                 data: @json($products->pluck('tonkho_soluong')),
                                                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
                                                 borderColor: 'rgba(54, 162, 235, 1)',

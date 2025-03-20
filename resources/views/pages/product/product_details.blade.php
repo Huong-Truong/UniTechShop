@@ -241,9 +241,9 @@ function decrementQty(button) {
            
             
                         <div class="row">
-                        <div class="col-md-6">
+                        <div class="col" >
                         <h4 class="mb-4">Các đánh giá ({{ count($danhgia) }})</h4>
-                        <div style="max-height: 300px; overflow-y: auto;">
+                        <div style="max-height: 300px; overflow-y: auto;"  >
                             @foreach($danhgia as $key => $value)
                             <div class="media mb-4" >
                                 <img src="{{ asset('img/profile.jpg') }}" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
@@ -267,96 +267,8 @@ function decrementQty(button) {
                             @endforeach
                             </div>
                         </div>
-                            <div class="col-md-6">
-                            <h4 class="mb-4">Gửi đánh giá sản phẩm</h4>
-                            <div class="d-flex my-3">
-                                <p class="mb-0 mr-2">Đánh giá của bạn* :</p>
-                                <div class="stars">
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
-                            </div>
-                            <form id="review-form" action="{{route('add-review')}}" method="post" enctype="multipart/form-data">
-                                @csrf
-                                <div class="form-group">
-                                    <label for="message">Nội dung đánh giá *</label>
-                                    <textarea name="noidung" id="message" cols="30" rows="5" class="form-control"></textarea>
-                                    <input type="hidden" name="sanpham_id" value="{{$sanpham->sanpham_id}}">
-                                    <?php 
-                                        $khachhang_id = Session::get('khachhang_id');
-                                        if(!$khachhang_id){
-                                            $khachhang_id = 13;
-                                        }
-                                    ?>
-                                  <input type="hidden" name="khachhang_id" value="{{ $khachhang_id }}">
-                                    <input type="hidden" name="sanpham_id" value="{{$sanpham->sanpham_id}}">
-                                </div>
-                                <div class="form-group mb-0">
-                                    <input type="submit" value="Gửi đánh giá" class="btn btn-primary px-3">
-                                </div>
-                            </form>
-                        </div>
+                          
 
-
-                            <script>
-                                                // Biến lưu số sao đã chọn
-                                                        // Biến lưu số sao đã chọn
-                                    let selectedRating = 0;
-
-                                    // Chọn tất cả các ngôi sao
-                                    const stars = document.querySelectorAll('.stars i');
-
-                                    // Thêm sự kiện nhấp chuột cho từng ngôi sao
-                                    stars.forEach((star, index) => {
-                                        star.addEventListener('click', () => {
-                                            // Reset tất cả các ngôi sao
-                                            stars.forEach(s => {
-                                                s.classList.remove('fas');
-                                                s.classList.add('far');
-                                            });
-
-                                            // Kích hoạt các ngôi sao được chọn
-                                            for (let i = 0; i <= index; i++) {
-                                                stars[i].classList.remove('far');
-                                                stars[i].classList.add('fas');
-                                            }
-
-                                            // Gán số sao đã chọn vào biến
-                                            selectedRating = index + 1;
-                                            console.log('Số sao đã chọn:', selectedRating);
-                                        });
-                                    });
-
-                                    // Xử lý gửi biểu mẫu
-                                    const form = document.getElementById('review-form');
-                                    form.addEventListener('submit', (e) => {
-                                        // Kiểm tra nếu người dùng chưa chọn sao
-                                        if (selectedRating === 0) {
-                                            alert('Vui lòng chọn xếp hạng sao!');
-                                            e.preventDefault();
-                                            return;
-                                        }
-
-                                        // Thêm giá trị xếp hạng sao vào form trước khi gửi
-                                        let ratingInput = document.querySelector('input[name="rating"]');
-                                        if (!ratingInput) {
-                                            ratingInput = document.createElement('input');
-                                            ratingInput.type = 'hidden';
-                                            ratingInput.name = 'rating';
-                                            form.appendChild(ratingInput);
-                                        }
-                                        ratingInput.value = selectedRating;
-
-                                        console.log('Số sao đã chọn (truyền vào form):', ratingInput.value);
-
-                                        // Form sẽ tự động được gửi nhờ method="post" và action trong HTML
-                                    });
-
-                            </script>
-                            <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
                         </div>
                     </div>
                   

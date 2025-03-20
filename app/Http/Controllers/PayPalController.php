@@ -140,7 +140,7 @@ class PayPalController extends Controller
         } else {
             $tb="Thanh toán không thành công";
             Session::put('error',  $tb);
-            return Redirect::to('/');
+            return Redirect::to(path: '/');
         }
     }
 

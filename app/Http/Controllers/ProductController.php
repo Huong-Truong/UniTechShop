@@ -73,8 +73,11 @@ class ProductController extends Controller
     public function save_product (Request $request)    
     {
         $this->AuthenLogin();
+     
+
+        
         // Lấy ra id lớn nhất
-        $maxId = DB::table('sanpham')->max('sanpham_id') + 1;
+        $maxId = DB::table('sanpham')->max('sanpham_id') + 1 ?? 0;
         // Lấy ra all dữ liệu 
         $data = $request->all();
 
@@ -97,7 +100,17 @@ class ProductController extends Controller
         $sp->sanpham_xuatxu = $data['product_country'];
         $sp->baohanh_id = $data['baohanh'];
         $get_image_file = $request->file('product_image');
-
+        // Kiêm tra tí
+        foreach($data as $key ){
+            if($key == null){
+                Session::put('message', 'Không được để trống ');
+                return Redirect::to('add-product');
+            }
+        }
+        if( (int)$data['product_price'] == 0 ){
+            Session::put('message', 'Giá nhập vào không hợp lệ!');
+            return Redirect::to('all-product');
+        }
 
         if($get_image_file){
 
@@ -169,6 +182,18 @@ class ProductController extends Controller
 
     public function delete_product($product_id){
         $this->AuthenLogin();
+        // Check đơn hàng
+        $checkDonHang = DB::table('chitietdonhang')->where('sanpham_id', $product_id)->count();
+        if($checkDonHang > 0){
+            Session::put('message', 'Không thể thực hiện thao tác do sản phẩm này đang ở trong đơn hàng');
+            return Redirect::to('all-product'); 
+        }
+        $checkKho = DB::table('tonkho')->where('sanpham_id', $product_id)->count();;
+        if ($checkKho){
+            Session::put('message', 'Không thể xóa do sản phẩm này đang ở trong kho hàng ');
+            return Redirect::to('all-product'); 
+        }
+
         $pro = Product::find( $product_id );
        
         $directoryPath = "img/sp$product_id";
@@ -193,7 +218,18 @@ class ProductController extends Controller
         $data['sanpham_xuatxu'] = $request->product_xuatxu;
         $data['hang_id'] = $request->brand;
         $data['baohanh_id'] = $request->baohanh;
-        $product = DB::table('sanpham')->where('sanpham_id', $product_id)->first();
+        // Kiêm tra tí
+        foreach($data as $key ){
+            if($key == null){
+                Session::put('message', 'Không được để trống bất ô nào ');
+                return $this->edit_product($product_id);
+            }
+        }
+        if( (int)$request->product_price == 0 ){
+            Session::put('message', 'Giá nhập vào không hợp lệ!');
+            return $this->edit_product($product_id);
+        }
+       // $product = DB::table('sanpham')->where('sanpham_id', $product_id)->first();
         $get_image_file = $request->file('product_image');
 
        
@@ -504,6 +540,70 @@ public function import_product(Request $request)
         return redirect()->back();
 
     }
-
-
+    public function submitReviews(Request $request) {
+        try {
+            $orderId = $request->orderId; // Ensure the order ID is passed
+            if (!$orderId) {
+                return response()->json(['success' => false, 'message' => 'Order ID is missing.']);
+            }
+    
+            // Ensure the session contains a valid customer ID
+            $tk = Session::get('khachhang_id');
+            if (!$tk) {
+                return response()->json(['success' => false, 'message' => 'Customer not logged in.']);
+            }
+    
+            // Validate the incoming reviews
+            $request->validate([
+                'reviews.*.content' => 'required|string',
+                'reviews.*.productId' => 'required|integer',
+                'reviews.*.rating' => 'required|integer|min:1|max:5',
+            ]);
+    
+            $reviews = $request->input('reviews');
+    
+            // Insert each review into the database
+            foreach ($reviews as $review) {
+                DB::table('danhgia')->insert([
+                    'dg_noidung' => $review['content'],
+                    'sanpham_id' => $review['productId'],
+                    'khachhang_id' => $tk,
+                    'dg_xephang' => $review['rating'],
+                
+                ]);
+            }
+    
+            // Update the `danhgia` field for the given order ID
+            DB::table('donhang')
+                ->where('donhang_id', $orderId)
+                ->where('danhgia', 0) // Only update if not already reviewed
+                ->update(['danhgia' => 1]);
+    
+            return response()->json(['success' => true, 'message' => 'Đánh giá đã được lưu thành công!', 'orderId' => $orderId]);
+        } catch (\Exception $e) {
+            // Handle exceptions and return an error response
+            return response()->json(['success' => false, 'message' => 'An error occurred.', 'error' => $e->getMessage()]);
+        }
+    }
+    public function getOrderProducts($orderId) {
+        try {
+            // Fetch products for the given order ID
+            $products = DB::table('chitietdonhang')
+                ->join('sanpham', 'chitietdonhang.sanpham_id', '=', 'sanpham.sanpham_id')
+                ->where('donhang_id', $orderId)
+                ->select(
+                    'sanpham.sanpham_id',
+                    'sanpham.sanpham_ten',
+                    'sanpham.sanpham_hinhanh'
+                )
+                ->get();
+    
+            return response()->json($products);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Có lỗi xảy ra khi lấy sản phẩm.', 'error' => $e->getMessage()]);
+        }
+    }
+    
+    
+    
 }

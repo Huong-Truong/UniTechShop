@@ -1,5 +1,15 @@
 @extends('admin_layout')
 @section('admin-content')
+<?php
+    $message = Session::get('message');
+    if($message){?>
+    <div id="errorBox" class="error-box">
+        {{$message}}
+    </div>
+<?php
+    Session::forget('message');
+    }
+?>
 <div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">

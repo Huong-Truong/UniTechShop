@@ -27,7 +27,7 @@ class CheckOutController extends Controller
             ->join('vanchuyen', 'vanchuyen.vanchuyen_id', '=', 'donhang.vanchuyen_id')
             ->join('chitiettrangthai', 'chitiettrangthai.donhang_id', '=', 'donhang.donhang_id')
             ->join('trangthai', 'trangthai.trangthai_id', '=', 'chitiettrangthai.trangthai_id')
-            ->select('donhang.donhang_id', 'donhang_tongtien', 'pttt_ten', 'vanchuyen_diachi', 'trangthai_ten', 'donhang_ngaytao')
+            ->select('donhang.danhgia','donhang.donhang_id', 'donhang_tongtien', 'pttt_ten', 'vanchuyen_diachi', 'trangthai_ten', 'trangthai.trangthai_id','donhang_ngaytao')
             ->get();
     
         // Tạo mảng để chứa tất cả các chi tiết đơn hàng
@@ -41,6 +41,7 @@ class CheckOutController extends Controller
                     'chitietdonhang.donhang_id',
                     'chitietdonhang.sanpham_gia', 
                     'chitietdonhang.sanpham_ten', 
+    
                     'chitietdonhang.sanpham_id', 
                     'ctdh_soluong', 
                     'sanpham_hinhanh'
@@ -62,8 +63,13 @@ class CheckOutController extends Controller
         }
     
         $taikhoan = DB::table('khachhang')->where('khachhang_id', $tk)->first();
-    
+        //  lấy đánh giá của account
+        $danhgia = DB::table('danhgia')
+        ->join('sanpham','sanpham.sanpham_id', '=', 'danhgia.sanpham_id')
+        ->where('khachhang_id', $tk)
+        ->get();
         return view('pages.checkout.account')
+            ->with('danhgia', $danhgia)
             ->with('ctdh', $ctdh) // Truyền mảng chi tiết đơn hàng vào view
             ->with('donhang', $donhang)
             ->with('taikhoan', $taikhoan)
@@ -75,7 +81,7 @@ class CheckOutController extends Controller
         $data = array();
         $khachhang_id = $request->khachhang_id;
         $data['khachhang_ten'] = $request->name;
-        $data['khachhang_matkhau'] = $request->pass;
+     
         ## chỉnh md5 không? md5( $request->pass)
         $data['khachhang_email'] = $request->email;
         $data['khachhang_sdt'] = $request->phone;
@@ -408,7 +414,8 @@ class CheckOutController extends Controller
                   $order_data['thanhtoan_id'] = $request->payment_option;
                   $order_data['khachhang_id'] = Session::get('khachhang_id');
                   $order_data['vanchuyen_id'] = Session::get('vanchuyen_id');
-                  $order_data['donhang_tongtien'] = Cart::total();
+                  $order_data['donhang_tongtien'] = (int)(preg_replace('/[^0-9.]/', '', Cart::total()));
+                 
                   $result  = DB::table('donhang')->insertGetId($order_data);
                   // order details
                   $content = Cart::content();

@@ -19,6 +19,8 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ThongKeController;
+use App\Http\Middleware\HandleError;
+use App\Http\Controllers\DanhGiaController;
 // use App\Http\Controllers\CheckOutController;
 
 
@@ -28,6 +30,7 @@ Route::get('/signup', [HomeController::class, 'signup'])->name('signup');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/trang-chu', [HomeController::class, 'index'])->name('trang-chu');
+
 
 
 
@@ -42,6 +45,8 @@ Route::get('/phan-loai/{phanloai_id}', [CategoryProduct::class, 'show_phanloai_l
 Route::get('/danh-muc/{danhmuc_id}', [CategoryProduct::class, 'show_danhmuc_home'])->name('danh-muc');
 Route::get('/xem-san-pham/{sanpham_id}', [ProductController::class, 'show_chitiet_sanpham'])->name('xem-san-pham');
 Route::post('/add-review', [ProductController::class, 'add_review'])->name('add-review');
+Route::post('/submit-reviews', [ProductController::class, 'submitReviews'])->name('/submit-reviews');
+Route::get('/get-order-products/{orderId}', [ProductController::class, 'getOrderProducts']);
 
 ## hiển thị sản phẩm theo thuong hieu home
 Route::get('/thuong-hieu/{hang_id}', [BrandProduct::class, 'show_thuonghieu_home'])->name('thuong-hieu');
@@ -255,6 +260,14 @@ Route::get('/chitiet-hdn/{hdn_id}', [StorageController::class, 'chitiet_hdn'])->
 Route::post('/import-hdn/{kho_id}', [StorageController::class, 'import_hdn'])->name('import-hdn');
 // cập nhật trạng thái sản phẩm dựa vào số lượng kho
 Route::get('unactive-product-storage', [StorageController::class, 'unactive_product_storage'])->name('unactive-product-storage');
+Route::get('/store-product', [StorageController::class, 'store'])->name('store-product')->middleware(HandleError::class);
+Route::get('/fill-kho', [StorageController::class, 'fill_kho'])->name('fill-kho')->middleware(HandleError::class);
+Route::get('/search-kho', [StorageController::class, 'search_kho'])->name('search-kho')->middleware(HandleError::class);
+Route::get('/delete-store/{sanpham_id}/{kho_id}', [StorageController::class, 'delete_store'])->name('delete-store')->middleware(HandleError::class);
+Route::get('/nhapkho/{kho_id}', [StorageController::class, 'nhapkho'])->name('nhapkho')->middleware(HandleError::class);
+Route::get('/chitiet-hdn/{hdn_id}', [StorageController::class, 'chitiet_hdn'])->name('chitiet-hdn')->middleware(HandleError::class);
+Route::post('/import-hdn/{kho_id}', [StorageController::class, 'import_hdn'])->name('import-hdn')->middleware(HandleError::class);
+
 // File
 Route::get('/download-classify', [FileController::class, 'download_classify'])->name('file-classify');
 Route::get('/download-cate', [FileController::class, 'download_cate'])->name('file-cate');
@@ -281,3 +294,6 @@ Route::get('/thongke-don-thang', [ThongKeController::class, 'thongke_don_thang']
 Route::get('/thongke-don-nam', [ThongKeController::class, 'thongke_don_nam'])->name('thongke-don-nam');
 Route::get('/thongke-sp', [ThongKeController::class, 'thongke_sp'])->name('thongke-sp');
 
+// Danh gia
+Route::get('/show-dg/{product_id}/{xephang}', [DanhGiaController::class, 'show_dg'])->name('show-dg');
+Route::get('/delete-dg/{dg_id}', [DanhGiaController::class, 'delete_dg'])->name('delete-dg');

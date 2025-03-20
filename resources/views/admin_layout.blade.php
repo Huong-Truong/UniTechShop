@@ -35,6 +35,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <link rel="stylesheet" href="{{asset('admin_css/monthly.css')}}">
 <!-- //calendar -->
 <!-- //font-awesome icons -->
+<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
 <script src="{{asset('admin_js/jquery2.0.3.min.js')}}"></script>
 <script src="{{asset('admin_js/raphael-min.js')}}"></script>
 <script src="{{asset('admin_js/morris.js')}}"></script>
@@ -152,6 +153,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <div class="fa fa-bars"></div>
     </div>
 </div>
+{{-- Lỗi --}}
+
+
 <!--logo end-->
 {{-- <div class="nav notify-row" id="top_menu">
     <!--  notification start -->
@@ -390,7 +394,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 </li> 
                 <li class="sub-menu">
                     <a href="javascript:;">
-                        <i class="fa fa-book"></i>
+                        <i class="fa fa-clipboard"></i>
+                       
                         <span>Quản lý danh mục</span>
                     </a>
                     <ul class="sub">
@@ -401,7 +406,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 </li>
                 <li class="sub-menu">
                     <a href="javascript:;">
-                        <i class="fa fa-book"></i>
+                        <i class="fa fa-clipboard"></i>
                         <span>Quản lý thương hiệu</span>
                     </a>
                     <ul class="sub">
@@ -454,7 +459,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 </li>
                 <li class="sub-menu">
                     <a href="javascript:;">
-                        <i class="fa fa-book"></i>
+                        <i class="fa fa-code"></i>
                         <span> Bảo hành</span>
                     </a>
                     <ul class="sub">

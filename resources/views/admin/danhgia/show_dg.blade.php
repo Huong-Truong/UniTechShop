@@ -13,22 +13,32 @@
 <div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">
-       Chương trình khuyến mãi
+        Đánh giá sản phẩm {{$product->sanpham_ten}}
     </div>
     <div class = "panel-heading1">
       <div class="row w3-res-tb ">
         <div class="col-sm-5 m-b-xs">    
-              
+            <form class="form-fillter" action="{{route('show-dg', ['product_id' => $product->sanpham_id,'xephang'=> 'all'])}}" method="get">
+                <select name="sao" class="input-sm form-control w-sm inline v-middle">
+                   
+                    <option value="all">Tất cả</option>
+                    @for ($i = 5; $i >= 1; $i--)
+                        <option value="{{ $i }}"  {{ $i == $sao ? 'selected' : '' }}>
+                            @for ($j = $i; $j >= 1; $j--)
+                                ★
+                            @endfor
+                        </option>
+                    @endfor
+                </select>
+                <button class="btn btn-sm btn-default">Lọc</button>
+            </form>
         </div>
         <div class="col-sm-4">
         </div>
         <div class="col-sm-3">
-          <div class="input-group">
+          {{-- <div class="input-group">
             <a  class="custom-button" href="{{ route('add-sales')}}">Thêm khuyến mãi</a> 
-            <span>    </span>
-            <a  class="custom-button" href="{{ route('add-sales-brand')}}">Thêm khuyến mãi theo thương hiệu</a> 
-          </div>
-
+          </div> --}}
         </div>
       </div>
     </div>
@@ -42,9 +52,10 @@
               </label>
             </th>
             <th>STT</th>
-            <th>Khuyến mãi</th>
-            <th>Mô tả</th>
-            <th>Thương hiệu</th>
+            <th>Tên khách hàng</th>
+            <th>Xếp hạng</th>
+            <th>Nội dung</th>
+            <th>Thời gian</th>
             <th>Thao tác</th>
             <th style="width:30px;"></th>
           </tr>
@@ -52,7 +63,7 @@
         <tbody>
           
         <?php $i=1;?>
-            @foreach($all_sales as $key => $value)
+            @foreach($dg as $key => $value)
           <tr>
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
             <td>
@@ -68,20 +79,30 @@
                 $gia = number_format(preg_replace('/\D/', '',$gia), 0, ',', '.');
             }
             ?>
-            <td>{{$gia}} {{$value->km_donvi}}  </td>
-            <td>{{$value->km_mota}}</td>
+            <td>{{$value->khachhang_ten}}  </td>
             <td>
-                <?php 
-                if($value->brand == NULL){
-                    echo "Không";
-                }else{
-                  echo $value->brand;
-                }
-                  ?>
+            <?php
+            $n = $value->dg_xephang; // Số lần lặp lại
+            for ($i = 0; $i < $n; $i++) { 
+            ?>
+                <i class="fa fa-star"></i>
 
-            </td>
+            <?php
+            }
+            ?>
+           </td>
+            <td>{{$value->dg_noidung}}</td>
+            <td>{{$value->dg_ngay}}</td>
+          
+
             <td>
-               <a onclick="return confirm('Bạn có chắc muốn xóa ?')" class="active"  href="{{route('delete-sales', ['sale_id' => $value->km_id])}}"> <i class="fa fa-times text-danger text"></i></a> 
+                <div class="input-group">
+                    <a onclick="return confirm('Bạn có chắc muốn xóa ?')" class=" custom-button"  id="deleteProductBtn" 
+                    href="{{route('delete-dg', ['dg_id' => $value->dg_id])}} " class="active" ui-toggle-class=""> 
+                       Xóa
+                      </a>
+                  </div>
+               
             </td>
           </tr>
         @endforeach

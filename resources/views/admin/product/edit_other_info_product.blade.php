@@ -1,5 +1,15 @@
 @extends('admin_layout')
 @section('admin-content')
+<?php
+    $message = Session::get('message');
+    if($message){?>
+    <div id="errorBox" class="error-box">
+        {{$message}}
+    </div>
+<?php
+    Session::forget('message');
+    }
+?>
 <div class="row">
             <div class="col-lg-12">
                     <section class="panel">
@@ -70,7 +80,7 @@
                                       }
                                      ?>
                                     @endforeach
-                                    <input value="{{$last_gia}}"name="giadichvu[]" class="form-control" id="exampleInputEmail1" >
+                                    <input  value="{{$last_gia}}"name="giadichvu[]" class="form-control" id="exampleInputEmail1" >
                                 </div>
                             @endforeach 
                             <button type="submit" name="update_other_info_product" class="btn btn-info">Cập nhật</button>
