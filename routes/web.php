@@ -45,6 +45,8 @@ Route::get('/phan-loai/{phanloai_id}', [CategoryProduct::class, 'show_phanloai_l
 Route::get('/danh-muc/{danhmuc_id}', [CategoryProduct::class, 'show_danhmuc_home'])->name('danh-muc');
 Route::get('/xem-san-pham/{sanpham_id}', [ProductController::class, 'show_chitiet_sanpham'])->name('xem-san-pham');
 Route::post('/add-review', [ProductController::class, 'add_review'])->name('add-review');
+Route::post('/submit-reviews', [ProductController::class, 'submitReviews'])->name('/submit-reviews');
+Route::get('/get-order-products/{orderId}', [ProductController::class, 'getOrderProducts']);
 
 ## hiển thị sản phẩm theo thuong hieu home
 Route::get('/thuong-hieu/{hang_id}', [BrandProduct::class, 'show_thuonghieu_home'])->name('thuong-hieu');
@@ -73,6 +75,11 @@ Route::get('/payment', [CheckOutController::class, 'payment'])->name('payment');
 ## user
 Route::post('/login-khachhang', [CheckOutController::class, 'login_khachhang'])->name('login-khachhang');
 Route::post('/dangky-khachhang', [CheckOutController::class, 'dangky_khachhang'])->name('dangky-khachhang');
+## account
+Route::get('/account', [CheckOutController::class, 'account'])->name('account');
+Route::post('/update-info', [CheckOutController::class, 'update_info'])->name('update-info');
+
+
 
 
 ## đặt hàng
@@ -220,6 +227,7 @@ Route::post('/save-set-service/{product_id}', [ServiceController::class, 'save_s
 ## orders
 Route::get('/manage-orders', [CheckOutController::class, 'manage_orders'])->name('manage-orders');
 Route::get('/view-order/{donhang_id}', [CheckOutController::class, 'view_order'])->name('view-order');
+
 Route::get('/delete-order/{donhang_id}', [CheckOutController::class, 'manage_orders'])->name('delete-order');
 ## cập nhật trang thái đơn hàng
 Route::get('/update-status', [CheckOutController::class, 'update_status'])->name('update-status');
@@ -243,6 +251,15 @@ Route::get('/edit-nhacungcap/{nhacungcap_id}', [NhaCungCapController::class, 'ed
 Route::post('/update-nhacungcap/{nhacungcap_id}', [NhaCungCapController::class, 'update_nhacungcap'])->name('update-nhacungcap');
 
 // Storage
+Route::get('/store-product', [StorageController::class, 'store'])->name('store-product');
+Route::get('/fill-kho', [StorageController::class, 'fill_kho'])->name('fill-kho');
+Route::get('/search-kho', [StorageController::class, 'search_kho'])->name('search-kho');
+Route::get('/delete-store/{sanpham_id}/{kho_id}', [StorageController::class, 'delete_store'])->name('delete-store');
+Route::get('/nhapkho/{kho_id}', [StorageController::class, 'nhapkho'])->name('nhapkho');
+Route::get('/chitiet-hdn/{hdn_id}', [StorageController::class, 'chitiet_hdn'])->name('chitiet-hdn');
+Route::post('/import-hdn/{kho_id}', [StorageController::class, 'import_hdn'])->name('import-hdn');
+// cập nhật trạng thái sản phẩm dựa vào số lượng kho
+Route::get('unactive-product-storage', [StorageController::class, 'unactive_product_storage'])->name('unactive-product-storage');
 Route::get('/store-product', [StorageController::class, 'store'])->name('store-product')->middleware(HandleError::class);
 Route::get('/fill-kho', [StorageController::class, 'fill_kho'])->name('fill-kho')->middleware(HandleError::class);
 Route::get('/search-kho', [StorageController::class, 'search_kho'])->name('search-kho')->middleware(HandleError::class);

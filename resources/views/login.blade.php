@@ -24,20 +24,27 @@
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
     <style>
+        body{
+               background-color: #f0f2f4!important; 
+        }
 .container{
-    padding: 100px;
+    padding-top: 25px;
+    padding-bottom: 100px;
 }
  .dn, .login-form, .signup-form {
-    border: 1px dashed #000000; /* 2px wide black border */
+ 
 	border-radius: 5px;
 	padding: 25px;
-    border-color: lightgray;
-    background-color:rgba(194, 194, 194, 0.2) !important;
+    background-color:rgb(255, 255, 255) !important;
 }
 
 form label{
-
+	padding: 25px;
     font-weight: bold !important;
+   
+}
+.dn .form-control{
+    border: 1px  rgb(130, 130, 130)  solid ;
 }
 h2{
     padding: 10px;
@@ -50,7 +57,7 @@ h2{
     <!-- Topbar Start -->
     <div class="container-fluid">
         <div class="row bg-secondary py-2 px-xl-5">
-            <div class="col-lg-6 d-none d-lg-block">
+            <div class="col-lg-4 d-none d-lg-block">
                 <div class="d-inline-flex align-items-center">
                     <a class="text-dark" href="">FAQs</a>
                     <span class="text-muted px-2">|</span>
@@ -141,29 +148,26 @@ h2{
     <section id="form" >
     <div class="container ">
         <div class="row justify-content-center align-items-center">
-            <div class=" col-sm-7 col-sm-offset-2 form border-3">
+            <div class=" col-sm-5 col-sm-offset-2 form border-3">
                 <div class="login-form dn">
                     <h2>Đăng nhập</h2>
                     <form action="{{route('login-khachhang')}}" method="POST">
                         @csrf
                         
                         <label for="" class=" px-2"  style="margin: -8px;" >Email</label>
-                        <input name="khachhang_email" style="margin-bottom: 15px;" type="text" class="form-control border-1 px-4" name="email_account" placeholder="Email tài khoản" />
+                        <input name="khachhang_email" type="text"   class="form-control border-3-dark px-6" name="email_account" placeholder="Email tài khoản" />
                         <br>
                         
                         <label for="" class=" px-2"  style="margin: -8px;">Mật Khẩu</label>
-                        <input name="khachhang_matkhau"  style="margin-bottom: 15px;" type="password" class="form-control border-1 " name="password_account" placeholder="Mật khẩu" />
-                        <label  class=" py-2 " for=""></label>
-                        <span>
-                            <input type="checkbox" class="checkbox"> 
-                            Ghi nhớ
-                        </span>
+                        <input name="khachhang_matkhau"  type="password" class="form-control border-3 " name="password_account" placeholder="Mật khẩu" />
+                        
                         <br>
+                        <small class=" py-2 " for=""><a href="">Quên mật khẩu?</a></small>
                         <hr>
-                        <span>
+                        <small>
                      Bằng cách tiếp tục, bạn đồng ý với  <a href=""> Điều khoản và Điều kiện</a>  <a href=" ">Chính sách Quyền riêng tư</a>, và  <a href="">Điều khoản Chương trình UniTech™</a>.
                      của chúng tôi.   
-                    </span>
+                    </small>
                         <hr>
                         <span>
                          <b> Chưa có tài khoản?  </b> <a href="{{route('signup')}}">Đăng ký tại đây</a>

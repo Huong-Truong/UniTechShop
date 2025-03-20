@@ -39,7 +39,8 @@ class CartController extends Controller
         Cart::add($data);
         ## set thuế 10% cho mỗi sản phẩm
         Cart::setGlobalTax(10);
-
+        $sucess = "Đã thêm vào giỏ hàng";
+        Session::put('success', $sucess);
         return redirect()->back();
         // return view('pages.cart.show_cart')->with('danhmuc', $cate_product)->with('phanloai', $phanloai);
     }

@@ -34,25 +34,25 @@
                     <div class="row">
               
                         <div class="col-md-6 form-group">
-                            <label>Họ tên</label>
-                            <input name="nguoinhan" class="form-control" type="text" value="{{$khachhang->khachhang_ten}}">
+                            <label>Họ tên*</label>
+                            <input name="nguoinhan" class="form-control" type="text" value="{{$khachhang->khachhang_ten}}" required>
                         </div>
              
                         <div class="col-md-6 form-group">
-                            <label>E-mail</label>
-                            <input name="email" class="form-control" type="text" placeholder="example@email.com" value="{{$khachhang->khachhang_email}}">
+                            <label>E-mail*</label>
+                            <input name="email" class="form-control" type="text" placeholder="example@email.com" value="{{$khachhang->khachhang_email}}" required >
                         </div>
                         <div class="col-md-6 form-group">
-                            <label>Địa chỉ cụ thể</label>
-                            <textarea name="diachi" class="form-control"  style="width: 100%; height: 200px;">{{$khachhang->khachhang_diachi}}</textarea>
+                            <label>Địa chỉ cụ thể*</label>
+                            <textarea name="diachi" class="form-control"  style="width: 100%; height: 200px;" required>{{$khachhang->khachhang_diachi}}</textarea>
                         </div>
                         <div class="col-md-6 form-group">
                             <label>Ghi chú gửi hàng</label>
-                            <textarea name="ghichu" class="form-control" placeholder="Đường 3/2, P.Xuân Khánh. Q.Ninh Kiều, TP.Cần Thơ" style="width: 100%; height: 200px;"></textarea>
+                            <textarea name="ghichu" class="form-control" placeholder="Ghi chú đơn hàng" style="width: 100%; height: 200px;" ></textarea>
                         </div>
                         <div class="col-md-6 form-group">
-                            <label>Số điện thoại</label>
-                            <input name="sdt" class="form-control" type="text" placeholder="0123 456 789"  value="{{$khachhang->khachhang_sdt}}">
+                            <label>Số điện thoại*</label>
+                            <input name="sdt" class="form-control" type="text" placeholder="0123 456 789"  value="{{$khachhang->khachhang_sdt}}" required>
                         </div>
                         <div class="col-md-6 form-group">
                         <label>&nbsp;</label>
@@ -78,25 +78,25 @@
                     <div class="row">
               
                         <div class="col-md-6 form-group">
-                            <label>Họ tên</label>
-                            <input name="nguoinhan" class="form-control" type="text" value="">
+                            <label>Họ tên*</label>
+                            <input name="nguoinhan" class="form-control" type="text"  required>
                         </div>
              
                         <div class="col-md-6 form-group">
-                            <label>E-mail</label>
-                            <input name="email" class="form-control" type="text" placeholder="example@email.com" value="">
+                            <label>E-mail*</label>
+                            <input name="email" class="form-control" type="text" placeholder="example@email.com" required>
                         </div>
                         <div class="col-md-6 form-group">
-                            <label>Địa chỉ cụ thể</label>
-                            <textarea name="diachi" class="form-control"  style="width: 100%; height: 200px;"></textarea>
+                            <label>Địa chỉ cụ thể*</label>
+                            <textarea name="diachi" class="form-control"  style="width: 100%; height: 200px;" required ></textarea>
                         </div>
                         <div class="col-md-6 form-group">
                             <label>Ghi chú gửi hàng</label>
                             <textarea name="ghichu" class="form-control" placeholder="Đường 3/2, P.Xuân Khánh. Q.Ninh Kiều, TP.Cần Thơ" style="width: 100%; height: 200px;"></textarea>
                         </div>
                         <div class="col-md-6 form-group">
-                            <label>Số điện thoại</label>
-                            <input name="sdt" class="form-control" type="text" placeholder="0123 456 789"  value="">
+                            <label>Số điện thoại*</label>
+                            <input name="sdt" class="form-control" type="text" placeholder="0123 456 789"  required>
                         </div>
                         <div class="col-md-6 form-group">
                         <label>&nbsp;</label>
