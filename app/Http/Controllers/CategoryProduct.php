@@ -37,12 +37,15 @@ class CategoryProduct extends Controller
     public function all_category_product ()
     {
         $this->AuthenLogin();
+        $count = Category::count();
 
         // $all_category = DB::table('danhmuc')
         // ->join('phanloaisp', 'phanloaisp.phanloai_id', '=', 'danhmuc.phanloai_id')->get(); ## lấy tấy cả dữ liêu
          $all_category = Category::join('phanloaisp','phanloaisp.phanloai_id','=','danhmuc.phanloai_id')
          ->orderBy('danhmuc_id','desc')->get();
-        $manger_category = view ('admin.category.all_category_product')->with('all_category', $all_category);
+        $manger_category = view ('admin.category.all_category_product')
+        ->with('count',$count)
+        ->with('all_category', $all_category);
         return view('admin_layout')->with('admin.category.all_category_product',$manger_category); ## gom lại hiện chung
 
     }

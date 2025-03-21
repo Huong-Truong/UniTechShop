@@ -58,6 +58,11 @@ class BaoHanhController extends Controller
 
     public function delete_baohanh($baohanh_id){
         $this->AuthenLogin();
+        $check = DB::table('sanpham')->where('baohanh_id',$baohanh_id)->count();
+        if($check > 0){
+            Session::put('message','Không thể xóa. Đang có sản phẩm áp dụng bảo hành này');
+            return Redirect::to('all-baohanh'); 
+        }
         $baohanh = BaoHanh::find($baohanh_id);
         $baohanh->delete();
         return Redirect::to('all-baohanh'); 

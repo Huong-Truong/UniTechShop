@@ -13,7 +13,7 @@
 <div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">
-        Liệt kê phân loại
+        Liệt kê phân loại ({{$count}})
     </div>
     <div class="panel-heading1">
       <div class="row w3-res-tb">
@@ -65,12 +65,9 @@
       <table class="table table-striped b-t b-light">
         <thead>
           <tr>
-            <th style="width:20px;">
-              <label class="i-checks m-b-none">
-                <input type="checkbox"><i></i>
-              </label>
-            </th>
+           
             <th>STT</th>
+            <th>Mã</th>
             <th>Tên phân loại</th>
             <th>Thao tác</th>
             <th style="width:30px;"></th>
@@ -87,14 +84,18 @@
       ?>
             @foreach($all_classify as $key => $pl)
           <tr>
-            <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
+          
             
             <td><?php
               echo $i;
                $i++;
                ?>
             </td>
-          
+            <td><?php
+              if($pl->phanloai_id < 10) echo 'PL00';
+              else if($pl->phanloai_id < 100) echo 'PL0'; 
+              else echo 'PL';           
+            ?>{{$pl->phanloai_id}}</td>
             <td>{{$pl->phanloai_ten}}</td>
 
             <td>

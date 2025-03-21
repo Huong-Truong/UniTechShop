@@ -30,27 +30,27 @@
                                 @csrf
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Tên Sản phẩm</label>
-                                    <input name="product_name" class="form-control" id="exampleInputEmail1" placeholder="Tên danh mục">
+                                    <input name="product_name" class="form-control" id="exampleInputEmail1"  required>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Giá</label>
-                                    <input name="product_price" class="form-control" id="exampleInputEmail1" placeholder="Tên danh mục">
+                                    <input name="product_price" class="form-control" id="exampleInputEmail1"  required>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Hình ảnh</label>
-                                    <input type="file" name="product_image" class="form-control" id="exampleInputEmail1" >
+                                    <input type="file" name="product_image" class="form-control" id="exampleInputEmail1" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Xuất Xứ</label>
-                                    <input name="product_country" class="form-control" id="exampleInputEmail1" placeholder="Tên danh mục">
+                                    <input name="product_country" class="form-control" id="exampleInputEmail1"  required>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Mô tả sản phẩm </label>
-                                    <textarea name="product_content" style="resize: none" rows="8" placeholder="Mô tả sản phẩm" class="form-control" ></textarea>
+                                    <textarea name="product_content" style="resize: none" rows="8"  class="form-control" required ></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Thông số Sản phẩm</label>
-                                    <textarea name="product_specificate" style="resize: none" rows="8" placeholder="Mô tả sản phẩm" class="ckeditor form-control" id="noidung1"></textarea>
+                                    <textarea name="product_specificate" style="resize: none" rows="8" class="ckeditor form-control" id="noidung1" required></textarea>
                                     <script src="{{asset('ckeditor/ckeditor.js')}}"></script> 
                                     <script>
                                     // Disable auto inline editing

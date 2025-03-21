@@ -21,6 +21,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ThongKeController;
 use App\Http\Middleware\HandleError;
 use App\Http\Controllers\DanhGiaController;
+use App\Http\Controllers\UserController;
 // use App\Http\Controllers\CheckOutController;
 
 
@@ -78,6 +79,14 @@ Route::post('/dangky-khachhang', [CheckOutController::class, 'dangky_khachhang']
 ## account
 Route::get('/account', [CheckOutController::class, 'account'])->name('account');
 Route::post('/update-info', [CheckOutController::class, 'update_info'])->name('update-info');
+
+// Đổi mật khẩu user
+Route::post('/change-pass', [UserController::class, 'change_pass'])->name('change-pass');
+
+// Quên mật khẩu user
+Route::get('/forgot-user', [UserController::class, 'forgot_user'])->name('forgot-user');
+Route::post('/review-user', [UserController::class, 'review_user'])->name('review-user');
+
 
 
 
@@ -227,6 +236,7 @@ Route::post('/save-set-service/{product_id}', [ServiceController::class, 'save_s
 ## orders
 Route::get('/manage-orders', [CheckOutController::class, 'manage_orders'])->name('manage-orders');
 Route::get('/view-order/{donhang_id}', [CheckOutController::class, 'view_order'])->name('view-order');
+Route::get('/search-order', [CheckOutController::class, 'search_order'])->name('search-order');
 
 Route::get('/delete-order/{donhang_id}', [CheckOutController::class, 'manage_orders'])->name('delete-order');
 ## cập nhật trang thái đơn hàng
@@ -237,6 +247,7 @@ Route::get('/update-status', [CheckOutController::class, 'update_status'])->name
 // Quen MK
 Route::get('/forgot-pass', [HomeController::class, 'forgot_pass'])->name('forgot-pass');
 Route::post('/review-pass', [HomeController::class, 'review_pass'])->name('review-pass');
+// Gửi liên hệ
 Route::post('/send-contact', [HomeController::class, 'send_contact'])->name('send-contact');
 // Doi MK
 Route::get('/change-pass', [HomeController::class, 'change_pass'])->name('change-pass');

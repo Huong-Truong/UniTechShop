@@ -54,6 +54,7 @@ class ProductController extends Controller
     public function all_product ()
     {
         $this->AuthenLogin();
+        $count = Product::count();
         $all = Product::join('danhmuc', 'danhmuc.danhmuc_id', '=', 'sanpham.danhmuc_id')
         ->join('hangsanpham', 'hangsanpham.hang_id', '=', 'sanpham.hang_id')
         ->select('sanpham.*', 'danhmuc.danhmuc_ten', 'hangsanpham.hang_ten')
@@ -64,6 +65,7 @@ class ProductController extends Controller
         $brand = Brand::orderBy('hang_ten','desc')->get();
 
         $manger = view ('admin.product.all_product')->with('all', $all)
+        ->with('count',$count)
         ->with('category',$category)
         ->with('brand',$brand);
         return view('admin_layout')->with('admin.product.all_product',$manger); ## gom lại hiện chung
@@ -185,7 +187,7 @@ class ProductController extends Controller
         // Check đơn hàng
         $checkDonHang = DB::table('chitietdonhang')->where('sanpham_id', $product_id)->count();
         if($checkDonHang > 0){
-            Session::put('message', 'Không thể thực hiện thao tác do sản phẩm này đang ở trong đơn hàng');
+            Session::put('message', 'Không thể thực hiện thao tác do sản phẩm này đang có trong đơn hàng');
             return Redirect::to('all-product'); 
         }
         $checkKho = DB::table('tonkho')->where('sanpham_id', $product_id)->count();;
@@ -462,6 +464,7 @@ public function import_product(Request $request)
     {
         $this->AuthenLogin();
         $cate_id = $request->category;
+        $count = Product::where('danhmuc_id',$cate_id)->count();
         if($cate_id == 'all'){
             return Redirect('/all-product');
         }
@@ -476,6 +479,7 @@ public function import_product(Request $request)
         $brand = Brand::orderBy('hang_ten','desc')->get();
 
         $manger = view ('admin.product.all_product')->with('all', $all)
+        ->with('count',$count)
         ->with('category',$category)
         ->with('brand',$brand);
         return view('admin_layout')->with('admin.product.all_product',$manger); ## gom lại hiện chung
@@ -486,6 +490,7 @@ public function import_product(Request $request)
     {
         $this->AuthenLogin();
         $brand_id = $request->brand;
+        $count = Product::where('hang_id',$brand_id)->count();
         if($brand_id == 'all'){
             return Redirect('/all-product');
         }
@@ -500,6 +505,7 @@ public function import_product(Request $request)
         $brand = Brand::orderBy('hang_ten','desc')->get();
 
         $manger = view ('admin.product.all_product')->with('all', $all)
+        ->with('count',$count)
         ->with('category',$category)
         ->with('brand',$brand);
         return view('admin_layout')->with('admin.product.all_product',$manger); ## gom lại hiện chung
@@ -510,6 +516,7 @@ public function import_product(Request $request)
     {
         $this->AuthenLogin();
         $key = $request->key;
+        $count = Product::where('sanpham.sanpham_ten','like','%'.$key.'%')->count();
         $all = Product::join('danhmuc', 'danhmuc.danhmuc_id', '=', 'sanpham.danhmuc_id')
         ->join('hangsanpham', 'hangsanpham.hang_id', '=', 'sanpham.hang_id')
         ->select('sanpham.*', 'danhmuc.danhmuc_ten', 'hangsanpham.hang_ten')
@@ -521,6 +528,8 @@ public function import_product(Request $request)
         $brand = Brand::orderBy('hang_ten','desc')->get();
 
         $manger = view ('admin.product.all_product')->with('all', $all)
+        ->with('count',$count)
+        ->with('count',$count)
         ->with('category',$category)
         ->with('brand',$brand);
         return view('admin_layout')->with('admin.product.all_product',$manger); ## gom lại hiện chung

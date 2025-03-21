@@ -24,7 +24,7 @@
                                  {{-- Tên danh mục --}}
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Tên danh mục</label>
-                                    <input name="danhmuc_ten" class="form-control" id="exampleInputEmail1" placeholder="Tên danh mục">
+                                    <input name="danhmuc_ten" class="form-control" id="exampleInputEmail1" placeholder="Tên danh mục" required>
                                 </div>
                                 {{-- Phân loại --}}
                                 <div class="form-group">

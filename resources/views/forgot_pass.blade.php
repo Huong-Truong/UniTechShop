@@ -29,42 +29,47 @@
         }
 .container{
     padding-top: 25px;
-    padding-bottom: 100px;
+    padding-bottom: 50px;
 }
  .dn, .login-form, .signup-form {
  
 	border-radius: 5px;
-	padding: 25px;
+	padding: 15px;
     background-color:rgb(255, 255, 255) !important;
 }
 
 form label{
-	padding: 15px;
+	padding: 45px;
     font-weight: bold !important;
    
-}
-form input{
-    margin-top: -8px;
-    margin-bottom: -10px;
 }
 .dn .form-control{
     border: 1px  rgb(130, 130, 130)  solid ;
 }
 h2{
-    padding: 10px;
+    padding: 40px;
     text-align: center;
 }
-.signup-form{
+.login-form{
     width: 700px;
 }
 </style>
 </head>
-
+<?php
+    $message = Session::get('message');
+    if($message){?>
+    <div id="errorBox" class="error-box">
+        {{$message}}
+    </div>
+<?php
+    Session::forget('message');
+    }
+?>
 <body>
     <!-- Topbar Start -->
     <div class="container-fluid">
         <div class="row bg-secondary py-2 px-xl-5">
-            <div class="col-lg-6 d-none d-lg-block">
+            <div class="col-lg-4 d-none d-lg-block">
                 <div class="d-inline-flex align-items-center">
                     <a class="text-dark" href="">FAQs</a>
                     <span class="text-muted px-2">|</span>
@@ -155,98 +160,58 @@ h2{
     <section id="form" >
     <div class="container ">
         <div class="row justify-content-center align-items-center">
-           
+     
+                <div class="login-form dn">
+                    <h2>Thông tin tài khoản</h2>
+                    <form action="{{route('review-user')}}" method="POST">
+                        @csrf
+                        
+                       
+                        <input name="email" type="text"   class="form-control border-3-dark px-6" name="email_account" placeholder="Email tài khoản" />
+                        <br>
+                        
+                
+                        {{-- <input name="khachhang_matkhau"  type="password" class="form-control border-3 " name="password_account" placeholder="Mật khẩu" /> --}}
+                        
+                        
+                        <small class=" py-2 " for=""><a href="{{route('login-checkout')}}">Quay lại đăng nhập</a></small>
+                        <hr>
+                        <small>
+                   
+                <div class="clearfix"></div>
+                        <button type="submit" class="btn btn-primary btn-block border-0 py-3">Cấp lại mật khẩu</button>
+                    </form>
+             
+            </div>
+            <!-- <div class="col-sm-1">
+				<h5>Hoặc</h5>
+			</div> -->
+            <!-- <div class="col-sm-5">
                 <div class="signup-form dn">
                     <h2>Đăng ký</h2>
                     <form action="{{route('dangky-khachhang')}}" method="POST">
                         @csrf
-                        <label  class=" py-2  "   for="">Tên tài khoản</label>
-                        <input name="name" class="form-control border-1 py-2" type="text" placeholder=""/>
-                       <br>
+                        <label  class=" py-2  "  for="">Tên tài khoản</label>
+                        <input name="name" class="form-control border-1 py-4" type="text" placeholder=""/>
                         <label  class=" py-2  " for="">Địa chỉ email</label>
-                        <input name="email" class="form-control border-1 py-2" type="email" placeholder=""/>
-                        <br>
+                        <input name="email" class="form-control border-1 py-4" type="email" placeholder=""/>
                         <label  class=" py-2  " for="">Địa chỉ</label>
-                        <input name="address" class="form-control border-1 py-2" type="text" placeholder=""/>
-                        <br>
-                        <label   class=" py-2 " for="">Mật khẩu</label>
-                        <input name="pass" class="form-control border-1 py-2" type="password" placeholder=""/>
-                        <br>
+                        <input name="address" class="form-control border-1 py-4" type="text" placeholder=""/>
+                        <label   class=" py-2  " for="">Mật khẩu</label>
+                        <input name="pass" class="form-control border-1 py-4" type="password" placeholder=""/>
                         <label  class=" py-2 " for="">Số điện thoại</label>
-                        <input name="phone" class=" form-control border-1 py-2" type="text" placeholder=""/>
-
-                        <hr>
-                        <small>
-                     Bằng cách tiếp tục, bạn đồng ý với  <a href=""> Điều khoản và Điều kiện</a>  <a href=" ">Chính sách Quyền riêng tư</a>, và  <a href="">Điều khoản Chương trình UniTech™</a>.
-                     của chúng tôi.   
-                    </small>
-                        <hr>
-                        <span>
-                         <b> Đã có tài khoản?  </b> <a href="{{route('login-checkout')}}"> Đăng nhập</a>
-                        </span>
-                        <hr>
-                        <div class="px-3"></div>
-                     
+                        <input name="phone" class="form-control border-1 py-4" type="text" placeholder=""/>
+                        <label  class=" py-2 " for=""></label>
                         <button name="submit" type="submit" class="btn btn-primary btn-block border-0 py-3">Đăng ký</button>
                     </form>
                 </div>
-    
+            </div> -->
         </div>
     </div>
-    
 </section>
 
 
 
-
-    <!-- Footer Start -->
-    <div class="container-fluid bg-secondary text-dark mt-5 pt-5">
-        <div class="row px-xl-5  pt-6">
-            <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
-                <a href="" class="text-decoration-none">
-                    <h1 class="mb-4 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border border-white px-3 mr-1">U</span>UniTech</h1>
-                </a>
-                <p>Điểm đến của những sản phẩm công nghệ tiên tiến, mang đến cho bạn trải nghiệm mua sắm đỉnh cao và chất lượng tuyệt vời.</p>
-                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Đường 3/2, Phường Hưng Lợi, Quận Ninh Kiều, Thành phố Cần Thơ</p>
-                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>ctu@gmail.com</p>
-                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+84 345 67890</p>
-            </div>
-            <div class="col-lg-8 col-md-12">
-                <div class="row">
-                    <div class="col-md-4 mb-5">
-                        <h5 class="font-weight-bold text-dark mb-4">Đường dẫn</h5>
-                        <div class="d-flex flex-column justify-content-start">
-                            <a class="text-dark mb-2" href="index.html"><i class="fa fa-angle-right mr-2"></i>Trang Chủ</a>
-                            <a class="text-dark mb-2" href="shop.html"><i class="fa fa-angle-right mr-2"></i>Sản Phẩm</a>
-                            <a class="text-dark mb-2" href="detail.html"><i class="fa fa-angle-right mr-2"></i>Giỏ Hàng</a>
-                            <a class="text-dark mb-2" href="cart.html"><i class="fa fa-angle-right mr-2"></i>Thanh Toán</a>
-                            <a class="text-dark mb-2" href="{{ route('contact') }}"><i class="fa fa-angle-right mr-2"></i>Liên Hệ</a>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-5">
-                        <h5 class="font-weight-bold text-dark mb-4">Về Chúng Tôi</h5>
-                        <div class="d-flex flex-column justify-content-start">
-                            <a class="text-dark mb-2" href="index.html"><i class="fa fa-angle-right mr-2"></i>Giới thiệu UniShop</a>
-                            <a class="text-dark mb-2" href="shop.html"><i class="fa fa-angle-right mr-2"></i>Hệ thống cửa hàng</a>
-                            <a class="text-dark mb-2" href="detail.html"><i class="fa fa-angle-right mr-2"></i>Hướng dẫn đặt hàng</a>
-                            <a class="text-dark mb-2" href="cart.html"><i class="fa fa-angle-right mr-2"></i>Chính sách và quy định</a>
-                            <a class="text-dark mb-2" href="checkout.html"><i class="fa fa-angle-right mr-2"></i>Thông tin sở hữu</a>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-5">
-                            <h5 class="font-weight-bold text-dark mb-4">Follow Us</h5>
-                            <div class="d-flex flex-column justify-content-start">
-                                <a class="text-dark px-6 mb-2" href=""><i class="fab fa-facebook-f mr-2" ></i>Facebook</a>
-                                <a class="text-dark px-6 mb-2" href=""><i class="fab fa-twitter mr-2"></i>Twitter</a>
-                                <a class="text-dark px-6 mb-2" href=""><i class="fab fa-linkedin-in mr-2"></i>LinkedIn</a>
-                                <a class="text-dark px-6 mb-2" href=""><i class="fab fa-instagram mr-2"></i>Instagram</a>
-                                <a class="text-dark pl-6 mb-2" href=""><i class="fab fa-youtube mr-2"></i>Youtube</a>
-                            </div>
-                    </div>
-            </div>
-        </div>
-    </div>
-    <!-- Footer End -->
 
 
     <!-- Back to Top -->

@@ -50,9 +50,21 @@ h2{
     padding: 10px;
     text-align: center;
 }
+.login-form{
+    width: 700px;
+}
 </style>
 </head>
-
+<?php
+    $message = Session::get('message');
+    if($message){?>
+    <div id="errorBox" class="error-box">
+        {{$message}}
+    </div>
+<?php
+    Session::forget('message');
+    }
+?>
 <body>
     <!-- Topbar Start -->
     <div class="container-fluid">
@@ -148,7 +160,7 @@ h2{
     <section id="form" >
     <div class="container ">
         <div class="row justify-content-center align-items-center">
-            <div class=" col-sm-5 col-sm-offset-2 form border-3">
+          
                 <div class="login-form dn">
                     <h2>Đăng nhập</h2>
                     <form action="{{route('login-khachhang')}}" method="POST">
@@ -162,7 +174,7 @@ h2{
                         <input name="khachhang_matkhau"  type="password" class="form-control border-3 " name="password_account" placeholder="Mật khẩu" />
                         
                         <br>
-                        <small class=" py-2 " for=""><a href="">Quên mật khẩu?</a></small>
+                        <small class=" py-2 " for=""><a href="{{route('forgot-user')}}">Quên mật khẩu?</a></small>
                         <hr>
                         <small>
                      Bằng cách tiếp tục, bạn đồng ý với  <a href=""> Điều khoản và Điều kiện</a>  <a href=" ">Chính sách Quyền riêng tư</a>, và  <a href="">Điều khoản Chương trình UniTech™</a>.
@@ -179,7 +191,7 @@ h2{
                 <div class="clearfix"></div>
                         <button type="submit" class="btn btn-primary btn-block border-0 py-3">Đăng nhập</button>
                     </form>
-                </div>
+               
             </div>
             <!-- <div class="col-sm-1">
 				<h5>Hoặc</h5>

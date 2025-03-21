@@ -3439,3 +3439,24 @@ a.active{
     display: inline;
     color: rgb(210, 0, 0);
 }
+.charts-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.chart {
+    width: 45%;
+    height: 400px;
+    margin-bottom: 50px;
+    padding-top:50px ;
+}
+
+.profile > a{
+    background-color: #000;
+    font-size: 100px;
+}
+
+.a-black{
+    color: #4c4c4c;
+}
+

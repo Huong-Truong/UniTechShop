@@ -14,7 +14,13 @@
   <div class="panel panel-default">
     <div class="panel-heading">
         Thông tin 
-          {{$kho->kho_ten}}
+        @if ($kho->kho_ten != 0)
+        {{$kho->kho_ten}}
+        @else
+        Tất cả kho
+          
+        @endif
+        
        
     </div>
     <div class="panel-heading1">
@@ -42,18 +48,10 @@
           <button class="btn btn-sm btn-default">
             <a  href="{{route('nhapkho',['kho_id' => $kho->kho_id])}}">Nhập kho</a> 
            </button>
-<<<<<<< HEAD
-<<<<<<< HEAD
+
           @endif
           
-=======
 
-         
->>>>>>> 64fd946b7690df810e98decf4a8eeb40bfec6773
-=======
-
-         
->>>>>>> 64fd946b7690df810e98decf4a8eeb40bfec6773
          
         </div>
       <div class="col-sm-4">

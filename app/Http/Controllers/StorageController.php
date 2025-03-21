@@ -84,18 +84,33 @@ class StorageController extends Controller
     }
 
     public function search_kho(Request $request){
-        $this->AuthenLogin();
-        $id_kho = $request->id_kho;
-        $kho = Storage::find($id_kho);
+        $this->AuthenLogin();;
+        $id_kho = $request->id_kho ;
+        if($id_kho){
+            $kho = Storage::find($id_kho);
+        }
+        else {
+             $kho = new Storage();
+            $kho->kho_ten = 'tất cả kho';
+            $kho->kho_id = 0;
+        }
+        
+        
+    
         $key = $request->key;
         $storage = Storage::get();
         $store = DB::table('tonkho')
         ->join('sanpham', 'sanpham.sanpham_id', '=', 'tonkho.sanpham_id')
-        ->join('khohang', 'khohang.kho_id', '=', 'tonkho.kho_id')
-        ->where('khohang.kho_id',$id_kho)
+        ->select(
+            'sanpham.sanpham_id',
+            'sanpham.sanpham_ten',
+            DB::raw('SUM(tonkho.tonkho_soluong) as tonkho_soluong')
+        )
         ->where('sanpham.sanpham_ten','like','%'.$key.'%')
+        ->groupBy('sanpham.sanpham_id', 'sanpham.sanpham_ten',)
         ->orderBy('sanpham.sanpham_id', 'desc')
         ->get();
+      
         
     
         return   view ('admin.storage.storage')

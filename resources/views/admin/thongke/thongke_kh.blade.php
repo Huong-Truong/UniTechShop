@@ -20,7 +20,7 @@
                         </header>
                        
                         <div class="row w3-res-tb">
-                            <div class="col-sm-5 m-b-xs">
+                           
                                
                                     <br>
                                     <div class="custom-o btn" >
@@ -65,7 +65,7 @@
                                   </form>
                                     
                                  
-                                </div>
+                                
                                 
                          <div class="col-sm-4">
                             

@@ -80,14 +80,21 @@ class NhaCungCapController extends Controller
         $nhacungcap->nhacungcap_diachi = $data['nhacungcap_diachi'];
        // DB::table('phanloaisp')->where('phanloai_id', $nhacungcap_id)->update($data);
          $nhacungcap->save();
-        Session::put('message','Cập nhật phân loại sản phẩm thành công');
+        Session::put('message','Cập nhật thông tin thành công');
         return Redirect::to('all-nhacungcap'); 
     }
 
     public function delete_nhacungcap($nhacungcap_id){
         $this->AuthenLogin();
+        $count = DB::table('hoadonnhap')->where('nhacungcap_id',$nhacungcap_id)->count();
+        $check = DB::table('hoadonnhap')->where('nhacungcap_id',$nhacungcap_id)->first();
+        if($check){
+            Session::put('message','Không thể xóa. Đang có '.$count.' hóa đơn nhập của nhà cung cấp này');
+            return Redirect::to('all-nhacungcap'); 
+        }
         $nhacungcap = NhaCungCap::find($nhacungcap_id);
         $nhacungcap->delete();
+        Session::put('message','Cập nhật nhà cung cấp sản thành công');
         return Redirect::to('all-nhacungcap'); 
     }
 }

@@ -49,6 +49,13 @@ class ServiceController extends Controller
     
     public function delete_service($service_id){
         $this->AuthenLogin();
+        $check = DB::table('giadichvu')->where('dv_id',$service_id)->first();
+
+        if( $check){
+            Session::put('message', 'Không thể xóa. Đang có sản phẩm sử dụng dịch vụ này');
+            return Redirect::to('all-service'); 
+        }
+
         $service = Service::find($service_id);
         $service->delete();
         

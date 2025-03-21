@@ -30,9 +30,12 @@ class BrandProduct extends Controller
     public function all_brand_product ()
     {
         $this->AuthenLogin();
+        $count = Brand::count();
        // $all_brand = DB::table('hangsanpham')->get();
         $all_brand = Brand::orderBy('hang_id','desc')->get();
-        $manger_brand = view ('admin.brand.all_brand_product')->with('all_brand', $all_brand);
+        $manger_brand = view ('admin.brand.all_brand_product')
+        ->with('count',$count)
+        ->with('all_brand', $all_brand);
         return view('admin_layout')->with('admin.brand.all_brand_product',$manger_brand); ## gom lại hiện chung
 
     }
@@ -165,6 +168,7 @@ class BrandProduct extends Controller
                     $brand->hang_id = $maxID + 1;
                     $brand->hang_ten = $data[0];
                     $brand->hang_mota = $data[1];
+                    $brand->hang_hinhanh = 'Chưa có';
                     $brand->hang_trangthai = 1;
                     $brand->save();
                     $maxID++;

@@ -24,11 +24,11 @@
                                 @csrf
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Tên hãng</label>
-                                    <input name="brand_name" class="form-control" id="exampleInputEmail1" placeholder="Tên danh mục">
+                                    <input name="brand_name" class="form-control" id="exampleInputEmail1" placeholder="Tên danh mục" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Hình ảnh</label>
-                                    <input type="file" name="brand_image" class="form-control" id="exampleInputEmail1" >
+                                    <input type="file" name="brand_image" class="form-control" id="exampleInputEmail1" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Mô tả Hãng</label>
@@ -36,7 +36,7 @@
                                 </div>
                                 <div class="form-group">
                                 <label for="exampleInputPassword1">Hiển thị</label>
-                                <select name="brand_status" class="form-control input-sm m-bot15">
+                                <select name="brand_status" class="form-control input-sm m-bot15" required>
                                 <option value = "0">Ẩn</option>
                                 <option value = "1">Hiển thị</option>
                                 </select>

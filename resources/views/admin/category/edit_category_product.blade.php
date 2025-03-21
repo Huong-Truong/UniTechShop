@@ -24,7 +24,7 @@
                                 @csrf
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Tên danh mục</label>
-                                    <input value="{{ $edit_value->danhmuc_ten}}"name="danhmuc_ten" class="form-control" id="exampleInputEmail1" placeholder="Tên danh mục">
+                                    <input value="{{ $edit_value->danhmuc_ten}}"name="danhmuc_ten" class="form-control" id="exampleInputEmail1" placeholder="Tên danh mục" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Danh mục sản phẩm</label>

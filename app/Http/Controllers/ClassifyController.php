@@ -36,9 +36,13 @@ class ClassifyController extends Controller
     {
         $this->AuthenLogin();
        $all_classify = Classify::orderBy('phanloai_id','desc')->get();
+       $count = Classify::count();
        // $all_classify = DB::table('phanloaisp')->get(); ## lấy tấy cả dữ liêu
-        $manger_classify = view ('admin.classify.all_classify_product')->with('all_classify', $all_classify);
+        $manger_classify = view ('admin.classify.all_classify_product')
+        ->with('count',$count)
+        ->with('all_classify', $all_classify);
         return view('admin_layout')->with('admin.all_classify_product',$manger_classify); ## gom lại hiện chung
+
 
     }
     public function save_classify_product (Request $request)    

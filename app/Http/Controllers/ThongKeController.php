@@ -161,24 +161,34 @@ class ThongKeController extends Controller
         
     }
 
-    public function thongke_sp(){
+    public function thongke_sp(Request $request)
+    {
         $this->AuthenLogin(); 
-             
-        $products = DB::table('chitietdonhang')
-        ->join('sanpham', 'sanpham.sanpham_id', '=', 'chitietdonhang.sanpham_id')
-        ->select(
-            'sanpham.sanpham_id',
-            'sanpham.sanpham_ten',
-            DB::raw('SUM(chitietdonhang.ctdh_soluong) as ctdh_soluong')
-        )
-        ->groupBy('sanpham.sanpham_id', 'sanpham.sanpham_ten')
-        ->orderBy('sanpham.sanpham_id', 'desc')
-        ->get();
-
-        
-        
-        
-        return view('admin.thongke.thongke_sp')->with('products',$products);
+        $month = $request->month ?? 0;
+        $year = $request->year ?? date('Y');
+    
+        $query = DB::table('chitietdonhang')
+            ->join('sanpham', 'sanpham.sanpham_id', '=', 'chitietdonhang.sanpham_id')
+            ->join('donhang', 'donhang.donhang_id', '=', 'chitietdonhang.donhang_id')
+            ->select(
+                'sanpham.sanpham_id',
+                'sanpham.sanpham_ten',
+                DB::raw('SUM(chitietdonhang.ctdh_soluong) as ctdh_soluong')
+            )
+            ->groupBy('sanpham.sanpham_id', 'sanpham.sanpham_ten')
+            ->whereYear('donhang.donhang_ngaytao', $year)
+            ->orderBy('sanpham.sanpham_id', 'desc');
+    
+        if ($month) {
+            $query->whereMonth('donhang.donhang_ngaytao', $month);
+        }
+    
+        $products = $query->get();
+    
+        return view('admin.thongke.thongke_sp')
+            ->with('y', $year)
+            ->with('m', $month)
+            ->with('products', $products);
     }
 
     public function thongke_kh(Request $request) {
@@ -210,6 +220,8 @@ class ThongKeController extends Controller
             ->with('y',$y)
             ->with('m',$m);
     }
+
+
 
 }
 

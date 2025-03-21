@@ -17,6 +17,44 @@
             <header class="panel-heading">
                 Sản phẩm bán chạy
             </header>
+
+            <div class="custom-o btn" >
+                <br>
+                <br>
+             
+                <form action="{{route('thongke-sp')}}" method="GET" enctype="multipart/form-data" class="form-search">
+                  @csrf
+                  
+                <div class="btn">
+                  <select name="month" class="form-control input-sm m-bot15">
+                    <option value="0" {{ $m == 0 ? 'selected' : '' }}>Tất cả</option>
+                    @for ($i = 1; $i <= 12; $i++)
+                        <option value="{{ $i }}" {{ $i == (int)$m ? 'selected' : '' }}>Tháng {{ $i }}</option>
+                    @endfor
+                </select>
+              </div>
+              <div class="btn">
+                <select name="year" class="form-control input-sm m-bot15">
+                 
+                  <option value="0">Tất cả</option>
+                  <?php $nam = date('Y');?>
+                  @for ($i = $nam - 5; $i <= $nam + 5; $i ++)
+                  <option value="{{$i}}" {{ $i == $y ? 'selected' : '' }} >{{$i}}</option>
+                  @endfor
+              </select>
+                </div>
+                  
+                  <p id="fileName"></p>
+              
+                  <br>
+                  <input type="submit" value="Lọc" name="import_hdn" class="custom-file-upload">
+                </form>
+              <br>
+              
+           
+ 
+        </div>
+       
             <div class="panel-body">
                 <div style="width: 90%;">
                     <canvas id="sanphamChart"></canvas>

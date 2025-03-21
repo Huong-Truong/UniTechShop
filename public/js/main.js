@@ -102,3 +102,7 @@
     
 })(jQuery);
 
+setTimeout(function() {
+    document.getElementById('errorBox').style.display = 'none';
+}, 7000); // 10000 milliseconds = 10 seconds
+
