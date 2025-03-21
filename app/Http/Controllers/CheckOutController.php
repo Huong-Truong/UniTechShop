@@ -599,8 +599,7 @@ class CheckOutController extends Controller
     
     public function search_order(Request $request){
         return $this->manage_orders($request);
-    }
-    
+    }    
 
 }
 
