@@ -379,22 +379,29 @@ class CheckOutController extends Controller
         $data = array();
         $data['trangthai_id'] = $request->trangthai_donhang;
 
-        DB::table('chitiettrangthai')->where('donhang_id', $request->donhang_id)->update($data);
         ## update tồn kho
         $sanpham = DB::table('chitietdonhang')->where('donhang_id', $request->donhang_id)->get();
-        if($request->trangthai_donhang != "1"){
-            foreach($sanpham as $v_sanpham){
-                $kho1 =DB::table('tonkho')->where('kho_id', 1)->where('sanpham_id', $v_sanpham->sanpham_id)->pluck('tonkho_soluong')->first();
-                $kho2 =DB::table('tonkho')->where('kho_id', 2)->where('sanpham_id', $v_sanpham->sanpham_id)->pluck('tonkho_soluong')->first();
-                if($kho1 > 0){
-                    $kho1 = $kho1 - $v_sanpham->ctdh_soluong;
-                    DB::table('tonkho')->where('kho_id', 1)->where('sanpham_id', $v_sanpham->sanpham_id)->update(['tonkho_soluong'=>$kho1]);
-                }else{
-                    $kho2 = $kho2 - $v_sanpham->ctdh_soluong;
-                    DB::table('tonkho')->where('kho_id', 2)->where('sanpham_id', $v_sanpham->sanpham_id)->update(['tonkho_soluong'=>$kho2]);
+        if($request->check){
+            if($request->check == 1){
+                DB::table('chitiettrangthai')->where('donhang_id', $request->donhang_id)->update($data);
+            }
+        }else{
+            DB::table('chitiettrangthai')->where('donhang_id', $request->donhang_id)->update($data);
+            if($request->trangthai_donhang != "1"){
+                foreach($sanpham as $v_sanpham){
+                    $kho1 =DB::table('tonkho')->where('kho_id', 1)->where('sanpham_id', $v_sanpham->sanpham_id)->pluck('tonkho_soluong')->first();
+                    $kho2 =DB::table('tonkho')->where('kho_id', 2)->where('sanpham_id', $v_sanpham->sanpham_id)->pluck('tonkho_soluong')->first();
+                    if($kho1 > 0){
+                        $kho1 = $kho1 - $v_sanpham->ctdh_soluong;
+                        DB::table('tonkho')->where('kho_id', 1)->where('sanpham_id', $v_sanpham->sanpham_id)->update(['tonkho_soluong'=>$kho1]);
+                    }else if($kho2 > 0){
+                        $kho2 = $kho2 - $v_sanpham->ctdh_soluong;
+                        DB::table('tonkho')->where('kho_id', 2)->where('sanpham_id', $v_sanpham->sanpham_id)->update(['tonkho_soluong'=>$kho2]);
+                    }
                 }
             }
         }
+        
         return redirect()->back();
 
     }
