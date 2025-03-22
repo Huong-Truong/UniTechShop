@@ -51,8 +51,9 @@ class BaoHanhController extends Controller
     
     public function all_baohanh(){
         $this->AuthenLogin();
+        $count = BaoHanh::count();
         $all_baohanh = BaoHanh::orderBy('baohanh_id','desc')->get();
-        $manger_baohanh = view ('admin.baohanh.all_baohanh')->with('all_baohanh', $all_baohanh);
+        $manger_baohanh = view ('admin.baohanh.all_baohanh')->with('count',$count)->with('all_baohanh', $all_baohanh);
         return view('admin_layout')->with('admin.all_baohanh',$manger_baohanh); ## gom lại hiện chung
     }
 

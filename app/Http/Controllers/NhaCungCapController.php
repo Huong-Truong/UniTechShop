@@ -55,8 +55,11 @@ class NhaCungCapController extends Controller
     
     public function all_nhacungcap(){
         $this->AuthenLogin();
+        $count = NhaCungCap::count();
         $all_nhacungcap = NhaCungCap::orderBy('nhacungcap_id','desc')->get();
-        $manger_nhacungcap = view ('admin.nhaphang.all_nhacungcap')->with('all_nhacungcap', $all_nhacungcap);
+        $manger_nhacungcap = view ('admin.nhaphang.all_nhacungcap')
+        ->with('count',$count)
+        ->with('all_nhacungcap', $all_nhacungcap);
         return view('admin_layout')->with('admin.all_nhacungcap',$manger_nhacungcap); ## gom lại hiện chung
     }
     public function edit_nhacungcap($nhacungcap_id){

@@ -15,9 +15,9 @@
     <div class="panel-heading">
         Thông tin 
         @if ($kho->kho_ten != 0)
-        {{$kho->kho_ten}}
+        {{$kho->kho_ten}} ({{$count}})
         @else
-        Tất cả kho
+        Tất cả kho  ({{$count}})
           
         @endif
         

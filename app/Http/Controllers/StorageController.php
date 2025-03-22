@@ -41,6 +41,9 @@ class StorageController extends Controller
     }
     public function store(){
         $this->AuthenLogin();
+       
+
+        DB::table('tonkho')->where('tonkho_soluong',0)->delete();
         $kho = new Storage();
         $kho->kho_ten = 'tất cả kho';
         $kho->kho_id = 0;
@@ -55,9 +58,11 @@ class StorageController extends Controller
         ->groupBy('sanpham.sanpham_id', 'sanpham.sanpham_ten',)
         ->orderBy('sanpham.sanpham_id', 'desc')
         ->get();
+        $count = $store->count();
 
         
         return   view ('admin.storage.storage')
+        ->with('count',$count)
         ->with('store', $store)
         ->with('storage', $storage)
         ->with('kho',$kho);
@@ -77,7 +82,9 @@ class StorageController extends Controller
        ->where('khohang.kho_id',$id_kho)
        ->orderBy('sanpham.sanpham_id', 'desc')
        ->get();
+       $count = $store->count(); 
        return   view ('admin.storage.storage')
+       ->with('count',$count)
        ->with('store', $store)
        ->with('storage', $storage)
        ->with('kho', $kho);
@@ -95,7 +102,7 @@ class StorageController extends Controller
             $kho->kho_id = 0;
         }
         
-        
+    
     
         $key = $request->key;
         $storage = Storage::get();
@@ -111,9 +118,10 @@ class StorageController extends Controller
         ->orderBy('sanpham.sanpham_id', 'desc')
         ->get();
       
-        
+        $count = $store->count(); 
     
         return   view ('admin.storage.storage')
+        ->with('count',$count)
         ->with('store', $store)
         ->with('storage', $storage)
         ->with('kho', $kho);
@@ -137,19 +145,31 @@ class StorageController extends Controller
      
     }
 
-    public function nhapkho($kho_id){
-
+    public function nhapkho(Request $request, $kho_id)
+    {
         $this->AuthenLogin();
         $ncungcap = NhaCungCap::get();
         $kho = Storage::find($kho_id);
-        $hdn = HoaDonNhap::join('nhacungcap','nhacungcap.nhacungcap_id','=','hoadonnhap.nhacungcap_id')
-        ->where('kho_id',$kho_id)
-        ->get();
-        
-        return   view ('admin.storage.nhapkho')
-        ->with('ncungcap', $ncungcap )
-        ->with('kho',$kho)
-        ->with('hdn',$hdn);
+        $query = HoaDonNhap::join('nhacungcap', 'nhacungcap.nhacungcap_id', '=', 'hoadonnhap.nhacungcap_id')
+            ->where('kho_id', $kho_id)
+            ->orderBy('hdn_id', 'desc');
+    
+        if ($key = $request->key) {
+            $query->where(function($q) use ($key) {
+                $q->where('nhacungcap_ten', 'like', '%' . $key . '%')
+                  ->orWhere('hdn_ngay', 'like', '%' . $key . '%')
+                  ->orWhere('hdn_tongtien', 'like', '%' . $key . '%');
+            });
+        }
+    
+        $hdn = $query->get();
+        $count = $hdn->count();
+    
+        return view('admin.storage.nhapkho')
+            ->with('count', $count)
+            ->with('ncungcap', $ncungcap)
+            ->with('kho', $kho)
+            ->with('hdn', $hdn);
     }
 
     public function chitiet_hdn($hdn_id){
@@ -165,97 +185,103 @@ class StorageController extends Controller
         ->with('chitiet',$chitiet)
         ->with('hdn_id',$hdn_id);
     }
-
-
-    
-    public function import_hdn(Request $request, $kho_id)
+    public function search_hdn(Request $request)
     {
-        $this->AuthenLogin();
-       
-    
-        if (!$request->hasFile('fileToUpload')) {
-            Session::put('message', 'Chưa có file nào được chọn');
-            return Redirect::to('/nhapkho/' . $kho_id);
-        }
-    
-        $file = $request->file('fileToUpload');
-        $fileType = strtolower($file->getClientOriginalExtension());
-    
-        if ($fileType != 'csv') {
-            Session::put('message', 'Chỉ chấp nhận csv');
-            return Redirect::to('/all-classify-product');
-        }
-    
-        $target_dir = 'excel/';
-        $target_file = $target_dir . $file->getClientOriginalName();
-        $file->move($target_dir, $file->getClientOriginalName());
-    
-        $maxID_hdn = HoaDonNhap::max('hdn_id') ?? 0;
-    
-        $hdn = new HoaDonNhap();
-        $hdn->hdn_id = $maxID_hdn + 1;
-        $hdn->hdn_ngay = date('y-m-d');
-        $hdn->nhacungcap_id = $request->nhacungcap;
-        
-        $hdn->kho_id = $kho_id;
-        $tongtien = 0;
-     
-    
-        if (($handle = fopen($target_file, 'r')) !== FALSE) {
-            fgetcsv($handle); // Skip header row
-    
-            while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
-                $data = array_map(function($value) {
-                    return mb_convert_encoding($value, 'UTF-8', 'auto');
-                }, $data);
-                $tongtien += (int)$data[1]*(int)$data[2];
-                  //  Cập nhật vô kho
-                  if( $tonkho = DB::table('tonkho')->where('kho_id',$kho_id)
-                  ->where('sanpham_id',$data[0])->first()){
-                    $ton = array();
-                    $ton['tonkho_soluong'] = $data[2];
-                    DB::table('tonkho')->where('kho_id',$kho_id)
-                    ->where('sanpham_id',$data[0])->update($ton);
-                }
-                else {
-                    $ton = array();
-                    $ton['kho_id'] = $kho_id;
-                    $ton['sanpham_id'] = $data[0];
-                    $ton['tonkho_soluong'] = $data[2];
-                    DB::table('tonkho')->insert($ton);
-                }
-                
+        return $this->nhapkho($request, $request->kho_id);
+    }
 
-                // Xử lú chi tiết nhập
-                $chitiet = [
-                    'sanpham_id' => $data[0],
-                    'dongia' => $data[1],
-                    'hdn_soluong' => $data[2],
-                    'hdn_id' => $maxID_hdn + 1
-                ];
+    public function import_hdn(Request $request, $kho_id)
+{
+    $this->AuthenLogin();
 
-                DB::table('sanpham')->where('sanpham_id', $data[0])->update(['sanpham_trangthai' => 1]);
-
-                if (!DB::table('chitiethoadonnhap')->insert($chitiet)) {
-                    Session::put('message', 'File CSV không khớp');
-                    fclose($handle);
-                    return Redirect::to('/nhapkho/' . $kho_id);
-                }
-            }
-            fclose($handle);
-            $hdn->hdn_tongtien = $tongtien;
-            $hdn->save();
-            Session::put('message', 'Thêm thành công');
-        } else {
-            Session::put('message', 'Không thể mở tệp CSV');
-        }
-        $sp =   DB::table('sanpham')->get();
-
-
+    if (!$request->hasFile('fileToUpload')) {
+        Session::put('message', 'Chưa có file nào được chọn');
         return Redirect::to('/nhapkho/' . $kho_id);
     }
 
-  
-    
+    $file = $request->file('fileToUpload');
+    $fileType = strtolower($file->getClientOriginalExtension());
 
+    if ($fileType != 'csv') {
+        Session::put('message', 'Chỉ chấp nhận csv');
+        return Redirect::to('/nhapkho/' . $kho_id); // Corrected redirect
+    }
+
+    $target_dir = 'excel/';
+    $target_file = $target_dir . $file->getClientOriginalName();
+    $file->move($target_dir, $file->getClientOriginalName());
+
+    $maxID_hdn = HoaDonNhap::max('hdn_id') ?? 0;
+
+    $hdn = new HoaDonNhap();
+    $hdn->hdn_id = $maxID_hdn + 1;
+    $hdn->hdn_ngay = date('y-m-d');
+    $hdn->nhacungcap_id = $request->nhacungcap;
+    $hdn->kho_id = $kho_id;
+    $tongtien = 0;
+
+    if (($handle = fopen($target_file, 'r')) !== FALSE) {
+        fgetcsv($handle); // Skip header row
+
+        // Check if the file has no data after the header
+        if (feof($handle)) {
+            Session::put('message', 'File CSV không có dữ liệu');
+            fclose($handle);
+            return Redirect::to('/nhapkho/' . $kho_id);
+        }
+
+        $hasData = false; // Flag to check if there is data after the header
+        while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
+            $hasData = true; // Set flag to true as we found data
+            $data = array_map(function ($value) {
+                return mb_convert_encoding($value, 'UTF-8', 'auto');
+            }, $data);
+
+            $tongtien += (int)$data[1] * (int)$data[2];
+
+            // Cập nhật vô kho
+            if ($tonkho = DB::table('tonkho')->where('kho_id', $kho_id)->where('sanpham_id', $data[0])->first()) {
+                $ton = array();
+                $ton['tonkho_soluong'] = (int)$data[2] + $tonkho->tonkho_soluong ; //add to existing quantity
+                DB::table('tonkho')->where('kho_id', $kho_id)->where('sanpham_id', $data[0])->update($ton);
+            } else {
+                $ton = array();
+                $ton['kho_id'] = $kho_id;
+                $ton['sanpham_id'] = $data[0];
+                $ton['tonkho_soluong'] = $data[2];
+                DB::table('tonkho')->insert($ton);
+            }
+
+            // Xử lý chi tiết nhập
+            $chitiet = [
+                'sanpham_id' => $data[0],
+                'dongia' => $data[1],
+                'hdn_soluong' => $data[2],
+                'hdn_id' => $maxID_hdn + 1
+            ];
+
+            DB::table('sanpham')->where('sanpham_id', $data[0])->update(['sanpham_trangthai' => 1]);
+
+            if (!DB::table('chitiethoadonnhap')->insert($chitiet)) {
+                Session::put('message', 'File CSV không khớp');
+                fclose($handle);
+                return Redirect::to('/nhapkho/' . $kho_id);
+            }
+        }
+        fclose($handle);
+
+        if (!$hasData) {
+            Session::put('message', 'File CSV không có dữ liệu');
+            return Redirect::to('/nhapkho/' . $kho_id);
+        }
+
+        $hdn->hdn_tongtien = $tongtien;
+        $hdn->save();
+        Session::put('message', 'Thêm thành công');
+    } else {
+        Session::put('message', 'Không thể mở tệp CSV');
+    }
+
+    return Redirect::to('/nhapkho/' . $kho_id);
+}
 }

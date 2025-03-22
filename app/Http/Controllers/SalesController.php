@@ -107,8 +107,11 @@ class SalesController extends Controller
 
     public function all_sales(){
         $this->AuthenLogin();
+        $count = KhuyenMai::count();
         $all_sales = KhuyenMai::orderBy('km_id','desc')->get();
-        $manger_sales = view ('admin.sales.all_sales')->with('all_sales', $all_sales);
+        $manger_sales = view ('admin.sales.all_sales')
+        ->with('count',$count)
+        ->with('all_sales', $all_sales);
         return view('admin_layout')->with('admin.all_sales',$manger_sales); ## gom lại hiện chung
     }
 

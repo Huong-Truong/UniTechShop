@@ -14,7 +14,7 @@
   <div class="panel panel-default">
     <div class="panel-heading">
         Hóa đơn nhập hàng
-          {{$kho->kho_ten}}
+          {{$kho->kho_ten}} ({{$count}})
         
     </div>
     <div class="panel-heading1">
@@ -79,8 +79,14 @@
         </div>
       <div class="col-sm-4">
       </div>
+      
       <div class="col-sm-3">
-    
+        <form  action="{{route('search-hdn')}}" method="get" class="form-search" >
+          
+          <input type="hidden" name="kho_id" value="{{$kho->kho_id}}"> 
+          <input type="text" name="key" class="input-sm form-control" placeholder="Search" >
+          <button class="btn btn-sm btn-default " type="submit" >Go!</button>
+        </form>
       </div>
     </div>
     </div>
@@ -118,7 +124,11 @@
                     ?>
                    </td>
 
-                   <td> HDN{{$value->hdn_id}}</td> 
+                   <td><?php
+                    if($value->hdn_id < 10) echo 'HDN0';
+                    else if($value->hdn_id< 100) echo 'HDN'; 
+                    else echo 'HDN';           
+                  ?>{{$value->hdn_id}}</td> 
 
                    <td> {{$value->nhacungcap_ten}}</td> 
                  

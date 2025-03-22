@@ -268,6 +268,7 @@ Route::get('/search-kho', [StorageController::class, 'search_kho'])->name('searc
 Route::get('/delete-store/{sanpham_id}/{kho_id}', [StorageController::class, 'delete_store'])->name('delete-store');
 Route::get('/nhapkho/{kho_id}', [StorageController::class, 'nhapkho'])->name('nhapkho');
 Route::get('/chitiet-hdn/{hdn_id}', [StorageController::class, 'chitiet_hdn'])->name('chitiet-hdn');
+Route::get('/search-hdn', [StorageController::class, 'search_hdn'])->name('search-hdn');
 Route::post('/import-hdn/{kho_id}', [StorageController::class, 'import_hdn'])->name('import-hdn');
 // cập nhật trạng thái sản phẩm dựa vào số lượng kho
 Route::get('unactive-product-storage', [StorageController::class, 'unactive_product_storage'])->name('unactive-product-storage');
@@ -299,6 +300,7 @@ Route::post('/update-customer/{customer_id}', [CustomerController::class, 'updat
 Route::get('/unactive-customer/{customer_id}', [CustomerController::class, 'unactive_customer'])->name('unactive-customer');
 Route::get('/active-customer/{customer_id}', [CustomerController::class, 'active_customer'])->name('active-customer');
 Route::get('/loc-kh', [CustomerController::class, 'loc_khachhang'])->name('loc-kh');
+Route::get('/search-customer', [CustomerController::class, 'search_customer'])->name('search-customer');
 
 
 // Thong Ke

@@ -13,7 +13,7 @@
 <div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">
-       Quản lý nhà cung cấp
+       Quản lý nhà cung cấp  ({{$count}})
     </div>
 
     <div class = "panel-heading1">

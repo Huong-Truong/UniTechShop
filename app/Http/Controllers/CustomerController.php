@@ -21,14 +21,14 @@ class CustomerController extends Controller
         }
     }
 
-    public function all_customer()
+    public function all_customer(Request $request)
     {
         $this->AuthenLogin();
         $trangthai = 1;
         $month=0;
         $year=date('Y');
 
-        $all_customer = Customer::leftJoin('donhang', 'khachhang.khachhang_id', '=', 'donhang.khachhang_id')
+        $query = Customer::leftJoin('donhang', 'khachhang.khachhang_id', '=', 'donhang.khachhang_id')
         ->select(
             'khachhang.khachhang_id',
             'khachhang.khachhang_sdt',
@@ -47,10 +47,17 @@ class CustomerController extends Controller
             'khachhang.khachhang_diachi',
             'khachhang.khachhang_trangthai'
         )
-        ->orderBy('total', 'desc')
-        ->get();
+        ->orderBy('total', 'desc');
+        if($key = $request->key){
+            $query->where('khachhang_ten', 'like', '%' . $key . '%')
+            ->orWhere('khachhang_sdt', 'like', '%' . $key . '%')
+            ->orWhere('khachhang_email', 'like', '%' . $key . '%');
+        }
+        $all_customer = $query->get();
+        $count = $all_customer->count();
 
         $manger_customer = view ('admin.customer.all_customer')
+        ->with('count',$count)
         ->with('y',$year)
         ->with('m',$month)
         ->with('t',$trangthai) 
@@ -113,6 +120,11 @@ class CustomerController extends Controller
         return Redirect::to('all-customer'); 
     }
 
+    public function search_customer(Request $request){
+        return $this->loc_khachhang($request);
+            
+    }
+
     public function loc_khachhang(Request $request) {
         $this->AuthenLogin();
         $trangthai = $request->trangthai;
@@ -150,17 +162,23 @@ class CustomerController extends Controller
             if ($month) {
                 $query->whereMonth('donhang.donhang_ngaytao', $month);
             }
-    
+            if($key = $request->key){
+                $query->where('khachhang_ten', 'like', '%' . $key . '%')
+                ->orWhere('khachhang_sdt', 'like', '%' . $key . '%')
+                ->orWhere('khachhang_email', 'like', '%' . $key . '%');
+            }
             $all_customer = $query->get();
+            $count = $all_customer->count();
     
             $manger_customer = view('admin.customer.all_customer')
             ->with('all_customer', $all_customer)
+            ->with('count',$count)
             ->with('y',$year)
             ->with('m',$month)
             ->with('t',$trangthai)   ;
             return view('admin_layout')->with('admin.customer.all_customer', $manger_customer);
         } else {
-            return Redirect::to("/all-customer");
+            return $this->all_customer($request);
         }
     }
 

@@ -31,8 +31,11 @@ class ServiceController extends Controller
     
     public function all_service(){
         $this->AuthenLogin();
+        $count = Service::count();
         $all_service = Service::orderBy('dv_id','desc')->get();
-        $manger_service = view ('admin.service.all_service')->with('all_service', $all_service);
+        $manger_service = view ('admin.service.all_service')
+        ->with('count',$count)
+        ->with('all_service', $all_service);
         return view('admin_layout')->with('admin.all_service',$manger_service); ## gom lại hiện chung
     }
     public function save_service(Request $request)    
