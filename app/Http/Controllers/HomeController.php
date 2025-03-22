@@ -16,7 +16,14 @@
 
 class HomeController extends Controller
 {
-
+    public function AuthenLogin(){
+        $admin_id = Session::get('admin_id');
+        if($admin_id){
+           return  Redirect::to('admin.dashboard');
+        }else{
+           return Redirect::to('admin')->send(); ## hàm send() có thể không cần thiết
+        }
+    }
     public function login_backup(){
         return view('login_backup');
     }
@@ -152,8 +159,48 @@ class HomeController extends Controller
   
 
         // DOi mk
-        public function change_pass(){
-            
+        public function change_pass($id){
+            $this->AuthenLogin();
+            Session::forget('admin_id');
+            return view('admin_change_pass')->with('id',$id);
+        }
+
+        public function confirm_change_pass(Request $request){
+            $old = $request->old;
+      $new = $request->new;
+      $confirm= $request->confirm;
+      $id = $request->id;
+      $mk = DB::table('admin')->where('admin_id',$id)->value('admin_password');
+      if($old != $mk){
+        Session::put('message','Mật khẩu cũ không chính xác');
+        return $this->change_pass($id);
+           
+      }
+      if(strlen($new) < 5){
+        Session::put('message','Mật khẩu mới phải từ 5 kí tự trở lên');
+        return $this->change_pass($id);
+           
+      }
+      if($old == $new){
+        Session::put('message','Mật khẩu mới phải khác mật khẩu cũ');
+        return $this->change_pass($id);
+           
+      }
+      else {
+        if($new != $confirm){
+            Session::put('message','Mật khẩu xác nhận không trùng khớp');
+            return $this->change_pass($id);
+           
+        }
+        else {
+            DB::table('admin')->where('admin_id',$id)->update(['admin_password'=>$new]);
+            Session::put('message','Thay đổi mật khẩu thành công');
+            return Redirect('/admin');
+           
+        }
+      }
+      
+
         }
 
 }

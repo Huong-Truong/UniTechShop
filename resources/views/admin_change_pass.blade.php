@@ -46,7 +46,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
  
 <div class="log-w3"><br><br>
 <div class="w3layouts-main for-got">
-    <h3>Nhập thông tin tài khoản</h3>
+    <h2>ĐỔI MẬT KHẨU</h2>
     <?php 
     $message = Session::get('message'); ## lấy tin nhắn có tên là message
     if($message){
@@ -54,13 +54,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         Session::put('message',null); ## in ra xong set lại null
     }
 ?>
-        <form action="{{route('review-pass')}}" method="post">
+        <form action="{{route('confirm-change-pass')}}" method="post">
             @csrf
-            <input type="email" class="ggg" name="email" placeholder="EMAIL" required="">
+            <input type="hidden" name="id" value="{{$id}}">
+            <input type="password" class="ggg" name="old" placeholder="MẬT KHẨU CŨ" required="">
+            <input type="password" class="ggg" name="new" placeholder="MẬT KHẨU MỚI" required="">
+            <input type="password" class="ggg" name="confirm" placeholder="XÁC NHẬN MẬT KHẨU MỚI" required="">
+            <h6><a href="{{route('admin')}}">ĐĂNG NHẬP</a></h6>
                 <div class="clearfix"></div>
-                <h6><a href="{{route('admin')}}">ĐĂNG NHẬP</a></h6>
-                <div class="clearfix"></div>
-                <input type="submit" value="Lấy lại mật khẩu" name="login">
+                <input type="submit" value="Đổi mật khẩu">
         </form>
         <!-- <p>Don't Have an Account ?<a href="registration.html">Create an account</a></p> -->
 </div>
