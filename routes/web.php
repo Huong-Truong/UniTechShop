@@ -21,6 +21,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ThongKeController;
 use App\Http\Middleware\HandleError;
 use App\Http\Controllers\DanhGiaController;
+use App\Http\Controllers\UserController;
 // use App\Http\Controllers\CheckOutController;
 
 
@@ -78,6 +79,14 @@ Route::post('/dangky-khachhang', [CheckOutController::class, 'dangky_khachhang']
 ## account
 Route::get('/account', [CheckOutController::class, 'account'])->name('account');
 Route::post('/update-info', [CheckOutController::class, 'update_info'])->name('update-info');
+
+// Đổi mật khẩu user
+Route::post('/change-pass', [UserController::class, 'change_pass'])->name('change-pass');
+
+// Quên mật khẩu user
+Route::get('/forgot-user', [UserController::class, 'forgot_user'])->name('forgot-user');
+Route::post('/review-user', [UserController::class, 'review_user'])->name('review-user');
+
 
 
 
@@ -227,6 +236,7 @@ Route::post('/save-set-service/{product_id}', [ServiceController::class, 'save_s
 ## orders
 Route::get('/manage-orders', [CheckOutController::class, 'manage_orders'])->name('manage-orders');
 Route::get('/view-order/{donhang_id}', [CheckOutController::class, 'view_order'])->name('view-order');
+Route::get('/search-order', [CheckOutController::class, 'search_order'])->name('search-order');
 
 Route::get('/delete-order/{donhang_id}', [CheckOutController::class, 'manage_orders'])->name('delete-order');
 ## cập nhật trang thái đơn hàng
@@ -237,6 +247,7 @@ Route::get('/update-status', [CheckOutController::class, 'update_status'])->name
 // Quen MK
 Route::get('/forgot-pass', [HomeController::class, 'forgot_pass'])->name('forgot-pass');
 Route::post('/review-pass', [HomeController::class, 'review_pass'])->name('review-pass');
+// Gửi liên hệ
 Route::post('/send-contact', [HomeController::class, 'send_contact'])->name('send-contact');
 // Doi MK
 Route::get('/change-pass', [HomeController::class, 'change_pass'])->name('change-pass');
@@ -257,6 +268,7 @@ Route::get('/search-kho', [StorageController::class, 'search_kho'])->name('searc
 Route::get('/delete-store/{sanpham_id}/{kho_id}', [StorageController::class, 'delete_store'])->name('delete-store');
 Route::get('/nhapkho/{kho_id}', [StorageController::class, 'nhapkho'])->name('nhapkho');
 Route::get('/chitiet-hdn/{hdn_id}', [StorageController::class, 'chitiet_hdn'])->name('chitiet-hdn');
+Route::get('/search-hdn', [StorageController::class, 'search_hdn'])->name('search-hdn');
 Route::post('/import-hdn/{kho_id}', [StorageController::class, 'import_hdn'])->name('import-hdn');
 // cập nhật trạng thái sản phẩm dựa vào số lượng kho
 Route::get('unactive-product-storage', [StorageController::class, 'unactive_product_storage'])->name('unactive-product-storage');
@@ -288,6 +300,7 @@ Route::post('/update-customer/{customer_id}', [CustomerController::class, 'updat
 Route::get('/unactive-customer/{customer_id}', [CustomerController::class, 'unactive_customer'])->name('unactive-customer');
 Route::get('/active-customer/{customer_id}', [CustomerController::class, 'active_customer'])->name('active-customer');
 Route::get('/loc-kh', [CustomerController::class, 'loc_khachhang'])->name('loc-kh');
+Route::get('/search-customer', [CustomerController::class, 'search_customer'])->name('search-customer');
 
 
 // Thong Ke

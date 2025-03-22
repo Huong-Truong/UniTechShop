@@ -30,11 +30,11 @@
                                 @csrf
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Tên Sản phẩm</label>
-                                    <input value="{{ $edit_product->sanpham_ten}}"name="product_name" class="form-control" id="exampleInputEmail1">
+                                    <input value="{{ $edit_product->sanpham_ten}}"name="product_name" class="form-control" id="exampleInputEmail1" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Giá</label>
-                                    <input value="{{ $edit_product->sanpham_gia}}"name="product_price" class="form-control" id="exampleInputEmail1">
+                                    <input value="{{ $edit_product->sanpham_gia}}"name="product_price" class="form-control" id="exampleInputEmail1" required>
                                 </div>
                                 <div class="form-group">
 
@@ -45,11 +45,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Xuất xứ</label>
-                                    <input value="{{ $edit_product->sanpham_xuatxu}}"name="product_xuatxu" class="form-control" id="exampleInputEmail1">
+                                    <input value="{{ $edit_product->sanpham_xuatxu}}"name="product_xuatxu" class="form-control" id="exampleInputEmail1" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Nội dung sản phẩm</label>
-                                        <textarea  name="product_content" style="resize: none" rows = "8"  placeholder="Mô tả danh mục" class="form-control" name="" id="exampleInputPassword1">
+                                        <textarea  name="product_content" style="resize: none" rows = "8"  placeholder="Mô tả danh mục" class="form-control" name="" id="exampleInputPassword1" required>
                                             {{ $edit_product->sanpham_mota}}
                                         </textarea>
                                 </div>

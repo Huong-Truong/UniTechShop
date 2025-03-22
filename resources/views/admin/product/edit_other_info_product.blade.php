@@ -33,7 +33,7 @@
                                 @csrf
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Mô tả</label>
-                                    <input value="{{ $hdsd->HDSD_mota}}"name="hdsd_mota" class="form-control" id="exampleInputEmail1" >
+                                    <input value="{{ $hdsd->HDSD_mota}}"name="hdsd_mota" class="form-control" id="exampleInputEmail1" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Video</label><br>
@@ -43,7 +43,7 @@
                                       allowfullscreen></iframe>
                                     <br>
                                     <label for="exampleInputEmail1">ID video</label>
-                                    <input value="{{$hdsd->HDSD_video}}"name="hdsd_video" class="form-control" id="exampleInputEmail1" >
+                                    <input value="{{$hdsd->HDSD_video}}"name="hdsd_video" class="form-control" id="exampleInputEmail1" required >
                                 </div>
                                 <button type="submit" name="update_other_info_product" class="btn btn-info">Cập nhật</button>
                             </form>
@@ -66,7 +66,7 @@
                             @foreach ($service as $srv) 
                                 <div class="form-group">
                                      <label >{{$srv->dv_ten}}</label> 
-                                     <input type="hidden" name="dv_id[]" value="{{$srv->dv_id}}">
+                                     <input type="hidden" name="dv_id[]" value="{{$srv->dv_id}}" required>
                                      <?php   $gia = '';
                                              $last_gia = "Chưa thiết lập" ?>
                                      @foreach ($priceSrv as $p) 
@@ -80,7 +80,7 @@
                                       }
                                      ?>
                                     @endforeach
-                                    <input  value="{{$last_gia}}"name="giadichvu[]" class="form-control" id="exampleInputEmail1" >
+                                    <input  value="{{$last_gia}}"name="giadichvu[]" class="form-control" id="exampleInputEmail1"required >
                                 </div>
                             @endforeach 
                             <button type="submit" name="update_other_info_product" class="btn btn-info">Cập nhật</button>

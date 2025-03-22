@@ -13,7 +13,7 @@
 <div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">
-        Liệt kê thương hiệu
+        Liệt kê thương hiệu  ({{$count}})
     </div>
     <div class="panel-heading1">
       <div class="row w3-res-tb">
@@ -60,12 +60,9 @@
       <table class="table table-striped b-t b-light">
         <thead>
           <tr>
-            <th style="width:20px;">
-              <label class="i-checks m-b-none">
-                <input type="checkbox"><i></i>
-              </label>
-            </th>
+          
             <th>STT</th>
+            <th>Mã</th>
             <th>Tên thương hiệu</th>
             <th>Hinh ảnh</th>
             <th>Mô tả</th>
@@ -78,14 +75,20 @@
         <?php $i = 1?>
             @foreach($all_brand as $key => $brand)
           <tr>
-            <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
+            
             
             <td><?php
               echo $i;
                $i++;
                ?>
             </td>
-          
+          <td>
+            <?php
+              if($brand->hang_id < 10) echo 'H000';
+              else if($brand->hang_id < 100) echo 'H00'; 
+              else echo 'H0';           
+            ?>{{$brand->hang_id}}
+          </td>
             <td>{{$brand->hang_ten}}</td>
             <td><img class="img_edit image-show" src="{{asset('img/brand/'.$brand->hang_hinhanh)}}" height="150" width="150" alt=""></td>
             <td>{{$brand->hang_mota}}</td>

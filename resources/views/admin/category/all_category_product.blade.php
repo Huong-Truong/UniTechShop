@@ -13,7 +13,7 @@
 <div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">
-        Liệt kê danh mục sản phẩm
+        Liệt kê danh mục sản phẩm ({{$count}})
     </div>
     <div class="panel-heading1">
       <div class="row w3-res-tb">
@@ -61,12 +61,10 @@
       <table class="table table-striped b-t b-light">
         <thead>
           <tr>
-            <th style="width:20px;">
-              <label class="i-checks m-b-none">
-                <input type="checkbox"><i></i>
-              </label>
-            </th>
+            
             <th>STT</th>
+             
+            <th>Mã</th>
             <th>Tên danh mục</th>
             <th>Phân loại</th>
             <th>Hiển thị</th>
@@ -81,14 +79,18 @@
         ?>
             @foreach($all_category as $key => $cate)
           <tr>
-            <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
+           
             
             <td><?php
               echo $i;
                $i++;
                ?>
             </td>
-          
+            <td><?php
+              if($cate->danhmuc_id < 10) echo 'DM00';
+              else if($cate->danhmuc_id < 100) echo 'DM0'; 
+              else echo 'DM';           
+            ?>{{$cate->danhmuc_id}}</td>
             <td>{{$cate->danhmuc_ten}}</td>
             <td>{{$cate->phanloai_ten}}</td>
             <td><span class="text-ellipsis">

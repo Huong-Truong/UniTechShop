@@ -28,15 +28,15 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Số điện thoại</label>
-                                    <input value="{{ $edit_value->khachhang_sdt}}" name="khachhang_sdt" class="form-control" id="exampleInputEmail1" >
+                                    <input value="{{ $edit_value->khachhang_sdt}}" name="khachhang_sdt" class="form-control" id="exampleInputEmail1" required >
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Email</label>
-                                    <input value="{{ $edit_value->khachhang_email}}" name="khachhang_email" class="form-control" id="exampleInputEmail1" >
+                                    <input value="{{ $edit_value->khachhang_email}}" name="khachhang_email" class="form-control" id="exampleInputEmail1"required >
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Địa chỉ</label>
-                                    <input value="{{ $edit_value->khachhang_diachi}}" name="khachhang_diachi" class="form-control" id="exampleInputEmail1" >
+                                    <input value="{{ $edit_value->khachhang_diachi}}" name="khachhang_diachi" class="form-control" id="exampleInputEmail1" required>
                                 </div>
 
                                 <button type="submit" name="update_customer" class="btn btn-info">Cập nhật </button>

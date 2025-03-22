@@ -14,7 +14,13 @@
   <div class="panel panel-default">
     <div class="panel-heading">
         Thông tin 
-          {{$kho->kho_ten}}
+        @if ($kho->kho_ten != 0)
+        {{$kho->kho_ten}} ({{$count}})
+        @else
+        Tất cả kho  ({{$count}})
+          
+        @endif
+        
        
     </div>
     <div class="panel-heading1">
@@ -44,6 +50,7 @@
            </button>
 
           @endif
+          
 
          
         </div>

@@ -14,7 +14,7 @@
   <div class="panel panel-default">
  
     <div class="panel-heading">
-        Liệt kê sản phẩm
+        Liệt kê sản phẩm ({{$count}})
         
     </div>
     <div class="panel-heading1">
@@ -92,10 +92,8 @@
         <thead>
         
           <tr>
-            <th style="width:20px;">
-              <label class="i-checks m-b-none">
-                <input type="checkbox"><i></i>
-              </label>
+            <th>
+              Mã
             </th>
             <th>Tên sản phẩm</th>
             <th>Giá</th>
@@ -114,7 +112,11 @@
 
           @foreach($all as $key => $pro)
           <tr>
-            <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
+            <td><?php
+              if($pro->sanpham_id < 10) echo 'SP00';
+              else if($pro->sanpham_id < 100) echo 'SP0'; 
+              else echo 'SP';           
+            ?>{{$pro->sanpham_id}}</td>
             <td>{{$pro->sanpham_ten}}</td>
 
             <td>

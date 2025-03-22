@@ -51,13 +51,19 @@ class BaoHanhController extends Controller
     
     public function all_baohanh(){
         $this->AuthenLogin();
+        $count = BaoHanh::count();
         $all_baohanh = BaoHanh::orderBy('baohanh_id','desc')->get();
-        $manger_baohanh = view ('admin.baohanh.all_baohanh')->with('all_baohanh', $all_baohanh);
+        $manger_baohanh = view ('admin.baohanh.all_baohanh')->with('count',$count)->with('all_baohanh', $all_baohanh);
         return view('admin_layout')->with('admin.all_baohanh',$manger_baohanh); ## gom lại hiện chung
     }
 
     public function delete_baohanh($baohanh_id){
         $this->AuthenLogin();
+        $check = DB::table('sanpham')->where('baohanh_id',$baohanh_id)->count();
+        if($check > 0){
+            Session::put('message','Không thể xóa. Đang có sản phẩm áp dụng bảo hành này');
+            return Redirect::to('all-baohanh'); 
+        }
         $baohanh = BaoHanh::find($baohanh_id);
         $baohanh->delete();
         return Redirect::to('all-baohanh'); 

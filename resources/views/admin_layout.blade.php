@@ -124,6 +124,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     });
 </script>
 <style>
+     
+     
+   
     p#messageStyle{
     color:rgb(79, 78, 78);
     font-size: 15px;
@@ -335,15 +338,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     </ul> --}}
     <!--  notification end -->
 </div>
-<div class="top-nav clearfix">
+<div class="top-nav clearfix ">
     <!--search & user info start-->
     <ul class="nav pull-right top-menu">
-        {{-- <li>
-            <input type="text" class="form-control search" placeholder=" Search">
-        </li> --}}
+        
         <!-- user login dropdown start-->
-        <li class="dropdown">
-            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+        <li class="dropdown" class="profile" >
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#" >
                 <img alt=" " src="images/huongtruong.jpg">
                 {{-- <i class="fa fa-user"></i> --}}
                 <span class="username">
@@ -426,47 +427,39 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                        
                     </ul>
                 </li>
-                <li class="sub-menu">
-                    <a href="javascript:;">
+               
+                    <li>
+                        <a href="{{ route('manage-orders') }}">
+                            <i class="fa fa-user"></i>
+                            Quản lý đơn hàng
+                        </a>
+    
+                    </li>
+                    
+               
+                <li>
+                    <a href="{{ route('all-sales') }}">
                         <i class="fa fa-book"></i>
-                        <span> Đơn hàng</span>
+                      Khuyến mãi
                     </a>
-                    <ul class="sub">
-						<li><a href="{{ route('manage-orders') }}">Quản lý đơn hàng</a></li>
-						<!-- <li><a href="{{route('all-product') }}"></a></li> -->
-                       
-                    </ul>
+
                 </li>
-                <li class="sub-menu">
-                    <a href="javascript:;">
-                        <i class="fa fa-book"></i>
-                        <span> Quản lý khuyến mãi</span>
+                <li>
+                    <a href="{{ route('all-service') }}">
+                        <i class="fa fa-user"></i>
+                       Dịch vụ
                     </a>
-                    <ul class="sub">
-						<li><a href="{{ route('all-sales') }}">Khuyến mãi hệ thống</a></li>
-                        {{-- <li><a href="{{ route('set-sales') }}">Thiết lập khuyến mãi </a></li> --}}
-                    </ul>
+
                 </li>
-                <li class="sub-menu">
-                    <a href="javascript:;">
-                        <i class="fa fa-book"></i>
-                        <span> Quản lý dịch vụ</span>
-                    </a>
-                    <ul class="sub">
-						<li><a href="{{ route('all-service') }}">Dịch vụ hệ thống</a></li>
-                        {{-- <li><a href="{{ route('set-sales') }}">Thiết lập khuyến mãi </a></li> --}}
-                    </ul>
-                </li>
-                <li class="sub-menu">
-                    <a href="javascript:;">
+
+                <li>
+                    <a href="{{ route('all-baohanh') }}">
                         <i class="fa fa-code"></i>
-                        <span> Bảo hành</span>
+                    Bảo hành
                     </a>
-                    <ul class="sub">
-						<li><a href="{{ route('all-baohanh') }}">Các chương trình bảo hành</a></li>
-                        {{-- <li><a href="{{ route('set-sales') }}">Thiết lập khuyến mãi </a></li> --}}
-                    </ul>
+
                 </li>
+                
                 <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-th"></i>

@@ -115,17 +115,22 @@ class CheckOutController extends Controller
     public function login_khachhang(Request $request){
         $email = $request->khachhang_email;
         $password = $request->khachhang_matkhau;
+        
         $result = DB::table('khachhang')->where('khachhang_email', $email)->where('khachhang_matkhau',$password)->pluck('khachhang_id')->first();
         if($result){
             Session::put('khachhang_id', $result); // Lưu ID vào session
             if(Cart::content()->count() > 0){
                 return Redirect::to('/checkout');
             }else{
+               
                 return Redirect::to('/');
             }
            
           
         }else{
+            // $lan_dn_sai;
+            // Session::put('solan',$lan_dn_sai);
+            Session::put('message','Tài khoản hoặc mật khẩu không đúng');
             return Redirect::to('/login-checkout');
         }
        
@@ -338,16 +343,21 @@ class CheckOutController extends Controller
            return Redirect::to('admin')->send(); ## hàm send() có thể không cần thiết
         }
     }
-    public function manage_orders(){
+    public function manage_orders(Request $request){
         $this->AuthenLogin();
-        $all_orders = DB::table('donhang')
+        $query = DB::table('donhang')
         ->join('khachhang', 'khachhang.khachhang_id', '=', 'donhang.khachhang_id')
         ->join('chitiettrangthai', 'donhang.donhang_id', '=', 'chitiettrangthai.donhang_id')
         ->join('trangthai','trangthai.trangthai_id', '=', 'chitiettrangthai.trangthai_id' )
         ->select('donhang.*', 'khachhang.khachhang_ten', 'trangthai.trangthai_ten', 'chitiettrangthai.trangthai_id')
-        ->orderby('donhang.donhang_id', 'desc')->get(); // Thêm phương thức get() để lấy tất cả dữ liệu
-    
-        $donhang_id = $all_orders->pluck('donhang.donhang_id')->first();
+        ->orderby('donhang.donhang_id', 'desc'); // Thêm phương thức get() để lấy tất cả dữ liệu
+        if($key = $request->key){
+            $query->where('khachhang_ten', 'like', '%' . $key . '%')
+            ->orWhere('donhang_ngaytao', 'like', '%' . $key . '%')
+            ->orWhere('trangthai_ten', 'like', '%' . $key . '%');
+        }
+        $all_orders = $query->get();
+       // $donhang_id = $all_orders->pluck('donhang.donhang_id')->first();
         $trangthai = DB::table('trangthai')->get();
 
         
@@ -591,9 +601,12 @@ class CheckOutController extends Controller
 
         
     }
+
     
     
-    
+    public function search_order(Request $request){
+        return $this->manage_orders($request);
+    }    
 
 }
 

@@ -30,10 +30,12 @@
       </div>
       <div class="col-sm-3">
         <div class="input-group">
-          <input type="text" class="input-sm form-control" placeholder="Search">
-          <span class="input-group-btn">
-            <button class="btn btn-sm btn-default" type="button">Go!</button>
-          </span>
+       
+          <form  action="{{route('search-order')}}" method="get" class="form-search" >
+           
+            <input type="text" name="key" class="input-sm form-control" placeholder="Search" >
+            <button class="btn btn-sm btn-default " type="submit" >Go!</button>
+          </form>
         </div>
       </div>
     </div>
@@ -51,7 +53,8 @@
             <th>Người đặt</th>
             <th>Tổng giá tiền kèm thuế</th>
             <th>Tình trạng</th>
-            <th>Hiển thị</th>
+            <th>Ngày tạo</th>
+            <th>Chi tiết</th>
             <th style="width:30px;"></th>
           </tr>
         </thead>
@@ -63,10 +66,23 @@
             @foreach($all as $key => $cate_pro)
           <tr>
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
-            <td> <a href="{{route('view-order', ['donhang_id' => $cate_pro->donhang_id])}}">DH{{$cate_pro->donhang_id}}</a>
+            <td> <a class ="a-black" href="{{route('view-order', ['donhang_id' => $cate_pro->donhang_id])}}">
+              <?php
+              if($cate_pro->donhang_id< 10) echo 'DH00';
+              else if($cate_pro->donhang_id < 100) echo 'DH0'; 
+              else echo 'DH';           
+            ?>{{$cate_pro->donhang_id}}
+            </a>
             </td>
             <td>{{$cate_pro->khachhang_ten}}</td>
-            <td>{{$cate_pro->donhang_tongtien}}</td>
+            <td>
+              <?php
+              if((int)$cate_pro->donhang_tongtien != 0){
+                $formattedVND = number_format(preg_replace('/\D/', '',$cate_pro->donhang_tongtien), 0, ',', '.') . ' VND';
+                echo $formattedVND;
+              }
+            ?>
+            </td>
 
             <td>
             <form action="{{route('update-status')}}" method="get">
@@ -91,9 +107,10 @@
             </div>
             </form>
             </td>
+            <td>{{$cate_pro->donhang_ngaytao}}</td>
             <td>
-              <a href="{{route('view-order', ['donhang_id' => $cate_pro->donhang_id])}}" class="active" ui-toggle-class=""><i class="fa fa-pencil-square-o text-success text-active"></i>  </a>
-              <a onclick="return confirm('Bạn có chắc muốn xóa ?')" class="active"  href="{{route('delete-order', ['donhang_id' => $cate_pro->donhang_id])}}"> <i class="fa fa-times text-danger text"></i></a>
+              <a href="{{route('view-order', ['donhang_id' => $cate_pro->donhang_id])}}" class="active" ui-toggle-class=""><i class="fa fa-info-circle text-success text-active"></i>  </a>
+              {{-- <a onclick="return confirm('Bạn có chắc muốn xóa ?')" class="active"  href="{{route('delete-order', ['donhang_id' => $cate_pro->donhang_id])}}"> <i class="fa fa-times text-danger text"></i></a> --}}
             </td>
           </tr>
         @endforeach

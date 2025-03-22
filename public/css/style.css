@@ -9589,3 +9589,51 @@ a.text-dark:hover, a.text-dark:focus {
     transform: translateY(-15px);
   }
 }
+
+
+.error-box {
+  position: fixed;
+  left: 10px; 
+  bottom: 10px;
+  
+  background-color: #c5c5c5;
+  color: #3f3f3f;
+  padding: 30px;
+  padding-left: 10px;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  box-shadow: 1px 1px 10px rgba(162, 0, 0, 0.1);
+  font-weight:400;
+  font-size: 14px;
+  text-align: left;
+}
+.mess-box {
+  position: fixed;
+  left: 20px;
+  top: 10px;
+  
+  background-color: gainsboro;
+  color: #3f3f3f;
+  padding: 30px;
+  padding-left: 10px;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  box-shadow: 1px 1px 10px rgba(162, 0, 0, 0.1);
+  font-weight:400;
+  font-size: 14px;
+  text-align: left;
+}
+
+.login-form{
+  padding: 100px;
+  background-color: #007bff;
+}
+
+.input-pass{
+  display:inline-block;
+}
+.input-pass > input{
+padding: 0px 150px;
+margin: 10px;
+}
+

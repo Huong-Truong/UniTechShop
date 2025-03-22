@@ -13,7 +13,7 @@
 <div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">
-       Quản lý nhà cung cấp
+       Quản lý nhà cung cấp  ({{$count}})
     </div>
 
     <div class = "panel-heading1">
@@ -74,7 +74,7 @@
 
             <td>
                 <a href="{{route('edit-nhacungcap', ['nhacungcap_id' => $value->nhacungcap_id])}}" class="active" ui-toggle-class=""><i class="fa fa-pencil-square-o text-success text-active"></i>  </a>
-               <a onclick="return confirm('Bạn có chắc muốn xóa ?')" href="{{route('delete-nhacungcap', ['nhacungcap_id' => $value->nhacungcap_id])}}"> 
+               <a onclick="return confirm('Bạn có chắc muốn xóa ?')"  class="active"  href="{{route('delete-nhacungcap', ['nhacungcap_id' => $value->nhacungcap_id])}}"> 
                 <i class="fa fa-times text-danger text"></i></a> 
             </td>
           </tr>

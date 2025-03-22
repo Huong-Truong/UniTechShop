@@ -40,13 +40,60 @@ class AdminController extends Controller
 
     public function showDashboard()
 {
+    // Đơn hàng
     $year = date('Y');
     $month = date('m');
     $soluongdon = DB::table('donhang')
-    ->whereYear('donhang_ngaytao', $year)
-    ->whereMonth('donhang_ngaytao', $month)
-    ->count('donhang_id');
-   return view('admin.dashboard')->with('soluongdon',$soluongdon);
+        ->whereYear('donhang_ngaytao', $year)
+        ->whereMonth('donhang_ngaytao', $month)
+        ->count('donhang_id');
+
+    // PTTT
+    $paymentData = DB::table('donhang')
+        ->join('thanhtoan', 'donhang.thanhtoan_id', '=', 'thanhtoan.pttt_id')
+        ->select('thanhtoan.pttt_ten', DB::raw('COUNT(donhang.donhang_id) as count'))
+        ->groupBy('thanhtoan.pttt_ten')
+        ->get();
+
+    // Hãng
+    $brandData = DB::table('sanpham')
+        ->join('hangsanpham', 'sanpham.hang_id', '=', 'hangsanpham.hang_id')
+        ->select('hangsanpham.hang_ten', DB::raw('COUNT(sanpham.sanpham_id) as count'))
+        ->groupBy('hangsanpham.hang_ten')
+        ->get();
+
+    // Danh mục 
+    $categoryData = DB::table('sanpham')
+        ->join('danhmuc', 'sanpham.danhmuc_id', '=', 'danhmuc.danhmuc_id')
+        ->select('danhmuc.danhmuc_ten', DB::raw('COUNT(sanpham.sanpham_id) as count'))
+        ->groupBy('danhmuc.danhmuc_ten')
+        ->get();
+
+    // Số lượng đơn hàng theo tháng
+    $monthlySalesData = DB::table('donhang')
+        ->selectRaw('MONTH(donhang_ngaytao) as month, COUNT(*) as count')
+        ->whereYear('donhang_ngaytao', $year)
+        ->groupBy('month')
+        ->get();
+
+    // Top 10 sản phẩm bán chạy nhất
+    $topProductsData = DB::table('chitietdonhang')
+    ->join('sanpham', 'sanpham.sanpham_id', '=', 'chitietdonhang.sanpham_id')
+    ->select('sanpham.sanpham_ten',DB::raw('COUNT(chitietdonhang.ctdh_soluong) as count'))
+    ->groupBy('sanpham.sanpham_ten')
+    ->limit(10)
+    ->get();
+    // Top khách
+    $topCustomersData = DB::table('khachhang')
+    ->join('donhang', 'khachhang.khachhang_id', '=', 'donhang.khachhang_id')
+    ->select('khachhang.khachhang_ten', DB::raw('SUM(donhang.donhang_tongtien) as count'))
+    ->groupBy('khachhang.khachhang_ten')
+    ->orderBy('count', 'desc')
+    ->limit(10)
+    ->get();
+
+    return view('admin.dashboard', compact('paymentData', 
+    'brandData', 'categoryData', 'monthlySalesData', 'topProductsData','topCustomersData'));
 }
 
     public function dashboard(Request $request)

@@ -13,7 +13,7 @@
 <div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">
-       Các chương trình bảo hành có trong hệ thống
+       Các chương trình bảo hành có trong hệ thống  ({{$count}})
     </div>
     <div class = "panel-heading1">
       <div class="row w3-res-tb ">

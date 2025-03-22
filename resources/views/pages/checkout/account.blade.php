@@ -38,6 +38,16 @@ h2{
     text-align: center;
 }
 </style>
+<?php
+    $message = Session::get('message');
+    if($message){?>
+    <div id="errorBox" class="mess-box">
+        {{$message}}
+    </div>
+<?php
+    Session::forget('message');
+    }
+?>
 <div class="row px-xl-5">
             <div class="col">
                 <div class="nav nav-tabs justify-content-center border-secondary mb-4">
@@ -367,15 +377,15 @@ document.addEventListener('DOMContentLoaded', function () {
                                                 <input type="hidden" name="khachhang_id" value="{{$taikhoan->khachhang_id}}">
                                                 <div class="col-md-6 form-group">
                                                     <label>Tên tài khoản</label>
-                                                    <input value="{{$taikhoan->khachhang_ten}}" name="name" class="form-control" type="text" placeholder="Nhập tên tài khoản">
+                                                    <input value="{{$taikhoan->khachhang_ten}}" name="name" class="form-control" type="text" placeholder="Nhập tên tài khoản" required>
                                                 </div>
                                                 <div class="col-md-6 form-group">
                                                     <label>Địa chỉ email</label>
-                                                    <input value="{{$taikhoan->khachhang_email}}" name="email" class="form-control" type="email" placeholder="Nhập email">
+                                                    <input value="{{$taikhoan->khachhang_email}}" name="email" class="form-control" type="email" placeholder="Nhập email"  required>
                                                 </div>
                                                 <div class="col-md-6 form-group ">
                                                     <label>Số điện thoại</label>
-                                                    <input value="{{$taikhoan->khachhang_sdt}}" name="phone" class="form-control" type="text" placeholder="Nhập số điện thoại">
+                                                    <input value="{{$taikhoan->khachhang_sdt}}" name="phone" class="form-control" type="text" placeholder="Nhập số điện thoại"  required>
                                                 </div>
                                                 <div class="col-md-6 form-group ">
                                                     <label>Địa chỉ</label>
@@ -399,26 +409,25 @@ document.addEventListener('DOMContentLoaded', function () {
                                     <div class="tab-pane fade" id="tab2-pane-2">
                                         <div class=" dn card border-left border-right text-center p-4">
                                             <h4>Đổi mật khẩu</h4>
-                                            <form action="" method="POST">
+                                            <form action="{{route('change-pass')}}" method="POST">
                                                 @csrf
                                                 <div class="row">
 
-                                                <div class="col-md-6 form-group">
-                                                    <label>Nhập mật khẩu cũ</label>
-                                                    <input name="old_password" class="form-control" type="password" placeholder="Nhập mật khẩu cũ">
-                                                </div>
-                                                <div class="col-md-6 form-group">
-                                                    <label>Nhập mật khẩu mới</label>
-                                                    <input name="new_password" class="form-control" type="password" placeholder="Nhập mật khẩu mới">
-                                                </div>
-                                                <div class="col-md-6 form-group">
-                                                    <label>Xác nhận mật khẩu mới</label>
-                                                    <input name="confirm_password" class="form-control" type="password" placeholder="Xác nhận mật khẩu mới">
-                                                </div>
-                                                <div class="col-md-6 form-group">
-                                                <label >Xác nhận</label>
-                                                 <input type="submit" class="btn btn-primary btn-block" value="Đổi mật khẩu">
-                                                </div>
+                                             
+                                                 
+                                                        <input name="old_password" class="form-control" type="password" placeholder="Nhập mật khẩu cũ"  required>
+                                                    
+
+                                                        <br><br>
+                                                
+                                                        <input name="new_password" class="form-control" type="password" placeholder="Nhập mật khẩu mới"  required>
+                                                        <br><br>
+                                                        <input name="confirm_password" class="form-control" type="password" placeholder="Xác nhận mật khẩu mới"  required>
+                                                    
+                                                    <input type="hidden" name="khachhang_id" value="{{Session::get('khachhang_id')}}">
+                                                        <br><br>
+                                                     <input type="submit" class="btn btn-primary btn-block" value="Đổi mật khẩu">
+                                                  
                                                 </div>
                                             </form>
                                         </div>

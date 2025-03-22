@@ -13,7 +13,7 @@
 <div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">
-       Danh sách khách hàng
+       Danh sách khách hàng ({{$count}})
     </div>
     <div class="panel-heading1">
       <div class="row w3-res-tb">
@@ -62,8 +62,13 @@
         <div class="col-sm-4">
         
         </div>
+      
         <div class="col-sm-3">
-         
+          <form  action="{{route('search-customer')}}" method="get" class="form-search" >
+
+            <input type="text" name="key" class="input-sm form-control" placeholder="Search" >
+            <button class="btn btn-sm btn-default " type="submit" >Go!</button>
+          </form>
             
         </div>
       </div>
