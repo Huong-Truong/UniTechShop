@@ -250,7 +250,7 @@ Route::post('/review-pass', [HomeController::class, 'review_pass'])->name('revie
 // Gửi liên hệ
 Route::post('/send-contact', [HomeController::class, 'send_contact'])->name('send-contact');
 // Doi MK
-Route::get('/change-pass/{id}', [HomeController::class, 'change_pass'])->name('change-pass');
+Route::get('/admin-change-pass/{id}', [HomeController::class, 'change_pass'])->name('admin-change-pass');
 Route::post('/confirm-change-pass', [HomeController::class, 'confirm_change_pass'])->name('confirm-change-pass');
 
 
