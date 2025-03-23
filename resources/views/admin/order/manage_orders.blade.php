@@ -88,6 +88,10 @@
             <form action="{{route('update-status')}}" method="get">
             <div class="form-group">
             <input type="hidden" name="donhang_id" value="{{$cate_pro->donhang_id}}">
+           
+              @if($cate_pro->trangthai_id>1)
+              <input type="hidden" name="check" value="1">
+              @endif
               <select name="trangthai_donhang" class="input-sm m-bot15">
                      @foreach ($trangthai as $key=>$value)
                      <option value="{{ $value->trangthai_id }}"
@@ -96,8 +100,10 @@
                       {{ $value->trangthai_id == $cate_pro->trangthai_id ? 'selected' : '' }}>
                       {{$value->trangthai_ten}}
                   </option>
+
                     @endforeach
               </select>
+              
               <input type="submit" class="btn custom-button" name="submit" value="Cập nhật">
             </div>
             </form>

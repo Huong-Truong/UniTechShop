@@ -24,7 +24,7 @@
              
                 <form action="{{route('thongke-sp')}}" method="GET" enctype="multipart/form-data" class="form-search">
                   @csrf
-                  <p>Tháng</p>
+                  
                 <div class="btn">
                   <select name="month" class="form-control input-sm m-bot15">
                     <option value="0" {{ $m == 0 ? 'selected' : '' }}>Tất cả</option>
@@ -33,7 +33,10 @@
                     @endfor
                 </select>
               </div>
+<<<<<<< HEAD
+=======
               <p>Năm</p>
+>>>>>>> 298d2494bfeb1ad29d1fb16c0a1f71f34261dea1
               <div class="btn">
                 <select name="year" class="form-control input-sm m-bot15">
                  
@@ -45,11 +48,16 @@
               </select>
                 </div>
                   
+<<<<<<< HEAD
+                  <p id="fileName"></p>
+              
+=======
                 <p>Top</p>
                                         <div class="btn">
                                             
                                             <input type="number" name="number" class="input-sm form-control m-bot15" style="width: 60px;">
                                         </div>
+>>>>>>> 298d2494bfeb1ad29d1fb16c0a1f71f34261dea1
                   <br>
                   <input type="submit" value="Lọc" name="import_hdn" class="custom-file-upload">
                 </form>
