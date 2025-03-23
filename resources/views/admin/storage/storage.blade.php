@@ -26,6 +26,7 @@
     <div class="panel-heading1">
     <div class="row w3-res-tb">
         <div class="col-sm-5 m-b-xs ">
+          <button class="btn btn-sm btn-default " type="submit" ><a href="{{route('add-kho')}}">Thêm kho</a></button>
           <form class="form-fillter" action="{{route('fill-kho')}}" method="get">
             
             <select  name="kho" class="input-sm form-control w-sm inline v-middle ">
@@ -57,6 +58,7 @@
       <div class="col-sm-4">
       </div>
       <div class="col-sm-3">
+
         {{-- <div class="input-group"> --}}
           <form  action="{{route('search-kho')}}" method="get" class="form-search" >
             <input type="hidden" name="id_kho" value="{{$kho->kho_id}}">

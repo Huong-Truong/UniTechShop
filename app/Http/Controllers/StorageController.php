@@ -43,7 +43,7 @@ class StorageController extends Controller
         $this->AuthenLogin();
        
 
-        DB::table('tonkho')->where('tonkho_soluong',0)->delete();
+        DB::table('tonkho')->where('tonkho_soluong','<','0')->delete();
         $kho = new Storage();
         $kho->kho_ten = 'tất cả kho';
         $kho->kho_id = 0;
@@ -284,4 +284,15 @@ class StorageController extends Controller
 
     return Redirect::to('/nhapkho/' . $kho_id);
 }
+
+    public function add_kho(){
+        $this->AuthenLogin();
+        return view('admin.storage.add_kho');
+    }
+
+    public function save_kho(Request $request){
+        $this->AuthenLogin();
+        $tenkho = $request->name_kho;
+        $diachi = $request->diachi;
+    }
 }

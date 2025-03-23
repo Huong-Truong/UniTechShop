@@ -356,13 +356,16 @@ class CheckOutController extends Controller
             ->orWhere('donhang_ngaytao', 'like', '%' . $key . '%')
             ->orWhere('trangthai_ten', 'like', '%' . $key . '%');
         }
+        $count = $query->count();
         $all_orders = $query->get();
        // $donhang_id = $all_orders->pluck('donhang.donhang_id')->first();
         $trangthai = DB::table('trangthai')->get();
 
         
         
-        return view ('admin.order.manage_orders')->with('all', $all_orders)->with('trangthai', $trangthai);
+        return view ('admin.order.manage_orders')->with('all', $all_orders)
+        ->with('count',$count)
+        ->with('trangthai', $trangthai);
         // return view('admin_layout')->with('admin.manage_orders',$manger); ## gom lại hiện chung
 
     }
@@ -397,7 +400,7 @@ class CheckOutController extends Controller
             }
         }else{
             DB::table('chitiettrangthai')->where('donhang_id', $request->donhang_id)->update($data);
-            if($request->trangthai_donhang != "1"){
+            if($request->trangthai_donhang != "1" && $request->trangthai_donhang != "4" ){
                 foreach($sanpham as $v_sanpham){
                     $kho1 =DB::table('tonkho')->where('kho_id', 1)->where('sanpham_id', $v_sanpham->sanpham_id)->pluck('tonkho_soluong')->first();
                     $kho2 =DB::table('tonkho')->where('kho_id', 2)->where('sanpham_id', $v_sanpham->sanpham_id)->pluck('tonkho_soluong')->first();

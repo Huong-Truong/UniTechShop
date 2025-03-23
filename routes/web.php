@@ -263,6 +263,8 @@ Route::get('/edit-nhacungcap/{nhacungcap_id}', [NhaCungCapController::class, 'ed
 Route::post('/update-nhacungcap/{nhacungcap_id}', [NhaCungCapController::class, 'update_nhacungcap'])->name('update-nhacungcap');
 
 // Storage
+Route::get('/add-kho', [StorageController::class, 'add_kho'])->name('add-kho');
+Route::post('/save-kho', [StorageController::class, 'save_kho'])->name('save-kho');
 Route::get('/store-product', [StorageController::class, 'store'])->name('store-product');
 Route::get('/fill-kho', [StorageController::class, 'fill_kho'])->name('fill-kho');
 Route::get('/search-kho', [StorageController::class, 'search_kho'])->name('search-kho');

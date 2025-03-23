@@ -108,13 +108,20 @@ h2{
                 <th>Ngày đặt</th>
                 <th>Chi tiết đơn hàng</th>
                 <th>Đánh giá</th>
+                <th>Hủy đơn</th>
             </tr>
         </thead>
         <tbody class="align-middle">
             @foreach ($donhang as $key => $value)
                 <tr>
                     <td class="align-middle">{{ $value->donhang_id }}</td>
-                    <td class="align-middle">{{ $value->donhang_tongtien }}</td>
+                    <td class="align-middle">
+                                <?php
+                    if((int) $value->donhang_tongtien != 0){
+                        $formattedVND = number_format(preg_replace('/\D/', '', $value->donhang_tongtien), 0, ',', '.') . ' VND';
+                        echo $formattedVND; }    
+                    ?>
+                    </td>
                     <td class="align-middle">{{ $value->pttt_ten }}</td>
                     <td class="align-middle">{{ $value->trangthai_ten }}</td>
                     <td class="align-middle">{{ $value->vanchuyen_diachi }}</td>
@@ -130,6 +137,9 @@ h2{
                             <span class="text-muted">Không khả dụng</span>
                         @endif
                     </td>
+                    
+                        <td class="align-middle"><a href="#" class="btn btn-info btn-sm" ">Hủy</a></td>
+                    
                 </tr>
             @endforeach
         </tbody>

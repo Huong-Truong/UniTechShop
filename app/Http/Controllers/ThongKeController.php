@@ -182,7 +182,9 @@ class ThongKeController extends Controller
         if ($month) {
             $query->whereMonth('donhang.donhang_ngaytao', $month);
         }
-    
+        if($number = $request->number){
+            $query->limit($number);
+        }
         $products = $query->get();
     
         return view('admin.thongke.thongke_sp')

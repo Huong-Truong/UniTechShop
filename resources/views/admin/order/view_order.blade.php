@@ -124,8 +124,8 @@
       <table class="table table-striped table-bordered table-hover custom-table">
           <thead class="thead-dark">
               <tr>
-                  <th>Thông tin</th>
-                  <th>Chi tiết</th>
+                  <th style="width: 25%;">Thông tin</th>
+                  <th style="width: 75%;">Chi tiết</th>
               </tr>
           </thead>
           <tbody>
@@ -162,11 +162,6 @@
           </tbody>
       </table>
   </div>
-  
- 
-
-  
-    </div>
     <footer class="panel-footer">
      
     </footer>
