@@ -92,6 +92,7 @@
                      @foreach ($trangthai as $key=>$value)
                      <option value="{{ $value->trangthai_id }}"
                       {{ $value->trangthai_id < $cate_pro->trangthai_id ? 'disabled' : '' }}
+                      {{  $cate_pro->trangthai_id == 4 ? 'disabled' : '' }}
                       {{ $value->trangthai_id == $cate_pro->trangthai_id ? 'selected' : '' }}>
                       {{$value->trangthai_ten}}
                   </option>
