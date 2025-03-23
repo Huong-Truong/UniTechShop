@@ -30,6 +30,7 @@
                    <option value="2" {{ $t == 2 ? 'selected' : '' }}>Tổng tiền</option> 
                   </select>
               </div>
+          
               <div class="btn">
                 <select name="month" class="form-control input-sm m-bot15">
                   <option value="0" {{ $m == 0 ? 'selected' : '' }}>Tất cả</option>
@@ -38,6 +39,7 @@
                   @endfor
               </select>
             </div>
+          
             <div class="btn">
               <select name="year" class="form-control input-sm m-bot15">
                

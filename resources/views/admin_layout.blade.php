@@ -353,13 +353,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         if($name){
                             echo $name;
                         }
+                        $id = Session::get('admin_id');
                     ?>
                 </span>
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu extended logout">
                 <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
-                <li><a href="{{ route('change-pass') }}"><i class="fa fa-lock"></i></i></i> Đổi mật khẩu</a></li>
+                <li><a href="{{ route('admin-change-pass',['id'=> $id ]) }}"><i class="fa fa-lock"></i></i></i> Đổi mật khẩu</a></li>
                 <li><a href="{{ route('logout') }}"><i class="fa fa-key"></i> Đăng xuất</a></li>
             </ul>
         </li>

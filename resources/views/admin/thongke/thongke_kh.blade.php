@@ -57,7 +57,7 @@
                                         <p>Top</p>
                                         <div class="btn">
                                             
-                                            <input type="text" name="number" class="input-sm form-control m-bot15" style="width: 30px;">
+                                            <input type="number" name="number" class="input-sm form-control m-bot15" style="width: 60px;">
                                         </div>
                              
                               <button class="btn btn-sm btn-default " type="submit" >Xem</button>  
