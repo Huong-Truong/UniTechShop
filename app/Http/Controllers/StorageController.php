@@ -143,19 +143,29 @@ class StorageController extends Controller
             Session::put('message','Đã xảy ra lỗi!');
               return Redirect('/store-product');
          }
+         
 
         $soluong = DB::table('tonkho')->where('sanpham_id', $sanpham_id)
         ->where('kho_id', $kho_id)->value('tonkho_soluong');
+        
         if ($soluong !== null) {
-            $soluong = (int)$soluong - 1;
-            DB::table('tonkho')
+            $soluong --;
+            if($soluong <= 0){
+                DB::table('tonkho')
+                ->where('sanpham_id', $sanpham_id)
+                ->where('kho_id', $kho_id)->
+                delete();
+            }
+            else 
+            {
+                DB::table('tonkho')
                 ->where('sanpham_id', $sanpham_id)
                 ->where('kho_id', $kho_id)
                 ->update(['tonkho_soluong' => $soluong]);
+            }
+          
         } 
-        $request = new Request();
-        $request->kho = $kho_id;
-        return $this->fill_kho($request);
+       return Redirect()->back();
      
     }
 

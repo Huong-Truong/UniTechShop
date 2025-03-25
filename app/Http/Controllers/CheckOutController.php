@@ -404,12 +404,16 @@ class CheckOutController extends Controller
                 foreach($sanpham as $v_sanpham){
                     $kho1 =DB::table('tonkho')->where('kho_id', 1)->where('sanpham_id', $v_sanpham->sanpham_id)->pluck('tonkho_soluong')->first();
                     $kho2 =DB::table('tonkho')->where('kho_id', 2)->where('sanpham_id', $v_sanpham->sanpham_id)->pluck('tonkho_soluong')->first();
-                    if($kho1 > 0){
-                        $kho1 = $kho1 - $v_sanpham->ctdh_soluong;
+                    if($kho1 > $v_sanpham->ctdh_soluong){
+                        $kho1  -= $v_sanpham->ctdh_soluong;
                         DB::table('tonkho')->where('kho_id', 1)->where('sanpham_id', $v_sanpham->sanpham_id)->update(['tonkho_soluong'=>$kho1]);
-                    }else if($kho2 > 0){
-                        $kho2 = $kho2 - $v_sanpham->ctdh_soluong;
+                    }else if($kho2 > $v_sanpham->ctdh_soluong){
+                        $kho2 -= $v_sanpham->ctdh_soluong;
                         DB::table('tonkho')->where('kho_id', 2)->where('sanpham_id', $v_sanpham->sanpham_id)->update(['tonkho_soluong'=>$kho2]);
+                    }
+                    else {
+                        Session::put('message','Sản phẩm trong kho không đủ, vui lòng nhập thêm hàng');
+                        return Redirect()->back();
                     }
                 }
             }
