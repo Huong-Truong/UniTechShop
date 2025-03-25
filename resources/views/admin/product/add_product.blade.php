@@ -38,7 +38,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Hình ảnh</label>
-                                    <input type="file" name="product_image" class="form-control" id="exampleInputEmail1" required>
+                                    <input type="file" name="product_image" class="form-control" id="exampleInputEmail1">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Xuất Xứ</label>

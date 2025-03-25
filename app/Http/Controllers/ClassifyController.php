@@ -67,9 +67,16 @@ class ClassifyController extends Controller
 
     public function edit_classify_product($classify_id){
         $this->AuthenLogin();
-        $classify = Classify::where('phanloai_id',$classify_id)->get();
+        if(Classify::where('phanloai_id',$classify_id)->count() > 0){
+            $classify = Classify::where('phanloai_id',$classify_id)->get();
+            $manger_classify = view ('admin.classify.edit_classify_product')->with('edit_classify', $classify);
+        }
+        else {
+            Session::put('message','Đã xả ra lỗi');
+            return Redirect()->back();
+        }
        //  $classify = DB::table('phanloaisp')->where('phanloai_id', $classify_id)->get();
-        $manger_classify = view ('admin.classify.edit_classify_product')->with('edit_classify', $classify);
+       
         return view('admin_layout')->with('admin.classify.edit_classify_product',$manger_classify); ## gom lại hiện chung
     }
 
@@ -81,8 +88,15 @@ class ClassifyController extends Controller
             Session::put('message','Không thể xóa. Đang có '.$checkClassify.' danh mục thuộc phân lọai này');
             return Redirect::to('all-classify-product'); 
         }
-        $classify = Classify::find( $classify_id );
-        $classify->delete();
+        if(Classify::where('phanloai_id', $classify_id )->count() > 0){
+            $classify = Classify::find( $classify_id );
+            $classify->delete();
+        }
+        else {
+            Session::put('message','Đã xảy ra lỗi!');
+            return Redirect()->back();
+        }
+       
        // DB::table('phanloaisp')->where('phanloai_id', $classify_id)->delete();
         Session::put('message','Xóa phân phân loại sản phẩm thành công');
         return Redirect::to('all-classify-product'); 
@@ -92,13 +106,20 @@ class ClassifyController extends Controller
         $this->AuthenLogin();
         // $data = array();
         // $data['phanloai_ten'] = $request->classify_name;
-        $classify = Classify::find( $classify_id );
-        $data = $request->all();
-        $classify->phanloai_ten = $data['classify_name'];
-       // DB::table('phanloaisp')->where('phanloai_id', $classify_id)->update($data);
-         $classify->save();
-        Session::put('message','Cập nhật phân loại sản phẩm thành công');
-        return Redirect::to('all-classify-product'); 
+        if(  $classify = Classify::find( $classify_id )){
+            $data = $request->all();
+            $classify->phanloai_ten = $data['classify_name'];
+           // DB::table('phanloaisp')->where('phanloai_id', $classify_id)->update($data);
+             $classify->save();
+            Session::put('message','Cập nhật phân loại sản phẩm thành công');
+            return Redirect::to('all-classify-product'); 
+        }
+        else {
+            Session::put('message','Đã xảy ra lỗi!');
+            return Redirect()->back();
+        }
+      
+       
     }
 
     public function search_classify_product(Request $request){

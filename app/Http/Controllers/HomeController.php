@@ -114,7 +114,7 @@ class HomeController extends Controller
         }
         
         $new_pass = $randomPassword;
-        $data['admin_password'] = $new_pass;
+        $data['admin_password'] = md5($new_pass);
 
         $admin_email = DB::table('admin')->where('admin_email', $email)->first();
         if($admin_email){
@@ -193,7 +193,8 @@ class HomeController extends Controller
            
         }
         else {
-            DB::table('admin')->where('admin_id',$id)->update(['admin_password'=>$new]);
+
+            DB::table('admin')->where('admin_id',$id)->update(['admin_password'=>md5($new)]);
             Session::put('message','Thay đổi mật khẩu thành công');
             return Redirect('/admin');
            

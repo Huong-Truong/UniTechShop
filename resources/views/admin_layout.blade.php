@@ -28,6 +28,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- font CSS -->
 <link href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
 <!-- font-awesome icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="{{asset('admin_css/font.css')}}" type="text/css"/>
 <link href="{{asset('admin_css/font-awesome.css')}}" rel="stylesheet"> 
 <link rel="stylesheet" href="{{asset('admin_css/morris.css')}}" type="text/css"/>
@@ -345,8 +346,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <!-- user login dropdown start-->
         <li class="dropdown" class="profile" >
             <a data-toggle="dropdown" class="dropdown-toggle" href="#" >
-                <img alt=" " src="images/huongtruong.jpg">
-                {{-- <i class="fa fa-user"></i> --}}
+                {{-- <i class="fa fa-user-tie"></i> --}}
+                {{-- <img alt=" " src="images/huongtruong.jpg"> --}}
+                <i class="fa fa-user" style="padding: 7px; font-size: 20px;"></i>
                 <span class="username">
                     <?php 
                         $name = Session::get('admin_name');
@@ -359,7 +361,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu extended logout">
-                <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
+                {{-- <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li> --}}
                 <li><a href="{{ route('admin-change-pass',['id'=> $id ]) }}"><i class="fa fa-lock"></i></i></i> Đổi mật khẩu</a></li>
                 <li><a href="{{ route('logout') }}"><i class="fa fa-key"></i> Đăng xuất</a></li>
             </ul>
@@ -379,7 +381,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <ul class="sidebar-menu" id="nav-accordion">
                 <li>
                     <a class="active" href="{{ route('dashboard') }}">
-                        <i class="fa fa-dashboard"></i>
+                        <i class="fa fa-pie-chart"></i>
                         <span>Tổng quan</span>
                     </a>
                 </li>
@@ -408,7 +410,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 </li>
                 <li class="sub-menu">
                     <a href="javascript:;">
-                        <i class="fa fa-clipboard"></i>
+                        <i class="	fa fa-chrome"></i>
+                        
                         <span>Quản lý thương hiệu</span>
                     </a>
                     <ul class="sub">
@@ -419,7 +422,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 </li>
                 <li class="sub-menu">
                     <a href="javascript:;">
-                        <i class="fa fa-book"></i>
+                         <i class="fa fa-tasks"></i>
                         <span> Quản lý sản phẩm</span>
                     </a>
                     <ul class="sub">
@@ -431,7 +434,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                
                     <li>
                         <a href="{{ route('manage-orders') }}">
-                            <i class="fa fa-user"></i>
+                            <i class=" fa fa-bar-chart-o"></i>
                             Quản lý đơn hàng
                         </a>
     
@@ -440,14 +443,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                
                 <li>
                     <a href="{{ route('all-sales') }}">
-                        <i class="fa fa-book"></i>
+                        <i class="fa fa-bullhorn"></i>
                       Khuyến mãi
                     </a>
 
                 </li>
                 <li>
                     <a href="{{ route('all-service') }}">
-                        <i class="fa fa-user"></i>
+                        <i class="fa fa-glass"></i>
                        Dịch vụ
                     </a>
 
@@ -539,8 +542,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<li><a href="404.html">404 Error</a></li>
                         <li><a href="registration.html">Registration</a></li>
                     </ul>
-                </li> --}}
-                <li>
+                 </li> --}}
+                <li> 
                     <a href="{{route('all-customer')}}">
                         <i class="fa fa-user"></i>
                        Khách hàng

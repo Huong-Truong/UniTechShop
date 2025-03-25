@@ -17,6 +17,7 @@ session_start();
 class StorageController extends Controller
 {
     //
+   
     public function unactive_product_storage(){
         $this->AuthenLogin();
         $sp =   DB::table('sanpham')->get();
@@ -91,10 +92,18 @@ class StorageController extends Controller
     }
 
     public function search_kho(Request $request){
-        $this->AuthenLogin();;
+        $this->AuthenLogin();
         $id_kho = $request->id_kho ;
+        if($id_kho != 0){
+            if(Storage::where('kho_id', $id_kho)->count() == 0){
+                Session::put('message','Đã xảy ra lỗi!');
+                  return Redirect('/store-product');
+             }
+        }
+    
+        
         if($id_kho){
-            $kho = Storage::find($id_kho);
+            $kho = Storage::find(id: $id_kho);
         }
         else {
              $kho = new Storage();
@@ -130,6 +139,11 @@ class StorageController extends Controller
 
     public function delete_store($sanpham_id,$kho_id){
         $this->AuthenLogin();  
+        if(Storage::where('kho_id', $kho_id)->count() == 0){
+            Session::put('message','Đã xảy ra lỗi!');
+              return Redirect('/store-product');
+         }
+
         $soluong = DB::table('tonkho')->where('sanpham_id', $sanpham_id)
         ->where('kho_id', $kho_id)->value('tonkho_soluong');
         if ($soluong !== null) {
@@ -148,6 +162,11 @@ class StorageController extends Controller
     public function nhapkho(Request $request, $kho_id)
     {
         $this->AuthenLogin();
+         if(Storage::where('kho_id', $kho_id)->count() == 0){
+            Session::put('message','Đã xảy ra lỗi!');
+              return Redirect('/store-product');
+         }
+         
         $ncungcap = NhaCungCap::get();
         $kho = Storage::find($kho_id);
         $query = HoaDonNhap::join('nhacungcap', 'nhacungcap.nhacungcap_id', '=', 'hoadonnhap.nhacungcap_id')

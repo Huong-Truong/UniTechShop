@@ -101,8 +101,12 @@ class AdminController extends Controller
    
     $admin_email = $request->admin_email;
     $admin_password = $request->admin_password;
+    $admin_password_md5 = md5($request->admin_password);
 
-    $result = DB::table('admin')->where('admin_email', $admin_email)->where('admin_password', $admin_password)->first();
+    $result = DB::table('admin')->where('admin_email', $admin_email)
+    ->where('admin_password', $admin_password)
+    ->orWhere('admin_password', $admin_password_md5)
+    ->first();
     if($result){
         Session::put('admin_name', $result->admin_ten);
         Session::put('admin_id', $result->admin_id);

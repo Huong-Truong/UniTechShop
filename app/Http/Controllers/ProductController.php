@@ -103,15 +103,10 @@ class ProductController extends Controller
         $sp->baohanh_id = $data['baohanh'];
         $get_image_file = $request->file('product_image');
         // Kiêm tra tí
-        foreach($data as $key ){
-            if($key == null){
-                Session::put('message', 'Không được để trống ');
-                return Redirect::to('add-product');
-            }
-        }
-        if( (int)$data['product_price'] == 0 ){
+      
+        if ((int)$data['product_price'] == 0) {
             Session::put('message', 'Giá nhập vào không hợp lệ!');
-            return Redirect::to('all-product');
+            return Redirect()->back()->withInput();
         }
 
         if($get_image_file){
@@ -133,11 +128,18 @@ class ProductController extends Controller
              // Lưu thông tin ảnh vào cơ sở dữ liệu
              $sp->sanpham_hinhanh = '';
             // insert vô sanpham
-            $sp->save();
+            if($sp->save()){
+                Session::put('message', 'Thêm sản phẩm mới thành công!');
+            }
+            else {
+                Session::put('message','Đã xảy ra lỗi!');
+                return Redirect()->back();
+            }
+            
             // insert vô hdsd
             $hdsd->save();
             // Hiển thị thông báo thành công và chuyển hướng
-            Session::put('message', 'Thêm sản phẩm mới thành công!');
+           
             return Redirect::to('all-product');
         }
 
@@ -169,6 +171,10 @@ class ProductController extends Controller
     public function edit_product($product_id)
 {
     $this->AuthenLogin();
+    if(Product::where('sanpham_id', $product_id)->count() == 0){
+          Session::put('message','Đã xảy ra lỗi!');
+            return Redirect()->back();
+    }
     $cate_product = Category::orderBy('danhmuc_id', 'desc')->get();
     $brd_product = Brand::orderBy('hang_id', 'desc')->get();
     $product = Product::where('sanpham_id', $product_id)->first();
@@ -184,6 +190,10 @@ class ProductController extends Controller
 
     public function delete_product($product_id){
         $this->AuthenLogin();
+        if(Product::where('sanpham_id', $product_id)->count() == 0){
+            Session::put('message','Đã xảy ra lỗi!');
+              return Redirect()->back();
+      }
         // Check đơn hàng
         $checkDonHang = DB::table('chitietdonhang')->where('sanpham_id', $product_id)->count();
         if($checkDonHang > 0){
@@ -211,6 +221,10 @@ class ProductController extends Controller
     public function update_product(Request $request, $product_id)
     {
         $this->AuthenLogin();
+        if(Product::where('sanpham_id', $product_id)->count() == 0){
+            Session::put('message','Đã xảy ra lỗi!');
+              return Redirect()->back();
+      }
         $data = array();
         $data['sanpham_ten'] = $request->product_name;
         $data['sanpham_gia'] = $request->product_price;
@@ -257,6 +271,10 @@ class ProductController extends Controller
     public function edit_other_info_product($product_id)
 {
         $this->AuthenLogin();
+        if(Product::where('sanpham_id', $product_id)->count() == 0){
+            Session::put('message','Đã xảy ra lỗi!');
+              return Redirect()->back();
+      }
 
         $product = Product::find($product_id);
         $hdsd = HDSD::where('sanpham_id', $product_id)->get();
@@ -284,6 +302,10 @@ class ProductController extends Controller
 
 public function update_other_info_product(Request $request,$product_id){
     $this->AuthenLogin();
+    if(Product::where('sanpham_id', $product_id)->count() == 0){
+        Session::put('message','Đã xảy ra lỗi!');
+          return Redirect()->back();
+  }
     $data = $request->all();
 
     $hdsd = HDSD::find($product_id);
