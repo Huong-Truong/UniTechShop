@@ -1,16 +1,16 @@
  <!-- Page Header Start -->
   @extends('layout')
   @section('slide')
- <div class="container-fluid bg-secondary mb-5">
-        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
-            <h1 class="font-weight-semi-bold text-uppercase mb-3">Thanh Toán</h1>
-            <div class="d-inline-flex">
-                <p class="m-0"><a href="">Trang Chủ</a></p>
-                <p class="m-0 px-2">-</p>
-                <p class="m-0">Thanh toán</p>
-            </div>
+  <div class="container-fluid mb-5" style="background-image: url('../img/bgu3.jpg'); background-size: cover; background-position: center;">
+    <div class="d-flex flex-column align-items-center justify-content-center" style="height: 410px;">
+        <h1 class="font-weight-semi-bold text-uppercase mb-3" style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">Thanh Toán</h1>
+        <div class="d-inline-flex">
+            <p class="m-0" style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);"><a href="" style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">Trang Chủ</a></p>
+            <p class="m-0 px-2" style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">-</p>
+            <p class="m-0" style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">Thanh toán</p>
         </div>
     </div>
+</div>
     <!-- Page Header End -->
 @endsection
 

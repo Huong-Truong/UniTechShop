@@ -72,14 +72,16 @@
 
 
 @section('slide')
-<div class="container-fluid bg-secondary mb-5">
+<div class="container-fluid mb-5" style="background-image: url('../img/bgu1.jpg'); background-size: cover; background-position: center;">
+    <div class="d-flex flex-column align-items-center justify-content-center" style="height: 410px;">
         <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
-            <h1 class="font-weight-semi-bold text-uppercase mb-3">Liên hệ</h1>
+            <h1 class="font-weight-semi-bold text-uppercase mb-3" style="color: black; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">Liên hệ</h1>
             <div class="d-inline-flex">
-                <p class="m-0"><a href="">Home</a></p>
-                <p class="m-0 px-2">-</p>
-                <p class="m-0">Liên hệ</p>
+                <p class="m-0" style="color: black; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);"><a href="" style="color: black; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">Home</a></p>
+                <p class="m-0 px-2" style="color: black; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">-</p>
+                <p class="m-0" style="color: black; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">Liên hệ</p>
             </div>
         </div>
     </div>
+</div>
 @endsection
